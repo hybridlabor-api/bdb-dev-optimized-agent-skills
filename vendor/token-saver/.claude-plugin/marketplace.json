@@ -1,0 +1,22 @@
+{
+  "name": "token-saver-marketplace",
+  "owner": {
+    "name": "ppgranger",
+    "url": "https://github.com/ppgranger"
+  },
+  "metadata": {
+    "description": "Token-Saver: automatic output compression for AI coding assistants"
+  },
+  "plugins": [
+    {
+      "name": "token-saver",
+      "source": "./",
+      "description": "Automatically compresses verbose CLI output to save tokens. 32 specialized processors for git, docker, npm, terraform, kubectl, helm, ansible, cargo, go, and more.",
+      "version": "2.6.3",
+      "author": {
+        "name": "ppgranger"
+      },
+      "keywords": ["token-optimization", "compression", "cost-saving"]
+    }
+  ]
+}

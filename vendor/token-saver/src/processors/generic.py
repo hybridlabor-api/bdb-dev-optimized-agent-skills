@@ -1,0 +1,230 @@
+"""Generic fallback processor: ANSI strip, dedup, whitespace collapse, truncation."""
+
+import re
+
+from .. import config
+from .base import Processor
+
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*[a-zA-Z]|\x1b\].*?\x07")
+
+# Regex to normalize numbers/percentages for fuzzy matching
+_NUMERIC_RE = re.compile(r"\d+(\.\d+)?")
+# Unicode block/box characters are unambiguous progress bars.
+_PROGRESS_BLOCK_RE = re.compile(r"[━█▓░▒■□●○]{3,}")
+# ASCII runs (####, ====, ---->) are only progress bars in progress context;
+# on their own they are usually separators / rules that must be preserved.
+_ASCII_BAR_RE = re.compile(r"[#=\->]{5,}")
+_PROGRESS_CONTEXT_RE = re.compile(r"[%\[\]]|\b\d+/\d+\b|ETA|eta|\d+(\.\d+)?\s*[KMGT]?i?B/s")
+
+
+class GenericProcessor(Processor):
+    """Fallback processor that applies universal compression heuristics."""
+
+    priority = 999
+    hook_patterns = []
+
+    @property
+    def name(self) -> str:
+        return "generic"
+
+    def can_handle(self, command: str) -> bool:
+        return True  # Always matches as fallback
+
+    def process(self, command: str, output: str) -> str:
+        lines = output.splitlines()
+        lines = self._strip_ansi(lines)
+        lines = self._strip_progress_bars(lines)
+        lines = self._collapse_blank_lines(lines)
+        lines = self._collapse_repeated_lines(lines)
+        lines = self._collapse_similar_lines(lines)
+        lines = self._strip_trailing_whitespace(lines)
+        threshold = config.get("generic_truncate_threshold")
+        if len(lines) > threshold:
+            lines = self._truncate_middle(lines)
+        return "\n".join(lines)
+
+    def clean(self, text: str) -> str:
+        """Light cleanup pass: ANSI strip and blank line collapse only.
+
+        Used by the engine after a specialized processor to sanitize output
+        without applying heavy dedup or truncation.
+        """
+        lines = text.splitlines()
+        lines = self._strip_ansi(lines)
+        lines = self._collapse_blank_lines(lines)
+        lines = self._strip_trailing_whitespace(lines)
+        return "\n".join(lines)
+
+    def _strip_ansi(self, lines: list[str]) -> list[str]:
+        return [ANSI_RE.sub("", line) for line in lines]
+
+    def _strip_trailing_whitespace(self, lines: list[str]) -> list[str]:
+        return [line.rstrip() for line in lines]
+
+    def _strip_progress_bars(self, lines: list[str]) -> list[str]:
+        """Remove lines that are purely progress bars or spinners."""
+        result = []
+        for line in lines:
+            stripped = line.strip()
+            # Unicode block bars: always progress noise.
+            block = _PROGRESS_BLOCK_RE.search(stripped) if stripped else None
+            if block and len(block.group(0)) > len(stripped) * 0.5:
+                continue
+            # ASCII bars (====, ####, ---->): only strip when accompanied by a
+            # progress signal (%, [..], n/m, rate, ETA).  A bare "--------" or
+            # "========" line is a separator/rule and must survive.
+            ascii_bar = _ASCII_BAR_RE.search(stripped) if stripped else None
+            if (
+                ascii_bar
+                and len(ascii_bar.group(0)) > len(stripped) * 0.5
+                and _PROGRESS_CONTEXT_RE.search(stripped)
+            ):
+                continue
+            # Spinner lines
+            if stripped in (
+                "⠋",
+                "⠙",
+                "⠹",
+                "⠸",
+                "⠼",
+                "⠴",
+                "⠦",
+                "⠧",
+                "⠇",
+                "⠏",
+                "⣾",
+                "⣽",
+                "⣻",
+                "⢿",
+                "⡿",
+                "⣟",
+                "⣯",
+                "⣷",
+            ):
+                continue
+            result.append(line)
+        return result
+
+    def _collapse_blank_lines(self, lines: list[str]) -> list[str]:
+        """Merge consecutive blank lines into one."""
+        result = []
+        prev_blank = False
+        for line in lines:
+            is_blank = line.strip() == ""
+            if is_blank and prev_blank:
+                continue
+            result.append(line)
+            prev_blank = is_blank
+        return result
+
+    def _collapse_repeated_lines(self, lines: list[str]) -> list[str]:
+        """Collapse consecutive identical lines into `line (xN)`."""
+        if not lines:
+            return lines
+        result: list[str] = []
+        current = lines[0]
+        count = 1
+        for line in lines[1:]:
+            if line == current and current.strip():
+                count += 1
+            else:
+                self._flush(result, current, count)
+                current = line
+                count = 1
+        self._flush(result, current, count)
+        return result
+
+    def _collapse_similar_lines(self, lines: list[str]) -> list[str]:
+        """Collapse consecutive lines that differ only in numbers/percentages.
+
+        Only applies to lines where >=30% of the content is numeric — this
+        targets progress output (curl, wget, download bars) while preserving
+        data lines where numbers are meaningful identifiers.
+        """
+        if not lines:
+            return lines
+        result: list[str] = []
+        current = lines[0]
+        current_normalized = self._normalize_numbers(current)
+        group: list[str] = [current]
+
+        for line in lines[1:]:
+            normalized = self._normalize_numbers(line)
+            if (
+                normalized == current_normalized
+                and current.strip()
+                and len(current.strip()) > 10
+                and self._is_numeric_heavy(current)
+            ):
+                group.append(line)
+            else:
+                self._flush_similar(result, group)
+                current = line
+                current_normalized = normalized
+                group = [line]
+
+        self._flush_similar(result, group)
+        return result
+
+    def _normalize_numbers(self, line: str) -> str:
+        """Replace all numbers with a placeholder for fuzzy comparison."""
+        return _NUMERIC_RE.sub("N", line.strip())
+
+    def _is_numeric_heavy(self, line: str) -> bool:
+        """Check if a line is progress/status output where numbers are noise.
+
+        Returns True for lines where numeric changes are not meaningful data,
+        such as progress bars, download stats, and transfer indicators.
+        """
+        stripped = line.strip()
+        if not stripped:
+            return False
+        # Only collapse on EXPLICIT progress/transfer signals.  Bare digit-ratio
+        # heuristics are deliberately NOT used: they also match legitimate
+        # numeric data tables (e.g. yearly metrics, id columns), whose rows are
+        # meaningful and must be preserved rather than collapsed as redraw noise.
+        # Percentage patterns
+        if re.search(r"\d+(\.\d+)?%", stripped):
+            return True
+        # Transfer rate patterns
+        if re.search(r"\d+(\.\d+)?\s*(KB|MB|GB|B|kB|MiB|GiB|k|M|G)/s", stripped):
+            return True
+        # ETA/time remaining patterns
+        if re.search(r"(ETA|eta)\s+\d+", stripped):
+            return True
+        # Curl/wget progress format: lines with --:--:-- time patterns
+        numeric_chars = sum(1 for c in stripped if c.isdigit())
+        return bool(re.search(r"--:--:--|(\d+:){2}\d+", stripped) and numeric_chars >= 5)
+
+    def _flush(self, result: list[str], line: str, count: int) -> None:
+        if count > 1:
+            result.append(f"{line} (x{count})")
+        else:
+            result.append(line)
+
+    def _flush_similar(self, result: list[str], group: list[str]) -> None:
+        count = len(group)
+        if count >= 5:
+            result.append(group[0])
+            result.append(f"  ... ({count - 2} similar lines)")
+            result.append(group[-1])
+        else:
+            result.extend(group)
+
+    def _truncate_middle(self, lines: list[str]) -> list[str]:
+        """Truncate middle of long output."""
+        keep_head = config.get("generic_keep_head")
+        keep_tail = config.get("generic_keep_tail")
+        total = len(lines)
+        # Guard keep_tail == 0: lines[-0:] is the WHOLE list, which would emit
+        # every line back (worse than the original).  Use explicit empty slices.
+        head = lines[:keep_head] if keep_head > 0 else []
+        tail = lines[-keep_tail:] if keep_tail > 0 else []
+        removed = total - len(head) - len(tail)
+        if removed <= 0:
+            return lines
+        return [
+            *head,
+            f"... ({removed} lines truncated, {total} total) ...",
+            *tail,
+        ]

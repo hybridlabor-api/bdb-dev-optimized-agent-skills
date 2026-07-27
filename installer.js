@@ -250,6 +250,31 @@ async function installOpenWikiDaemon(apiKey, targetSkillDir) {
     });
 }
 
+async function installTokenSaver(platformTarget) {
+    const tokenSaverDir = path.join(srcDir, 'vendor', 'token-saver');
+    if (!fs.existsSync(tokenSaverDir)) {
+        return;
+    }
+    console.log(`\n${colors.magenta}${colors.bold}--- Installing Token-Saver Context Optimizer ---${colors.reset}`);
+    const { execSync } = require('child_process');
+    const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
+
+    try {
+        let targetFlag = '--target both';
+        if (platformTarget === '1') targetFlag = '--target antigravity';
+        else if (platformTarget === '2') targetFlag = '--target claude';
+
+        console.log(` -> Running Token-Saver setup (${targetFlag})...`);
+        execSync(`${pythonCmd} install.py ${targetFlag}`, {
+            cwd: tokenSaverDir,
+            stdio: 'inherit'
+        });
+        console.log(` -> Token-Saver successfully registered.`);
+    } catch (err) {
+        console.warn(` -> Warning: Token-Saver installation skipped or failed: ${err.message}`);
+    }
+}
+
 function moveIfExists(src, dest, label) {
     if (fs.existsSync(src)) {
         fs.renameSync(src, dest);
@@ -493,6 +518,7 @@ promptMode(({ mode, platform, customPaths }) => {
         }
 
         await installOpenWikiDaemon(creds.gemini, targetSkillDir);
+        await installTokenSaver(platform);
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
         console.log(`${colors.green}${colors.bold} 🎉 Installation complete! The environment now has the ${colors.reset}`);

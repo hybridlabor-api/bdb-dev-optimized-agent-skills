@@ -1,0 +1,1164 @@
+"""Tests for hooks and wrapper."""
+
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from scripts.hook_pretool import explain_decision, is_compressible
+
+
+class TestHookPretool:
+    def test_git_commands_compressible(self):
+        assert is_compressible("git status")
+        assert is_compressible("git diff --cached")
+        assert is_compressible("git log --oneline -20")
+        assert is_compressible("git push origin main")
+        assert is_compressible("git pull")
+        assert is_compressible("git fetch --all")
+        assert is_compressible("git reflog")
+
+    def test_git_global_options_compressible(self):
+        assert is_compressible("git -C /some/path status")
+        assert is_compressible("git -C /opt/homebrew log --oneline -20")
+        assert is_compressible("git --no-pager diff HEAD~1")
+        assert is_compressible("git -C /path --no-pager log")
+        assert is_compressible("git --no-pager -C /path status")
+        assert is_compressible("git -c core.pager=cat log --oneline")
+        assert is_compressible("git --git-dir=/path/.git status")
+        assert is_compressible("git --work-tree /path status")
+
+    def test_test_commands_compressible(self):
+        assert is_compressible("pytest tests/")
+        assert is_compressible("python -m pytest")
+        assert is_compressible("python3 -m pytest -v")
+        assert is_compressible("jest --coverage")
+        assert is_compressible("cargo test")
+        assert is_compressible("go test ./...")
+        assert is_compressible("npm test")
+        assert is_compressible("bun test")
+
+    def test_build_commands_compressible(self):
+        assert is_compressible("npm run build")
+        assert is_compressible("npm install")
+        assert is_compressible("cargo build")
+        assert is_compressible("make")
+        assert is_compressible("pip install -r requirements.txt")
+        assert is_compressible("tsc")
+        assert is_compressible("webpack")
+        assert is_compressible("next build")
+
+    def test_python_install_commands_compressible(self):
+        assert is_compressible("pip install flask")
+        assert is_compressible("pip3 install -r requirements.txt")
+        assert is_compressible("poetry install")
+        assert is_compressible("poetry update")
+        assert is_compressible("poetry add requests")
+        assert is_compressible("uv pip install flask")
+        assert is_compressible("uv sync")
+
+    def test_maven_gradle_commands_compressible(self):
+        assert is_compressible("mvn clean install")
+        assert is_compressible("mvn package")
+        assert is_compressible("gradle build")
+        assert is_compressible("./gradlew assemble")
+
+    def test_structured_log_commands_compressible(self):
+        assert is_compressible("stern my-pod")
+        assert is_compressible("kubetail my-service")
+
+    def test_lint_commands_compressible(self):
+        assert is_compressible("eslint src/")
+        assert is_compressible("ruff check .")
+        assert is_compressible("ruff .")
+        assert is_compressible("pylint src/")
+        assert is_compressible("python3 -m mypy src/")
+
+    def test_file_commands_compressible(self):
+        assert is_compressible("ls -la")
+        assert is_compressible("find . -name '*.py'")
+        assert is_compressible("tree src/")
+        assert is_compressible("cat file.py")
+
+    def test_complex_pipelines_excluded(self):
+        assert not is_compressible("cat file.txt | sort | uniq")
+        assert not is_compressible("git log | grep fix | sort")
+        assert not is_compressible("git log | grep fix | wc -l")
+        assert not is_compressible("cat app.log | tail -100 | grep ERROR")
+        assert not is_compressible("ls | awk '{print $1}'")
+        assert not is_compressible("git log | sed 's/foo/bar/'")
+        assert not is_compressible("find . | xargs rm")
+
+    def test_safe_trailing_truncation_pipes(self):
+        """head, tail, wc after a compressible command."""
+        assert is_compressible("git status | head")
+        assert is_compressible("git log --oneline | tail -20")
+        assert is_compressible("pip3 list | head -30")
+        assert is_compressible("ls -la /tmp | wc -l")
+        assert is_compressible("pytest tests/ | tail -10")
+        assert is_compressible("git log --oneline | head -n 50")
+        assert is_compressible("find . -name '*.py' | wc -l")
+
+    def test_safe_trailing_grep_pipes(self):
+        """Single grep filter after a compressible command."""
+        assert is_compressible("git log --oneline | grep fix")
+        assert is_compressible("pip3 list | grep -i torch")
+        assert is_compressible("docker ps | grep running")
+        assert is_compressible("git log --oneline | grep -v Merge")
+        assert is_compressible("ls -la | grep .py")
+        assert is_compressible("pip list | grep -E 'torch|numpy'")
+        assert is_compressible("git log | grep -c fix")
+
+    def test_safe_trailing_sort_uniq_cut_pipes(self):
+        """sort, uniq, cut after a compressible command."""
+        assert is_compressible("docker ps | sort")
+        assert is_compressible("docker ps | sort -k 2")
+        assert is_compressible("find . -name '*.py' | sort -r")
+        assert is_compressible("pip list | uniq")
+        assert is_compressible("pip list | uniq -c")
+        assert is_compressible("ls -la | cut -f1 -d,")
+
+    def test_or_chains_excluded(self):
+        assert not is_compressible("make || echo failed")
+
+    def test_interactive_commands_excluded(self):
+        assert not is_compressible("vim file.py")
+        assert not is_compressible("nano file.py")
+        assert not is_compressible("ssh server")
+
+    def test_rsync_local_compressible(self):
+        """Local rsync (no remote host) should be compressible."""
+        assert is_compressible("rsync -av src/ dest/")
+        assert is_compressible("rsync -r --delete /tmp/a/ /tmp/b/")
+        assert is_compressible("rsync --progress ./build/ /var/www/html/")
+
+    def test_rsync_remote_excluded(self):
+        """Remote rsync (with host:path) should be excluded."""
+        assert not is_compressible("rsync -av src/ user@server:/path/")
+        assert not is_compressible("rsync -r server:/remote/path /local/path")
+        assert not is_compressible("rsync -e ssh file.tar.gz host:/backup/")
+
+    def test_self_wrapping_excluded(self):
+        assert not is_compressible("python3 wrap.py git status")
+        assert not is_compressible("python3 /path/to/token_saver/wrap.py ls")
+        assert not is_compressible("token-saver stats")
+
+    def test_token_saver_in_path_not_excluded(self):
+        """token-saver in a path argument must not trigger the self-wrap guard."""
+        assert is_compressible("ls /Users/user/Desktop/token-saver")
+        assert is_compressible("git -C /path/token-saver status")
+        assert is_compressible("cat /tmp/token-saver/README.md")
+
+    def test_streaming_follow_commands_excluded(self):
+        """Commands that stream/follow forever must never be wrapped."""
+        assert not is_compressible("tail -f /var/log/syslog")
+        assert not is_compressible("tail -F app.log")
+        assert not is_compressible("journalctl -f")
+        assert not is_compressible("journalctl -u nginx -f")
+        assert not is_compressible("kubectl logs my-pod -f")
+        assert not is_compressible("kubectl logs my-pod --follow")
+        assert not is_compressible("docker logs container -f")
+        assert not is_compressible("docker logs --follow container")
+        assert not is_compressible("docker stats")
+        assert not is_compressible("docker compose up")
+        assert not is_compressible("watch kubectl get pods")
+        assert not is_compressible("vitest")
+        assert not is_compressible("vitest --watch")
+        assert not is_compressible("jest --watchAll")
+
+    def test_bounded_variants_still_compressible(self):
+        """Non-streaming variants of the same commands stay compressible."""
+        assert is_compressible("tail -n 50 app.log")
+        assert is_compressible("docker stats --no-stream")
+        assert is_compressible("docker compose up -d")
+        assert is_compressible("kubectl logs my-pod")
+        assert is_compressible("docker logs container")
+        assert is_compressible("vitest run")
+
+    def test_sudo_excluded(self):
+        assert not is_compressible("sudo apt install foo")
+
+    def test_redirections_excluded(self):
+        assert not is_compressible("git log > log.txt")
+        # No-space and other redirection forms the old `>\s` regex missed.
+        assert not is_compressible("git log>log.txt")
+        assert not is_compressible("git log >>log.txt")
+        assert not is_compressible("git diff 2>err.txt")
+
+    def test_quoted_redirection_char_not_excluded(self):
+        """A `>` inside a quoted argument is not a redirection."""
+        assert is_compressible('git log --grep "fixes >50 percent"')
+
+    def test_cat_file_named_wrap_py_compressible(self):
+        """Reading a file literally named wrap.py is not self-wrapping."""
+        assert is_compressible("cat wrap.py")
+        assert is_compressible("cat src/wrap.py")
+        # But invoking it via an interpreter is still excluded.
+        assert not is_compressible("python3 wrap.py git status")
+        assert not is_compressible("python3 /opt/token-saver/scripts/wrap.py ls")
+
+    def test_empty_command(self):
+        assert not is_compressible("")
+        assert not is_compressible("   ")
+
+    def test_unknown_commands_not_compressible(self):
+        assert not is_compressible("echo hello")
+        assert not is_compressible("python3 script.py")
+        assert not is_compressible("cp file1 file2")
+
+    def test_docker_commands_compressible(self):
+        assert is_compressible("docker build .")
+        assert is_compressible("docker ps")
+        assert is_compressible("docker logs container")
+
+    def test_docker_global_options_compressible(self):
+        assert is_compressible("docker --context remote ps")
+        assert is_compressible("docker -H tcp://host:2375 ps")
+        assert is_compressible("docker --host unix:///var/run/docker.sock images")
+
+    def test_network_commands_compressible(self):
+        assert is_compressible("curl https://example.com")
+        assert is_compressible("curl -v https://api.example.com/data")
+        assert is_compressible("wget https://example.com/file.tar.gz")
+
+    def test_kubectl_commands_compressible(self):
+        assert is_compressible("kubectl get pods")
+        assert is_compressible("kubectl describe pod my-pod")
+        assert is_compressible("kubectl logs my-pod")
+
+    def test_kubectl_global_options_compressible(self):
+        assert is_compressible("kubectl -n kube-system get pods")
+        assert is_compressible("kubectl --namespace kube-system get pods")
+        assert is_compressible("kubectl --context prod get nodes")
+        assert is_compressible("kubectl -A get pods")
+        assert is_compressible("kubectl --all-namespaces get pods")
+        assert is_compressible("kubectl -n monitoring --context staging describe pod my-pod")
+        assert is_compressible("kubectl --kubeconfig /path/config get svc")
+
+    def test_terraform_commands_compressible(self):
+        assert is_compressible("terraform plan")
+        assert is_compressible("terraform apply")
+        assert is_compressible("tofu plan")
+
+    def test_env_commands_compressible(self):
+        assert is_compressible("env")
+        assert is_compressible("printenv")
+
+    def test_env_prefix_excluded(self):
+        assert not is_compressible("env FOO=bar command")
+
+    def test_package_list_commands_compressible(self):
+        assert is_compressible("pip list")
+        assert is_compressible("pip3 list")
+        assert is_compressible("pip freeze")
+        assert is_compressible("npm ls")
+        assert is_compressible("npm list")
+        assert is_compressible("conda list")
+
+    def test_grep_commands_compressible(self):
+        assert is_compressible("grep -r pattern .")
+        assert is_compressible("rg pattern")
+        assert is_compressible("ag pattern src/")
+
+    def test_system_info_commands_compressible(self):
+        assert is_compressible("du -sh *")
+        assert is_compressible("wc -l *.py")
+        assert is_compressible("df -h")
+
+    def test_new_test_runners_compressible(self):
+        assert is_compressible("pnpm test")
+        assert is_compressible("yarn test")
+        assert is_compressible("dotnet test")
+        assert is_compressible("swift test")
+        assert is_compressible("mix test")
+        assert is_compressible("vitest run")  # bare `vitest` is watch mode (excluded)
+        assert is_compressible("bun test")
+
+    def test_new_git_subcommands_compressible(self):
+        assert is_compressible("git blame src/main.py")
+        assert is_compressible("git cherry-pick abc123")
+        assert is_compressible("git rebase main")
+        assert is_compressible("git merge feature/branch")
+        assert is_compressible("git stash list")
+
+    def test_new_lint_commands_compressible(self):
+        assert is_compressible("mypy src/")
+        assert is_compressible("shellcheck script.sh")
+        assert is_compressible("hadolint Dockerfile")
+        assert is_compressible("cargo clippy")
+        assert is_compressible("prettier --check src/")
+        assert is_compressible("biome check src/")
+        assert is_compressible("biome lint src/")
+
+    def test_new_docker_subcommands_compressible(self):
+        assert is_compressible("docker inspect container")
+        assert is_compressible("docker stats --no-stream")  # bare `docker stats` is live (excluded)
+        assert is_compressible("docker compose up -d")
+        assert is_compressible("docker compose down")
+        assert is_compressible("docker compose build")
+        assert is_compressible("docker compose ps")
+        assert is_compressible("docker compose logs web")
+
+    def test_new_kubectl_subcommands_compressible(self):
+        assert is_compressible("kubectl apply -f deployment.yaml")
+        assert is_compressible("kubectl delete pod my-pod")
+        assert is_compressible("kubectl create namespace test")
+
+    def test_new_terraform_subcommands_compressible(self):
+        assert is_compressible("terraform init")
+        assert is_compressible("terraform output")
+        assert is_compressible("terraform state list")
+        assert is_compressible("terraform state show aws_instance.web")
+        assert is_compressible("tofu init")
+        assert is_compressible("tofu output")
+
+    def test_new_build_commands_compressible(self):
+        assert is_compressible("turbo run build")
+        assert is_compressible("turbo build")
+        assert is_compressible("nx run build")
+        assert is_compressible("nx build")
+        assert is_compressible("docker compose build")
+
+    def test_new_search_commands_compressible(self):
+        assert is_compressible("fd -e py")
+        assert is_compressible("fdfind pattern")
+
+    def test_new_file_listing_commands_compressible(self):
+        assert is_compressible("exa -la")
+        assert is_compressible("eza --long")
+
+    def test_httpie_compressible(self):
+        assert is_compressible("http GET https://api.example.com")
+        assert is_compressible("https POST https://api.example.com")
+
+
+class TestHookPretoolIntegration:
+    """Test the full hook script behavior via subprocess."""
+
+    def _run_hook(self, input_data: dict) -> tuple[str, int]:
+        """Run hook_pretool.py with JSON input, return (stdout, exit_code)."""
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        hook_path = os.path.join(repo_root, "scripts", "hook_pretool.py")
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, hook_path],
+            input=json.dumps(input_data),
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        return result.stdout, result.returncode
+
+    def test_bash_git_status_rewritten(self):
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "git status"}}
+        )
+        assert code == 0
+        data = json.loads(stdout)
+        cmd = data["hookSpecificOutput"]["updatedInput"]["command"]
+        assert "wrap.py" in cmd
+        assert "git status" in cmd
+
+    def test_non_bash_tool_passthrough(self):
+        stdout, code = self._run_hook({"tool_name": "Read", "tool_input": {"path": "/some/file"}})
+        assert code == 0
+        assert stdout == ""
+
+    def test_non_compressible_passthrough(self):
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "echo hello"}}
+        )
+        assert code == 0
+        assert stdout == ""
+
+    def test_invalid_json_exits_cleanly(self):
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        hook_path = os.path.join(repo_root, "scripts", "hook_pretool.py")
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, hook_path],
+            input="not json",
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0
+
+    def test_command_properly_quoted(self):
+        """Ensure shell metacharacters in commands are safely quoted."""
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "git log --format='%H %s'"}}
+        )
+        assert code == 0
+        if stdout:
+            data = json.loads(stdout)
+            cmd = data["hookSpecificOutput"]["updatedInput"]["command"]
+            # Should be safely quoted
+            assert "wrap.py" in cmd
+
+    def test_piped_command_preserved_in_rewrite(self):
+        """The full original command including pipe must be passed to wrap.py."""
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "git log --oneline | grep fix"}}
+        )
+        assert code == 0
+        assert stdout  # Should produce output (not empty passthrough)
+        data = json.loads(stdout)
+        rewritten = data["hookSpecificOutput"]["updatedInput"]["command"]
+        assert "wrap.py" in rewritten
+        # Full command including pipe must be inside the quoted argument
+        assert "grep fix" in rewritten
+
+    def test_multi_stage_pipe_not_rewritten(self):
+        """Complex pipelines should NOT be rewritten."""
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "git log | grep fix | wc -l"}}
+        )
+        assert code == 0
+        assert stdout == ""  # Passthrough, no rewrite
+
+    def test_session_id_embedded_in_rewrite(self):
+        """Claude Code's session_id should be embedded as env var in rewritten command."""
+        stdout, code = self._run_hook(
+            {
+                "tool_name": "Bash",
+                "tool_input": {"command": "git status"},
+                "session_id": "cc-session-xyz",
+            }
+        )
+        assert code == 0
+        data = json.loads(stdout)
+        cmd = data["hookSpecificOutput"]["updatedInput"]["command"]
+        assert "TOKEN_SAVER_SESSION=cc-session-xyz" in cmd
+        assert "wrap.py" in cmd
+
+    def test_no_session_id_still_works(self):
+        """If no session_id in payload, command should still be rewritten (without prefix)."""
+        stdout, code = self._run_hook(
+            {"tool_name": "Bash", "tool_input": {"command": "git status"}}
+        )
+        assert code == 0
+        data = json.loads(stdout)
+        cmd = data["hookSpecificOutput"]["updatedInput"]["command"]
+        assert "wrap.py" in cmd
+        assert "TOKEN_SAVER_SESSION" not in cmd
+
+
+class TestChainedCommands:
+    """Tests for && and ; chained command support."""
+
+    def test_all_compressible_and_chain(self):
+        assert is_compressible("git add . && git commit -m fix && git push")
+        assert is_compressible("git status && git diff")
+
+    def test_silent_plus_compressible(self):
+        assert is_compressible("cd /project && npm install")
+        assert is_compressible("mkdir -p /tmp/test && ls -la /tmp/test")
+        assert is_compressible("cd /project && git status")
+
+    def test_all_silent_rejected(self):
+        assert not is_compressible("cd /tmp && mkdir -p foo")
+        assert not is_compressible("export FOO=bar && cd /tmp")
+
+    def test_unknown_segment_alone_rejected(self):
+        """A chain with NO compressible segment is still rejected."""
+        assert not is_compressible("echo hello && echo world")
+        assert not is_compressible("./run.sh && ./build.sh")
+
+    def test_unknown_segment_with_compressible_accepted(self):
+        """A chain with at least one compressible segment is accepted even
+        when other segments are unknown. The unknown ones pass through
+        unchanged in wrap.py's per-segment compression."""
+        assert is_compressible("echo hello && git status")
+        assert is_compressible("git status && python3 script.py")
+        assert is_compressible("./build.sh && pytest tests/")
+        assert is_compressible("cd /project && python myscript.py && git status")
+
+    def test_bare_repl_in_chain_rejected(self):
+        """Bare REPL launchers would hang waiting for stdin; reject them."""
+        assert not is_compressible("git status && python")
+        assert not is_compressible("git status && python3")
+        assert not is_compressible("git status && node")
+        assert not is_compressible("git status && bash")
+        assert not is_compressible("cd /tmp && psql")
+        # Multi-dot version numbers
+        assert not is_compressible("git status && python3.12.1")
+        # But with arguments they are fine
+        assert is_compressible("git status && python script.py")
+        assert is_compressible("git status && node app.js")
+
+    def test_interactive_flag_rejected(self):
+        """`-i` / `--interactive` drops into REPL even with a script arg."""
+        # Single command
+        assert not is_compressible("python -i")
+        assert not is_compressible("python -i script.py")
+        assert not is_compressible("python3 -i script.py")
+        assert not is_compressible("node --interactive")
+        assert not is_compressible("bash -i")
+        assert not is_compressible("python -ic 'x=1'")
+        # In chains
+        assert not is_compressible("git status && python -i script.py")
+        assert not is_compressible("cd /tmp && bash -i")
+
+    def test_path_prefixed_repl_rejected(self):
+        """Path-prefixed REPLs and editors should still be caught."""
+        assert not is_compressible("/usr/bin/vim file.py")
+        assert not is_compressible("./venv/bin/python")
+        assert not is_compressible("git status && /usr/bin/vim file.py")
+        assert not is_compressible("git status && ./venv/bin/python")
+
+    def test_command_substitution_rejected(self):
+        """Unquoted $(...) breaks naive chain splitting; reject."""
+        assert not is_compressible("echo $(date)")
+        assert not is_compressible("git status && echo $(git rev-parse HEAD)")
+        # But quoted $() inside a string is fine — no splitting risk
+        assert is_compressible('git log --format="%H $(echo ignored)"')
+
+    def test_backtick_substitution_rejected(self):
+        """Unquoted backticks break naive chain splitting; reject."""
+        assert not is_compressible("echo `date`")
+        assert not is_compressible("git status && echo `git rev-parse HEAD`")
+        # Quoted backticks inside a string are fine
+        assert is_compressible('git log --format="%H `date`"')
+
+    def test_heredoc_rejected(self):
+        """Heredocs break naive chain splitting; reject."""
+        assert not is_compressible("cat <<EOF\nhello\nEOF")
+        assert not is_compressible("git status && cat <<END\ndata\nEND")
+
+    def test_pipe_in_non_last_segment_rejected(self):
+        assert not is_compressible("git status | grep foo && git diff")
+        assert not is_compressible("cat file | sort && git status")
+
+    def test_redirect_in_segment_rejected(self):
+        assert not is_compressible("git status && git log > log.txt")
+
+    def test_sudo_in_segment_rejected(self):
+        assert not is_compressible("cd /project && sudo apt install foo")
+
+    def test_or_chain_always_rejected(self):
+        assert not is_compressible("git push || echo failed")
+        assert not is_compressible("git add . && git push || echo failed")
+
+    def test_semicolon_chains(self):
+        assert is_compressible("cd /project; npm install")
+        assert is_compressible("cd /tmp; ls -la")
+
+    def test_mixed_and_semicolon(self):
+        assert is_compressible("cd /project && git add .; git push")
+        assert is_compressible("mkdir -p /tmp/test; cd /tmp/test && ls -la")
+
+    def test_safe_trailing_pipe_on_last_segment(self):
+        assert is_compressible("cd /project && git log --oneline | head -20")
+
+    def test_self_wrap_guard_in_chain(self):
+        assert not is_compressible("cd /project && python3 wrap.py git status")
+        assert not is_compressible("cd /project && token-saver stats")
+
+    # --- Real-world Claude Code patterns ---
+
+    def test_real_world_git_add_commit_push(self):
+        """The most common Claude Code chained command."""
+        assert is_compressible("git add . && git commit -m 'feat: add auth' && git push")
+        assert is_compressible('git add . && git commit -m "fix bug" && git push origin main')
+
+    def test_real_world_cd_then_build(self):
+        assert is_compressible("cd /project && npm run build")
+        assert is_compressible("cd /project && cargo build")
+        assert is_compressible("cd /project && make")
+
+    def test_real_world_cd_then_test(self):
+        assert is_compressible("cd /project && npm test")
+        assert is_compressible("cd /project && pytest tests/ -v")
+        assert is_compressible("cd /project && cargo test")
+
+    def test_real_world_mkdir_then_ls(self):
+        assert is_compressible("mkdir -p /tmp/output && ls -la /tmp/output")
+
+    def test_real_world_cd_then_lint(self):
+        assert is_compressible("cd /project && ruff check .")
+        assert is_compressible("cd /project && eslint src/")
+
+    def test_real_world_git_stash_then_pull(self):
+        assert is_compressible("git stash && git pull")
+
+    def test_real_world_checkout_then_status(self):
+        """git checkout is silent, git status is compressible."""
+        assert is_compressible("git checkout main && git status")
+        assert is_compressible("git checkout -b feature && git status")
+
+    def test_real_world_multi_silent_then_compressible(self):
+        assert is_compressible("cd /project && git checkout main && git pull")
+        assert is_compressible("mkdir -p dist && cp src/*.py dist/ && ls -la dist/")
+
+    def test_real_world_terraform_init_plan(self):
+        assert is_compressible("cd infra && terraform init && terraform plan")
+
+    def test_real_world_docker_compose(self):
+        assert is_compressible("cd /app && docker compose build && docker compose up -d")
+
+    # --- Quoted delimiters (should NOT split) ---
+
+    def test_quoted_semicolon_not_split(self):
+        """A ; inside quotes is not a chain delimiter."""
+        assert is_compressible("grep -r 'foo;bar' .")
+        assert is_compressible('grep -r "error; fatal" src/')
+
+    def test_quoted_ampersand_not_split(self):
+        """&& inside quotes is not a chain delimiter."""
+        assert is_compressible('git log --format="%H && %s"')
+
+    # --- Edge cases ---
+
+    def test_env_var_in_chain_rejected(self):
+        """env VAR=val prefix in any segment should reject the chain."""
+        assert not is_compressible("cd /project && env FOO=bar npm test")
+
+    def test_interactive_in_chain_rejected(self):
+        assert not is_compressible("cd /project && vim file.py")
+        assert not is_compressible("mkdir -p /tmp && ssh server")
+
+    def test_safe_trailing_pipe_on_last_segment_various(self):
+        assert is_compressible("cd /project && pip list | grep torch")
+        assert is_compressible("cd /project && git log --oneline | tail -20")
+        assert is_compressible("cd /project && docker ps | wc -l")
+
+    def test_single_segment_after_split(self):
+        """A command with quoted ; shouldn't change single-command behavior."""
+        assert is_compressible("git status")
+        assert not is_compressible("echo hello")
+
+    def test_three_segment_chain(self):
+        assert is_compressible("cd /a && cd /b && git status")
+        assert is_compressible("touch f && chmod 644 f && ls -la f")
+
+    def test_cd_then_go_build(self):
+        assert is_compressible("cd /project && go build ./...")
+
+    def test_cd_then_cargo_bench(self):
+        assert is_compressible("cd /project && cargo bench")
+
+
+class TestNewProcessorHookPatterns:
+    """Tests for hook patterns of newly added processors."""
+
+    # --- Cargo ---
+    def test_cargo_doc_compressible(self):
+        assert is_compressible("cargo doc")
+        assert is_compressible("cargo doc --open")
+
+    def test_cargo_update_compressible(self):
+        assert is_compressible("cargo update")
+
+    def test_cargo_bench_compressible(self):
+        assert is_compressible("cargo bench")
+
+    def test_cargo_build_still_compressible(self):
+        assert is_compressible("cargo build")
+        assert is_compressible("cargo build --release")
+        assert is_compressible("cargo check")
+
+    # --- Go ---
+    def test_go_build_compressible(self):
+        assert is_compressible("go build ./...")
+        assert is_compressible("go build -o myapp ./cmd/server")
+
+    def test_go_vet_compressible(self):
+        assert is_compressible("go vet ./...")
+
+    def test_go_mod_compressible(self):
+        assert is_compressible("go mod tidy")
+        assert is_compressible("go mod download")
+
+    def test_go_generate_compressible(self):
+        assert is_compressible("go generate ./...")
+
+    def test_go_install_compressible(self):
+        assert is_compressible("go install ./cmd/...")
+
+    # --- SSH non-interactive ---
+    def test_ssh_non_interactive_compressible(self):
+        assert is_compressible("ssh host 'ls -la'")
+        assert is_compressible('ssh host "uname -a"')
+        assert is_compressible("ssh -o StrictHostKeyChecking=no host 'uptime'")
+
+    def test_ssh_interactive_still_excluded(self):
+        assert not is_compressible("ssh host")
+        assert not is_compressible("ssh -p 22 host")
+
+    def test_scp_compressible(self):
+        assert is_compressible("scp file.txt host:/tmp/")
+        assert is_compressible("scp -r dir/ user@host:/path/")
+
+    # --- JQ/YQ ---
+    def test_jq_compressible(self):
+        assert is_compressible("jq . file.json")
+        assert is_compressible("jq '.items[]' data.json")
+
+    def test_yq_compressible(self):
+        assert is_compressible("yq . config.yaml")
+        assert is_compressible("yq eval '.spec' deployment.yaml")
+
+
+class TestPathPrefixNormalization:
+    """Commands invoked via full or relative paths should still be detected."""
+
+    def test_absolute_path_git(self):
+        assert is_compressible("/usr/bin/git status")
+        assert is_compressible("/usr/local/bin/git log --oneline")
+
+    def test_absolute_path_npm(self):
+        assert is_compressible("/usr/local/bin/npm install")
+        assert is_compressible("/usr/local/bin/npm test")
+
+    def test_venv_path_pip(self):
+        assert is_compressible(".venv/bin/pip install flask")
+        assert is_compressible(".venv/bin/pip3 install -r requirements.txt")
+        assert is_compressible(".venv/bin/pip list")
+
+    def test_venv_path_pytest(self):
+        assert is_compressible(".venv/bin/pytest tests/")
+
+    def test_node_modules_path(self):
+        assert is_compressible("./node_modules/.bin/jest --coverage")
+        assert is_compressible("./node_modules/.bin/eslint src/")
+        assert is_compressible("./node_modules/.bin/tsc")
+
+    def test_relative_path(self):
+        assert is_compressible("./bin/ruff check .")
+
+    def test_nvm_path(self):
+        assert is_compressible("/home/user/.nvm/versions/node/v18/bin/npm run build")
+
+    def test_cargo_path(self):
+        assert is_compressible("/home/user/.cargo/bin/cargo build")
+        assert is_compressible("/home/user/.cargo/bin/cargo test")
+
+    def test_pyenv_path(self):
+        assert is_compressible("/home/user/.pyenv/shims/pip install flask")
+
+    def test_vendor_path(self):
+        assert is_compressible("./vendor/bin/phpunit tests/")
+
+    def test_path_prefix_in_chain(self):
+        assert is_compressible("cd /project && /usr/bin/git status")
+        assert is_compressible("cd /project && .venv/bin/pytest tests/")
+
+    def test_path_prefix_with_trailing_pipe(self):
+        assert is_compressible("/usr/bin/git log --oneline | head -20")
+        assert is_compressible(".venv/bin/pip list | grep torch")
+
+
+class TestWrapperRunners:
+    """Commands invoked via wrapper runners (npx, poetry run, uv run, etc.)."""
+
+    # --- npx ---
+    def test_npx_jest(self):
+        assert is_compressible("npx jest --coverage")
+        assert is_compressible("npx jest tests/")
+
+    def test_npx_vitest(self):
+        assert is_compressible("npx vitest run")
+
+    def test_npx_mocha(self):
+        assert is_compressible("npx mocha tests/")
+
+    def test_npx_playwright(self):
+        assert is_compressible("npx playwright test")
+
+    def test_npx_eslint(self):
+        assert is_compressible("npx eslint src/")
+        assert is_compressible("npx eslint --fix src/")
+
+    def test_npx_prettier(self):
+        assert is_compressible("npx prettier --check src/")
+
+    def test_npx_build_tools(self):
+        assert is_compressible("npx webpack")
+        assert is_compressible("npx vite build")
+        assert is_compressible("npx tsc")
+        assert is_compressible("npx next build")
+        assert is_compressible("npx turbo run build")
+
+    # --- poetry run ---
+    def test_poetry_run_pytest(self):
+        assert is_compressible("poetry run pytest tests/")
+        assert is_compressible("poetry run pytest -v")
+
+    def test_poetry_run_lint(self):
+        assert is_compressible("poetry run flake8 src/")
+        assert is_compressible("poetry run pylint src/")
+        assert is_compressible("poetry run ruff check .")
+        assert is_compressible("poetry run mypy src/")
+
+    # --- uv run ---
+    def test_uv_run_pytest(self):
+        assert is_compressible("uv run pytest tests/")
+        assert is_compressible("uv run pytest -v")
+
+    def test_uv_run_lint(self):
+        assert is_compressible("uv run flake8 src/")
+        assert is_compressible("uv run pylint src/")
+        assert is_compressible("uv run ruff check .")
+        assert is_compressible("uv run mypy src/")
+
+    # --- pipx run ---
+    def test_pipx_run_pytest(self):
+        assert is_compressible("pipx run pytest tests/")
+
+    # --- bundle exec ---
+    def test_bundle_exec_rspec(self):
+        assert is_compressible("bundle exec rspec spec/")
+
+    def test_bundle_exec_rubocop(self):
+        assert is_compressible("bundle exec rubocop")
+
+    # --- python -m pip install ---
+    def test_python_m_pip_install(self):
+        assert is_compressible("python -m pip install flask")
+        assert is_compressible("python3 -m pip install -r requirements.txt")
+        assert is_compressible("python3.11 -m pip install flask")
+        assert is_compressible(".venv/bin/python -m pip install flask")
+
+    # --- Wrapper in chain ---
+    def test_wrapper_in_chain(self):
+        assert is_compressible("cd /project && npx jest --coverage")
+        assert is_compressible("cd /project && poetry run pytest tests/")
+        assert is_compressible("cd /project && uv run ruff check .")
+
+
+class TestChainPerSegmentCompression:
+    """Tests for wrap.py's per-segment chain compression."""
+
+    def _import_wrap(self):
+        import importlib
+
+        return importlib.import_module("scripts.wrap")
+
+    def test_inject_markers_single_segment(self):
+        wrap = self._import_wrap()
+        out = wrap.inject_markers([("git status", "")], "M_")
+        assert out == "git status"
+
+    def test_inject_markers_two_segments_and(self):
+        wrap = self._import_wrap()
+        out = wrap.inject_markers([("a", "&&"), ("b", "")], "M_")
+        assert out == "a && { echo 'M_1'; b; }"
+
+    def test_inject_markers_three_segments_mixed(self):
+        wrap = self._import_wrap()
+        out = wrap.inject_markers([("a", "&&"), ("b", ";"), ("c", "")], "M_")
+        assert out == "a && { echo 'M_1'; b; } ; { echo 'M_2'; c; }"
+
+    def test_split_output_no_markers(self):
+        wrap = self._import_wrap()
+        chunks = wrap.split_output_by_markers("just one chunk", "M_")
+        assert chunks == [(0, "just one chunk")]
+
+    def test_split_output_with_markers(self):
+        wrap = self._import_wrap()
+        text = "out1\nM_1\nout2\nM_2\nout3"
+        chunks = wrap.split_output_by_markers(text, "M_")
+        assert chunks == [(0, "out1"), (1, "out2"), (2, "out3")]
+
+    def test_split_output_missing_marker_indexed_correctly(self):
+        """If && short-circuits, the marker for the skipped segment is missing.
+        Remaining chunks must still map to the right segment via embedded index.
+        """
+        wrap = self._import_wrap()
+        # segment 1 (b) skipped due to a failing; ; still runs segment 2 (c)
+        text = "a_out\nM_2\nc_out"
+        chunks = wrap.split_output_by_markers(text, "M_")
+        assert chunks == [(0, "a_out"), (2, "c_out")]
+
+    def test_split_output_empty_chunks(self):
+        wrap = self._import_wrap()
+        text = "M_1\nbody1"
+        chunks = wrap.split_output_by_markers(text, "M_")
+        assert chunks == [(0, ""), (1, "body1")]
+
+    def test_e2e_wrap_chain_compresses_per_segment(self):
+        """Run wrap.py via subprocess on a real chain; verify both segments survive."""
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        cmd = "echo segA && echo segB"
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, cmd],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        assert result.returncode == 0, result.stderr
+        # Both segments' output should appear; markers should NOT leak
+        assert "segA" in result.stdout
+        assert "segB" in result.stdout
+        assert "__TS_MARK_" not in result.stdout
+
+    def test_strip_markers_removes_lines(self):
+        wrap = self._import_wrap()
+        text = "out1\nM_1\nout2\nM_2\nout3"
+        assert wrap.strip_markers(text, "M_") == "out1\nout2\nout3"
+
+    def test_strip_markers_no_markers_is_identity(self):
+        wrap = self._import_wrap()
+        assert wrap.strip_markers("plain output\nno markers", "M_") == ("plain output\nno markers")
+
+    def test_strip_markers_only_strips_matching_prefix(self):
+        wrap = self._import_wrap()
+        # Different prefix should not be touched
+        text = "out\nOTHER_1\nbody"
+        assert wrap.strip_markers(text, "M_") == text
+
+    def test_cap_output_under_limit_unchanged(self):
+        wrap = self._import_wrap()
+        from src import config
+
+        os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"] = "1000"  # noqa: S105
+        config.reload()
+        try:
+            text = "small output"
+            assert wrap._cap_output(text) == text
+        finally:
+            del os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"]
+            config.reload()
+
+    def test_cap_output_over_limit_truncated(self):
+        wrap = self._import_wrap()
+        from src import config
+
+        os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"] = "100"  # noqa: S105
+        config.reload()
+        try:
+            text = "x" * 500
+            capped = wrap._cap_output(text)
+            assert capped.startswith("x" * 100)
+            assert "truncated" in capped.lower()
+            assert len(text) < len(capped) or "truncated" in capped
+        finally:
+            del os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"]
+            config.reload()
+
+    def test_cap_output_disabled_with_zero(self):
+        wrap = self._import_wrap()
+        from src import config
+
+        os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"] = "0"  # noqa: S105
+        config.reload()
+        try:
+            text = "y" * 5000
+            assert wrap._cap_output(text) == text
+        finally:
+            del os.environ["TOKEN_SAVER_MAX_OUTPUT_BYTES"]
+            config.reload()
+
+    def test_e2e_wrap_caps_large_output(self):
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        env = os.environ.copy()
+        env["TOKEN_SAVER_MAX_OUTPUT_BYTES"] = "500"  # noqa: S105
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, "seq 1 100000"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            env=env,
+        )
+        assert "truncated" in result.stdout.lower()
+
+    def test_e2e_wrap_chain_dry_run_no_marker_leak(self):
+        """--dry-run on a chain should not show __TS_MARK_* lines."""
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, "--dry-run", "echo segA && echo segB"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        assert result.returncode == 0, result.stderr
+        assert "segA" in result.stdout
+        assert "segB" in result.stdout
+        assert "__TS_MARK_" not in result.stdout
+        assert "__TS_MARK_" not in result.stderr
+
+    def test_e2e_wrap_single_command_unchanged(self):
+        """Single command path should not inject markers."""
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, "echo hello"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        assert result.returncode == 0
+        assert "hello" in result.stdout
+        assert "__TS_MARK_" not in result.stdout
+
+    def _run_wrap_chain(self, cmd, timeout=10):
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        return subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, cmd],
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+    def test_e2e_chain_shares_shell_variables(self):
+        """Marker-injection runs the whole chain in ONE shell, so a variable
+        set in segment 0 is visible in segment 1.  A per-segment subprocess
+        pipeline would lose this — this test pins the design decision (#19).
+        """
+        r = self._run_wrap_chain("MYVAR=propagated && echo $MYVAR")
+        assert r.returncode == 0, r.stderr
+        assert "propagated" in r.stdout
+
+    def test_e2e_chain_shares_working_directory(self):
+        """`cd` in segment 0 must affect segment 1 (single shared shell)."""
+        r = self._run_wrap_chain("cd /usr && pwd")
+        assert r.returncode == 0, r.stderr
+        assert "/usr" in r.stdout
+
+    def test_e2e_chain_and_short_circuits_on_failure(self):
+        """`false && echo X` must not run the second segment."""
+        r = self._run_wrap_chain("false && echo SHOULD_NOT_APPEAR")
+        assert r.returncode != 0
+        assert "SHOULD_NOT_APPEAR" not in r.stdout
+
+    def test_e2e_chain_semicolon_continues_after_failure(self):
+        """`false ; echo X` must still run the second segment."""
+        r = self._run_wrap_chain("false ; echo APPEARS_ANYWAY")
+        assert "APPEARS_ANYWAY" in r.stdout
+
+    def test_e2e_single_command_propagates_exit_code(self):
+        """wrap.py must exit with the wrapped command's return code."""
+        r = self._run_wrap_chain("sh -c 'echo out; exit 3'")
+        assert r.returncode == 3
+        assert "out" in r.stdout
+
+    def test_e2e_single_command_merges_stderr(self):
+        """Single-command path merges stderr into the compressed output."""
+        r = self._run_wrap_chain("sh -c 'echo to_stderr 1>&2'")
+        assert "to_stderr" in r.stdout
+
+    def test_e2e_wrap_timeout_returns_partial(self):
+        """A command exceeding wrap_timeout is killed, returns code 124, and
+        any buffered partial output plus a timeout note survive (fail-open)."""
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        wrap_path = os.path.join(repo_root, "scripts", "wrap.py")
+        env = os.environ.copy()
+        env["TOKEN_SAVER_WRAP_TIMEOUT"] = "1"  # noqa: S105
+        result = subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, wrap_path, "sh -c 'echo early; sleep 10'"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            env=env,
+        )
+        assert result.returncode == 124
+        assert "timed out" in (result.stdout + result.stderr).lower()
+
+
+class TestExplainDecision:
+    def test_empty_command(self):
+        d = explain_decision("")
+        assert d["compressible"] is False
+        assert d["reason"] == "empty command"
+
+    def test_compressible_command(self):
+        d = explain_decision("git status")
+        assert d["compressible"] is True
+        assert d["excluded_by"] is None
+        assert d["is_chain"] is False
+        assert d["matched_patterns"]
+
+    def test_non_compressible_no_pattern(self):
+        d = explain_decision("foobar-unknown-cmd arg")
+        assert d["compressible"] is False
+        assert d["excluded_by"] is None
+        assert d["matched_patterns"] == []
+
+    def test_excluded_sudo(self):
+        d = explain_decision("sudo git status")
+        assert d["compressible"] is False
+        assert d["excluded_by"] is not None
+
+    def test_excluded_vim(self):
+        d = explain_decision("vim file.txt")
+        assert d["compressible"] is False
+        assert d["excluded_by"] is not None
+
+    def test_excluded_redirection(self):
+        d = explain_decision("git log > out.txt")
+        assert d["compressible"] is False
+        assert d["excluded_by"] == "output redirection"
+
+    def test_or_chain_rejected(self):
+        d = explain_decision("git status || echo fail")
+        assert d["compressible"] is False
+        assert d["excluded_by"] == r"||"
+
+    def test_dangerous_construct_rejected(self):
+        d = explain_decision("echo $(git status)")
+        assert d["compressible"] is False
+        assert d["excluded_by"] == "dangerous shell construct"
+
+    def test_safe_trailing_pipe_still_compressible(self):
+        d = explain_decision("git log | head -30")
+        assert d["compressible"] is True
+        assert d["matched_patterns"]
+
+    def test_chain_compressible(self):
+        d = explain_decision("git status && git diff")
+        assert d["is_chain"] is True
+        assert d["compressible"] is True
+        assert d["matched_patterns"]
+
+    def test_chain_with_unsafe_segment(self):
+        d = explain_decision("git status && sudo rm -rf /tmp/x")
+        assert d["is_chain"] is True
+        assert d["compressible"] is False
+
+
+class TestCmdExplain:
+    def _run_explain(self, *args):
+        import subprocess
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        return subprocess.run(  # noqa: S603, PLW1510
+            [sys.executable, "-m", "src.cli", "explain", *args],
+            capture_output=True,
+            text=True,
+            cwd=repo_root,
+            timeout=20,
+        )
+
+    def test_explain_json(self):
+        result = self._run_explain("git status", "--format", "json")
+        assert result.returncode == 0, result.stderr
+        data = json.loads(result.stdout)
+        assert data["command"] == "git status"
+        assert data["compressible"] is True
+        assert data["processor"] == "git"
+
+    def test_explain_text(self):
+        result = self._run_explain("sudo git status")
+        assert result.returncode == 0, result.stderr
+        assert "Compressible: no" in result.stdout
+        assert "Excluded by" in result.stdout
