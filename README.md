@@ -157,6 +157,37 @@ BDB OS v2.0.0 introduces a fully integrated local, offline-first semantic memory
 
 ---
 
+## ⚡ BDB Token-Saver: CLI Context Compression (v2.6.3)
+
+**BDB Token-Saver** is an ultra-fast context compression engine designed to drastically reduce context window usage for CLI tool execution outputs in AI agent workflows.
+
+### ⚙️ Purpose & Performance
+- **Automatic CLI Output Context Compression:** Reduces token overhead by **60–99%** on high-volume CLI tool outputs without impacting agent understanding.
+- **Zero Information Loss Guarantee:** Preserves all error messages, failed assertions, stack traces, exit codes, and actionable debugging context while stripping redundant whitespace, progress spinners, and repetitive logs.
+- **Automatic Secret Redaction:** Automatically detects and redacts passwords, tokens, API keys, and sensitive environment variables prior to inserting command output into agent context windows.
+
+### 🔬 Technical Specifications & Processors
+- **36 Specialized Processors:** Includes tailored compression rules for:
+  - **Version Control & Dev Tools:** `git` (status, diff, log, branch)
+  - **Testing Frameworks:** `pytest`, `jest`, `cargo test`, `vitest`, `go test`
+  - **Containers & Infrastructure:** `docker`, `kubectl`, `terraform`
+  - **Package Managers & Build Systems:** `npm`, `yarn`, `pnpm`, `pip`, `cargo`, `go` package listings and build outputs
+- **Preservation Rules:** Guarantees line numbers, error traces, and exact failure sites remain 100% intact for immediate root-cause diagnosis.
+
+### 🔌 Agent Integration & Hooks
+- **Automated Hook Installation:** Configured and installed seamlessly via `installer.js`.
+- **Supported Harnesses:**
+  - **Claude Code:** Integrated via `PreToolUse` hook.
+  - **Google Antigravity CLI:** Integrated via `AfterTool` hook.
+
+### 📊 CLI Diagnostics & Tooling
+You can run diagnostic and benchmarking commands directly in your terminal:
+- **Check Version:** `token-saver version`
+- **View Savings & Usage Statistics:** `token-saver stats`
+- **Benchmark Command Savings:** `token-saver benchmark '<command>'`
+
+---
+
 ## 🛠️ Installation
 
 ### 🆚 Which Version Should I Use?
