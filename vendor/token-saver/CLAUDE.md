@@ -1,4 +1,4 @@
-# Token-Saver Plugin
+# Heimdall Token Saver Plugin
 
 Token-saver automatically compresses verbose CLI output to save tokens.
 

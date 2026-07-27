@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Token-Saver CLI wrapper.
+"""Heimdall Token Saver CLI wrapper.
 
 Works in three scenarios (tried in order):
 1. Running from the repo (development): resolves to repo_dir/src/cli.py

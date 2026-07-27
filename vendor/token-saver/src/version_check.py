@@ -1,4 +1,4 @@
-"""Check for new Token-Saver releases via GitHub API."""
+"""Check for new Heimdall Token Saver releases via GitHub API."""
 
 import json
 import os
@@ -77,7 +77,7 @@ def _fetch_latest_version(fetch_fn=None, timeout=1):
 
 
 def check_for_update(fetch_fn=None, cache_ttl=_CACHE_TTL_SECONDS):
-    """Check if a newer version of Token-Saver is available.
+    """Check if a newer version of Heimdall Token Saver is available.
 
     Returns a notification string if an update is available, or None.
     Fully fail-open: any exception returns None.

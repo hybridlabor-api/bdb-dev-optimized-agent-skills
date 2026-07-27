@@ -306,7 +306,7 @@ def cmd_benchmark(args):
             )
         else:
             print()
-            print("Token-Saver Benchmark (dry-run)")
+            print("Heimdall Token Saver Benchmark (dry-run)")
             print("=" * 40)
             print(f"Command:     {command}")
             print(f"Processor:   {processor_name}")
@@ -366,7 +366,7 @@ def cmd_benchmark(args):
         print(json_mod.dumps(payload))
     else:
         print()
-        print("Token-Saver Benchmark")
+        print("Heimdall Token Saver Benchmark")
         print("=" * 40)
         print(f"Command:     {command}")
         print(f"Processor:   {processor_name}")
@@ -417,7 +417,7 @@ def cmd_explain(args):
         return
 
     print()
-    print("Token-Saver Explain")
+    print("Heimdall Token Saver Explain")
     print("=" * 40)
     print(f"Command:      {command}")
     if primary != command:
@@ -441,7 +441,7 @@ def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
         prog="token-saver",
-        description="Token-Saver: compress verbose tool outputs to save tokens",
+        description="Heimdall Token Saver: compress verbose tool outputs to save tokens",
     )
     subparsers = parser.add_subparsers(dest="command")
 

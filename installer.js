@@ -255,7 +255,7 @@ async function installTokenSaver(platformTarget) {
     if (!fs.existsSync(tokenSaverDir)) {
         return;
     }
-    console.log(`\n${colors.magenta}${colors.bold}--- Installing Token-Saver Context Optimizer ---${colors.reset}`);
+    console.log(`\n${colors.magenta}${colors.bold}--- Installing Heimdall Token Saver Context Optimizer ---${colors.reset}`);
     const { execSync } = require('child_process');
     const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
 
@@ -264,14 +264,14 @@ async function installTokenSaver(platformTarget) {
         if (platformTarget === '1') targetFlag = '--target antigravity';
         else if (platformTarget === '2') targetFlag = '--target claude';
 
-        console.log(` -> Running Token-Saver setup (${targetFlag})...`);
+        console.log(` -> Running Heimdall Token Saver setup (${targetFlag})...`);
         execSync(`${pythonCmd} install.py ${targetFlag}`, {
             cwd: tokenSaverDir,
             stdio: 'inherit'
         });
-        console.log(` -> Token-Saver successfully registered.`);
+        console.log(` -> Heimdall Token Saver successfully registered.`);
     } catch (err) {
-        console.warn(` -> Warning: Token-Saver installation skipped or failed: ${err.message}`);
+        console.warn(` -> Warning: Heimdall Token Saver installation skipped or failed: ${err.message}`);
     }
 }
 

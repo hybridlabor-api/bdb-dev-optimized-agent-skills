@@ -48,7 +48,7 @@ class TestStatsCommand:
     def test_stats_human_readable(self):
         rc, stdout, _ = _run_cli("stats")
         assert rc == 0
-        assert "Token-Saver Savings" in stdout
+        assert "Heimdall Token Saver Savings" in stdout
 
     def test_stats_json(self):
         rc, stdout, _ = _run_cli("stats", "--json")
@@ -83,7 +83,7 @@ class TestBenchmarkCommand:
     def test_benchmark_real_command(self):
         rc, stdout, _ = _run_cli("benchmark", "echo hello")
         assert rc == 0
-        assert "Token-Saver Benchmark" in stdout
+        assert "Heimdall Token Saver Benchmark" in stdout
         assert "Original:" in stdout
         assert "Compressed:" in stdout
 

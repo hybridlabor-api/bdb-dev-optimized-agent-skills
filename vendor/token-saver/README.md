@@ -1,4 +1,4 @@
-# Token-Saver
+# Heimdall Token Saver
 
 [![CI](https://github.com/ppgranger/token-saver/actions/workflows/ci.yml/badge.svg)](https://github.com/ppgranger/token-saver/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen)](tests/)
@@ -8,13 +8,13 @@
 
 **Cut your AI coding costs by 60-99% on CLI output — without losing a single error message.**
 
-Token-Saver is a drop-in **context-window optimizer for AI coding assistants**. It compresses the verbose terminal output your agent reads — `git diff`, `pytest`, `npm install`, `terraform plan`, `kubectl`, `docker` — so you spend fewer tokens, stay under your LLM context limit, and get faster, cheaper, more focused responses.
+Heimdall Token Saver is a drop-in **context-window optimizer for AI coding assistants**. It compresses the verbose terminal output your agent reads — `git diff`, `pytest`, `npm install`, `terraform plan`, `kubectl`, `docker` — so you spend fewer tokens, stay under your LLM context limit, and get faster, cheaper, more focused responses.
 
 **36 specialized processors** understand the tools you already use — git, pytest, jest, cargo, go, docker, kubernetes, terraform, pulumi, helm, ansible, aws, gcloud, and more. Each one knows exactly what to keep and what to discard: errors, diffs, stack traces, and actionable data stay; progress bars, passing tests, download spinners, and boilerplate go.
 
 Compatible with **Claude Code** and **Antigravity CLI**. Zero added latency. No extra LLM calls. Fully deterministic. One install, instant savings.
 
-**Why developers use Token-Saver:**
+**Why developers use Heimdall Token Saver:**
 
 - 💸 **Lower API bills** — pay for signal, not noise. Typical savings of 60-99% per command.
 - 🪟 **Bigger effective context** — fit more real work into the same context window.
@@ -41,11 +41,11 @@ Compatible with **Claude Code** and **Antigravity CLI**. Zero added latency. No 
 
 Every CLI command your AI assistant runs burns tokens — and most of that output is noise. A 500-line `git diff`, a `pytest` run with 200 passing tests, an `npm install` with 80 packages: the model only needs errors, modified files, and results. Everything else is wasted context and wasted money.
 
-Token-Saver sits between the CLI and your AI assistant, compressing output with content-aware strategies. The model sees exactly what it needs — nothing more, nothing less. Your context window stays clean, your costs drop, and your assistant responds faster with less noise to process.
+Heimdall Token Saver sits between the CLI and your AI assistant, compressing output with content-aware strategies. The model sees exactly what it needs — nothing more, nothing less. Your context window stays clean, your costs drop, and your assistant responds faster with less noise to process.
 
 ## How It Compares
 
-Token-Saver takes a different approach from LLM-based or caching solutions — see the [full comparison](docs/comparison.md).
+Heimdall Token Saver takes a different approach from LLM-based or caching solutions — see the [full comparison](docs/comparison.md).
 
 ## How It Works
 
@@ -153,7 +153,7 @@ The manual installer registers token-saver as a native Claude Code plugin
 (equivalent to `/plugin install`). It appears in `/plugin` list and hooks,
 skills, and commands are managed natively by Claude Code.
 
-The repo/zip can be deleted after installation. Token-Saver copies everything
+The repo/zip can be deleted after installation. Heimdall Token Saver copies everything
 it needs to `~/.token-saver/` and the platform plugin directories.
 
 ### Development Mode
@@ -328,7 +328,7 @@ Drop a `.token-saver.json` in your repository root to override global settings:
 }
 ```
 
-Project settings are merged with global settings. Token-Saver walks up parent directories (like `.gitignore` resolution) to find the nearest `.token-saver.json`. Useful for monorepos or projects with atypical output patterns (large Terraform plans, verbose test suites, etc.).
+Project settings are merged with global settings. Heimdall Token Saver walks up parent directories (like `.gitignore` resolution) to find the nearest `.token-saver.json`. Useful for monorepos or projects with atypical output patterns (large Terraform plans, verbose test suites, etc.).
 
 ### Complete Parameter List
 
@@ -374,7 +374,7 @@ Project settings are merged with global settings. Token-Saver walks up parent di
 
 ## Custom Processors
 
-You can extend Token-Saver with your own processors for commands not covered by the built-in 36.
+You can extend Heimdall Token Saver with your own processors for commands not covered by the built-in 36.
 
 1. Create a Python file with a class inheriting from `src.processors.base.Processor`
 2. Implement `can_handle()`, `process()`, `name`, and set `priority`
@@ -391,7 +391,7 @@ See [`examples/custom_processor/`](examples/custom_processor/) for a complete ex
 
 ## Savings Tracking
 
-Token-Saver records every compression in a local SQLite database:
+Heimdall Token Saver records every compression in a local SQLite database:
 
 ```
 ~/.token-saver/savings.db
@@ -424,7 +424,7 @@ token-saver stats --json
 ```
 
 ```
-Token-Saver Statistics
+Heimdall Token Saver Statistics
 ========================================
 
 Session

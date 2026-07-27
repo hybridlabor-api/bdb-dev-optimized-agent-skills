@@ -3,7 +3,7 @@ name: token-saver-config
 description: "Configure and diagnose token-saver compression settings. Use when the user asks about adjusting compression levels, checking processor status, debugging hook issues, or reviewing savings statistics."
 ---
 
-# Token-Saver Configuration & Diagnostics
+# Heimdall Token Saver Configuration & Diagnostics
 
 ## Check Status
 Run `token-saver stats` to see compression statistics for the current and all sessions.

@@ -3,9 +3,9 @@ name: token-saver-config
 description: Context window output compression engine for CLI commands (60-99% token reduction).
 ---
 
-# Token-Saver Configuration & Diagnostics
+# Heimdall Token Saver Configuration & Diagnostics
 
-Token-Saver is a drop-in context-window optimizer for AI coding assistants. It compresses the verbose terminal output your agent reads — `git diff`, `pytest`, `npm install`, `terraform plan`, `kubectl`, `docker` — so you spend fewer tokens, stay under your LLM context limit, and get faster, cheaper, more focused responses.
+Heimdall Token Saver is a drop-in context-window optimizer for AI coding assistants. It compresses the verbose terminal output your agent reads — `git diff`, `pytest`, `npm install`, `terraform plan`, `kubectl`, `docker` — so you spend fewer tokens, stay under your LLM context limit, and get faster, cheaper, more focused responses.
 
 ## Key Capabilities & CLI Diagnostics
 
@@ -33,6 +33,11 @@ After installation via `bdb-dev-optimized-agent-skills`, the `token-saver` comma
   ```bash
   token-saver update
   ```
+
+## BDB MCP Processors (90-95% Savings on Creative & Media MCPs)
+
+Heimdall includes **6 specialized BDB MCP Processors** for creative media and system tools (`bdb_td_*`, `bdb_unreal_*`, `bdb_after_effects_*`, `bdb_davinci_*`, `bdb_resolume_*`, `memb_mcp`):
+- 🔮 **With Heimdall BDB MCP Processors: You cut token consumption by 90-95% per MCP tool call, allowing your agent to run 10x longer without hitting context limits.**
 
 ## Compression Engine Rules & Guarantees
 

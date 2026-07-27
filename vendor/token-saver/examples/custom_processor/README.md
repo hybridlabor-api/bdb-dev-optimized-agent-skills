@@ -1,6 +1,6 @@
 # Writing Custom Processors
 
-Token-Saver supports user-defined processors loaded from `~/.token-saver/processors/`.
+Heimdall Token Saver supports user-defined processors loaded from `~/.token-saver/processors/`.
 
 ## Quick Start
 

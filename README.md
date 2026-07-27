@@ -157,9 +157,9 @@ BDB OS v2.0.0 introduces a fully integrated local, offline-first semantic memory
 
 ---
 
-## ⚡ BDB Token-Saver: CLI Context Compression (v2.6.3)
+## ⚡ Heimdall Token Saver: CLI Context Compression (v2.6.3)
 
-**BDB Token-Saver** is an ultra-fast context compression engine designed to drastically reduce context window usage for CLI tool execution outputs in AI agent workflows.
+**Heimdall Token Saver** is an ultra-fast context compression engine designed to drastically reduce context window usage for CLI tool execution outputs in AI agent workflows.
 
 ### ⚙️ Purpose & Performance
 - **Automatic CLI Output Context Compression:** Reduces token overhead by **60–99%** on high-volume CLI tool outputs without impacting agent understanding.

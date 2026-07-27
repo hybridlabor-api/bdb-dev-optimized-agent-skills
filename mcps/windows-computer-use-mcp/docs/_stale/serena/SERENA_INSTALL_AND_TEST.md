@@ -216,7 +216,7 @@ Close and reopen Cursor IDE. Serena should appear in the MCP tools.
 
 ## 🎯 Testing Scenarios
 
-### Test 1: Symbol Search (Token Saver!)
+### Test 1: Symbol Search (Heimdall Token Saver!)
 
 **Without Serena:**
 ```

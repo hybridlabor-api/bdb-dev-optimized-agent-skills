@@ -1,6 +1,6 @@
 # Examples
 
-This directory contains example fixtures and scripts for demonstrating Token-Saver's compression capabilities.
+This directory contains example fixtures and scripts for demonstrating Heimdall Token Saver's compression capabilities.
 
 ## Fixtures
 

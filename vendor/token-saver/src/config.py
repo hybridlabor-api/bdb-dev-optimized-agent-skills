@@ -1,4 +1,4 @@
-"""Configuration system for Token-Saver.
+"""Configuration system for Heimdall Token Saver.
 
 All thresholds and settings can be overridden via environment variables
 or a JSON config file at ~/.token-saver/config.json.

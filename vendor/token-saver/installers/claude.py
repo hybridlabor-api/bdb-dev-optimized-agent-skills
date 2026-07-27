@@ -1,4 +1,4 @@
-"""Claude Code specific installer logic for Token-Saver.
+"""Claude Code specific installer logic for Heimdall Token Saver.
 
 v2.0: Registers as a native Claude Code plugin instead of injecting hooks
 into settings.json. The manual installer registers the GitHub repo as a
@@ -377,7 +377,7 @@ def _migrate_from_v1():
 
 
 def install(use_symlink=False):
-    """Install Token-Saver for Claude Code as a native plugin.
+    """Install Heimdall Token Saver for Claude Code as a native plugin.
 
     This produces the same result as:
       /plugin marketplace add ppgranger/token-saver
@@ -416,7 +416,7 @@ def install(use_symlink=False):
 
 
 def uninstall():
-    """Uninstall Token-Saver from Claude Code."""
+    """Uninstall Heimdall Token Saver from Claude Code."""
     print("\n--- Claude Code ---")
     _unregister_plugin()
 

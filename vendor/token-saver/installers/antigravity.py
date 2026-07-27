@@ -1,4 +1,4 @@
-"""Antigravity CLI specific installer logic for Token-Saver."""
+"""Antigravity CLI specific installer logic for Heimdall Token Saver."""
 
 import os
 
@@ -28,7 +28,7 @@ def _plugin_dir():
 
 
 def install(use_symlink=False):
-    """Install Token-Saver for Antigravity CLI."""
+    """Install Heimdall Token Saver for Antigravity CLI."""
     target_dir = _plugin_dir()
     print(f"\n--- Antigravity CLI ({target_dir}) ---")
     install_files(target_dir, ANTIGRAVITY_FILES, use_symlink)
@@ -36,6 +36,6 @@ def install(use_symlink=False):
 
 
 def uninstall():
-    """Uninstall Token-Saver from Antigravity CLI."""
+    """Uninstall Heimdall Token Saver from Antigravity CLI."""
     print("\n--- Antigravity CLI ---")
     uninstall_dir(_plugin_dir())

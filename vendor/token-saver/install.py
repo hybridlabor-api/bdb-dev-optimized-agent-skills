@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Installer / Uninstaller for Token-Saver extension.
+"""Installer / Uninstaller for Heimdall Token Saver extension.
 
 Cross-platform: macOS, Linux, Windows.
 
@@ -28,7 +28,7 @@ from installers.common import (
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Install or uninstall Token-Saver extension",
+        description="Install or uninstall Heimdall Token Saver extension",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

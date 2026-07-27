@@ -72,7 +72,7 @@ def _impact_bar(value: float, max_value: float, width: int = 10) -> str:
 
 def _print_header():
     print()
-    print(f"  {BOLD_GREEN}Token-Saver Savings (Lifetime){RESET}")
+    print(f"  {BOLD_GREEN}Heimdall Token Saver Savings (Lifetime){RESET}")
     print(f"  {BOLD_YELLOW}{'═' * WIDTH}{RESET}")
 
 
@@ -189,7 +189,7 @@ def main():
     # --- Human-readable output ---
     if lifetime["commands"] == 0:
         print()
-        print(f"  {BOLD_GREEN}Token-Saver Savings{RESET}")
+        print(f"  {BOLD_GREEN}Heimdall Token Saver Savings{RESET}")
         print(f"  {BOLD_YELLOW}{'═' * WIDTH}{RESET}")
         print()
         print("  No compressions recorded yet.")

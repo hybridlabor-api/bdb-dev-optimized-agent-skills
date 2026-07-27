@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug in Token-Saver
+description: Report a bug in Heimdall Token Saver
 labels: ["bug"]
 body:
   - type: markdown

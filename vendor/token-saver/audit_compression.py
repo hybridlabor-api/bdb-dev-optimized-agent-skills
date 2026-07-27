@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deep audit of Token-Saver compression engine.
+"""Deep audit of Heimdall Token Saver compression engine.
 
 Generates realistic command outputs and measures compression ratios,
 then identifies opportunities for further compression.

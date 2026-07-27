@@ -316,7 +316,7 @@ class TestStatsCLI:
     def test_empty_db_human(self):
         result = self._run_stats()
         assert result.returncode == 0
-        assert "Token-Saver Savings" in result.stdout
+        assert "Heimdall Token Saver Savings" in result.stdout
         assert "No compressions" in result.stdout
 
     def test_empty_db_json(self):
@@ -331,7 +331,7 @@ class TestStatsCLI:
         self._seed_data()
         result = self._run_stats()
         assert result.returncode == 0
-        assert "Token-Saver Savings" in result.stdout
+        assert "Heimdall Token Saver Savings" in result.stdout
         assert "Total commands:" in result.stdout
         assert "Tokens saved:" in result.stdout
         assert "By Command" in result.stdout

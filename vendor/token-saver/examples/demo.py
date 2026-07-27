@@ -36,7 +36,7 @@ def to_tokens(n: int) -> int:
 
 def main() -> None:
     print()
-    print("Token-Saver Compression Demo")
+    print("Heimdall Token Saver Compression Demo")
     print("=" * 80)
     print()
 

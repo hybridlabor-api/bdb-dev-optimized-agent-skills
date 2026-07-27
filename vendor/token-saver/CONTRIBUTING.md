@@ -1,4 +1,4 @@
-# Contributing to Token-Saver
+# Contributing to Heimdall Token Saver
 
 ## How to contribute
 

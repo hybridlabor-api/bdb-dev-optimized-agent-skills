@@ -55,7 +55,7 @@ def demo_fixture(label: str, command: str, fixture_file: str) -> None:
 
 def main() -> None:
     print()
-    print("Token-Saver Compression Demo")
+    print("Heimdall Token Saver Compression Demo")
     print("=" * 78)
     print()
     print(f"  {'Command':<35} {'Raw':>14}    {'Compressed':>14}   {'Saved':>6}  Processor")

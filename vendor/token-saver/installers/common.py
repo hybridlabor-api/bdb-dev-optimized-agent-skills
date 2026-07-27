@@ -1,4 +1,4 @@
-"""Shared constants, file lists, and utility functions for Token-Saver installers."""
+"""Shared constants, file lists, and utility functions for Heimdall Token Saver installers."""
 
 import contextlib
 import glob
