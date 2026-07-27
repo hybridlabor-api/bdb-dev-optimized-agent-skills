@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#12152a"/>
+      <stop offset="100%" stop-color="#04060c"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="hippoMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a5568"/>
+      <stop offset="50%" stop-color="#3d4556"/>
+      <stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+    <linearGradient id="hippoSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d4556"/>
+      <stop offset="100%" stop-color="#1a202c"/>
+    </linearGradient>
+    <linearGradient id="snoutGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a6577"/>
+      <stop offset="100%" stop-color="#4a5568"/>
+    </linearGradient>
+    <linearGradient id="snoutPad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6b7a8d"/>
+      <stop offset="100%" stop-color="#556270"/>
+    </linearGradient>
+    <linearGradient id="ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="50%" stop-color="#D50000"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+    <linearGradient id="emerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#69F0AE"/>
+      <stop offset="50%" stop-color="#00E676"/>
+      <stop offset="100%" stop-color="#00C853"/>
+    </linearGradient>
+    <linearGradient id="sapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#82B1FF"/>
+      <stop offset="50%" stop-color="#448AFF"/>
+      <stop offset="100%" stop-color="#2962FF"/>
+    </linearGradient>
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a237e" stop-opacity="0.15"/>
+      <stop offset="40%" stop-color="#0d47a1" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#1a237e" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="glassFrame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="50%" stop-color="#2c2c2c"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="eyeIris" cx="45%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#1B0000"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="skinTexture" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="0.6" fill="#000" opacity="0.06"/>
+      <circle cx="4.5" cy="4.5" r="0.6" fill="#000" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.03" stroke="#FFD700" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/><line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/><line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- ===== HIPPO HEAD — angular, commanding ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Neck mass -->
+    <path d="M115,300 Q115,340 155,345 L245,345 Q285,340 285,300 L280,280 L120,280 Z" fill="#2d3748"/>
+
+    <!-- Main skull — broad, angular jaw -->
+    <path d="M85,215
+             C85,155 120,120 160,118
+             L240,118
+             C280,120 315,155 315,215
+             C315,260 300,295 275,310
+             L125,310
+             C100,295 85,260 85,215 Z"
+          fill="url(#hippoMain)"/>
+
+    <!-- Skin texture -->
+    <path d="M85,215 C85,155 120,120 160,118 L240,118 C280,120 315,155 315,215
+             C315,260 300,295 275,310 L125,310 C100,295 85,260 85,215 Z"
+          fill="url(#skinTexture)"/>
+
+    <!-- Hard shadow planes on face -->
+    <path d="M85,215 C85,190 95,170 115,155 L115,250 C100,250 85,240 85,215 Z" fill="#1a202c" opacity="0.3"/>
+    <path d="M315,215 C315,190 305,170 285,155 L285,250 C300,250 315,240 315,215 Z" fill="#1a202c" opacity="0.3"/>
+
+    <!-- Brow shelf — heavy, serious -->
+    <path d="M105,190 L185,178 L185,195 L105,200 Z" fill="#2d3748"/>
+    <path d="M295,190 L215,178 L215,195 L295,200 Z" fill="#2d3748"/>
+    <line x1="185" y1="182" x2="215" y2="182" stroke="#2d3748" stroke-width="6"/>
+
+    <!-- Forehead crease -->
+    <path d="M155,160 Q200,152 245,160" fill="none" stroke="#2d3748" stroke-width="1.5" opacity="0.5"/>
+    <path d="M160,167 Q200,160 240,167" fill="none" stroke="#2d3748" stroke-width="1" opacity="0.3"/>
+
+    <!-- ===== EARS — small, set back ===== -->
+    <path d="M100,170 C88,148 82,128 88,115 C94,102 108,108 110,125 C112,140 108,158 106,168"
+          fill="#3d4556" stroke="#2d3748" stroke-width="1"/>
+    <path d="M96,158 C90,142 87,132 90,122 C93,114 102,116 104,128 C106,140 103,152 101,160"
+          fill="#4a3728" opacity="0.6"/>
+
+    <path d="M300,170 C312,148 318,128 312,115 C306,102 292,108 290,125 C288,140 292,158 294,168"
+          fill="#3d4556" stroke="#2d3748" stroke-width="1"/>
+    <path d="M304,158 C310,142 313,132 310,122 C307,114 298,116 296,128 C294,140 297,152 299,160"
+          fill="#4a3728" opacity="0.6"/>
+
+    <!-- ===== SNOUT — massive, dominant ===== -->
+    <path d="M115,250
+             C115,232 150,218 200,218
+             C250,218 285,232 285,250
+             C285,288 268,315 200,315
+             C132,315 115,288 115,250 Z"
+          fill="url(#snoutGrad)"/>
+
+    <!-- Snout pad -->
+    <path d="M132,255
+             C132,242 158,232 200,232
+             C242,232 268,242 268,255
+             C268,278 252,298 200,298
+             C148,298 132,278 132,255 Z"
+          fill="url(#snoutPad)"/>
+
+    <!-- Heavy skin folds -->
+    <path d="M120,245 Q130,235 148,230" fill="none" stroke="#2d3748" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M280,245 Q270,235 252,230" fill="none" stroke="#2d3748" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M125,260 Q132,252 145,247" fill="none" stroke="#2d3748" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+    <path d="M275,260 Q268,252 255,247" fill="none" stroke="#2d3748" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+
+    <!-- Wrinkle texture on snout -->
+    <path d="M155,255 Q178,250 200,252 Q222,250 245,255" fill="none" stroke="#4a5568" stroke-width="0.8" opacity="0.4"/>
+    <path d="M160,265 Q180,261 200,262 Q220,261 240,265" fill="none" stroke="#4a5568" stroke-width="0.6" opacity="0.3"/>
+
+    <!-- ===== NOSTRILS — large, flared ===== -->
+    <ellipse cx="170" cy="258" rx="16" ry="11" fill="#1a202c" transform="rotate(-10, 170, 258)"/>
+    <ellipse cx="170" cy="257" rx="12" ry="8" fill="#0d1117" transform="rotate(-10, 170, 257)"/>
+
+    <ellipse cx="230" cy="258" rx="16" ry="11" fill="#1a202c" transform="rotate(10, 230, 258)"/>
+    <ellipse cx="230" cy="257" rx="12" ry="8" fill="#0d1117" transform="rotate(10, 230, 257)"/>
+
+    <!-- Nostril ridge -->
+    <path d="M186,253 Q200,247 214,253" fill="none" stroke="#3d4556" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- ===== EYES — narrow, intense ===== -->
+    <!-- Left eye — squinted, serious -->
+    <ellipse cx="152" cy="198" rx="22" ry="14" fill="#2d3748"/>
+    <ellipse cx="152" cy="198" rx="17" ry="11" fill="#CFD8DC"/>
+    <ellipse cx="155" cy="197" rx="10" ry="11" fill="url(#eyeIris)"/>
+    <ellipse cx="156" cy="196" rx="5" ry="6" fill="#000"/>
+    <circle cx="160" cy="193" r="3" fill="#fff" opacity="0.85"/>
+    <!-- Heavy upper lid -->
+    <path d="M130,194 Q145,183 175,192" fill="#3d4556" stroke="#2d3748" stroke-width="1"/>
+    <path d="M132,196 Q148,187 173,195" fill="none" stroke="#1a202c" stroke-width="1.5"/>
+
+    <!-- Right eye -->
+    <ellipse cx="248" cy="198" rx="22" ry="14" fill="#2d3748"/>
+    <ellipse cx="248" cy="198" rx="17" ry="11" fill="#CFD8DC"/>
+    <ellipse cx="251" cy="197" rx="10" ry="11" fill="url(#eyeIris)"/>
+    <ellipse cx="252" cy="196" rx="5" ry="6" fill="#000"/>
+    <circle cx="256" cy="193" r="3" fill="#fff" opacity="0.85"/>
+    <!-- Heavy upper lid -->
+    <path d="M270,194 Q255,183 225,192" fill="#3d4556" stroke="#2d3748" stroke-width="1"/>
+    <path d="M268,196 Q252,187 227,195" fill="none" stroke="#1a202c" stroke-width="1.5"/>
+
+    <!-- ===== GLASSES ===== -->
+    <g>
+      <!-- Left lens frame -->
+      <rect x="123" y="183" width="58" height="34" rx="6" ry="6" fill="none" stroke="url(#glassFrame)" stroke-width="3.5"/>
+      <!-- Left lens -->
+      <rect x="125" y="185" width="54" height="30" rx="5" ry="5" fill="url(#glassLens)"/>
+      <!-- Left lens reflection -->
+      <path d="M130,188 Q145,186 170,190" fill="none" stroke="url(#glassShine)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Right lens frame -->
+      <rect x="219" y="183" width="58" height="34" rx="6" ry="6" fill="none" stroke="url(#glassFrame)" stroke-width="3.5"/>
+      <!-- Right lens -->
+      <rect x="221" y="185" width="54" height="30" rx="5" ry="5" fill="url(#glassLens)"/>
+      <!-- Right lens reflection -->
+      <path d="M226,188 Q241,186 266,190" fill="none" stroke="url(#glassShine)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Bridge -->
+      <path d="M181,197 Q200,192 219,197" fill="none" stroke="url(#glassFrame)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Temple arms going to ears -->
+      <path d="M123,195 L100,188 Q92,186 90,170" fill="none" stroke="url(#glassFrame)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M277,195 L300,188 Q308,186 310,170" fill="none" stroke="url(#glassFrame)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Frame details — subtle screws -->
+      <circle cx="123" cy="195" r="1.5" fill="#555"/>
+      <circle cx="277" cy="195" r="1.5" fill="#555"/>
+      <circle cx="181" cy="195" r="1" fill="#555"/>
+      <circle cx="219" cy="195" r="1" fill="#555"/>
+    </g>
+
+    <!-- ===== MOUTH — stern, closed ===== -->
+    <path d="M150,292 L200,300 L250,292" fill="none" stroke="#1a202c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Jaw line definition -->
+    <path d="M110,285 Q125,298 150,292" fill="none" stroke="#2d3748" stroke-width="1.5" opacity="0.5"/>
+    <path d="M290,285 Q275,298 250,292" fill="none" stroke="#2d3748" stroke-width="1.5" opacity="0.5"/>
+
+  </g>
+
+  <!-- ===== CROWN ===== -->
+  <g filter="url(#glow)">
+    <!-- Crown base -->
+    <path d="M112,142 L112,122 Q200,114 288,122 L288,142 Q200,150 112,142 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.5"/>
+    <path d="M116,139 L116,126 Q200,118 284,126 L284,139 Q200,146 116,139 Z" fill="#4A148C" opacity="0.25"/>
+
+    <!-- Crown points -->
+    <path d="M112,122 L120,122 L108,72 L102,76 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.3"/>
+    <path d="M148,120 L162,120 L155,60 L148,64 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.3"/>
+    <path d="M188,117 L212,117 L206,40 L194,40 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.3"/>
+    <path d="M238,120 L252,120 L252,64 L245,60 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.3"/>
+    <path d="M280,122 L288,122 L298,76 L292,72 Z" fill="url(#gold)" stroke="#E65100" stroke-width="0.3"/>
+
+    <!-- Point tips -->
+    <path d="M104,74 L108,65 L112,74" fill="url(#goldDark)" opacity="0.6"/>
+    <path d="M150,62 L155,52 L160,62" fill="url(#goldDark)" opacity="0.6"/>
+    <path d="M196,44 L200,32 L204,44" fill="url(#goldDark)" opacity="0.6"/>
+    <path d="M242,62 L248,52 L253,62" fill="url(#goldDark)" opacity="0.6"/>
+    <path d="M290,74 L295,65 L299,74" fill="url(#goldDark)" opacity="0.6"/>
+
+    <!-- Center crown ornament -->
+    <path d="M196,48 Q200,40 204,48" fill="none" stroke="#FFF8E1" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Jewels -->
+    <circle cx="200" cy="42" r="8" fill="url(#ruby)" filter="url(#innerGlow)"/>
+    <ellipse cx="198" cy="40" rx="3" ry="2" fill="#FF8A80" opacity="0.5"/>
+
+    <circle cx="108" cy="68" r="5.5" fill="url(#emerald)" filter="url(#innerGlow)"/>
+    <circle cx="295" cy="68" r="5.5" fill="url(#emerald)" filter="url(#innerGlow)"/>
+
+    <circle cx="155" cy="58" r="5" fill="url(#sapphire)" filter="url(#innerGlow)"/>
+    <ellipse cx="154" cy="57" rx="2" ry="1.5" fill="#B3E5FC" opacity="0.4"/>
+    <circle cx="248" cy="58" r="5" fill="url(#sapphire)" filter="url(#innerGlow)"/>
+    <ellipse cx="247" cy="57" rx="2" ry="1.5" fill="#B3E5FC" opacity="0.4"/>
+
+    <!-- Band diamonds -->
+    <line x1="120" y1="136" x2="280" y2="136" stroke="#FFE082" stroke-width="1" opacity="0.5"/>
+    <rect x="140" y="130" width="4.5" height="4.5" rx="0.5" fill="#E1F5FE" transform="rotate(45, 142, 132)" opacity="0.7"/>
+    <rect x="167" y="128" width="4.5" height="4.5" rx="0.5" fill="#E1F5FE" transform="rotate(45, 169, 130)" opacity="0.7"/>
+    <rect x="197" y="127" width="5" height="5" rx="0.5" fill="#FFD700" transform="rotate(45, 199.5, 129.5)" opacity="0.8"/>
+    <rect x="227" y="128" width="4.5" height="4.5" rx="0.5" fill="#E1F5FE" transform="rotate(45, 229, 130)" opacity="0.7"/>
+    <rect x="254" y="130" width="4.5" height="4.5" rx="0.5" fill="#E1F5FE" transform="rotate(45, 256, 132)" opacity="0.7"/>
+
+    <!-- Cross-hatch -->
+    <g opacity="0.12" stroke="#E65100" stroke-width="0.4">
+      <line x1="125" y1="124" x2="125" y2="141"/><line x1="135" y1="123" x2="135" y2="140"/>
+      <line x1="175" y1="120" x2="175" y2="138"/><line x1="225" y1="120" x2="225" y2="138"/>
+      <line x1="265" y1="123" x2="265" y2="140"/><line x1="275" y1="124" x2="275" y2="141"/>
+    </g>
+  </g>
+
+  <!-- ===== TEXT ===== -->
+  <text x="200" y="372" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="6" fill="#FFD700" opacity="0.8">KING HIPPOPOTAMUS</text>
+  <line x1="80" y1="380" x2="320" y2="380" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- Corner marks — sharp, minimal -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+</svg>

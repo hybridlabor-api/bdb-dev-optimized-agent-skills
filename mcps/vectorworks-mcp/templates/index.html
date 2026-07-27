@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vectorworks Docs 検索</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem auto; max-width: 900px; line-height: 1.5; }
+      form { display: flex; gap: .5rem; }
+      input[type=text] { flex: 1; padding: .6rem .8rem; font-size: 1rem; }
+      button { padding: .6rem 1rem; font-size: 1rem; }
+      .card { border: 1px solid #ddd; border-radius: 8px; padding: .8rem 1rem; margin: 1rem 0; }
+      .meta { color: #444; font-size: .9rem; }
+      code { background: #f6f8fa; padding: 0 .2rem; border-radius: 3px; }
+      .score { float: right; color: #555; }
+    </style>
+  </head>
+  <body>
+    <h1>Vectorworks Docs 検索</h1>
+    <form method="get" action="/">
+      <input type="text" name="q" placeholder="API名や関数、キーワードで検索" value="{{ q }}" />
+      <button type="submit">検索</button>
+    </form>
+
+    {% if q and results|length == 0 %}
+      <p>該当する結果が見つかりませんでした。</p>
+    {% endif %}
+
+    {% for r in results %}
+      <div class="card">
+        <div class="meta">
+          <span>{{ r.doc_id }} #{{ r.chunk_id }}</span>
+          <span class="score">score: {{ '%.3f'|format(r.score) }}</span>
+        </div>
+        <pre style="white-space: pre-wrap;">{{ r.text }}</pre>
+      </div>
+    {% endfor %}
+  </body>
+  </html>
+

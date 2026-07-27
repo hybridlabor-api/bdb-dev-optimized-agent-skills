@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "tdmcp": {
+      "command": "npx",
+      "args": ["--yes", "--package=@dpantani/tdmcp", "tdmcp"]
+    },
+    "AbletonMCP": {
+      "command": "uvx",
+      "args": ["ableton-mcp"]
+    }
+  }
+}

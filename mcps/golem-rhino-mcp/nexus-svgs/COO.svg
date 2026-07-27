@@ -1,0 +1,512 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- ===== BACKGROUNDS ===== -->
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#14100a"/>
+      <stop offset="100%" stop-color="#04030100"/>
+    </radialGradient>
+    <radialGradient id="bgDeep" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1408"/>
+      <stop offset="100%" stop-color="#030201"/>
+    </radialGradient>
+
+    <!-- ===== GOLD — matches king-hippo exactly ===== -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- ===== BEAR FUR — dark brown/umber ===== -->
+    <linearGradient id="bearMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#503218"/>
+      <stop offset="45%" stop-color="#3d2510"/>
+      <stop offset="100%" stop-color="#261508"/>
+    </linearGradient>
+    <linearGradient id="bearLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6b4225"/>
+      <stop offset="100%" stop-color="#4a2e14"/>
+    </linearGradient>
+    <linearGradient id="bearShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d1a08"/>
+      <stop offset="100%" stop-color="#100800"/>
+    </linearGradient>
+    <linearGradient id="bearForehead" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5c3a1e"/>
+      <stop offset="100%" stop-color="#3d2510"/>
+    </linearGradient>
+    <linearGradient id="bearMuzzle" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7a4e2a"/>
+      <stop offset="100%" stop-color="#5a3818"/>
+    </linearGradient>
+    <linearGradient id="bearMuzzlePad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8a5e35"/>
+      <stop offset="100%" stop-color="#6a4220"/>
+    </linearGradient>
+    <linearGradient id="bearNeck" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d2510"/>
+      <stop offset="100%" stop-color="#1c1008"/>
+    </linearGradient>
+    <linearGradient id="bearEar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a2e14"/>
+      <stop offset="100%" stop-color="#2a180a"/>
+    </linearGradient>
+    <linearGradient id="earInner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8a5530"/>
+      <stop offset="100%" stop-color="#6a3818"/>
+    </linearGradient>
+
+    <!-- ===== AMBER ACCENT #FF6D00 ===== -->
+    <linearGradient id="amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA040"/>
+      <stop offset="50%" stop-color="#FF6D00"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- ===== JACKET / COLLAR ===== -->
+    <linearGradient id="jacket" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e180c"/>
+      <stop offset="100%" stop-color="#080604"/>
+    </linearGradient>
+    <linearGradient id="jacketFace" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2a2016"/>
+      <stop offset="50%" stop-color="#362a1a"/>
+      <stop offset="100%" stop-color="#2a2016"/>
+    </linearGradient>
+
+    <!-- ===== GLASSES ===== -->
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1400" stop-opacity="0.16"/>
+      <stop offset="50%" stop-color="#100c00" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#1e1400" stop-opacity="0.20"/>
+    </linearGradient>
+    <linearGradient id="glassFrame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="50%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#181818"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- ===== EYES ===== -->
+    <radialGradient id="eyeIris" cx="38%" cy="33%" r="55%">
+      <stop offset="0%" stop-color="#4a2800"/>
+      <stop offset="55%" stop-color="#1e1000"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <radialGradient id="eyeScl" cx="45%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#c8a878"/>
+      <stop offset="100%" stop-color="#a07848"/>
+    </radialGradient>
+
+    <!-- ===== GEMS ===== -->
+    <linearGradient id="ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="50%" stop-color="#D50000"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+
+    <!-- ===== FUR TEXTURE ===== -->
+    <pattern id="furCoarse" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M0,2 L1.5,5 L3,2" fill="none" stroke="#000" stroke-width="0.5" opacity="0.07"/>
+      <path d="M5,6 L6.5,9 L8,6" fill="none" stroke="#000" stroke-width="0.5" opacity="0.07"/>
+      <circle cx="2" cy="8" r="0.5" fill="#000" opacity="0.05"/>
+      <circle cx="7" cy="2" r="0.5" fill="#000" opacity="0.05"/>
+    </pattern>
+    <pattern id="furFine" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="1.2" y2="2.5" stroke="#000" stroke-width="0.35" opacity="0.06"/>
+      <line x1="2.5" y1="2.5" x2="3.8" y2="5" stroke="#000" stroke-width="0.35" opacity="0.06"/>
+    </pattern>
+
+    <!-- ===== FILTERS ===== -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="amberHalo">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Ambient haze -->
+    <radialGradient id="amberHaze" cx="50%" cy="58%" r="38%">
+      <stop offset="0%" stop-color="#FF6D00" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#FF6D00" stop-opacity="0"/>
+    </radialGradient>
+
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bgDeep)"/>
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Gold grid — matches king-hippo -->
+  <g opacity="0.03" stroke="#FFD700" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- Ambient amber warmth -->
+  <rect width="400" height="400" rx="32" fill="url(#amberHaze)"/>
+
+  <!-- ===== BEAR PORTRAIT — all inside hardShadow group ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- ===== DARK WORK JACKET ===== -->
+    <!-- Wide jacket body — operational, hands-on look -->
+    <path d="M30,400 L30,338
+             Q55,318 90,310 L145,302
+             Q172,342 200,347 Q228,342 255,302
+             L310,310 Q345,318 370,338
+             L370,400 Z"
+          fill="url(#jacket)"/>
+    <!-- Jacket surface texture -->
+    <path d="M30,400 L30,350 Q55,330 92,322 L146,314
+             Q170,348 200,353 Q230,348 254,314
+             L308,322 Q345,330 370,350 L370,400 Z"
+          fill="url(#jacketFace)" opacity="0.6"/>
+    <!-- Left lapel -->
+    <path d="M92,312 Q118,308 145,303 Q162,313 172,326"
+          fill="none" stroke="#2e2416" stroke-width="2.5" opacity="0.8" stroke-linecap="round"/>
+    <path d="M93,312 Q116,306 144,301"
+          fill="none" stroke="#FF6D00" stroke-width="0.7" opacity="0.3" stroke-linecap="round"/>
+    <!-- Right lapel -->
+    <path d="M308,312 Q282,308 255,303 Q238,313 228,326"
+          fill="none" stroke="#2e2416" stroke-width="2.5" opacity="0.8" stroke-linecap="round"/>
+    <path d="M307,312 Q284,306 256,301"
+          fill="none" stroke="#FF6D00" stroke-width="0.7" opacity="0.3" stroke-linecap="round"/>
+    <!-- Centre button -->
+    <ellipse cx="200" cy="358" rx="4.5" ry="4" fill="#1e1810" opacity="0.7"/>
+    <ellipse cx="200" cy="358" rx="2.5" ry="2.2" fill="#0e0c08" opacity="0.9"/>
+
+    <!-- ===== THICK NECK — massive column ===== -->
+    <path d="M128,292 Q128,328 158,340 L242,340 Q272,328 272,292 L268,272 L132,272 Z"
+          fill="url(#bearNeck)"/>
+    <path d="M128,292 Q128,328 158,340 L242,340 Q272,328 272,292 L268,272 L132,272 Z"
+          fill="url(#furCoarse)" opacity="0.5"/>
+    <!-- Neck shadow left -->
+    <path d="M132,285 Q132,318 155,332 L178,332 L178,272 L132,272 Z"
+          fill="#0e0800" opacity="0.28"/>
+    <!-- Neck shadow right -->
+    <path d="M268,285 Q268,318 245,332 L222,332 L222,272 L268,272 Z"
+          fill="#0e0800" opacity="0.28"/>
+    <!-- Neck fur dividing line -->
+    <path d="M160,280 Q200,276 240,280"
+          fill="none" stroke="#2a1808" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+
+    <!-- ===== MAIN SKULL — broad, massive, powerful bear ===== -->
+    <!-- Wider and rounder than king-hippo — bear proportions -->
+    <path d="M72,225
+             C72,158 108,116 155,110
+             L245,110
+             C292,116 328,158 328,225
+             C328,272 310,305 280,318
+             L120,318
+             C90,305 72,272 72,225 Z"
+          fill="url(#bearMain)"/>
+
+    <!-- Fur textures on skull -->
+    <path d="M72,225 C72,158 108,116 155,110 L245,110 C292,116 328,158 328,225
+             C328,272 310,305 280,318 L120,318 C90,305 72,272 72,225 Z"
+          fill="url(#furCoarse)" opacity="0.55"/>
+    <path d="M72,225 C72,158 108,116 155,110 L245,110 C292,116 328,158 328,225
+             C328,272 310,305 280,318 L120,318 C90,305 72,272 72,225 Z"
+          fill="url(#furFine)" opacity="0.25"/>
+
+    <!-- Deep side shadow planes — bear muzzle has strong shadow -->
+    <path d="M72,225 C72,195 85,168 108,152 L108,268 C88,260 72,248 72,225 Z"
+          fill="#0a0600" opacity="0.38"/>
+    <path d="M328,225 C328,195 315,168 292,152 L292,268 C312,260 328,248 328,225 Z"
+          fill="#0a0600" opacity="0.38"/>
+
+    <!-- Forehead dome highlight — light catches top of skull -->
+    <path d="M158,118 Q200,110 242,118 L244,140 Q200,130 156,140 Z"
+          fill="#6b4225" opacity="0.35"/>
+    <!-- Cheekbone amber catch — warm fur highlight -->
+    <ellipse cx="108" cy="240" rx="28" ry="20" fill="#FF6D00" opacity="0.04"
+             filter="url(#amberHalo)"/>
+    <ellipse cx="292" cy="240" rx="28" ry="20" fill="#FF6D00" opacity="0.04"
+             filter="url(#amberHalo)"/>
+
+    <!-- ===== ROUND BEAR EARS — set atop skull ===== -->
+    <!-- Left ear — perfectly round, compact -->
+    <ellipse cx="108" cy="126" rx="33" ry="31" fill="url(#bearEar)" stroke="#200e04" stroke-width="1.5"/>
+    <ellipse cx="108" cy="126" rx="33" ry="31" fill="url(#furCoarse)" opacity="0.4"/>
+    <!-- Left ear inner cup -->
+    <ellipse cx="108" cy="128" rx="20" ry="19" fill="url(#earInner)"/>
+    <!-- Left ear inner fine fur -->
+    <ellipse cx="108" cy="128" rx="12" ry="11" fill="#6b3a18" opacity="0.5"/>
+    <!-- Left ear shadow base connecting to skull -->
+    <path d="M78,145 Q82,122 108,112 Q100,128 98,148 Z"
+          fill="#0e0600" opacity="0.45"/>
+    <!-- Left ear amber rim glow -->
+    <ellipse cx="108" cy="118" rx="20" ry="18" fill="none" stroke="#FF6D00"
+             stroke-width="0.8" opacity="0.12"/>
+
+    <!-- Right ear -->
+    <ellipse cx="292" cy="126" rx="33" ry="31" fill="url(#bearEar)" stroke="#200e04" stroke-width="1.5"/>
+    <ellipse cx="292" cy="126" rx="33" ry="31" fill="url(#furCoarse)" opacity="0.4"/>
+    <!-- Right ear inner cup -->
+    <ellipse cx="292" cy="128" rx="20" ry="19" fill="url(#earInner)"/>
+    <!-- Right ear inner fine fur -->
+    <ellipse cx="292" cy="128" rx="12" ry="11" fill="#6b3a18" opacity="0.5"/>
+    <!-- Right ear shadow -->
+    <path d="M322,145 Q318,122 292,112 Q300,128 302,148 Z"
+          fill="#0e0600" opacity="0.45"/>
+    <!-- Right ear amber rim -->
+    <ellipse cx="292" cy="118" rx="20" ry="18" fill="none" stroke="#FF6D00"
+             stroke-width="0.8" opacity="0.12"/>
+
+    <!-- ===== HEAVY BROW SHELF — overhanging, stern, powerful ===== -->
+    <!-- This is what makes the bear look intimidating — deep brow ridge -->
+    <!-- Left brow mass -->
+    <path d="M88,205 L90,188 Q115,172 172,174 L176,192 Q128,190 88,205 Z"
+          fill="#200e04"/>
+    <!-- Right brow mass -->
+    <path d="M312,205 L310,188 Q285,172 228,174 L224,192 Q272,190 312,205 Z"
+          fill="#200e04"/>
+    <!-- Centre brow bridge — unibrow-like, furrowed -->
+    <path d="M176,182 Q200,175 224,182 L220,196 Q200,189 180,196 Z"
+          fill="#200e04"/>
+    <!-- Primary brow crease -->
+    <path d="M158,178 Q185,171 200,173 Q215,171 242,178"
+          fill="none" stroke="#120800" stroke-width="2.2" opacity="0.65"/>
+    <!-- Deep vertical furrow — classic bear scowl -->
+    <path d="M196,176 L200,166 L204,176"
+          fill="none" stroke="#120800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <!-- Second crease line -->
+    <path d="M162,184 Q186,178 200,180 Q214,178 238,184"
+          fill="none" stroke="#1e1008" stroke-width="1.2" opacity="0.4"/>
+    <!-- Brow fur texture strokes -->
+    <path d="M96,202 Q125,190 158,184"
+          fill="none" stroke="#120800" stroke-width="1" opacity="0.35" stroke-linecap="round"/>
+    <path d="M304,202 Q275,190 242,184"
+          fill="none" stroke="#120800" stroke-width="1" opacity="0.35" stroke-linecap="round"/>
+
+    <!-- ===== WIDE BEAR MUZZLE — blocky, dominant ===== -->
+    <path d="M115,262
+             C115,242 148,225 200,225
+             C252,225 285,242 285,262
+             C285,300 264,322 200,322
+             C136,322 115,300 115,262 Z"
+          fill="url(#bearMuzzle)"/>
+    <!-- Muzzle pad (lighter centre) -->
+    <path d="M132,266
+             C132,250 158,238 200,238
+             C242,238 268,250 268,266
+             C268,290 250,308 200,308
+             C150,308 132,290 132,266 Z"
+          fill="url(#bearMuzzlePad)"/>
+    <!-- Fur on muzzle -->
+    <path d="M115,262 C115,242 148,225 200,225 C252,225 285,242 285,262
+             C285,300 264,322 200,322 C136,322 115,300 115,262 Z"
+          fill="url(#furFine)" opacity="0.25"/>
+    <!-- Muzzle side fur strokes -->
+    <path d="M120,256 Q135,242 155,237"
+          fill="none" stroke="#2e1a08" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+    <path d="M280,256 Q265,242 245,237"
+          fill="none" stroke="#2e1a08" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+    <path d="M118,268 Q130,258 147,253"
+          fill="none" stroke="#2e1a08" stroke-width="1.3" opacity="0.3" stroke-linecap="round"/>
+    <path d="M282,268 Q270,258 253,253"
+          fill="none" stroke="#2e1a08" stroke-width="1.3" opacity="0.3" stroke-linecap="round"/>
+
+    <!-- ===== BEAR NOSE — wide flat nose ===== -->
+    <!-- Nose bridge -->
+    <path d="M182,252 Q200,246 218,252"
+          fill="none" stroke="#3a2010" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+    <!-- Nose pad — wide and flat, bear-like -->
+    <path d="M160,267 Q160,250 182,246 L218,246 Q240,250 240,267
+             Q240,283 200,285 Q160,283 160,267 Z"
+          fill="#120800"/>
+    <!-- Nose surface sheen -->
+    <ellipse cx="190" cy="260" rx="9" ry="5.5" fill="#241408" opacity="0.55"/>
+    <ellipse cx="188" cy="258" rx="4.5" ry="2.5" fill="#3a2010" opacity="0.4"/>
+    <!-- Nostrils -->
+    <ellipse cx="176" cy="270" rx="10" ry="7.5" fill="#080400" transform="rotate(-10, 176, 270)"/>
+    <ellipse cx="224" cy="270" rx="10" ry="7.5" fill="#080400" transform="rotate(10, 224, 270)"/>
+    <!-- Nostril bridge -->
+    <path d="M186,262 Q200,257 214,262"
+          fill="none" stroke="#2e1808" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+
+    <!-- ===== MOUTH — stern, tight, downturned ===== -->
+    <!-- Bear doesn't smile — firm line with slight downturn -->
+    <path d="M152,299 Q178,307 200,309 Q222,307 248,299"
+          fill="none" stroke="#120800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Thin chin crease -->
+    <path d="M168,307 Q200,313 232,307"
+          fill="none" stroke="#2e1808" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+    <!-- Jaw definition -->
+    <path d="M106,292 Q122,306 150,300"
+          fill="none" stroke="#2e1808" stroke-width="1.5" opacity="0.38" stroke-linecap="round"/>
+    <path d="M294,292 Q278,306 250,300"
+          fill="none" stroke="#2e1808" stroke-width="1.5" opacity="0.38" stroke-linecap="round"/>
+
+    <!-- ===== EYES — small, deep, intensely focused ===== -->
+    <!-- Bear eyes are small relative to face — set deep under brow -->
+    <!-- Left eye socket depression -->
+    <ellipse cx="152" cy="208" rx="28" ry="20" fill="#1a0c04"/>
+    <!-- Left sclera -->
+    <ellipse cx="152" cy="208" rx="21" ry="14" fill="url(#eyeScl)"/>
+    <!-- Left iris -->
+    <ellipse cx="154" cy="207" rx="13" ry="13" fill="url(#eyeIris)"/>
+    <!-- Left pupil -->
+    <ellipse cx="155" cy="206" rx="6.5" ry="7.5" fill="#000000"/>
+    <!-- Left specular -->
+    <circle cx="161" cy="201" r="3.5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="148" cy="212" r="1.2" fill="#ffffff" opacity="0.2"/>
+    <!-- Left heavy upper lid -->
+    <path d="M126,202 Q142,189 180,200" fill="#261508" stroke="#180c04" stroke-width="1.2"/>
+    <path d="M128,204 Q145,193 178,203"
+          fill="none" stroke="#0e0800" stroke-width="2.2"/>
+    <!-- Left lower lid shadow -->
+    <path d="M128,216 Q150,224 176,218"
+          fill="none" stroke="#1a0c04" stroke-width="1" opacity="0.4"/>
+
+    <!-- Right eye socket -->
+    <ellipse cx="248" cy="208" rx="28" ry="20" fill="#1a0c04"/>
+    <!-- Right sclera -->
+    <ellipse cx="248" cy="208" rx="21" ry="14" fill="url(#eyeScl)"/>
+    <!-- Right iris -->
+    <ellipse cx="250" cy="207" rx="13" ry="13" fill="url(#eyeIris)"/>
+    <!-- Right pupil -->
+    <ellipse cx="251" cy="206" rx="6.5" ry="7.5" fill="#000000"/>
+    <!-- Right specular -->
+    <circle cx="257" cy="201" r="3.5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="244" cy="212" r="1.2" fill="#ffffff" opacity="0.2"/>
+    <!-- Right heavy upper lid -->
+    <path d="M274,202 Q258,189 220,200" fill="#261508" stroke="#180c04" stroke-width="1.2"/>
+    <path d="M272,204 Q255,193 222,203"
+          fill="none" stroke="#0e0800" stroke-width="2.2"/>
+    <!-- Right lower lid shadow -->
+    <path d="M272,216 Q250,224 224,218"
+          fill="none" stroke="#1a0c04" stroke-width="1" opacity="0.4"/>
+
+    <!-- ===== SMALL RECTANGULAR READING GLASSES ===== -->
+    <!-- Tight frames — operations detail work, numbers-focused -->
+    <g>
+      <!-- Left lens frame — narrow rectangle -->
+      <rect x="124" y="196" width="54" height="26" rx="3.5" ry="3.5"
+            fill="none" stroke="url(#glassFrame)" stroke-width="3"/>
+      <!-- Left lens fill -->
+      <rect x="126" y="198" width="50" height="22" rx="2.5" ry="2.5"
+            fill="url(#glassLens)"/>
+      <!-- Left reflection -->
+      <path d="M131,201 Q147,199 172,203"
+            fill="none" stroke="url(#glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Right lens frame -->
+      <rect x="222" y="196" width="54" height="26" rx="3.5" ry="3.5"
+            fill="none" stroke="url(#glassFrame)" stroke-width="3"/>
+      <!-- Right lens fill -->
+      <rect x="224" y="198" width="50" height="22" rx="2.5" ry="2.5"
+            fill="url(#glassLens)"/>
+      <!-- Right reflection -->
+      <path d="M229,201 Q245,199 270,203"
+            fill="none" stroke="url(#glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Bridge — tight over nose -->
+      <path d="M178,208 Q200,204 222,208"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.8" stroke-linecap="round"/>
+
+      <!-- Temple arms to ears -->
+      <path d="M124,208 L100,202 Q92,200 90,180"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M276,208 L300,202 Q308,200 310,180"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.8" stroke-linecap="round"/>
+
+      <!-- Frame screw details -->
+      <circle cx="124" cy="208" r="1.5" fill="#404040"/>
+      <circle cx="276" cy="208" r="1.5" fill="#404040"/>
+      <circle cx="178" cy="208" r="1" fill="#404040"/>
+      <circle cx="222" cy="208" r="1" fill="#404040"/>
+
+      <!-- Amber corner accents on frames — brand signature -->
+      <circle cx="124" cy="196" r="1.5" fill="#FF6D00" opacity="0.55"/>
+      <circle cx="178" cy="196" r="1.5" fill="#FF6D00" opacity="0.55"/>
+      <circle cx="222" cy="196" r="1.5" fill="#FF6D00" opacity="0.55"/>
+      <circle cx="276" cy="196" r="1.5" fill="#FF6D00" opacity="0.55"/>
+    </g>
+
+    <!-- ===== THREE CLAW SCARS — left cheek, battle-tested ===== -->
+    <!-- Primary scar — deepest -->
+    <path d="M92,228 Q106,237 117,256"
+          fill="none" stroke="#140a02" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+    <!-- Scar highlight (raised tissue edge, slightly lighter) -->
+    <path d="M93,229 Q107,238 118,257"
+          fill="none" stroke="#6b3a12" stroke-width="1.2" stroke-linecap="round" opacity="0.2"/>
+    <!-- Second scar -->
+    <path d="M100,225 Q114,234 124,253"
+          fill="none" stroke="#140a02" stroke-width="2.8" stroke-linecap="round" opacity="0.75"/>
+    <path d="M101,226 Q115,235 125,254"
+          fill="none" stroke="#6b3a12" stroke-width="0.9" stroke-linecap="round" opacity="0.15"/>
+    <!-- Third scar — faintest -->
+    <path d="M108,223 Q122,232 132,250"
+          fill="none" stroke="#140a02" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+    <!-- Subtle amber discoloration around scar -->
+    <path d="M88,226 Q102,235 113,254"
+          fill="none" stroke="#8B4513" stroke-width="3" stroke-linecap="round" opacity="0.08"/>
+
+    <!-- ===== AMBER ACCENT HIGHLIGHTS ===== -->
+    <!-- Right cheekbone catch — warm fur catchlight -->
+    <path d="M312,238 Q324,250 326,268"
+          fill="none" stroke="#FF6D00" stroke-width="1.8" stroke-linecap="round" opacity="0.16"
+          filter="url(#amberHalo)"/>
+    <!-- Left ambient (non-scarred side) -->
+    <path d="M78,248 Q76,262 80,275"
+          fill="none" stroke="#FF6D00" stroke-width="1.2" stroke-linecap="round" opacity="0.10"
+          filter="url(#amberHalo)"/>
+    <!-- Forehead dome amber -->
+    <ellipse cx="200" cy="148" rx="50" ry="22" fill="#FF6D00" opacity="0.03"
+             filter="url(#amberHalo)"/>
+    <!-- Ear amber rim -->
+    <ellipse cx="108" cy="118" rx="22" ry="20" fill="none" stroke="#FF6D00"
+             stroke-width="1.2" opacity="0.14"/>
+    <ellipse cx="292" cy="118" rx="22" ry="20" fill="none" stroke="#FF6D00"
+             stroke-width="1.2" opacity="0.14"/>
+
+  </g>
+
+  <!-- ===== GOLD RING — bottom right, matches king-hippo ===== -->
+  <g filter="url(#glow)">
+    <circle cx="370" cy="370" r="14" fill="none" stroke="url(#gold)" stroke-width="2.5" opacity="0.55"/>
+    <circle cx="370" cy="370" r="9" fill="none" stroke="url(#goldDark)" stroke-width="1" opacity="0.35"/>
+    <circle cx="370" cy="370" r="5" fill="url(#ruby)" filter="url(#innerGlow)" opacity="0.82"/>
+    <ellipse cx="369" cy="368" rx="2" ry="1.5" fill="#FF8A80" opacity="0.5"/>
+  </g>
+
+  <!-- ===== COO TEXT ===== -->
+  <text x="200" y="373" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="#FFD700" opacity="0.85">COO</text>
+  <line x1="80" y1="381" x2="320" y2="381" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- ===== CORNER MARKS — exact match to king-hippo ===== -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+</svg>

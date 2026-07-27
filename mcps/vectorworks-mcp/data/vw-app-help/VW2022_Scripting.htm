@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes"/>
+  <meta name="version" content="2020.0.0"/>
+  <link rel="StyleSheet" href="../../template/styles/topic.min.css" type="text/css"/>
+  <link rel="StyleSheet" data-skin="true" type="text/css" href="../../template/StudioVW/layout.css"/>
+  <link rel="StyleSheet" data-skin="true" href="../../template/StudioVW/userstyles.css" type="text/css"/>
+  
+    <link rel="shortcut icon" type="image/png" href="../../Icon_H.png"/>
+    
+<link rel="StyleSheet" href="../../assets/css/Vectorworks.css" type="text/css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Scripting</title>
+  <meta name="generator" content="Adobe RoboHelp 2020"/>
+  <meta name="Originator" content="ImportMif"/>
+  <meta name="OriginalFile" content="C:\Documentation\27_Guide 2019\Scripts.fm"/>
+  
+<meta name="brsnext" value="VW2022_Guide/Scripts/Scripting.htm#TOC_Using_scripts"/><meta name="brsprev" value="VW2022_Guide/Objects_edit2/Cropping_imported_PDF_files.htm"/></head>
+
+<body class="rh-BODY-wrapper">
+  <div class="cookie-widget-holder" id="cookie-status-widget-holder"></div>
+  <div class="RH-LAYOUT-HEADER-skip-content-container" id="skip-to-content"></div>
+  <header class="RH-LAYOUT-HEADER-container" role="banner">
+    <div class="RH-LAYOUT-HEADER-logo-box  ">
+      <div class="RH-LAYOUT-HEADER-logo" id="logo-holder"></div>
+      <div class="RH-LAYOUT-HEADER-title" id="topic-title-holder"></div>
+    </div>
+    <div class="RH-LAYOUT-HEADERMENU-container" id="header-menu"></div>
+    <div class="search-placeholder-class" id="search-with-help"></div>
+  </header>
+  <main role="main" class="RH-LAYOUT-BODY-container">
+    <div class="RH-LAYOUT-SEARCHRESULTS" id="rh-searchresults"></div>
+    <div class="RH-LAYOUT-LEFTPANEL-container" id="rh-leftpanel"></div>
+    <div class="rh-layout-BODY-main" id="rh-layout-main">
+      <div class="RH-LAYOUT-TOOLBAR-toolbar-box" id="rh-toolbar"></div>
+      <div class="rh-layout-BODY-body">
+        <div class="RH-LAYOUT-CENTERPANEL-container">
+          <div class="rh-layout-selectdetails" id="rh-selectdetails"></div>
+          <div class="RH-LAYOUT-CENTERPANEL-topic-box" id="rh-topic" dir="ltr">
+  <p><a id="Top"></a></p>
+  <div>
+  <p class="SectionTitle" dir="ltr">Scripting</p>
+  <h1 dir="ltr" id="h"><a id="TOC_Using_scripts"></a><a id="XREF_28096_Using_Scripts"></a>Using scripts</h1>
+  <p dir="ltr">Scripting is one method of customizing the Vectorworks program to suit a wide range of design needs. Scripts can create anything from simple tools that assist with the most tedious drafting tasks, to sophisticated solutions for demanding designs. Scripting options in the Vectorworks program include:</p>
+  <p class="BulletwSpace" dir="ltr">The Software Developer’s Kit (SDK) in the C++ language</p>
+  <p class="Bullet" dir="ltr">Python programming language</p>
+  <p class="Bullet" dir="ltr">VectorScript, a lightweight Pascal-like programming language</p>
+  <p class="Bullet" dir="ltr">Marionette, a graphical scripting tool (see <a href="..\Marionette\Visual_scripting_with_Marionette.htm#h">Visual scripting with Marionette</a>)</p>
+  <p dir="ltr">This section discusses scripting, but not the SDK. For detailed developer-oriented documentation related to the SDK, Python, VectorScript, and Marionette, please navigate to <span class="Jump"><a href="http://developer.vectorworks.net">developer.vectorworks.net</a></span>.</p>
+  <p dir="ltr">The Vectorworks program provides several methods for creating, managing, and executing scripts. While scripting languages provide a rich set of development tools when creating scripts from scratch, there are also several commands that allow you to create scripts without direct knowledge of programming. The most basic of these methods is to select the <span class="Bold">File &gt; Export &gt; Export Script</span> command. The command creates a script from the file’s contents and saves it as a Python or VectorScript file in the designated location. Select the <span class="Bold">File &gt; Import &gt; Import Script</span> command to execute the script from a saved file in a new, automatically created design layer.</p>
+  <p dir="ltr">The <span class="Bold">Custom Selection</span>, <span class="Bold">Custom Tool/Attribute</span>, and <span class="Bold">Custom Modification</span> commands provide the ability to create useful scripts directly.</p>
+  <p dir="ltr">In addition to these automated methods of creating scripts, the traditional method for creating and saving scripts (and a feature of Vectorworks since its original release as MiniCad), is to write document scripts, which are saved as script resources and are stored in script palettes contained within a file. Both document scripts and script palettes can be created, accessed, exported, imported from another file, renamed, and deleted through the Resource Manager.</p>
+  <p dir="ltr">Scripts can also be created and stored in plug-ins. Plug-ins are a component of a workspace, and can be accessed from any file. Scripts in plug-ins can be used as menu items, tools, or parametric objects. Plug-ins are created and maintained using the Plug-in Manager, which is accessed by selecting <span class="Bold">Tools &gt; Plug-ins &gt; Plug-in Manager</span>.</p>
+  <p dir="ltr">Finally, scripts can be purchased from third-party vendors and installed. Script developers can create installation scripts of the menus and tools associated with third-party plug-ins and allow insertion of menus/commands and tool sets/tools into the current workspace.</p>
+  <p class="InsertDivider" dir="ltr"><img src="../../assets/images/divider.png"/></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating custom_selection_scripts.htm#h">Creating custom selection scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating_custom_tool_attribute_scripts.htm#h">Creating custom tool/attribute scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating custom_modification_scripts.htm#h">Creating custom modification scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating_and_editing_script_palettes_and_scripts.htm#h">Creating and editing script palettes and scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Running_scripts.htm#h">Running scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Concept_Scripted_plug-ins.htm#h1">Concept: Scripted plug-ins</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating_custom_path_objects.htm#h">Creating custom path objects</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Customizing_definitions_for_built-in_plug-in_objects.htm#h">Customizing definitions for built-in plug-in objects</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="The_VectorScript_debugger.htm#h">The VectorScript debugger</a></p>
+
+</div>
+  <p style="text-align: right;"> </p>
+  <p style="text-align: right;"><a href="http://www.vectorworks.net/support/help-feedback" target="_blank" title="Provide feedback">Was this page helpful?</a></p>
+  <p style="text-align: right;"> </p>
+
+</div>
+          <div class="RH-LAYOUT-BRS-container" id="rh-brs"></div>
+        </div>
+        <div class="RH-LAYOUT-RIGHTPANEL-container" id="rh-rightpanel"></div>
+      </div>
+    </div>
+  </main>
+  <footer role="contentinfo" class="RH-LAYOUT-FOOTER-container" id="rh-footer"></footer>
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = "../.."
+    gCommonRootRelPath = "../.."
+    gTopicId = "7"
+  
+//]]></script>
+
+
+  <script src="../../template/scripts/topicpage.js"></script>
+  <script src="../../whxdata/layoutconfig.js"></script>
+  <script src="../../whxdata/brsdata.js"></script>
+
+  
+    
+      
+          
+
+            
+              
+                <link rel="StyleSheet" href="../../template/StudioVW/font.css" type="text/css"/>
+                
+                  
+
+
+</body></html>

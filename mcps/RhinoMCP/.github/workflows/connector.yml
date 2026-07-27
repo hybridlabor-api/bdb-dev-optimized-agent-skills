@@ -1,0 +1,53 @@
+name: Connector
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'connector/**'
+      - 'shared/router-launcher.mjs'
+      - '.github/workflows/connector.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'connector/**'
+      - 'shared/router-launcher.mjs'
+      - '.github/workflows/connector.yml'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: false
+          lfs: true
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Validate manifest
+        working-directory: connector
+        run: npx --yes @anthropic-ai/mcpb validate manifest.json
+
+      - name: Pack .mcpb bundle
+        working-directory: connector
+        run: node build.mjs
+
+      - name: Inspect bundle
+        working-directory: connector
+        run: npx --yes @anthropic-ai/mcpb info *.mcpb
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: rhino-mcp-platform-connector
+          path: connector/*.mcpb
+          if-no-files-found: error

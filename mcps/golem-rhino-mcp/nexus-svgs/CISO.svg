@@ -1,0 +1,580 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- Background — near pitch-black with red warmth from center -->
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0e0507"/>
+      <stop offset="55%" stop-color="#070203"/>
+      <stop offset="100%" stop-color="#030101"/>
+    </radialGradient>
+
+    <!-- Gold — same crown-quality palette as king-hippo -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Obsidian exoskeleton main body -->
+    <linearGradient id="carapaceMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c22"/>
+      <stop offset="45%" stop-color="#121215"/>
+      <stop offset="100%" stop-color="#08080a"/>
+    </linearGradient>
+
+    <!-- Metallic plate sheen — subtle iridescent obsidian -->
+    <linearGradient id="plateSheen" x1="5%" y1="0%" x2="95%" y2="100%">
+      <stop offset="0%" stop-color="#2e2e38"/>
+      <stop offset="30%" stop-color="#1e1e26"/>
+      <stop offset="65%" stop-color="#141418"/>
+      <stop offset="100%" stop-color="#0a0a0e"/>
+    </linearGradient>
+
+    <!-- Lateral carapace sheen -->
+    <linearGradient id="plateSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#08080a"/>
+      <stop offset="50%" stop-color="#242430"/>
+      <stop offset="100%" stop-color="#08080a"/>
+    </linearGradient>
+
+    <!-- Pincer / claw gradient -->
+    <linearGradient id="pincerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#202028"/>
+      <stop offset="60%" stop-color="#141418"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </linearGradient>
+
+    <!-- Stinger tail gradient -->
+    <linearGradient id="stingerGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a1a20"/>
+      <stop offset="50%" stop-color="#222230"/>
+      <stop offset="100%" stop-color="#0e0e12"/>
+    </linearGradient>
+
+    <!-- Blood red eye radial -->
+    <radialGradient id="eyeRed" cx="38%" cy="32%" r="60%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="45%" stop-color="#D50000"/>
+      <stop offset="100%" stop-color="#7f0000"/>
+    </radialGradient>
+
+    <!-- Dimmer red for small eyes -->
+    <radialGradient id="eyeRedSmall" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="55%" stop-color="#D50000"/>
+      <stop offset="100%" stop-color="#5a0000"/>
+    </radialGradient>
+
+    <!-- Blood red linear -->
+    <linearGradient id="bloodRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="50%" stop-color="#D50000"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+
+    <!-- Tactical collar -->
+    <linearGradient id="collarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a20"/>
+      <stop offset="55%" stop-color="#101014"/>
+      <stop offset="100%" stop-color="#080809"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="redGlowStrong" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000" flood-opacity="0.85"/>
+    </filter>
+
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Armor scale/bump texture -->
+    <pattern id="scalePattern" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <ellipse cx="4.5" cy="4.5" rx="3" ry="2" fill="none" stroke="#26262e" stroke-width="0.5" opacity="0.75"/>
+      <ellipse cx="4.5" cy="4.5" rx="1.5" ry="1" fill="#18181e" opacity="0.35"/>
+    </pattern>
+
+    <!-- Fine armor dot texture -->
+    <pattern id="armorDots" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.7" fill="#202028" opacity="0.55"/>
+      <circle cx="3.5" cy="3.5" r="0.5" fill="#28282e" opacity="0.3"/>
+    </pattern>
+
+    <!-- Red atmospheric bleed -->
+    <radialGradient id="redAmbient" cx="50%" cy="58%" r="42%">
+      <stop offset="0%" stop-color="#D50000" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#D50000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Faint grid — obsidian with red tint -->
+  <g opacity="0.022" stroke="#D50000" stroke-width="0.3">
+    <line x1="0"   y1="100" x2="400" y2="100"/>
+    <line x1="0"   y1="200" x2="400" y2="200"/>
+    <line x1="0"   y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0"   x2="100" y2="400"/>
+    <line x1="200" y1="0"   x2="200" y2="400"/>
+    <line x1="300" y1="0"   x2="300" y2="400"/>
+  </g>
+
+  <!-- Red atmospheric bleed from face center -->
+  <rect width="400" height="400" rx="32" fill="url(#redAmbient)"/>
+
+  <!-- ===== STINGER TAIL — arched behind/above head ===== -->
+  <g filter="url(#softShadow)">
+    <!-- Tail main body — thick segmented tube curving from behind carapace up to apex -->
+    <path d="M200,92 C198,78 196,62 198,46 C200,32 204,22 208,14"
+          fill="none" stroke="url(#stingerGrad)" stroke-width="16" stroke-linecap="round"/>
+    <!-- Tail inner highlight sheen -->
+    <path d="M202,90 C200,76 198,60 200,46 C202,33 206,23 209,15"
+          fill="none" stroke="#2a2a36" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+    <!-- Tail outer shadow edge -->
+    <path d="M198,90 C196,76 194,60 196,44 C198,30 202,20 206,12"
+          fill="none" stroke="#060608" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- Tail segmentation rings — armor plates -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M193,80 Q200,77 207,80"   stroke="#080810" stroke-width="2"/>
+      <path d="M192,80 Q200,77.5 208,80" stroke="#D50000" stroke-width="0.65" opacity="0.5"/>
+      <path d="M192,65 Q200,62 208,65"   stroke="#080810" stroke-width="2"/>
+      <path d="M193,65 Q200,62.5 207,65" stroke="#D50000" stroke-width="0.65" opacity="0.5"/>
+      <path d="M194,50 Q200,47 206,50"   stroke="#080810" stroke-width="2"/>
+      <path d="M195,50 Q200,47.5 205,50" stroke="#D50000" stroke-width="0.65" opacity="0.45"/>
+      <path d="M197,36 Q200,33 203,36"   stroke="#080810" stroke-width="1.8"/>
+      <path d="M197,36 Q200,33.5 203,36" stroke="#D50000" stroke-width="0.5" opacity="0.4"/>
+    </g>
+
+    <!-- Venom bulb — swollen telson -->
+    <ellipse cx="207" cy="13" rx="11" ry="9" fill="url(#carapaceMain)" stroke="#22222a" stroke-width="1.2"/>
+    <ellipse cx="206" cy="11" rx="4.5" ry="3" fill="#22222a" opacity="0.55"/>
+
+    <!-- Stinger needle — acicular tip -->
+    <path d="M204,8 C205,4 208,0 213,-7 C216,-3 212,3 208,8 Z"
+          fill="#D50000" filter="url(#redGlow)" opacity="0.95"/>
+    <!-- Needle highlight -->
+    <path d="M206,7 C207,4 209,1 212,-5"
+          fill="none" stroke="#FF4444" stroke-width="0.9" opacity="0.65"/>
+
+    <!-- Venom bead at tip -->
+    <circle cx="213" cy="-7" r="2.5" fill="#D50000" opacity="0.85" filter="url(#redGlow)"/>
+    <!-- Venom drip -->
+    <path d="M213,-4 Q214,-1 212,4" fill="none" stroke="#D50000" stroke-width="1" opacity="0.45"/>
+  </g>
+
+  <!-- ===== LEFT PINCER — raised, menacing ===== -->
+  <g filter="url(#hardShadow)">
+    <!-- Proximal arm segment from body shoulder -->
+    <path d="M90,205 C74,192 58,178 44,167 C36,160 30,153 33,146 C36,138 47,141 57,150"
+          fill="url(#pincerGrad)" stroke="#1c1c22" stroke-width="2.5"/>
+    <!-- Arm highlight -->
+    <path d="M88,202 C72,190 57,177 44,166 C37,160 33,154 36,148"
+          fill="none" stroke="#2a2a34" stroke-width="2" opacity="0.5"/>
+    <!-- Arm segment joints -->
+    <ellipse cx="70" cy="185" rx="13" ry="9"
+             fill="url(#carapaceMain)" stroke="#1a1a22" stroke-width="1.5"
+             transform="rotate(-25, 70, 185)"/>
+    <ellipse cx="51" cy="162" rx="11" ry="7.5"
+             fill="url(#carapaceMain)" stroke="#1a1a22" stroke-width="1.5"
+             transform="rotate(-40, 51, 162)"/>
+    <!-- Joint red accent seams -->
+    <path d="M61,180 Q70,184 79,180" fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.55"/>
+    <path d="M43,165 Q51,159 59,165" fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.55"/>
+    <!-- Arm scale texture -->
+    <path d="M57,150 C64,168 76,185 90,205"
+          fill="none" stroke="url(#scalePattern)" stroke-width="12" opacity="0.4"/>
+
+    <!-- Movable finger / upper chela -->
+    <path d="M57,150
+             C50,140 37,128 22,116
+             C14,109 9,103 13,97
+             C17,90 28,95 37,104
+             C46,114 54,128 60,140 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Upper chela sheen -->
+    <path d="M54,147 C48,137 36,126 22,115"
+          fill="none" stroke="#2a2a34" stroke-width="2" opacity="0.55"/>
+    <!-- Upper tip — blood red -->
+    <path d="M13,97 C9,92 7,87 11,83 C15,79 22,83 24,89 C18,90 13,97 13,97 Z"
+          fill="#D50000" opacity="0.92" filter="url(#redGlow)"/>
+    <!-- Chela ridgeline -->
+    <path d="M37,104 Q46,120 54,140"
+          fill="none" stroke="#1a1a22" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- Fixed finger / lower chela -->
+    <path d="M57,150
+             C52,160 42,170 28,176
+             C19,180 11,180 9,173
+             C7,166 16,160 27,158
+             C38,155 50,153 60,150 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Lower tip — blood red -->
+    <path d="M9,173 C5,170 3,165 8,161 C12,157 19,161 19,168 C14,169 9,173 9,173 Z"
+          fill="#D50000" opacity="0.92" filter="url(#redGlow)"/>
+    <!-- Chela gap line -->
+    <path d="M57,150 Q44,152 35,158"
+          fill="none" stroke="#1a1a22" stroke-width="1" opacity="0.6"/>
+
+    <!-- Claw serration marks -->
+    <g stroke="#D50000" stroke-width="0.5" opacity="0.45" fill="none">
+      <path d="M42,107 L44,104 L46,107"/>
+      <path d="M49,120 L51,117 L53,120"/>
+      <path d="M26,161 L28,158 L30,161"/>
+      <path d="M18,166 L20,163 L22,166"/>
+    </g>
+  </g>
+
+  <!-- ===== RIGHT PINCER — mirror, raised ===== -->
+  <g filter="url(#hardShadow)">
+    <!-- Proximal arm segment -->
+    <path d="M310,205 C326,192 342,178 356,167 C364,160 370,153 367,146 C364,138 353,141 343,150"
+          fill="url(#pincerGrad)" stroke="#1c1c22" stroke-width="2.5"/>
+    <!-- Arm highlight -->
+    <path d="M312,202 C328,190 343,177 356,166 C363,160 367,154 364,148"
+          fill="none" stroke="#2a2a34" stroke-width="2" opacity="0.5"/>
+    <!-- Arm segment joints -->
+    <ellipse cx="330" cy="185" rx="13" ry="9"
+             fill="url(#carapaceMain)" stroke="#1a1a22" stroke-width="1.5"
+             transform="rotate(25, 330, 185)"/>
+    <ellipse cx="349" cy="162" rx="11" ry="7.5"
+             fill="url(#carapaceMain)" stroke="#1a1a22" stroke-width="1.5"
+             transform="rotate(40, 349, 162)"/>
+    <!-- Joint red accent seams -->
+    <path d="M321,180 Q330,184 339,180" fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.55"/>
+    <path d="M341,165 Q349,159 357,165" fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.55"/>
+
+    <!-- Movable finger / upper chela right -->
+    <path d="M343,150
+             C350,140 363,128 378,116
+             C386,109 391,103 387,97
+             C383,90 372,95 363,104
+             C354,114 346,128 340,140 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Upper chela sheen -->
+    <path d="M346,147 C352,137 364,126 378,115"
+          fill="none" stroke="#2a2a34" stroke-width="2" opacity="0.55"/>
+    <!-- Upper tip — blood red -->
+    <path d="M387,97 C391,92 393,87 389,83 C385,79 378,83 376,89 C382,90 387,97 387,97 Z"
+          fill="#D50000" opacity="0.92" filter="url(#redGlow)"/>
+    <!-- Chela ridgeline -->
+    <path d="M363,104 Q354,120 346,140"
+          fill="none" stroke="#1a1a22" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- Fixed finger / lower chela right -->
+    <path d="M343,150
+             C348,160 358,170 372,176
+             C381,180 389,180 391,173
+             C393,166 384,160 373,158
+             C362,155 350,153 340,150 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Lower tip — blood red -->
+    <path d="M391,173 C395,170 397,165 392,161 C388,157 381,161 381,168 C386,169 391,173 391,173 Z"
+          fill="#D50000" opacity="0.92" filter="url(#redGlow)"/>
+    <!-- Chela gap line -->
+    <path d="M343,150 Q356,152 365,158"
+          fill="none" stroke="#1a1a22" stroke-width="1" opacity="0.6"/>
+
+    <!-- Claw serration marks right -->
+    <g stroke="#D50000" stroke-width="0.5" opacity="0.45" fill="none">
+      <path d="M354,107 L356,104 L358,107"/>
+      <path d="M347,120 L349,117 L351,120"/>
+      <path d="M370,161 L372,158 L374,161"/>
+      <path d="M378,166 L380,163 L382,166"/>
+    </g>
+  </g>
+
+  <!-- ===== MAIN CARAPACE / PROSOMA / HEAD ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Lower thorax / abdomen stub visible below collar -->
+    <path d="M118,295 Q116,315 128,328 Q155,348 200,350 Q245,348 272,328 Q284,315 282,295 Z"
+          fill="url(#carapaceMain)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Thorax segment lines -->
+    <path d="M128,328 Q155,338 200,340 Q245,338 272,328"
+          fill="none" stroke="#D50000" stroke-width="0.6" opacity="0.4"/>
+    <path d="M120,312 Q152,322 200,324 Q248,322 280,312"
+          fill="none" stroke="#1e1e28" stroke-width="1.5" opacity="0.7"/>
+
+    <!-- Neck plate -->
+    <path d="M135,290 Q132,304 144,314 L200,320 L256,314 Q268,304 265,290 Z"
+          fill="url(#collarGrad)"/>
+
+    <!-- MAIN SKULL / PROSOMA — the commanding armored dome -->
+    <path d="M92,215
+             C92,160 128,112 168,104
+             L232,104
+             C272,112 308,160 308,215
+             C308,264 287,300 262,314
+             L138,314
+             C113,300 92,264 92,215 Z"
+          fill="url(#carapaceMain)"/>
+
+    <!-- Scale bump texture -->
+    <path d="M92,215 C92,160 128,112 168,104 L232,104
+             C272,112 308,160 308,215 C308,264 287,300 262,314
+             L138,314 C113,300 92,264 92,215 Z"
+          fill="url(#scalePattern)" opacity="0.95"/>
+
+    <!-- Fine armor dot texture -->
+    <path d="M92,215 C92,160 128,112 168,104 L232,104
+             C272,112 308,160 308,215 C308,264 287,300 262,314
+             L138,314 C113,300 92,264 92,215 Z"
+          fill="url(#armorDots)" opacity="0.65"/>
+
+    <!-- Central metallic sheen highlight — dorsal high plate -->
+    <path d="M200,106
+             C238,112 268,145 276,184
+             C284,223 266,262 244,280
+             C222,298 178,298 156,280
+             C134,262 116,223 124,184
+             C132,145 162,112 200,106 Z"
+          fill="url(#plateSheen)" opacity="0.65"/>
+
+    <!-- Deep shadow planes on lateral faces -->
+    <path d="M92,215 C92,182 102,158 117,142
+             L117,264 C104,254 92,238 92,215 Z"
+          fill="#040404" opacity="0.45"/>
+    <path d="M308,215 C308,182 298,158 283,142
+             L283,264 C296,254 308,238 308,215 Z"
+          fill="#040404" opacity="0.45"/>
+
+    <!-- ===== GEOMETRIC ARMOR SEGMENTATION ===== -->
+    <!-- Central dorsal keel line -->
+    <path d="M200,108 L200,295"
+          fill="none" stroke="#1c1c24" stroke-width="2.5" opacity="0.9"/>
+    <path d="M200,108 L200,295"
+          fill="none" stroke="#D50000" stroke-width="0.6" opacity="0.28"/>
+
+    <!-- Top plate horizontal seam -->
+    <path d="M144,135 Q200,128 256,135"
+          fill="none" stroke="#1c1c24" stroke-width="3"/>
+    <path d="M144,135 Q200,128 256,135"
+          fill="none" stroke="#D50000" stroke-width="0.9" opacity="0.55"/>
+
+    <!-- Eye row plate seam — brow level -->
+    <path d="M104,192 Q200,183 296,192"
+          fill="none" stroke="#1c1c24" stroke-width="3"/>
+    <path d="M104,192 Q200,183 296,192"
+          fill="none" stroke="#D50000" stroke-width="0.9" opacity="0.48"/>
+
+    <!-- Mid plate seam -->
+    <path d="M96,245 Q200,236 304,245"
+          fill="none" stroke="#1c1c24" stroke-width="2.5"/>
+    <path d="M96,245 Q200,236 304,245"
+          fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.38"/>
+
+    <!-- Lower collar seam -->
+    <path d="M106,278 Q200,270 294,278"
+          fill="none" stroke="#1c1c24" stroke-width="2"/>
+    <path d="M106,278 Q200,270 294,278"
+          fill="none" stroke="#D50000" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Diagonal plate facets — top region -->
+    <path d="M155,108 L118,165" fill="none" stroke="#1c1c24" stroke-width="1.8" opacity="0.6"/>
+    <path d="M245,108 L282,165" fill="none" stroke="#1c1c24" stroke-width="1.8" opacity="0.6"/>
+    <!-- Diagonal facets — brow to mid -->
+    <path d="M104,198 L96,245"  fill="none" stroke="#1c1c24" stroke-width="1.5" opacity="0.5"/>
+    <path d="M296,198 L304,245" fill="none" stroke="#1c1c24" stroke-width="1.5" opacity="0.5"/>
+    <!-- Diagonal facets — mid to lower -->
+    <path d="M98,250 L106,278"  fill="none" stroke="#1c1c24" stroke-width="1.2" opacity="0.45"/>
+    <path d="M302,250 L294,278" fill="none" stroke="#1c1c24" stroke-width="1.2" opacity="0.45"/>
+
+    <!-- Plate intersection diamond accents — blood red -->
+    <rect x="197" y="131" width="6" height="6" rx="0.5"
+          fill="#D50000" transform="rotate(45, 200, 134)" opacity="0.65" filter="url(#innerGlow)"/>
+    <rect x="197" y="238" width="6" height="6" rx="0.5"
+          fill="#D50000" transform="rotate(45, 200, 241)" opacity="0.55" filter="url(#innerGlow)"/>
+
+    <!-- Dorsal ridge bumps along keel — 4 armored knobs -->
+    <g fill="url(#plateSheen)" stroke="#D50000" stroke-width="0.45" opacity="0.8">
+      <ellipse cx="200" cy="120" rx="9" ry="5.5"/>
+      <ellipse cx="200" cy="138" rx="7" ry="4.5"/>
+      <ellipse cx="200" cy="154" rx="5.5" ry="3.5"/>
+      <ellipse cx="200" cy="168" rx="4" ry="2.8"/>
+    </g>
+
+    <!-- ===== HEAVY BROW SHELF — threatening overhang ===== -->
+    <path d="M96,193 L180,174 L180,194 L96,200 Z" fill="#080810" opacity="0.95"/>
+    <path d="M304,193 L220,174 L220,194 L304,200 Z" fill="#080810" opacity="0.95"/>
+    <!-- Brow bridge center -->
+    <rect x="180" y="176" width="40" height="12" fill="#080810" opacity="0.95"/>
+    <!-- Brow blood-red edge highlight — glowing edge -->
+    <path d="M98,193 Q138,181 178,178 L200,177 L222,178 Q262,181 302,193"
+          fill="none" stroke="#D50000" stroke-width="1" opacity="0.65" filter="url(#redGlow)"/>
+
+    <!-- ===== 5 GLOWING BLOOD-RED EYES — scorpion multi-eye array ===== -->
+    <!-- Row arrangement: 2 large primaries center, 2 secondary, 1 tertiary each side = 6 total -->
+
+    <!-- LEFT PRIMARY — large, central, terrifying -->
+    <ellipse cx="164" cy="215" rx="22" ry="17" fill="#060608" stroke="#18181e" stroke-width="1.5"/>
+    <ellipse cx="164" cy="215" rx="17" ry="13" fill="url(#eyeRed)" filter="url(#redGlowStrong)"/>
+    <ellipse cx="164" cy="215" rx="11" ry="9" fill="#FF1744" opacity="0.88"/>
+    <ellipse cx="164" cy="215" rx="6" ry="5.5" fill="#FF4444"/>
+    <ellipse cx="162" cy="212" rx="3.5" ry="2.5" fill="#FF8A80" opacity="0.55"/>
+    <!-- Vertical slit pupil -->
+    <ellipse cx="164" cy="215" rx="2.2" ry="8" fill="#100000" opacity="0.95"/>
+
+    <!-- RIGHT PRIMARY -->
+    <ellipse cx="236" cy="215" rx="22" ry="17" fill="#060608" stroke="#18181e" stroke-width="1.5"/>
+    <ellipse cx="236" cy="215" rx="17" ry="13" fill="url(#eyeRed)" filter="url(#redGlowStrong)"/>
+    <ellipse cx="236" cy="215" rx="11" ry="9" fill="#FF1744" opacity="0.88"/>
+    <ellipse cx="236" cy="215" rx="6" ry="5.5" fill="#FF4444"/>
+    <ellipse cx="234" cy="212" rx="3.5" ry="2.5" fill="#FF8A80" opacity="0.55"/>
+    <ellipse cx="236" cy="215" rx="2.2" ry="8" fill="#100000" opacity="0.95"/>
+
+    <!-- LEFT SECONDARY — offset above and outward -->
+    <ellipse cx="133" cy="200" rx="12" ry="9.5" fill="#060608" stroke="#18181e" stroke-width="1"/>
+    <ellipse cx="133" cy="200" rx="8.5" ry="7" fill="url(#eyeRedSmall)" filter="url(#redGlow)"/>
+    <ellipse cx="133" cy="200" rx="5" ry="4" fill="#FF1744" opacity="0.85"/>
+    <ellipse cx="132" cy="198" rx="2.5" ry="2" fill="#FF8A80" opacity="0.45"/>
+    <ellipse cx="133" cy="200" rx="1.8" ry="4.5" fill="#100000" opacity="0.9"/>
+
+    <!-- RIGHT SECONDARY -->
+    <ellipse cx="267" cy="200" rx="12" ry="9.5" fill="#060608" stroke="#18181e" stroke-width="1"/>
+    <ellipse cx="267" cy="200" rx="8.5" ry="7" fill="url(#eyeRedSmall)" filter="url(#redGlow)"/>
+    <ellipse cx="267" cy="200" rx="5" ry="4" fill="#FF1744" opacity="0.85"/>
+    <ellipse cx="266" cy="198" rx="2.5" ry="2" fill="#FF8A80" opacity="0.45"/>
+    <ellipse cx="267" cy="200" rx="1.8" ry="4.5" fill="#100000" opacity="0.9"/>
+
+    <!-- LEFT TERTIARY — smallest, outermost -->
+    <ellipse cx="110" cy="207" rx="8" ry="6.5" fill="#060608" stroke="#18181e" stroke-width="0.8"/>
+    <ellipse cx="110" cy="207" rx="5.5" ry="4.5" fill="url(#eyeRedSmall)" filter="url(#redGlow)"/>
+    <ellipse cx="110" cy="207" rx="3" ry="2.5" fill="#FF1744" opacity="0.8"/>
+    <ellipse cx="110" cy="207" rx="1.2" ry="3" fill="#100000" opacity="0.85"/>
+
+    <!-- RIGHT TERTIARY -->
+    <ellipse cx="290" cy="207" rx="8" ry="6.5" fill="#060608" stroke="#18181e" stroke-width="0.8"/>
+    <ellipse cx="290" cy="207" rx="5.5" ry="4.5" fill="url(#eyeRedSmall)" filter="url(#redGlow)"/>
+    <ellipse cx="290" cy="207" rx="3" ry="2.5" fill="#FF1744" opacity="0.8"/>
+    <ellipse cx="290" cy="207" rx="1.2" ry="3" fill="#100000" opacity="0.85"/>
+
+    <!-- ===== CHELICERAE — armored mouthparts / fangs ===== -->
+    <!-- Left chelicera -->
+    <path d="M172,265 C170,276 166,284 162,295
+             C160,302 164,309 170,305
+             C176,300 178,289 180,275 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.2"/>
+    <!-- Left fang tip -->
+    <path d="M162,295 C157,303 155,310 159,316 C163,321 170,317 172,310
+             C167,309 162,295 162,295 Z"
+          fill="#D50000" opacity="0.9" filter="url(#innerGlow)"/>
+
+    <!-- Right chelicera -->
+    <path d="M228,265 C230,276 234,284 238,295
+             C240,302 236,309 230,305
+             C224,300 222,289 220,275 Z"
+          fill="url(#pincerGrad)" stroke="#18181e" stroke-width="1.2"/>
+    <!-- Right fang tip -->
+    <path d="M238,295 C243,303 245,310 241,316 C237,321 230,317 228,310
+             C233,309 238,295 238,295 Z"
+          fill="#D50000" opacity="0.9" filter="url(#innerGlow)"/>
+
+    <!-- Labrum — central mouth armor plate -->
+    <path d="M176,264 Q200,255 224,264 L228,276 Q200,272 172,276 Z"
+          fill="url(#plateSide)" stroke="#1c1c24" stroke-width="1.2"/>
+    <path d="M176,264 Q200,255 224,264"
+          fill="none" stroke="#D50000" stroke-width="0.7" opacity="0.5"/>
+
+    <!-- ===== TACTICAL COLLAR — military grade ===== -->
+    <path d="M134,314 Q147,325 200,329 Q253,325 266,314 L262,303
+             Q232,316 200,318 Q168,316 138,303 Z"
+          fill="url(#collarGrad)" stroke="#18181e" stroke-width="1.5"/>
+    <!-- Collar segment lines -->
+    <path d="M140,314 Q200,322 260,314"
+          fill="none" stroke="#222230" stroke-width="2.2"/>
+    <path d="M137,306 Q168,315 200,317 Q232,315 263,306"
+          fill="none" stroke="#D50000" stroke-width="0.6" opacity="0.38"/>
+    <!-- Collar tactical rivets -->
+    <g fill="#1c1c28" stroke="#D50000" stroke-width="0.55" opacity="0.85">
+      <circle cx="150" cy="315" r="3.2"/>
+      <circle cx="173" cy="319" r="2.8"/>
+      <circle cx="200" cy="321" r="3.5"/>
+      <circle cx="227" cy="319" r="2.8"/>
+      <circle cx="250" cy="315" r="3.2"/>
+    </g>
+    <!-- Collar tactical stripe -->
+    <path d="M141,310 Q200,320 259,310"
+          fill="none" stroke="#D50000" stroke-width="1.2" opacity="0.28"/>
+
+  </g>
+
+  <!-- ===== BLOOD RED ARMOR EDGE GLOW — key structural edges pulse ===== -->
+  <g filter="url(#redGlow)" opacity="0.5">
+    <path d="M155,106 Q200,100 245,106"   fill="none" stroke="#D50000" stroke-width="1.4"/>
+    <path d="M118,160 Q200,152 282,160"   fill="none" stroke="#D50000" stroke-width="1.1"/>
+    <path d="M102,192 Q200,184 298,192"   fill="none" stroke="#D50000" stroke-width="1.2"/>
+  </g>
+
+  <!-- ===== GOLD RING — prestige border matching king-hippo ===== -->
+  <circle cx="200" cy="200" r="192" fill="none" stroke="url(#gold)" stroke-width="0.7" opacity="0.1"/>
+  <circle cx="200" cy="200" r="187" fill="none" stroke="url(#gold)" stroke-width="0.3" opacity="0.06"/>
+
+  <!-- ===== TEXT — CISO in gold, same style as king-hippo ===== -->
+  <text x="200" y="368"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="17" font-weight="700" letter-spacing="8"
+        fill="url(#gold)" opacity="0.85">CISO</text>
+  <line x1="90" y1="377" x2="310" y2="377" stroke="url(#gold)" stroke-width="0.5" opacity="0.18"/>
+
+  <!-- Role subtitle -->
+  <text x="200" y="389"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="6.5" font-weight="400" letter-spacing="4"
+        fill="#D50000" opacity="0.5">CHIEF INFORMATION SECURITY OFFICER</text>
+
+  <!-- ===== CORNER MARKS — identical to king-hippo ===== -->
+  <g opacity="0.15" stroke="url(#gold)" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- Corner accent dots — blood red glow -->
+  <g fill="#D50000" opacity="0.38" filter="url(#redGlow)">
+    <circle cx="20" cy="20" r="1.5"/>
+    <circle cx="380" cy="20" r="1.5"/>
+    <circle cx="20" cy="380" r="1.5"/>
+    <circle cx="380" cy="380" r="1.5"/>
+  </g>
+
+  <!-- Operational status indicator — glowing red dot, top right quadrant -->
+  <circle cx="358" cy="42" r="3.5" fill="#D50000" opacity="0.8" filter="url(#redGlow)"/>
+  <circle cx="358" cy="42" r="1.8" fill="#FF4444" opacity="0.9"/>
+
+</svg>

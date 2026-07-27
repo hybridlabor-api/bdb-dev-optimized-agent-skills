@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "davinci-resolve": {
+      "command": "python",
+      "args": ["path/to/resolve_mcp_bridge.py"]
+    }
+  }
+}

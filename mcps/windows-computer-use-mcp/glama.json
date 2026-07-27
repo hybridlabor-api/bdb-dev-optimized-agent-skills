@@ -1,0 +1,94 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": [
+    "sandraschi"
+  ],
+  "name": "windows-computer-use-mcp",
+  "description": "Windows computer use agent (CUA-MCP): native UI automation via portmanteau MCP tools -- windows, elements, mouse, keyboard, visual, assert, dialog, shortcut, task. High privilege -- read docs/SAFETY.md; pair with virtualization-mcp for Sandbox/VM. HITL, kill switch, rate limits. FastMCP 3.4+.",
+  "type": "mcp_server",
+  "status": "production",
+  "framework": "FastMCP 3.4+",
+  "version": "0.7.0",
+  "last_sota_sync": "2026-06-25",
+  "sota_version": "13.0",
+  "tools": 18,
+  "transport": [
+    "stdio",
+    "http"
+  ],
+  "keywords": [
+    "windows",
+    "ui-automation",
+    "pywinauto",
+    "automation",
+    "gui",
+    "face-recognition",
+    "mcp-server",
+    "fastmcp",
+    "sota-2026"
+  ],
+  "features": {
+    "window_management": {
+      "enabled": true,
+      "capabilities": [
+        "focus",
+        "move",
+        "resize",
+        "close",
+        "wait"
+      ]
+    },
+    "element_interaction": {
+      "enabled": true,
+      "capabilities": [
+        "click",
+        "type",
+        "select",
+        "drag_drop"
+      ]
+    },
+    "mouse_control": {
+      "enabled": true,
+      "capabilities": [
+        "absolute-move",
+        "relative-move",
+        "scroll"
+      ]
+    },
+    "keyboard_input": {
+      "enabled": true,
+      "capabilities": [
+        "hotkeys",
+        "text-injection",
+        "ime-support"
+      ]
+    },
+    "visual_operations": {
+      "enabled": true,
+      "features": [
+        "screenshot",
+        "OCR",
+        "image_finding",
+        "template-matching"
+      ]
+    },
+    "face_recognition": {
+      "enabled": true,
+      "provider": "opencv-insightface"
+    },
+    "safety_and_isolation": {
+      "enabled": true,
+      "capabilities": [
+        "env-kill-switch",
+        "rate-limits",
+        "dry-run",
+        "hitl-mouse-keyboard",
+        "pair-with-virtualization-mcp-for-sandbox-vm"
+      ],
+      "documentation": [
+        "docs/SAFETY.md",
+        "mcp-central-docs/patterns/WINDOWS_COMPUTER_USE_MCP_SAFETY.md"
+      ]
+    }
+  }
+}

@@ -1,0 +1,507 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- Background — deep sea abyss, near-black violet -->
+    <radialGradient id="bg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%"   stop-color="#0d0820"/>
+      <stop offset="55%"  stop-color="#070412"/>
+      <stop offset="100%" stop-color="#020108"/>
+    </radialGradient>
+
+    <!-- Gold (matching king-hippo) -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFE082"/>
+      <stop offset="30%"  stop-color="#FFD700"/>
+      <stop offset="70%"  stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Octopus skin — deep purple-black, abyssal -->
+    <radialGradient id="skinDome" cx="48%" cy="32%" r="60%">
+      <stop offset="0%"   stop-color="#22093e"/>
+      <stop offset="50%"  stop-color="#150525"/>
+      <stop offset="100%" stop-color="#080214"/>
+    </radialGradient>
+    <linearGradient id="skinShade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#1c0835"/>
+      <stop offset="60%"  stop-color="#110420"/>
+      <stop offset="100%" stop-color="#08020f"/>
+    </linearGradient>
+    <linearGradient id="tentacleSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#180830"/>
+      <stop offset="100%" stop-color="#08021a"/>
+    </linearGradient>
+
+    <!-- Neon violet -->
+    <radialGradient id="violetCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#EE66FF"/>
+      <stop offset="45%"  stop-color="#AA00FF"/>
+      <stop offset="100%" stop-color="#5500BB"/>
+    </radialGradient>
+    <linearGradient id="violetSweep" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#5500BB" stop-opacity="0"/>
+      <stop offset="35%"  stop-color="#AA00FF"  stop-opacity="0.95"/>
+      <stop offset="65%"  stop-color="#CC44FF"  stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#5500BB" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Visor lens -->
+    <linearGradient id="visorLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#20004a" stop-opacity="0.75"/>
+      <stop offset="50%"  stop-color="#35006e" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#10002a" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Eye iris — deep violet, luminous -->
+    <radialGradient id="irisGrad" cx="45%" cy="38%" r="52%">
+      <stop offset="0%"   stop-color="#DD55FF"/>
+      <stop offset="40%"  stop-color="#8800CC"/>
+      <stop offset="80%"  stop-color="#440066"/>
+      <stop offset="100%" stop-color="#220033"/>
+    </radialGradient>
+
+    <!-- Neural line gradients -->
+    <linearGradient id="neuroH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#AA00FF" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#CC44FF" stop-opacity="0.75"/>
+      <stop offset="75%"  stop-color="#AA00FF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#CC44FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="neuroD1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#9900EE" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#BB33FF" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#9900EE" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="vGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.85"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="eyeGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0.5 0 1.0 0 0
+                0   0 0.4 0 0
+                1.0 0 1.0 0 0
+                0   0 0   0.6 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Sucker texture -->
+    <pattern id="suckers" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r="2.8" fill="none" stroke="#AA00FF" stroke-width="0.45" opacity="0.18"/>
+      <circle cx="7" cy="7" r="1.2" fill="none" stroke="#7700AA" stroke-width="0.3"  opacity="0.12"/>
+      <circle cx="0" cy="0" r="1.8" fill="none" stroke="#880099" stroke-width="0.3"  opacity="0.08"/>
+      <circle cx="14" cy="14" r="1.8" fill="none" stroke="#880099" stroke-width="0.3" opacity="0.08"/>
+    </pattern>
+
+    <!-- Subtle grid on background -->
+    <pattern id="gridPat" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M 22 0 L 0 0 0 22" fill="none" stroke="#AA00FF" stroke-width="0.18" opacity="0.1"/>
+    </pattern>
+
+  </defs>
+
+  <!-- ===========================
+       BACKGROUND
+  ============================ -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+  <rect width="400" height="400" rx="32" fill="url(#gridPat)" opacity="0.6"/>
+  <!-- Ambient bioluminescent haze -->
+  <ellipse cx="200" cy="195" rx="175" ry="150" fill="#AA00FF" opacity="0.022"/>
+  <ellipse cx="200" cy="175" rx="110" ry="95"  fill="#CC44FF" opacity="0.015"/>
+
+  <!-- ===========================
+       TENTACLES (rendered behind head)
+  ============================ -->
+  <g filter="url(#hardShadow)">
+
+    <!-- TENTACLE 1 — far left, sweeps up with curl -->
+    <path d="M 72,360
+             C 50,328 36,292 44,255
+             C 50,230 68,220 80,230
+             C 90,240 84,260 76,272
+             C 68,284 64,300 74,318
+             C 80,328 90,330 96,322"
+          fill="none" stroke="#160730" stroke-width="22" stroke-linecap="round"/>
+    <path d="M 72,360
+             C 50,328 36,292 44,255
+             C 50,230 68,220 80,230
+             C 90,240 84,260 76,272
+             C 68,284 64,300 74,318
+             C 80,328 90,330 96,322"
+          fill="none" stroke="url(#tentacleSkin)" stroke-width="20" stroke-linecap="round"/>
+    <!-- Sucker row on tentacle 1 -->
+    <circle cx="52"  cy="275" r="4"   fill="none" stroke="#AA00FF" stroke-width="0.9" opacity="0.55"/>
+    <circle cx="60"  cy="258" r="3.5" fill="none" stroke="#9900CC" stroke-width="0.8" opacity="0.45"/>
+    <circle cx="70"  cy="244" r="3.5" fill="none" stroke="#AA00FF" stroke-width="0.8" opacity="0.45"/>
+    <circle cx="80"  cy="234" r="3"   fill="none" stroke="#8800BB" stroke-width="0.7" opacity="0.4"/>
+    <!-- Glowing tip -->
+    <circle cx="96"  cy="322" r="6"   fill="#AA00FF" opacity="0.88" filter="url(#vGlow)"/>
+    <circle cx="96"  cy="322" r="3"   fill="#EE99FF"/>
+
+    <!-- TENTACLE 2 — left side, rises higher -->
+    <path d="M 108,365
+             C 88,338 72,308 80,272
+             C 86,250 106,240 118,250
+             C 128,260 122,280 114,292
+             C 106,304 104,322 116,334"
+          fill="none" stroke="#160730" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 108,365
+             C 88,338 72,308 80,272
+             C 86,250 106,240 118,250
+             C 128,260 122,280 114,292
+             C 106,304 104,322 116,334"
+          fill="none" stroke="url(#tentacleSkin)" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="88"  cy="290" r="3.5" fill="none" stroke="#AA00FF" stroke-width="0.8" opacity="0.55"/>
+    <circle cx="96"  cy="272" r="3"   fill="none" stroke="#9900CC" stroke-width="0.7" opacity="0.45"/>
+    <circle cx="106" cy="258" r="3"   fill="none" stroke="#AA00FF" stroke-width="0.7" opacity="0.45"/>
+    <circle cx="116" cy="334" r="5.5" fill="#AA00FF" opacity="0.85" filter="url(#vGlow)"/>
+    <circle cx="116" cy="334" r="2.8" fill="#EE99FF"/>
+
+    <!-- TENTACLE 3 — right side, mirror of tentacle 2 -->
+    <path d="M 292,365
+             C 312,338 328,308 320,272
+             C 314,250 294,240 282,250
+             C 272,260 278,280 286,292
+             C 294,304 296,322 284,334"
+          fill="none" stroke="#160730" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 292,365
+             C 312,338 328,308 320,272
+             C 314,250 294,240 282,250
+             C 272,260 278,280 286,292
+             C 294,304 296,322 284,334"
+          fill="none" stroke="url(#tentacleSkin)" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="312" cy="290" r="3.5" fill="none" stroke="#AA00FF" stroke-width="0.8" opacity="0.55"/>
+    <circle cx="304" cy="272" r="3"   fill="none" stroke="#9900CC" stroke-width="0.7" opacity="0.45"/>
+    <circle cx="294" cy="258" r="3"   fill="none" stroke="#AA00FF" stroke-width="0.7" opacity="0.45"/>
+    <circle cx="284" cy="334" r="5.5" fill="#AA00FF" opacity="0.85" filter="url(#vGlow)"/>
+    <circle cx="284" cy="334" r="2.8" fill="#EE99FF"/>
+
+    <!-- TENTACLE 4 — far right, mirror of tentacle 1 -->
+    <path d="M 328,360
+             C 350,328 364,292 356,255
+             C 350,230 332,220 320,230
+             C 310,240 316,260 324,272
+             C 332,284 336,300 326,318
+             C 320,328 310,330 304,322"
+          fill="none" stroke="#160730" stroke-width="22" stroke-linecap="round"/>
+    <path d="M 328,360
+             C 350,328 364,292 356,255
+             C 350,230 332,220 320,230
+             C 310,240 316,260 324,272
+             C 332,284 336,300 326,318
+             C 320,328 310,330 304,322"
+          fill="none" stroke="url(#tentacleSkin)" stroke-width="20" stroke-linecap="round"/>
+    <circle cx="348" cy="275" r="4"   fill="none" stroke="#AA00FF" stroke-width="0.9" opacity="0.55"/>
+    <circle cx="340" cy="258" r="3.5" fill="none" stroke="#9900CC" stroke-width="0.8" opacity="0.45"/>
+    <circle cx="330" cy="244" r="3.5" fill="none" stroke="#AA00FF" stroke-width="0.8" opacity="0.45"/>
+    <circle cx="320" cy="234" r="3"   fill="none" stroke="#8800BB" stroke-width="0.7" opacity="0.4"/>
+    <circle cx="304" cy="322" r="6"   fill="#AA00FF" opacity="0.88" filter="url(#vGlow)"/>
+    <circle cx="304" cy="322" r="3"   fill="#EE99FF"/>
+
+  </g>
+
+  <!-- ===========================
+       DATA STREAMS (glowing dots flowing from tips)
+  ============================ -->
+  <!-- Left stream — tentacle 2 -->
+  <g filter="url(#softGlow)" opacity="0.88">
+    <circle cx="104" cy="308" r="2.2" fill="#AA00FF"/>
+    <circle cx="96"  cy="295" r="1.6" fill="#CC66FF"/>
+    <circle cx="90"  cy="280" r="2"   fill="#AA00FF"/>
+    <circle cx="84"  cy="266" r="1.4" fill="#9900CC"/>
+    <circle cx="80"  cy="253" r="1.8" fill="#BB44FF"/>
+  </g>
+  <!-- Right stream — tentacle 3 -->
+  <g filter="url(#softGlow)" opacity="0.88">
+    <circle cx="296" cy="308" r="2.2" fill="#AA00FF"/>
+    <circle cx="304" cy="295" r="1.6" fill="#CC66FF"/>
+    <circle cx="310" cy="280" r="2"   fill="#AA00FF"/>
+    <circle cx="316" cy="266" r="1.4" fill="#9900CC"/>
+    <circle cx="320" cy="253" r="1.8" fill="#BB44FF"/>
+  </g>
+
+  <!-- ===========================
+       OCTOPUS HEAD — bulbous cranium
+  ============================ -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Cranium — large dome, narrows below into mantle -->
+    <path d="M 112,238
+             C 100,212 96,180 102,152
+             C 110,114 142,80 200,76
+             C 258,80 290,114 298,152
+             C 304,180 300,212 288,238
+             C 276,264 255,282 235,292
+             C 220,300 200,304 200,304
+             C 200,304 180,300 165,292
+             C 145,282 124,264 112,238 Z"
+          fill="url(#skinDome)"/>
+
+    <!-- Sucker texture overlay -->
+    <path d="M 112,238
+             C 100,212 96,180 102,152
+             C 110,114 142,80 200,76
+             C 258,80 290,114 298,152
+             C 304,180 300,212 288,238
+             C 276,264 255,282 235,292
+             C 220,300 200,304 200,304
+             C 200,304 180,300 165,292
+             C 145,282 124,264 112,238 Z"
+          fill="url(#suckers)"/>
+
+    <!-- 3D depth shadows — side planes -->
+    <path d="M 112,238 C 100,212 96,180 102,152
+             C 108,128 120,108 140,96
+             L 142,188 C 124,214 112,238 112,238 Z"
+          fill="#060112" opacity="0.5"/>
+    <path d="M 288,238 C 300,212 304,180 298,152
+             C 292,128 280,108 260,96
+             L 258,188 C 276,214 288,238 288,238 Z"
+          fill="#060112" opacity="0.5"/>
+
+    <!-- Dome ambient violet — bioluminescent surface -->
+    <ellipse cx="200" cy="128" rx="72" ry="48" fill="#AA00FF" opacity="0.04"/>
+    <ellipse cx="186" cy="114" rx="34" ry="22" fill="#CC44FF" opacity="0.03"/>
+
+    <!-- ===========================
+         NEURAL NETWORK on cranium
+    ============================ -->
+    <g filter="url(#softGlow)" opacity="0.78">
+      <!-- Latitude arcs across dome -->
+      <path d="M 148,110 Q 200,98  252,110"
+            fill="none" stroke="#AA00FF" stroke-width="0.85" opacity="0.65"/>
+      <path d="M 134,133 Q 200,120 266,133"
+            fill="none" stroke="#CC44FF" stroke-width="0.75" opacity="0.55"/>
+      <path d="M 126,158 Q 200,144 274,158"
+            fill="none" stroke="#9900CC" stroke-width="0.65" opacity="0.48"/>
+      <path d="M 122,182 Q 200,168 278,182"
+            fill="none" stroke="#AA00FF" stroke-width="0.6"  opacity="0.4"/>
+
+      <!-- Meridian lines top-to-equator -->
+      <path d="M 200,80  L 200,208"
+            fill="none" stroke="#BB33FF" stroke-width="0.7" opacity="0.38"/>
+      <path d="M 162,90  Q 154,148 148,205"
+            fill="none" stroke="#9900CC" stroke-width="0.6" opacity="0.35"/>
+      <path d="M 238,90  Q 246,148 252,205"
+            fill="none" stroke="#9900CC" stroke-width="0.6" opacity="0.35"/>
+      <path d="M 134,118 Q 122,168 126,214"
+            fill="none" stroke="#770099" stroke-width="0.5" opacity="0.28"/>
+      <path d="M 266,118 Q 278,168 274,214"
+            fill="none" stroke="#770099" stroke-width="0.5" opacity="0.28"/>
+
+      <!-- Diagonal cross-links -->
+      <path d="M 156,100 Q 184,134 168,168"
+            fill="none" stroke="#CC44FF" stroke-width="0.6" opacity="0.42"/>
+      <path d="M 244,100 Q 216,134 232,168"
+            fill="none" stroke="#CC44FF" stroke-width="0.6" opacity="0.42"/>
+      <path d="M 176,90  Q 214,122 248,154"
+            fill="none" stroke="#AA00FF" stroke-width="0.5" opacity="0.35"/>
+      <path d="M 224,90  Q 186,122 152,154"
+            fill="none" stroke="#AA00FF" stroke-width="0.5" opacity="0.35"/>
+      <path d="M 145,144 Q 172,130 200,138 Q 228,130 255,144"
+            fill="none" stroke="#BB33FF" stroke-width="0.55" opacity="0.38"/>
+    </g>
+
+    <!-- Neural nodes — bioluminescent points on network intersections -->
+    <g filter="url(#innerGlow)">
+      <!-- Top apex -->
+      <circle cx="200" cy="86"  r="4"   fill="#DD55FF" opacity="0.95"/>
+      <circle cx="200" cy="86"  r="2"   fill="#FFCCFF"/>
+
+      <!-- Upper tier -->
+      <circle cx="156" cy="104" r="3.2" fill="#AA00FF" opacity="0.88"/>
+      <circle cx="156" cy="104" r="1.4" fill="#EE88FF"/>
+      <circle cx="244" cy="104" r="3.2" fill="#AA00FF" opacity="0.88"/>
+      <circle cx="244" cy="104" r="1.4" fill="#EE88FF"/>
+
+      <!-- Mid tier -->
+      <circle cx="138" cy="132" r="2.8" fill="#9900CC" opacity="0.82"/>
+      <circle cx="262" cy="132" r="2.8" fill="#9900CC" opacity="0.82"/>
+      <circle cx="200" cy="118" r="2.8" fill="#CC44FF" opacity="0.78"/>
+
+      <!-- Lower tier -->
+      <circle cx="130" cy="162" r="2.5" fill="#BB33FF" opacity="0.72"/>
+      <circle cx="270" cy="162" r="2.5" fill="#BB33FF" opacity="0.72"/>
+      <circle cx="178" cy="110" r="2.2" fill="#AA00FF" opacity="0.7"/>
+      <circle cx="222" cy="110" r="2.2" fill="#AA00FF" opacity="0.7"/>
+      <circle cx="164" cy="138" r="2"   fill="#9900CC" opacity="0.65"/>
+      <circle cx="236" cy="138" r="2"   fill="#9900CC" opacity="0.65"/>
+      <circle cx="200" cy="148" r="2.2" fill="#AA00FF" opacity="0.62"/>
+    </g>
+
+    <!-- ===========================
+         EYE SOCKETS
+    ============================ -->
+    <ellipse cx="155" cy="216" rx="38" ry="30" fill="#08011a" opacity="0.82"/>
+    <ellipse cx="245" cy="216" rx="38" ry="30" fill="#08011a" opacity="0.82"/>
+
+    <!-- ===========================
+         EYES — large, forward, alien slit pupils
+    ============================ -->
+    <!-- Sclera — very dark violet-grey, not white -->
+    <ellipse cx="155" cy="216" rx="30" ry="24" fill="#0f0328"/>
+    <ellipse cx="245" cy="216" rx="30" ry="24" fill="#0f0328"/>
+
+    <!-- Iris — deep violet, luminous -->
+    <ellipse cx="155" cy="216" rx="22" ry="21" fill="url(#irisGrad)"/>
+    <ellipse cx="245" cy="216" rx="22" ry="21" fill="url(#irisGrad)"/>
+
+    <!-- Iris detail rings -->
+    <ellipse cx="155" cy="216" rx="22" ry="21" fill="none" stroke="#DD55FF" stroke-width="0.85" opacity="0.6"/>
+    <ellipse cx="155" cy="216" rx="16" ry="15" fill="none" stroke="#9900CC"  stroke-width="0.6"  opacity="0.4"/>
+    <ellipse cx="245" cy="216" rx="22" ry="21" fill="none" stroke="#DD55FF"  stroke-width="0.85" opacity="0.6"/>
+    <ellipse cx="245" cy="216" rx="16" ry="15" fill="none" stroke="#9900CC"  stroke-width="0.6"  opacity="0.4"/>
+
+    <!-- Horizontal slit pupil — the mark of alien intelligence -->
+    <ellipse cx="155" cy="216" rx="17" ry="5" fill="#000000"/>
+    <ellipse cx="245" cy="216" rx="17" ry="5" fill="#000000"/>
+    <!-- Slit inner sheen -->
+    <ellipse cx="155" cy="215" rx="15" ry="2.2" fill="#0c0020" opacity="0.6"/>
+    <ellipse cx="245" cy="215" rx="15" ry="2.2" fill="#0c0020" opacity="0.6"/>
+
+    <!-- Eye bioluminescent glow -->
+    <ellipse cx="155" cy="216" rx="22" ry="21" fill="#AA00FF" opacity="0.11" filter="url(#eyeGlow)"/>
+    <ellipse cx="245" cy="216" rx="22" ry="21" fill="#AA00FF" opacity="0.11" filter="url(#eyeGlow)"/>
+
+    <!-- Catch lights — intelligence, awareness -->
+    <ellipse cx="163" cy="207" rx="5.5" ry="4" fill="#ffffff" opacity="0.18"/>
+    <ellipse cx="253" cy="207" rx="5.5" ry="4" fill="#ffffff" opacity="0.18"/>
+    <circle  cx="160" cy="206" r="2"         fill="#ffffff" opacity="0.36"/>
+    <circle  cx="250" cy="206" r="2"         fill="#ffffff" opacity="0.36"/>
+
+    <!-- Brow ridges — heavy, smooth -->
+    <path d="M 122,202 Q 155,192 188,200"
+          fill="#0e0325" stroke="#180440" stroke-width="2.5" opacity="0.92"/>
+    <path d="M 278,202 Q 245,192 212,200"
+          fill="#0e0325" stroke="#180440" stroke-width="2.5" opacity="0.92"/>
+
+    <!-- ===========================
+         FUTURISTIC VISOR
+    ============================ -->
+    <g filter="url(#softGlow)">
+      <!-- Glow behind visor -->
+      <rect x="114" y="206" width="172" height="22" rx="5"
+            fill="#AA00FF" opacity="0.16" filter="url(#vGlow)"/>
+
+      <!-- Left lens -->
+      <rect x="116" y="207" width="76" height="20" rx="5"
+            fill="url(#visorLens)" stroke="#6600AA" stroke-width="1.1"/>
+      <rect x="118" y="209" width="72" height="16" rx="4"
+            fill="url(#visorLens)" opacity="0.65"/>
+      <!-- Left edge shine -->
+      <line x1="120" y1="210" x2="188" y2="210"
+            stroke="#CC44FF" stroke-width="0.75" opacity="0.55"/>
+
+      <!-- Right lens -->
+      <rect x="208" y="207" width="76" height="20" rx="5"
+            fill="url(#visorLens)" stroke="#6600AA" stroke-width="1.1"/>
+      <rect x="210" y="209" width="72" height="16" rx="4"
+            fill="url(#visorLens)" opacity="0.65"/>
+      <!-- Right edge shine -->
+      <line x1="212" y1="210" x2="280" y2="210"
+            stroke="#CC44FF" stroke-width="0.75" opacity="0.55"/>
+
+      <!-- Bridge -->
+      <rect x="192" y="211" width="16" height="12" rx="3"
+            fill="#180038" stroke="#5500AA" stroke-width="0.9"/>
+      <line x1="194" y1="217" x2="206" y2="217"
+            stroke="#AA00FF" stroke-width="0.7" opacity="0.75"/>
+
+      <!-- Violet glow sweep across lenses -->
+      <rect x="116" y="215" width="76" height="5" rx="2.5"
+            fill="url(#violetSweep)" opacity="0.75"/>
+      <rect x="208" y="215" width="76" height="5" rx="2.5"
+            fill="url(#violetSweep)" opacity="0.75"/>
+
+      <!-- Temple arms -->
+      <path d="M 116,217 Q 100,217 94,224"
+            fill="none" stroke="#5500AA" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M 284,217 Q 300,217 306,224"
+            fill="none" stroke="#5500AA" stroke-width="1.6" stroke-linecap="round"/>
+
+      <!-- Lens sensor dots -->
+      <circle cx="130" cy="217" r="1.1" fill="#AA00FF" opacity="0.85"/>
+      <circle cx="142" cy="217" r="0.9" fill="#7700BB" opacity="0.65"/>
+      <circle cx="270" cy="217" r="1.1" fill="#AA00FF" opacity="0.85"/>
+      <circle cx="258" cy="217" r="0.9" fill="#7700BB" opacity="0.65"/>
+    </g>
+
+    <!-- ===========================
+         BIOLUMINESCENT SPOTS on skin
+    ============================ -->
+    <g filter="url(#innerGlow)" opacity="0.82">
+      <!-- Upper head -->
+      <circle cx="143" cy="180" r="2.8" fill="#AA00FF" opacity="0.72"/>
+      <circle cx="174" cy="164" r="2.2" fill="#BB33FF" opacity="0.68"/>
+      <circle cx="257" cy="180" r="2.8" fill="#AA00FF" opacity="0.72"/>
+      <circle cx="226" cy="164" r="2.2" fill="#BB33FF" opacity="0.68"/>
+      <circle cx="200" cy="172" r="2.5" fill="#CC44FF" opacity="0.62"/>
+
+      <!-- Lower head / neck area -->
+      <circle cx="138" cy="240" r="2.2" fill="#9900CC" opacity="0.65"/>
+      <circle cx="262" cy="240" r="2.2" fill="#9900CC" opacity="0.65"/>
+      <circle cx="152" cy="262" r="2"   fill="#AA00FF" opacity="0.58"/>
+      <circle cx="248" cy="262" r="2"   fill="#AA00FF" opacity="0.58"/>
+      <circle cx="200" cy="268" r="2.2" fill="#BB33FF" opacity="0.52"/>
+      <circle cx="176" cy="274" r="1.6" fill="#9900CC" opacity="0.48"/>
+      <circle cx="224" cy="274" r="1.6" fill="#9900CC" opacity="0.48"/>
+
+      <!-- Tentacle root spots -->
+      <circle cx="112" cy="252" r="2.2" fill="#AA00FF" opacity="0.62"/>
+      <circle cx="288" cy="252" r="2.2" fill="#AA00FF" opacity="0.62"/>
+    </g>
+
+  </g><!-- end head group -->
+
+  <!-- ===========================
+       GOLD RING (matching king-hippo)
+  ============================ -->
+  <circle cx="200" cy="200" r="192" fill="none" stroke="url(#gold)" stroke-width="1"   opacity="0.12"/>
+  <circle cx="200" cy="200" r="188" fill="none" stroke="#FFD700"     stroke-width="0.4" opacity="0.07"/>
+
+  <!-- ===========================
+       TEXT
+  ============================ -->
+  <text x="200" y="372"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15"
+        font-weight="700"
+        letter-spacing="6"
+        fill="url(#gold)"
+        opacity="0.85">CAIO</text>
+  <line x1="148" y1="380" x2="252" y2="380" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- ===========================
+       CORNER MARKS (matching king-hippo exactly)
+  ============================ -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M 20,45  L 20,20  L 45,20"/>
+    <path d="M 380,45 L 380,20 L 355,20"/>
+    <path d="M 20,355 L 20,380 L 45,380"/>
+    <path d="M 380,355 L 380,380 L 355,380"/>
+  </g>
+
+</svg>

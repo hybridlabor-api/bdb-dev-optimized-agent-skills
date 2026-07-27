@@ -1,0 +1,80 @@
+name: Connector Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'connector/**'
+      - 'shared/router-launcher.mjs'
+      - '.github/workflows/connector-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # create tags + releases
+
+concurrency:
+  group: connector-release
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: false
+          lfs: true
+          fetch-depth: 1
+
+      - name: Read connector version
+        id: ver
+        run: |
+          VERSION=$(node -p "require('./connector/manifest.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=connector-v$VERSION" >> "$GITHUB_OUTPUT"
+          [[ "$VERSION" == *-* ]] && echo "prerelease=true" >> "$GITHUB_OUTPUT" || echo "prerelease=false" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether release already exists
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${{ steps.ver.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Release ${{ steps.ver.outputs.tag }} exists - nothing to release."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "New version ${{ steps.ver.outputs.version }} - will release."
+          fi
+
+      - name: Setup Node.js
+        if: steps.check.outputs.exists == 'false'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Validate manifest
+        if: steps.check.outputs.exists == 'false'
+        working-directory: connector
+        run: npx --yes @anthropic-ai/mcpb validate manifest.json
+
+      - name: Pack .mcpb bundle
+        if: steps.check.outputs.exists == 'false'
+        working-directory: connector
+        run: node build.mjs
+
+      - name: Create GitHub Release (creates tag atomically)
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.ver.outputs.tag }}" \
+            connector/*.mcpb \
+            --title "Connector ${{ steps.ver.outputs.version }}" \
+            --target "${{ github.sha }}" \
+            --generate-notes \
+            ${{ steps.ver.outputs.prerelease == 'true' && '--prerelease' || '' }}

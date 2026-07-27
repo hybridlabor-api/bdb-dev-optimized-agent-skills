@@ -1,0 +1,16 @@
+FROM node:24-slim AS build
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm ci
+
+# Copy source code and build the application
+COPY . .
+RUN npm run build
+
+# Prepare startup helper for stdio/http selection
+RUN chmod +x docker/start.sh
+
+CMD ["./docker/start.sh"]

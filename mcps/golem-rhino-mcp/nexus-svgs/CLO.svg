@@ -1,0 +1,501 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- Background — deep space black with subtle warm center -->
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#0c0d18"/>
+      <stop offset="55%"  stop-color="#06070f"/>
+      <stop offset="100%" stop-color="#020307"/>
+    </radialGradient>
+
+    <!-- Gold — identical to king-hippo -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFE082"/>
+      <stop offset="30%"  stop-color="#FFD700"/>
+      <stop offset="70%"  stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Raven plumage — deep black core -->
+    <linearGradient id="ravenBody" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%"   stop-color="#141620"/>
+      <stop offset="35%"  stop-color="#0a0b12"/>
+      <stop offset="70%"  stop-color="#060709"/>
+      <stop offset="100%" stop-color="#030405"/>
+    </linearGradient>
+
+    <!-- Blue-silver iridescent sheen — the raven's magic -->
+    <linearGradient id="iridBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1e3a5f" stop-opacity="0.55"/>
+      <stop offset="40%"  stop-color="#16325a" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0a1830" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="iridSilver" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#546E7A" stop-opacity="0.35"/>
+      <stop offset="50%"  stop-color="#78909C" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#37474F" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Feather edge silver highlights -->
+    <linearGradient id="silverEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#CFD8DC"/>
+      <stop offset="50%"  stop-color="#B0BEC5"/>
+      <stop offset="100%" stop-color="#78909C"/>
+    </linearGradient>
+    <linearGradient id="silverFade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#B0BEC5" stop-opacity="0"/>
+      <stop offset="40%"  stop-color="#CFD8DC" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#90A4AE" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Beak — jet black, hard-edged, predatory -->
+    <linearGradient id="beakUpper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1e1e1e"/>
+      <stop offset="50%"  stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#030303"/>
+    </linearGradient>
+    <linearGradient id="beakHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#383838" stop-opacity="0.9"/>
+      <stop offset="60%"  stop-color="#181818" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beakLower" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#151515"/>
+      <stop offset="100%" stop-color="#040404"/>
+    </linearGradient>
+
+    <!-- Eye — silver/white iris, cold intelligence -->
+    <radialGradient id="eyeIris" cx="42%" cy="38%" r="58%">
+      <stop offset="0%"   stop-color="#E8ECED"/>
+      <stop offset="30%"  stop-color="#CFD8DC"/>
+      <stop offset="60%"  stop-color="#90A4AE"/>
+      <stop offset="85%"  stop-color="#607D8B"/>
+      <stop offset="100%" stop-color="#37474F"/>
+    </radialGradient>
+    <radialGradient id="eyePupil" cx="38%" cy="35%" r="55%">
+      <stop offset="0%"   stop-color="#040406"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+
+    <!-- Judge's robe collar — absolute black authority -->
+    <linearGradient id="robeMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0e0f18"/>
+      <stop offset="40%"  stop-color="#080910"/>
+      <stop offset="100%" stop-color="#020308"/>
+    </linearGradient>
+    <linearGradient id="robeSilverAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#546E7A" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#78909C" stop-opacity="0.35"/>
+      <stop offset="70%"  stop-color="#78909C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#546E7A" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Wire-frame glasses — thin platinum -->
+    <linearGradient id="glassFrame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#78909C"/>
+      <stop offset="50%"  stop-color="#CFD8DC"/>
+      <stop offset="100%" stop-color="#78909C"/>
+    </linearGradient>
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#B0BEC5" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#546E7A" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- ===== FILTERS — identical naming pattern to king-hippo ===== -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="eyeGlow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle grid — same as king-hippo, silver tinted for legal theme -->
+  <g opacity="0.028" stroke="#B0BEC5" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- ===== JUDGE'S ROBE — bottom foundation ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Robe body — voluminous dark mass fills lower third -->
+    <path d="M20,400 L20,318
+             Q50,302 90,295 Q130,288 168,292
+             Q184,294 200,300
+             Q216,294 232,292
+             Q270,288 310,295 Q350,302 380,318
+             L380,400 Z"
+          fill="url(#robeMain)"/>
+
+    <!-- Left collar wing — formal judge lapel -->
+    <path d="M20,400 L20,325
+             Q44,308 72,300 Q108,292 148,294
+             Q168,296 180,304
+             L174,338
+             Q155,326 122,322 Q85,320 62,336
+             L55,400 Z"
+          fill="#070810"/>
+
+    <!-- Right collar wing -->
+    <path d="M380,400 L380,325
+             Q356,308 328,300 Q292,292 252,294
+             Q232,296 220,304
+             L226,338
+             Q245,326 278,322 Q315,320 338,336
+             L345,400 Z"
+          fill="#070810"/>
+
+    <!-- Robe center split — darkness -->
+    <path d="M178,306 Q200,318 222,306 L226,400 L174,400 Z"
+          fill="#020306"/>
+
+    <!-- Silver trim bands on robe -->
+    <rect x="20" y="316" width="360" height="1.5" rx="0.8" fill="url(#robeSilverAccent)" opacity="0.5"/>
+    <rect x="20" y="320" width="360" height="0.8" rx="0.4" fill="url(#robeSilverAccent)" opacity="0.25"/>
+
+    <!-- Robe collar feather-to-fabric merge detail -->
+    <path d="M90,296 Q140,286 168,291 Q184,294 196,300"
+          fill="none" stroke="#546E7A" stroke-width="1" opacity="0.4"/>
+    <path d="M310,296 Q260,286 232,291 Q216,294 204,300"
+          fill="none" stroke="#546E7A" stroke-width="1" opacity="0.4"/>
+
+  </g>
+
+  <!-- ===== RAVEN HEAD MAIN — 3/4 view, facing viewer-left ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Neck base into collar -->
+    <path d="M152,298 Q176,312 200,316 Q224,312 248,298
+             L252,282 Q236,272 200,270 Q164,272 148,282 Z"
+          fill="#0a0b14"/>
+
+    <!-- Skull — sleek, tapered ovoid, 3/4 angle -->
+    <!-- Head is centered, with beak extending left from ~x=120 -->
+    <path d="M120,240
+             C108,220 104,198 106,178
+             C108,152 120,130 142,116
+             C160,104 182,98 205,98
+             C230,98 254,106 270,122
+             C286,138 294,162 292,188
+             C290,214 278,238 262,254
+             Q242,270 205,274
+             Q158,272 120,240 Z"
+          fill="url(#ravenBody)"/>
+
+    <!-- Blue iridescent layer -->
+    <path d="M120,240 C108,220 104,198 106,178 C108,152 120,130 142,116
+             C160,104 182,98 205,98 C230,98 254,106 270,122
+             C286,138 294,162 292,188 C290,214 278,238 262,254
+             Q242,270 205,274 Q158,272 120,240 Z"
+          fill="url(#iridBlue)"/>
+
+    <!-- Silver iridescent counter-sheen -->
+    <path d="M120,240 C108,220 104,198 106,178 C108,152 120,130 142,116
+             C160,104 182,98 205,98 C230,98 254,106 270,122
+             C286,138 294,162 292,188 C290,214 278,238 262,254
+             Q242,270 205,274 Q158,272 120,240 Z"
+          fill="url(#iridSilver)"/>
+
+    <!-- Hard shadow — right (far) side of face, 3/4 shadow plane -->
+    <path d="M256,116 C276,134 290,160 290,186
+             C290,212 278,238 262,254
+             L256,260
+             C270,242 282,216 282,190
+             C282,164 270,140 252,122 Z"
+          fill="#000" opacity="0.55"/>
+
+    <!-- Left (near) side subtle light catch -->
+    <path d="M118,220 C108,206 106,188 108,172
+             C110,155 118,140 130,128
+             Q121,145 118,168 Q115,192 122,218 Z"
+          fill="#1e3050" opacity="0.38"/>
+
+    <!-- ===== SLICKED-BACK CREST FEATHERS — sharp, authoritative ===== -->
+    <!-- These sweep back from the forehead — precise, intimidating -->
+    <path d="M188,98 Q194,72 198,54 Q200,72 196,98 Z"
+          fill="#0c0d16" stroke="#B0BEC5" stroke-width="0.7" stroke-opacity="0.45"/>
+    <path d="M200,98 Q208,68 212,50 Q212,70 208,98 Z"
+          fill="#0a0b14" stroke="#90A4AE" stroke-width="0.6" stroke-opacity="0.4"/>
+    <path d="M178,100 Q182,76 184,60 Q184,78 180,100 Z"
+          fill="#0c0e18" stroke="#78909C" stroke-width="0.55" stroke-opacity="0.35"/>
+    <path d="M212,99 Q220,74 224,58 Q222,76 217,99 Z"
+          fill="#0a0b14" stroke="#78909C" stroke-width="0.55" stroke-opacity="0.32"/>
+    <path d="M167,104 Q168,82 170,68 Q172,83 170,104 Z"
+          fill="#0c0e18" stroke="#607D8B" stroke-width="0.5" stroke-opacity="0.28"/>
+
+    <!-- Side sweeping feathers — left -->
+    <path d="M126,136 Q110,118 100,100 Q114,114 132,132 Z"
+          fill="#09090f" stroke="#546E7A" stroke-width="0.7" stroke-opacity="0.45"/>
+    <path d="M118,156 Q100,140 90,122 Q106,136 122,152 Z"
+          fill="#0a0b14" stroke="#455A64" stroke-width="0.6" stroke-opacity="0.38"/>
+    <path d="M113,176 Q94,162 84,146 Q100,158 116,174 Z"
+          fill="#080910" stroke="#455A64" stroke-width="0.55" stroke-opacity="0.3"/>
+    <path d="M112,196 Q92,184 82,168 Q98,178 115,194 Z"
+          fill="#080910" stroke="#37474F" stroke-width="0.5" stroke-opacity="0.25"/>
+
+    <!-- Feather texture strokes across skull — iridescent lines -->
+    <g fill="none" opacity="0.20" stroke="#90A4AE" stroke-width="0.55">
+      <path d="M142,120 Q170,110 205,108"/>
+      <path d="M130,140 Q162,128 205,126"/>
+      <path d="M123,160 Q158,148 208,146"/>
+      <path d="M120,180 Q157,170 210,168"/>
+      <path d="M122,200 Q160,192 214,190"/>
+      <path d="M126,220 Q162,214 218,212"/>
+    </g>
+    <!-- Secondary finer texture -->
+    <g fill="none" opacity="0.10" stroke="#607D8B" stroke-width="0.35">
+      <path d="M148,114 Q175,106 208,104"/>
+      <path d="M136,134 Q166,124 208,122"/>
+      <path d="M128,154 Q162,144 210,142"/>
+    </g>
+
+    <!-- Silver edge highlight lines — premium feather catch-light -->
+    <path d="M140,118 Q168,108 205,106"
+          fill="none" stroke="#E8ECEE" stroke-width="1.4" opacity="0.32"/>
+    <path d="M126,140 Q158,128 202,126"
+          fill="none" stroke="#CFD8DC" stroke-width="1.1" opacity="0.26"/>
+    <path d="M120,162 Q154,150 204,148"
+          fill="none" stroke="#B0BEC5" stroke-width="0.9" opacity="0.22"/>
+    <path d="M120,183 Q156,174 208,172"
+          fill="none" stroke="#90A4AE" stroke-width="0.7" opacity="0.18"/>
+
+    <!-- ===== BEAK — curved raptor hook, partially open, authority ===== -->
+    <!-- Upper mandible — dominant downward curve from face -->
+    <path d="M116,216
+             C110,210 100,202 84,190
+             C72,181 62,172 58,162
+             Q54,152 60,147
+             Q66,143 74,150
+             C82,158 92,170 104,182
+             C114,192 122,206 126,216
+             Q122,222 116,216 Z"
+          fill="url(#beakUpper)"/>
+
+    <!-- Upper mandible surface highlight — ridge of curved beak -->
+    <path d="M116,216 C108,208 96,198 80,186 C68,177 60,167 58,157
+             Q62,152 68,154 C76,162 88,174 100,186 C110,196 120,210 124,218 Z"
+          fill="url(#beakHighlight)" opacity="0.55"/>
+
+    <!-- Upper mandible: hook tip — sharp downcurve -->
+    <path d="M60,147 Q54,138 55,128 Q62,121 70,128 Q74,136 70,144 Q65,140 62,144 Z"
+          fill="#0a0a0a"/>
+    <!-- Cutting edge / tomia line -->
+    <path d="M116,216 C102,206 86,192 70,176 Q62,166 58,155"
+          fill="none" stroke="#252525" stroke-width="1.2" opacity="0.6"/>
+    <!-- Culmen ridge line -->
+    <path d="M116,215 C104,204 88,190 72,174 Q64,163 59,150 Q56,140 58,130"
+          fill="none" stroke="#2a2a2a" stroke-width="0.7" opacity="0.5" stroke-dasharray="0"/>
+
+    <!-- Lower mandible — slightly dropped, showing open authority -->
+    <path d="M118,228
+             C112,225 100,220 84,214
+             C72,208 62,202 59,194
+             Q56,185 63,182
+             Q70,180 78,186
+             C88,193 100,204 112,214
+             Q118,220 118,228 Z"
+          fill="url(#beakLower)"/>
+
+    <!-- Beak open gap — darkness inside -->
+    <path d="M116,218 Q94,210 72,200 Q62,194 59,186 Q62,178 68,180
+             Q80,185 96,196 Q110,208 118,220 Z"
+          fill="#010103" opacity="0.92"/>
+
+    <!-- Lower mandible edge -->
+    <path d="M118,228 C106,222 88,214 70,206 Q60,200 57,192"
+          fill="none" stroke="#1a1a1a" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- ===== EYE — single visible, silver iris, piercing cold intelligence ===== -->
+    <!-- Orbital socket depth -->
+    <ellipse cx="174" cy="185" rx="30" ry="24" fill="#030408"/>
+
+    <!-- Eye white — dark, just barely lighter than skull -->
+    <ellipse cx="172" cy="183" rx="23" ry="19" fill="#141620"/>
+
+    <!-- Silver iris — the most distinctive element -->
+    <ellipse cx="170" cy="181" rx="19" ry="16" fill="url(#eyeIris)" filter="url(#eyeGlow)"/>
+
+    <!-- Pupil — deep black, round but with oval compression -->
+    <ellipse cx="168" cy="179" rx="10" ry="12" fill="url(#eyePupil)"/>
+    <ellipse cx="167" cy="178" rx="7"  ry="9"  fill="#000"/>
+
+    <!-- Specular highlight — sharp pinpoint of light -->
+    <circle cx="162" cy="174" r="2.8" fill="#fff" opacity="0.92"/>
+    <circle cx="165" cy="176" r="1.2" fill="#fff" opacity="0.5"/>
+
+    <!-- Subtle silver iris ring -->
+    <ellipse cx="170" cy="181" rx="21" ry="18"
+             fill="none" stroke="#607D8B" stroke-width="0.8" opacity="0.35"/>
+
+    <!-- Upper eyelid — heavy, predatory angle -->
+    <path d="M148,174 Q166,160 196,170 L196,177 Q170,165 150,180 Z"
+          fill="#050610"/>
+    <path d="M150,176 Q166,162 195,171"
+          fill="none" stroke="#141820" stroke-width="1.8"/>
+
+    <!-- Lower lid — thin line -->
+    <path d="M152,196 Q170,202 196,195 L195,190 Q170,197 153,192 Z"
+          fill="#050610" opacity="0.65"/>
+
+    <!-- ===== WIRE-FRAME GLASSES — half-rim, platinum, intellectual ===== -->
+    <g filter="url(#softGlow)">
+      <!-- Main lens — half-rim (only top arc, no bottom frame — glasses rest on face) -->
+      <!-- Left lens (primary, 3/4 view) -->
+      <path d="M142,170 Q144,160 153,156 Q166,152 182,154 Q194,156 198,163 L198,175
+               Q192,170 182,168 Q166,166 153,168 Q145,170 142,173 Z"
+            fill="url(#glassLens)"/>
+      <!-- Half-rim top arc — the only visible frame element -->
+      <path d="M142,172 Q144,160 153,156 Q166,152 182,154 Q194,156 198,163"
+            fill="none" stroke="url(#glassFrame)" stroke-width="1.6" stroke-linecap="round"/>
+      <!-- Lens glass fill -->
+      <path d="M142,172 Q144,160 153,156 Q166,152 182,154 Q194,156 198,163 L198,174
+               Q192,168 182,166 Q166,164 153,167 Q145,169 142,172 Z"
+            fill="url(#glassLens)"/>
+      <!-- Lens shine reflection -->
+      <path d="M148,162 Q162,157 180,159"
+            fill="none" stroke="url(#glassShine)" stroke-width="1.3" stroke-linecap="round"/>
+
+      <!-- Right lens — partially visible, 3/4 perspective foreshortening -->
+      <path d="M204,164 Q206,156 214,153 Q224,150 234,153 Q240,156 242,162"
+            fill="none" stroke="url(#glassFrame)" stroke-width="1.3"
+            stroke-linecap="round" opacity="0.58"/>
+      <!-- Right lens fill hint -->
+      <path d="M204,164 Q206,156 214,153 Q224,150 234,153 Q240,156 242,162 L242,170
+               Q224,168 214,169 Q206,170 204,172 Z"
+            fill="url(#glassLens)" opacity="0.45"/>
+
+      <!-- Bridge — hairline wire connecting lenses -->
+      <path d="M198,165 Q201,162 204,165"
+            fill="none" stroke="url(#glassFrame)" stroke-width="1.3" stroke-linecap="round"/>
+
+      <!-- Temple arm — left, going to hidden ear behind feathers -->
+      <path d="M142,172 Q130,177 120,184 Q112,190 110,200"
+            fill="none" stroke="url(#glassFrame)" stroke-width="1.3"
+            stroke-linecap="round" opacity="0.65"/>
+
+      <!-- Temple arm — right, into shadow side -->
+      <path d="M242,165 Q254,162 262,158 Q270,154 274,146"
+            fill="none" stroke="url(#glassFrame)" stroke-width="1.2"
+            stroke-linecap="round" opacity="0.45"/>
+
+      <!-- Nose pad detail — tiny platinum -->
+      <circle cx="198" cy="166" r="1.3" fill="#B0BEC5" opacity="0.9"/>
+      <circle cx="204" cy="166" r="1.3" fill="#B0BEC5" opacity="0.9"/>
+    </g>
+
+    <!-- ===== FEATHER RUFF / COLLAR — fan of feathers merging into robe ===== -->
+    <!-- These spread around the neck base like a Victorian lace collar or judge's tabs -->
+
+    <!-- Center front feathers -->
+    <path d="M194,270 Q198,292 194,312 Q200,298 206,312 Q202,292 206,270 Z"
+          fill="#080910" stroke="#546E7A" stroke-width="0.8" stroke-opacity="0.42"/>
+    <!-- Flanking center -->
+    <path d="M182,268 Q183,290 177,310 Q186,296 191,312 Q192,292 196,270 Z"
+          fill="#070810" stroke="#455A64" stroke-width="0.7" stroke-opacity="0.36"/>
+    <path d="M208,268 Q207,290 213,310 Q209,296 204,312 Q203,292 199,270 Z"
+          fill="#070810" stroke="#455A64" stroke-width="0.7" stroke-opacity="0.36"/>
+
+    <!-- Left spreading ruff -->
+    <path d="M165,264 Q163,285 155,304 Q168,290 172,308 Q174,288 180,268 Z"
+          fill="#060810" stroke="#37474F" stroke-width="0.65" stroke-opacity="0.32"/>
+    <path d="M148,256 Q142,276 130,294 Q148,281 151,298 Q154,278 164,260 Z"
+          fill="#060810" stroke="#37474F" stroke-width="0.6" stroke-opacity="0.28"/>
+    <path d="M135,246 Q125,265 114,282 Q135,269 137,285 Q142,265 154,250 Z"
+          fill="#05060e" stroke="#2E3A44" stroke-width="0.55" stroke-opacity="0.24"/>
+
+    <!-- Right spreading ruff -->
+    <path d="M235,264 Q237,285 245,304 Q232,290 228,308 Q226,288 220,268 Z"
+          fill="#060810" stroke="#37474F" stroke-width="0.65" stroke-opacity="0.32"/>
+    <path d="M252,256 Q258,276 270,294 Q252,281 249,298 Q246,278 236,260 Z"
+          fill="#060810" stroke="#37474F" stroke-width="0.6" stroke-opacity="0.28"/>
+    <path d="M265,246 Q275,265 286,282 Q265,269 263,285 Q258,265 246,250 Z"
+          fill="#05060e" stroke="#2E3A44" stroke-width="0.55" stroke-opacity="0.24"/>
+
+    <!-- Silver accent on ruff feather edges — iridescent catch-light -->
+    <path d="M196,270 Q200,286 198,302"
+          fill="none" stroke="#78909C" stroke-width="0.9" opacity="0.42"/>
+    <path d="M184,268 Q185,284 181,300"
+          fill="none" stroke="#607D8B" stroke-width="0.8" opacity="0.36"/>
+    <path d="M210,268 Q209,284 213,300"
+          fill="none" stroke="#607D8B" stroke-width="0.8" opacity="0.36"/>
+    <path d="M167,264 Q165,278 160,292"
+          fill="none" stroke="#546E7A" stroke-width="0.7" opacity="0.30"/>
+    <path d="M233,264 Q235,278 240,292"
+          fill="none" stroke="#546E7A" stroke-width="0.7" opacity="0.30"/>
+    <path d="M150,256 Q146,268 138,280"
+          fill="none" stroke="#455A64" stroke-width="0.6" opacity="0.25"/>
+    <path d="M250,256 Q254,268 262,280"
+          fill="none" stroke="#455A64" stroke-width="0.6" opacity="0.25"/>
+
+  </g>
+
+  <!-- ===== GOLD RING — top of card, matching king-hippo style ===== -->
+  <g filter="url(#glow)">
+    <!-- Outer ring -->
+    <circle cx="200" cy="50" r="20" fill="none"
+            stroke="url(#gold)" stroke-width="2.5"/>
+    <!-- Inner thin ring -->
+    <circle cx="200" cy="50" r="15" fill="none"
+            stroke="#FFD700" stroke-width="0.5" opacity="0.38"/>
+    <!-- Center dot -->
+    <circle cx="200" cy="50" r="4" fill="url(#gold)"/>
+    <!-- Cardinal accent marks on ring -->
+    <circle cx="200" cy="30" r="2.2" fill="url(#goldDark)" opacity="0.75"/>
+    <circle cx="200" cy="70" r="2.2" fill="url(#goldDark)" opacity="0.75"/>
+    <circle cx="180" cy="50" r="2.2" fill="url(#goldDark)" opacity="0.75"/>
+    <circle cx="220" cy="50" r="2.2" fill="url(#goldDark)" opacity="0.75"/>
+    <!-- Diagonal smaller marks -->
+    <circle cx="186" cy="36" r="1.3" fill="#FFC107" opacity="0.5"/>
+    <circle cx="214" cy="36" r="1.3" fill="#FFC107" opacity="0.5"/>
+    <circle cx="186" cy="64" r="1.3" fill="#FFC107" opacity="0.5"/>
+    <circle cx="214" cy="64" r="1.3" fill="#FFC107" opacity="0.5"/>
+  </g>
+
+  <!-- ===== TEXT — identical style to king-hippo ===== -->
+  <text x="200" y="372"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="6"
+        fill="#FFD700" opacity="0.8">CLO</text>
+  <line x1="80" y1="380" x2="320" y2="380"
+        stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- ===== CORNER MARKS — sharp, minimal, identical to king-hippo ===== -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+</svg>

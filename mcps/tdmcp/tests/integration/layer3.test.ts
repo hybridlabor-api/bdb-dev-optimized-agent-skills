@@ -1,0 +1,114 @@
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { createTdmcpServer } from "../../src/server/tdmcpServer.js";
+import { loadConfig } from "../../src/utils/config.js";
+import { silentLogger } from "../../src/utils/logger.js";
+import { makeTdServer } from "../helpers/tdMock.js";
+
+const mock = makeTdServer();
+beforeAll(() => mock.listen({ onUnhandledRequest: "error" }));
+afterEach(() => mock.resetHandlers());
+afterAll(() => mock.close());
+
+async function connectClient(env: NodeJS.ProcessEnv = {}) {
+  const config = loadConfig(env); // defaults → 127.0.0.1:9980 (matches the mock bridge)
+  const server = createTdmcpServer(config, { logger: silentLogger });
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  const client = new Client({ name: "tdmcp-test-client", version: "0.0.0" });
+  await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
+  return client;
+}
+
+describe("integration: Layer 3 over the MCP protocol", () => {
+  it("exposes the core Layer 3 tools", async () => {
+    const client = await connectClient();
+    const { tools } = await client.listTools();
+    const names = tools.map((t) => t.name);
+    expect(names).toEqual(
+      expect.arrayContaining([
+        "get_td_info",
+        "create_td_node",
+        "delete_td_node",
+        "update_td_node_parameters",
+        "get_td_nodes",
+        "get_td_node_parameters",
+        "get_td_node_errors",
+        "execute_python_script",
+        "exec_node_method",
+        "create_python_script",
+      ]),
+    );
+  });
+
+  it("locks out raw Python escape hatches when TDMCP_RAW_PYTHON=off", async () => {
+    const client = await connectClient({ TDMCP_RAW_PYTHON: "off" });
+    const names = (await client.listTools()).tools.map((t) => t.name);
+    expect(names).not.toContain("execute_python_script");
+    expect(names).not.toContain("exec_node_method");
+    expect(names).not.toContain("create_python_script");
+    // Structured tools stay available.
+    expect(names).toContain("find_td_nodes");
+    expect(names).toContain("get_td_nodes");
+  });
+
+  it("marks the Python escape hatches as destructive", async () => {
+    const client = await connectClient();
+    const tools = (await client.listTools()).tools;
+    for (const name of ["execute_python_script", "exec_node_method", "create_python_script"]) {
+      const tool = tools.find((t) => t.name === name);
+      expect(tool, `${name} should be registered`).toBeDefined();
+      expect(tool?.annotations?.destructiveHint, `${name} should stay destructive`).toBe(true);
+    }
+  });
+
+  // Regression guard: tools that remove nodes or overwrite saved state must keep
+  // destructiveHint=true so a future docs/annotation pass cannot silently downgrade
+  // the safety signal MCP clients rely on. listTools() returns every layer's tools.
+  it("marks node-removing and state-overwriting tools as destructive", async () => {
+    const client = await connectClient();
+    const tools = (await client.listTools()).tools;
+    for (const name of ["delete_td_node", "create_panic", "manage_component"]) {
+      const tool = tools.find((t) => t.name === name);
+      expect(tool, `${name} should be registered`).toBeDefined();
+      expect(tool?.annotations?.destructiveHint, `${name} should stay destructive`).toBe(true);
+    }
+  });
+
+  it("creates a Noise TOP, then a Null TOP, then lists them", async () => {
+    const client = await connectClient();
+    const noise = await client.callTool({
+      name: "create_td_node",
+      arguments: { parent_path: "/project1", type: "noiseTOP", name: "noise1" },
+    });
+    expect(JSON.stringify(noise.content)).toContain("/project1/noise1");
+
+    const nullTop = await client.callTool({
+      name: "create_td_node",
+      arguments: { parent_path: "/project1", type: "nullTOP", name: "null1" },
+    });
+    expect(JSON.stringify(nullTop.content)).toContain("/project1/null1");
+
+    const list = await client.callTool({
+      name: "get_td_nodes",
+      arguments: { parent_path: "/project1", detail_level: "full" },
+    });
+    // Node data now travels on the structuredContent channel, not the text block.
+    const data = JSON.stringify(list.structuredContent);
+    expect(data).toContain("noise1");
+    expect(data).toContain("null1");
+  });
+
+  it("reads the operator knowledge resource", async () => {
+    const client = await connectClient();
+    const result = await client.readResource({ uri: "tdmcp://operators/TOP" });
+    expect(result.contents.length).toBeGreaterThan(0);
+    expect(JSON.stringify(result.contents)).toContain("Noise TOP");
+  });
+
+  it("get_td_info returns bridge info through MCP when mocked", async () => {
+    const client = await connectClient();
+    const result = await client.callTool({ name: "get_td_info", arguments: {} });
+    expect(JSON.stringify(result.content)).toContain("2023.12000");
+  });
+});

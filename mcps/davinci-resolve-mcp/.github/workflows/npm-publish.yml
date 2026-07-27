@@ -1,0 +1,109 @@
+name: Publish npm package
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Run Python smoke tests
+        run: python tests/test_import.py
+
+      - name: Run static guard tests
+        # Drift guards that gate every publish: no undefined names in src/,
+        # tool action lists in sync with dispatch, control-panel guide in
+        # sync with the panel's navigation and screenshots, and the
+        # Blackmagic-facing api-limitations.md in sync with the api_truth ledger.
+        run: |
+          pip install pyflakes
+          python -m unittest tests.test_static_undefined_names tests.test_action_list_drift tests.test_panel_docs_drift tests.test_api_limitations_doc
+
+      - name: Run Node CLI smoke tests
+        run: |
+          node bin/davinci-resolve-mcp.mjs --help
+          node bin/davinci-resolve-mcp.mjs --version
+
+      - name: Run setup dry run
+        run: |
+          export DAVINCI_RESOLVE_MCP_INSTALL_ROOT="$(mktemp -d)"
+          node bin/davinci-resolve-mcp.mjs setup --dry-run --no-venv --clients manual --update-policy never
+
+      - name: Check npm package contents
+        run: npm pack --dry-run
+
+      - name: Check npm version availability
+        id: npm_version
+        shell: bash
+        run: |
+          package_name="$(node -p "require('./package.json').name")"
+          package_version="$(node -p "require('./package.json').version")"
+          if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "${package_name}@${package_version} is already published; skipping npm publish."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "${package_name}@${package_version} is not published yet."
+          fi
+
+      - name: Compute expected tarball checksum
+        id: pack_meta
+        if: steps.npm_version.outputs.publish == 'true'
+        shell: bash
+        run: |
+          shasum="$(npm pack --dry-run --json | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8'))[0].shasum")"
+          echo "shasum=${shasum}" >> "$GITHUB_OUTPUT"
+          echo "Expected tarball shasum: ${shasum}"
+
+      - name: Publish to npm
+        id: npm_publish
+        if: steps.npm_version.outputs.publish == 'true'
+        continue-on-error: true
+        run: npm publish --provenance --access public
+
+      - name: Verify publish landed
+        if: steps.npm_version.outputs.publish == 'true' && steps.npm_publish.outcome == 'failure'
+        shell: bash
+        run: |
+          # npm publish can exit nonzero after the registry has already accepted
+          # the PUT: a retried request re-presents the consumed single-use OIDC
+          # exchange token and gets 401 "token is invalid" (observed on the
+          # v2.37.0 run). Only fail the job if the exact tarball is not live.
+          package_name="$(node -p "require('./package.json').name")"
+          package_version="$(node -p "require('./package.json').version")"
+          expected="${{ steps.pack_meta.outputs.shasum }}"
+          for attempt in 1 2 3 4 5 6; do
+            published="$(npm view "${package_name}@${package_version}" dist.shasum 2>/dev/null || true)"
+            if [ -n "${published}" ]; then
+              if [ "${published}" = "${expected}" ]; then
+                echo "npm publish reported failure, but ${package_name}@${package_version} is live with the expected shasum ${expected}. Treating as success."
+                exit 0
+              fi
+              echo "::error::${package_name}@${package_version} exists on the registry with shasum ${published}, expected ${expected}. Refusing to mask the publish failure."
+              exit 1
+            fi
+            echo "Attempt ${attempt}: ${package_name}@${package_version} not visible on the registry yet; retrying in 10s."
+            sleep 10
+          done
+          echo "::error::npm publish failed and ${package_name}@${package_version} never appeared on the registry."
+          exit 1

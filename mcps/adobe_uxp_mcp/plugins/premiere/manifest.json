@@ -1,0 +1,20 @@
+{
+  "id": "com.bdb.mcp.premiere",
+  "name": "BDB Premiere MCP",
+  "version": "1.0.0",
+  "main": "index.html",
+  "host": [
+    {
+      "app": "PPRO",
+      "minVersion": "24.0.0"
+    }
+  ],
+  "manifestVersion": 5,
+  "requiredPermissions": {
+    "network": {
+      "domains": ["ws://localhost:8080", "localhost"]
+    },
+    "localFileSystem": "request",
+    "allowCodeGenerationFromStrings": true
+  }
+}

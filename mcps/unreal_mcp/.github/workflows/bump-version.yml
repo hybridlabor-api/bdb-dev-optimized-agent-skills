@@ -1,0 +1,320 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to set (e.g., 0.5.5)'
+        required: true
+        type: string
+      auto_increment:
+        description: 'Auto-increment version (overrides version input)'
+        required: false
+        type: choice
+        options:
+          - ''
+          - major
+          - minor
+          - patch
+        default: ''
+      create_changelog:
+        description: 'Create new CHANGELOG entry (template)'
+        required: false
+        type: boolean
+        default: false
+      branch:
+        description: 'Target branch'
+        required: false
+        type: string
+        default: 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.branch || 'main' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get current version
+        id: current_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Current npm version: $CURRENT_VERSION"
+
+      - name: Validate version format
+        if: inputs.auto_increment == ''
+        env:
+          VERSION_INPUT: ${{ github.event.inputs.version }}
+        run: |
+          if [[ ! "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Invalid version format: $VERSION_INPUT"
+            echo "Version must be in semver format: X.Y.Z"
+            exit 1
+          fi
+          echo "✅ Version format validated: $VERSION_INPUT"
+
+      - name: Calculate new version (auto-increment)
+        if: inputs.auto_increment != ''
+        id: calc_version
+        env:
+          CURRENT_VERSION: ${{ steps.current_version.outputs.version }}
+          AUTO_INCREMENT: ${{ github.event.inputs.auto_increment }}
+        run: |
+          CURRENT="$CURRENT_VERSION"
+          INCREMENT="$AUTO_INCREMENT"
+
+          echo "Current version: $CURRENT"
+          echo "Increment type: $INCREMENT"
+
+          # Parse version
+          MAJOR=$(echo $CURRENT | cut -d. -f1)
+          MINOR=$(echo $CURRENT | cut -d. -f2)
+          PATCH=$(echo $CURRENT | cut -d. -f3)
+
+          # Increment based on type
+          case $INCREMENT in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New npm version: $NEW_VERSION"
+
+      - name: Set final npm version
+        id: final_version
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          AUTO_INCREMENT: ${{ inputs.auto_increment }}
+          CALC_VERSION: ${{ steps.calc_version.outputs.version }}
+        run: |
+          if [ "$AUTO_INCREMENT" != "" ]; then
+            VERSION="$CALC_VERSION"
+          else
+            VERSION="$INPUT_VERSION"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Final npm version: $VERSION"
+
+      - name: Update package.json
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+        run: |
+          VERSION="$FINAL_VERSION"
+          npm version "$VERSION" --no-git-tag-version
+          echo "✅ Updated package.json and package-lock.json to $VERSION"
+
+      - name: Update server.json
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+        run: |
+          VERSION="$FINAL_VERSION"
+          jq --arg v "$VERSION" '.version = $v | .packages[] |= if .registryType == "npm" then .version = $v else . end' server.json > tmp && mv tmp server.json
+          echo "✅ Updated server.json to $VERSION"
+
+      - name: Update src/index.ts
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+        run: |
+          VERSION="$FINAL_VERSION"
+
+          # Update only the DEFAULT_SERVER_VERSION fallback string (targeted replacement)
+          perl -0777 -i -pe "s/(const DEFAULT_SERVER_VERSION[\\s\\S]*?:\\s*)'[^']+';/\${1}'$VERSION';/" src/index.ts
+
+          echo "✅ Updated src/index.ts DEFAULT_SERVER_VERSION fallback to $VERSION"
+
+      - name: Verify no hardcoded npm versions remain
+        env:
+          OLD_VERSION: ${{ steps.current_version.outputs.version }}
+        run: |
+
+          # Search for remaining occurrences (excluding expected files)
+          FOUND=$(grep -r "$OLD_VERSION" --include="*.json" --include="*.ts" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git 2>/dev/null | grep -v "CHANGELOG.md" | grep -v "package-lock.json" || true)
+
+          if [ -n "$FOUND" ]; then
+            echo "⚠️ Warning: Found remaining instances of $OLD_VERSION in code:"
+            echo "$FOUND"
+            echo "This might be intentional (e.g., CHANGELOG.md, docs)"
+          else
+            echo "✅ No hardcoded npm versions found (excluding CHANGELOG.md, package-lock.json)"
+          fi
+
+      - name: Create CHANGELOG entry
+        if: inputs.create_changelog == 'true'
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+        run: |
+          VERSION="$FINAL_VERSION"
+          DATE=$(date +%Y-%m-%d)
+
+          # Create new CHANGELOG entry
+          cat > changelog_entry.tmp << 'CHANGELOG_EOF'
+          ## 🏷️ [VERSION_PLACEHOLDER] - DATE_PLACEHOLDER
+
+          > [!NOTE]
+          > ### 🚀 New Release
+          > This is a new release. Fill in changelog details below.
+
+          ### ✨ Added
+
+          <details>
+          <summary><b>New Features</b></summary>
+
+          | Feature | Description |
+          |---------|-------------|
+          | | |
+
+          </details>
+
+          ### 🔧 Changed
+
+          <details>
+          <summary><b>Improvements</b></summary>
+
+          | Component | Change |
+          |-----------|--------|
+          | | |
+
+          </details>
+
+          ### 🐛 Fixed
+
+          -
+
+          ### 📊 Statistics
+
+          - **Files Changed:**
+          - **New Features:**
+          - **Bug Fixes:**
+
+          ---
+
+          CHANGELOG_EOF
+
+          # Replace placeholders
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/g" changelog_entry.tmp
+          sed -i "s/DATE_PLACEHOLDER/$DATE/g" changelog_entry.tmp
+
+          # Read the new entry
+          NEW_ENTRY=$(cat changelog_entry.tmp)
+
+          # Insert after the first --- line (after header)
+          awk -v entry="$NEW_ENTRY" '
+            /^---$/ && !found { print; found=1; getline; print entry; next }
+            { print }
+          ' CHANGELOG.md > CHANGELOG.md.tmp
+
+          mv CHANGELOG.md.tmp CHANGELOG.md
+          rm changelog_entry.tmp
+
+          echo "✅ Created CHANGELOG entry for $VERSION"
+
+      - name: Show changes
+        run: |
+          echo "## 📋 Changes Summary"
+          echo ""
+          echo "### Files Modified:"
+          git diff --stat
+          echo ""
+          echo "### Detailed Changes:"
+          git diff
+
+      - name: Commit changes
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+          CREATE_CHANGELOG: ${{ inputs.create_changelog }}
+        run: |
+          VERSION="$FINAL_VERSION"
+
+          if [ "$CREATE_CHANGELOG" == "true" ]; then
+            COMMIT_MESSAGE="chore(release): bump version to v$VERSION"
+          else
+            COMMIT_MESSAGE="chore: bump version to v$VERSION"
+          fi
+
+          git add package.json package-lock.json server.json src/index.ts
+
+          if [ "$CREATE_CHANGELOG" == "true" ]; then
+            git add CHANGELOG.md
+          fi
+
+          git commit -m "$COMMIT_MESSAGE"
+          echo "✅ Committed changes"
+
+      - name: Push changes
+        env:
+          TARGET_BRANCH: ${{ github.event.inputs.branch || 'main' }}
+        run: |
+          # Push commit only (no tag creation - tags are created manually)
+          git push origin "$TARGET_BRANCH"
+
+          echo "✅ Pushed changes to $TARGET_BRANCH"
+
+      - name: Create Release Summary
+        env:
+          FINAL_VERSION: ${{ steps.final_version.outputs.version }}
+          CURRENT_VERSION: ${{ steps.current_version.outputs.version }}
+          CREATE_CHANGELOG: ${{ inputs.create_changelog }}
+        run: |
+          VERSION="$FINAL_VERSION"
+          CURRENT="$CURRENT_VERSION"
+
+          echo "## ✅ Version Bump Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Previous Version:** \`$CURRENT\`" >> $GITHUB_STEP_SUMMARY
+          echo "**New Version:** \`$VERSION\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Files Updated:" >> $GITHUB_STEP_SUMMARY
+          echo "- \`package.json\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`server.json\` (2 occurrences)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`src/index.ts\`" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$CREATE_CHANGELOG" == "true" ]; then
+            echo "- \`CHANGELOG.md\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Changes:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          git diff --stat HEAD~1 HEAD >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📝 Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review the pushed changes" >> $GITHUB_STEP_SUMMARY
+          echo "2. Fill in CHANGELOG.md with release notes (if created)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Create and push tag manually: \`git tag -a v$VERSION -m 'Release v$VERSION' && git push origin v$VERSION\`" >> $GITHUB_STEP_SUMMARY
+          echo "4. Tag push will trigger automated workflows:" >> $GITHUB_STEP_SUMMARY
+          echo "   - \`release.yml\` will trigger automatically on tag push" >> $GITHUB_STEP_SUMMARY
+          echo "   - \`publish-mcp.yml\` will trigger automatically on tag push" >> $GITHUB_STEP_SUMMARY

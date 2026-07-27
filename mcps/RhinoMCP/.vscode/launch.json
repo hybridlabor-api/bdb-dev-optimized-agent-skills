@@ -1,0 +1,89 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "Rhino 9 - netcore",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build (R9)",
+      "program": "",
+      "osx": {
+        "program": "/Applications/RhinoBETA.app/Contents/MacOS/Rhinoceros",
+        "args": [
+          "-nosplash"
+        ],
+        "env": {
+          "RHINO_PACKAGE_DIRS": "${workspaceFolder}/rhino/plugin/bin/R9-osx/Debug",
+        }
+      },
+      "windows": {
+        "program": "C:\\Program Files\\Rhino 9 WIP\\System\\Rhino.exe",
+        "targetArchitecture": "x86_64",
+        "args": [
+          "/netcore",
+          "/nosplash"
+        ],
+        "env": {
+          "RHINO_PACKAGE_DIRS": "${workspaceFolder}/rhino/plugin/bin/R9-win/Debug",
+        }
+      },
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": "Rhino 8 - netcore",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build (R8)",
+      "program": "",
+      "osx": {
+        "program": "/Applications/Rhino 8.app/Contents/MacOS/Rhinoceros",
+        "args": [
+          "-nosplash"
+        ],
+        "env": {
+          "RHINO_PACKAGE_DIRS": "${workspaceFolder}/rhino/plugin/bin/R8-osx/Debug",
+        }
+      },
+      "windows": {
+        "program": "C:\\Program Files\\Rhino 8\\System\\Rhino.exe",
+        "targetArchitecture": "x86_64",
+        "args": [
+          "/netcore",
+          "/nosplash"
+        ],
+        "env": {
+          "RHINO_PACKAGE_DIRS": "${workspaceFolder}/rhino/plugin/bin/R8-win/Debug",
+        }
+      },
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": "Router - launch",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "router: build + register + open claude",
+      "program": "${workspaceFolder}/rhino/router/bin/R9/Debug/net8.0/rhino-mcp-router.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/rhino/router",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Docs - hugo server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "hugo server --buildDrafts --disableFastRender",
+      "cwd": "${workspaceFolder}/docs",
+      "serverReadyAction": {
+        "pattern": "Web Server is available at (https?://\\S+)",
+        "uriFormat": "%s",
+        "action": "openExternally"
+      }
+    },
+  ],
+  "compounds": []
+}

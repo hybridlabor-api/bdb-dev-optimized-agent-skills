@@ -1,0 +1,51 @@
+info:
+  description: OpenAPI schema for generating TouchDesigner API client code
+  title: TouchDesigner API
+  version: 1.4.3
+
+openapi: 3.0.0
+
+servers:
+  - url: ${process.env.TD_WEB_SERVER_HOST}:${process.env.TD_WEB_SERVER_PORT}
+    description: TouchDesigner Web Server
+
+paths:
+  /api/nodes:
+    $ref: ./paths/api/nodes/list.yml
+  /api/nodes/detail:
+    $ref: ./paths/api/nodes/detail.yml
+  /api/nodes/errors:
+    $ref: ./paths/api/nodes/errors.yml
+  /api/td/classes:
+    $ref: ./paths/api/td/classes/list.yml
+  /api/td/classes/{className}:
+    $ref: ./paths/api/td/classes/details.yml
+  /api/td/modules/help:
+    $ref: ./paths/api/td/modules/help.yml
+  /api/td/nodes/exec:
+    $ref: ./paths/api/td/nodes/exec.yml
+  /api/td/server/exec:
+    $ref: ./paths/api/td/server/exec.yml
+  /api/td/server/td:
+    $ref: ./paths/api/td/server/td.yml
+
+components:
+  schemas:
+    TdNode:
+      $ref: ./components/schemas/TdNode.yml
+    TdNodeFamilyType:
+      $ref: ./components/schemas/TdNodeFamilyType.yml
+    TdNodeError:
+      $ref: ./components/schemas/TdNodeError.yml
+    TdNodeErrorReport:
+      $ref: ./components/schemas/TdNodeErrorReport.yml
+    TdPythonClassDetails:
+      $ref: ./components/schemas/TdPythonClassDetails.yml
+    TdPythonClassInfo:
+      $ref: ./components/schemas/TdPythonClassInfo.yml
+    TdPythonMethodInfo:
+      $ref: ./components/schemas/TdPythonMethodInfo.yml
+    TdPythonPropertyInfo:
+      $ref: ./components/schemas/TdPythonPropertyInfo.yml
+    ModuleHelp:
+      $ref: ./components/schemas/ModuleHelp.yml

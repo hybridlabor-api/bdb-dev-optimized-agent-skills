@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes"/>
+  <meta name="version" content="2020.0.0"/>
+  <link rel="StyleSheet" href="../../template/styles/topic.min.css" type="text/css"/>
+  <link rel="StyleSheet" data-skin="true" type="text/css" href="../../template/StudioVW/layout.css"/>
+  <link rel="StyleSheet" data-skin="true" href="../../template/StudioVW/userstyles.css" type="text/css"/>
+  
+    <link rel="shortcut icon" type="image/png" href="../../Icon_H.png"/>
+    
+<link rel="StyleSheet" href="../../assets/css/Vectorworks.css" type="text/css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="Originator" content="ImportMif"/>
+  <meta name="OriginalFile" content="C:\Documentation\27_Guide 2019\Scripts.fm"/>
+  <meta name="generator" content="Adobe RoboHelp 2022"/>
+  <title>Creating scripted plug-ins</title>
+  
+<meta name="rh-version" content="2022.1.188"/><meta name="brsnext" value="VW2023_Guide/Scripts/Specifying_the_plug-in_definition.htm"/><meta name="brsprev" value="VW2023_Guide/Scripts/Concept_Scripted_plug-ins.htm"/></head>
+
+<body class="rh-BODY-wrapper">
+  <div class="cookie-widget-holder" id="cookie-status-widget-holder"></div>
+  <div class="RH-LAYOUT-HEADER-skip-content-container" id="skip-to-content"></div>
+  <header class="RH-LAYOUT-HEADER-container" role="banner">
+    <div class="RH-LAYOUT-HEADER-logo-box  ">
+      <div class="RH-LAYOUT-HEADER-logo" id="logo-holder"></div>
+      <div class="RH-LAYOUT-HEADER-title" id="topic-title-holder"></div>
+    </div>
+    <div class="RH-LAYOUT-HEADERMENU-container" id="header-menu"></div>
+    <div class="search-placeholder-class" id="search-with-help"></div>
+  </header>
+  <main role="main" class="RH-LAYOUT-BODY-container">
+    <div class="RH-LAYOUT-SEARCHRESULTS" id="rh-searchresults"></div>
+    <div class="RH-LAYOUT-LEFTPANEL-container" id="rh-leftpanel"></div>
+    <div class="rh-layout-BODY-main" id="rh-layout-main">
+      <div class="RH-LAYOUT-TOOLBAR-toolbar-box" id="rh-toolbar"></div>
+      <div class="rh-layout-BODY-body">
+        <div class="RH-LAYOUT-CENTERPANEL-container">
+          <div class="rh-layout-selectdetails" id="rh-selectdetails"></div>
+          <div class="RH-LAYOUT-CENTERPANEL-topic-box" id="rh-topic" dir="ltr">
+  <p><a id="Top"></a></p>
+  <div>
+  <h1 dir="ltr" id="h"><a id="Plug-in_Manager_command" data-indexterm="Plug-in Manager command"></a><a id="IX_Plug_in_Manager_command"></a><a id="XREF_89724_Creating_Scripted"></a>Creating scripted <a id="CSH_995"></a>plug-ins<a id="CSH_996"></a></h1>
+  <table border="1" cellpadding="1" cellspacing="1" class="TableLeft" style="border-collapse: collapse;">
+    <tbody>
+      <tr>
+        <td>
+          <p class="Heading_white">Command</p>
+        </td>
+        <td>
+          <p class="Heading_white">Path</p>
+        </td>
+        <td>
+          <p class="Heading_white">Shortcut</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="CellBody">Plug-in Manager</p>
+        </td>
+        <td>
+          <p class="CellBody" dir="ltr">Tools &gt; Plug-ins</p>
+        </td>
+        <td>
+          <p class="CellBulletwSpace" dir="ltr">Ctrl+Shift+Z (Windows)</p>
+          <p class="CellBulletwSpace" dir="ltr">Cmd+Shift+Z (Mac)</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p dir="ltr">The Plug-in Manager displays three types of plug-ins:</p>
+  <p class="BulletwSpace" dir="ltr">Custom, unobfuscated plug-ins that you create</p>
+  <p class="Bullet" dir="ltr">Third-party plug-ins, purchased from developers (obfuscated), and obfuscated plug-ins you create</p>
+  <p class="Bullet" dir="ltr">Built-in, obfuscated plug-ins that are included with the Vectorworks program</p>
+  <p dir="ltr">Third-party plug-ins and built-in plug-ins, which are obfuscated, may allow limited editing of the plug-in parameters and definition. Options that are not available for editing are grayed.</p>
+  <p dir="ltr">Custom, unobfuscated plug-ins are created and edited from the Custom Plug-ins tab of the Plug-in Manager, where you can specify the plug-in type, category, parameters, options, and code for a new custom plug-in. Plug-ins are saved as described in <a href="Concept_Scripted_plug-ins.htm#h2">Plug-in file location</a>.</p>
+  <p dir="ltr">To create a plug-in:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">Select the command.</p>
+  <p class="Indent" dir="ltr">The Plug-in Manager dialog box opens.</p>
+  <p class="Indent" dir="ltr"><a class="dropspot" data-rhwidget="DropSpot" data-target="POPUP29193442" href="#"><span data-open-text="true" data-skip-index="true">Click to show/hide the parameters.</span><span data-close-text="true">Click to show/hide the parameters.</span></a></p>
+  <div data-targetname="POPUP29193442">
+    <table align="center" cellpadding="1" cellspacing="0" class="TableSmall" dir="ltr" style="border-collapse:collapse;" width="693">
+      <tbody>
+        <tr class="t1st" style="">
+          <td style="vertical-align: top;" width="160">
+            <p class="Heading_table" dir="ltr">Parameter</p>
+          </td>
+          <td style="vertical-align: top;" width="533">
+            <p class="Heading_table" dir="ltr">Description</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBody" dir="ltr">Custom Plug-ins</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr"> </p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">Plug-ins list</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Lists available custom plug-ins; the icon to the left of the plug-in name indicates the type of plug-in (see <a data-cke-saved-href="Concept_Scripted_plug-ins.htm#h" href="Concept_Scripted_plug-ins.htm#h">Plug-in types</a>)</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">New</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Creates a new custom plug-in as described in this section</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">Edit Definition</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Opens the Edit Plug-in Definition dialog box, to define or edit the properties of the currently selected custom plug-in (see <a data-cke-saved-href="Plug-in_definition.htm#h" href="Plug-in_definition.htm#h">Plug-in definition</a>)</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">Edit Script</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Opens the Script Editor window, to create, rename, or edit the code that executes with the selected custom plug-in. See <a data-cke-saved-href="Specifying_the_plug-in_script.htm#h" href="Specifying_the_plug-in_script.htm#h">Specifying the plug-in script</a>.</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">Duplicate</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Creates a copy of the currently selected plug-in; specify a name for the copy in the Assign Name dialog box</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBodyIndent" dir="ltr">Delete</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Deletes the currently selected plug-in; this action cannot be undone</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBody" dir="ltr">Third-party Plug-ins</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Lists any third-party plug-ins, and allows third-party plug-ins to be installed, uninstalled, and customized as permitted.</p>
+            <p class="CellBulletwSpace" dir="ltr" style="counter-set: prl-p-cellbulletwspace 0;"><span class="Bold">Install:</span> Select the installation files from the third-party script provider; they are automatically copied to your plug-ins folder. Vectorworks must be restarted before newly installed third-party plug-ins can be used.</p>
+            <p class="CellBulletwSpace" dir="ltr"><span class="Bold">Delete:</span> Removes the plug-in from the Vectorworks program and deletes the plug-in files. This action cannot be undone.</p>
+            <p class="CellBulletwSpace" dir="ltr"><span class="Bold">Customize:</span> When permitted by the third-party provider, a selected plug-in may allow limited customization. Options that are not available for editing are grayed.</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="160">
+            <p class="CellBody" dir="ltr">Built-in Plug-ins</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="533">
+            <p class="CellBody" dir="ltr">Lists the plug-ins available with the Vectorworks installation; some of these allow limited customization as permitted. Options that are not available for editing are grayed. An example of built-in plug-in customization is described in <a data-cke-saved-href="Customizing_definitions_for_built-in_plug-in_objects.htm#h" href="Customizing_definitions_for_built-in_plug-in_objects.htm#h">Customizing definitions for built-in plug-in objects</a>.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="Numbered" dir="ltr"><a id="CSH_997"></a>From the Custom Plug-ins tab, click <span class="Bold">New</span>.</p>
+  <p class="Indent" dir="ltr">The Assign Name dialog box opens. Enter the name of the new plug-in item and select the type of the plug-in to create. Plug-in names are limited to 27 characters in length. The appropriate plug-in extension will be appended to the plug-in name. Plug-ins can contain a Python script for execution.</p>
+  <p class="Indent" dir="ltr"><a class="dropspot" data-rhwidget="DropSpot" data-target="POPUP29188842" href="#"><span data-open-text="true" data-skip-index="true">Click to show/hide the parameters.</span><span data-close-text="true">Click to show/hide the parameters.</span></a></p>
+  <div data-targetname="POPUP29188842">
+    <table align="center" cellpadding="1" cellspacing="0" class="TableSmall" dir="ltr" style="border-collapse:collapse;" width="690">
+      <tbody>
+        <tr class="t1st" style="">
+          <td style="vertical-align: top;" width="149">
+            <p class="Heading_table" dir="ltr">Parameter</p>
+          </td>
+          <td style="vertical-align: top;" width="541">
+            <p class="Heading_table" dir="ltr">Description</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Name of the Script Plug-in</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Specifies the name of the new plug-in; this is also the name of the plug-in file, automatically appended with the appropriate extension (<span class="SourceCode">.px</span>, <span class="SourceCode">.vsm, .vst</span>, or <span class="SourceCode">.vso</span>)</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">The plug-in will be created in</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Describes the location of the plug-in file; plug-ins are saved in the location indicated so that they are not overwritten when installing a new version of Vectorworks products; see <a data-cke-saved-href="Concept_Scripted_plug-ins.htm#h2" href="Concept_Scripted_plug-ins.htm#h2">Plug-in file location</a></p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellTitle" dir="ltr">Plug-in type</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Select the type of plug-in to create</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Command</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Menu command (<span class="SourceCode">.vsm</span>) plug-ins can be used like any standard menu command item, performing operations on the active Vectorworks file. Menu commands can detect the view state of the active Vectorworks file, or can determine if a selection set exists upon which the menu command can act.</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Tool</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Tool item (<span class="SourceCode">.vst</span>) plug-ins allow scripts to be added to a Vectorworks workspace as a tool palette item. Tools make use of the SmartCursor, and can respond to file state conditions such as selection status or view orientation.</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Objects</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Plug-in objects (<span class="SourceCode">.vso</span>) allow the creation of complex objects such as standard architectural or mechanical elements, “smart” drawing components like callouts or drawing borders, or other flexible objects which streamline the design process. Plug-in objects support standard Vectorworks program core technologies such as snapping, classing, and advanced object editing; they can contain up to 32,767 parameters for defining and editing the object appearance.</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Point Object</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Point objects are defined by a single point click for placement</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Linear Object</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Linear objects require a user-defined line to create the basic geometry of the object</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Rectangle Object</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Rectangle objects utilize a user-defined rectangle to define and create the basic geometry of the object</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">2D/3D Path Object</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Path objects define a user-defined polygonal path or NURBS curve to create the basic geometry of the object</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Include File</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="541">
+            <p class="CellBody" dir="ltr">Specifies an additional file (<span class="SourceCode">.vss</span> or <span class="SourceCode">.px</span>) to be included with a script</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="Numbered" dir="ltr">Define the plug-in properties as described in <a href="Specifying_the_plug-in_definition.htm#h">Specifying the plug-in definition</a>.</p>
+  <p class="Numbered" dir="ltr">Add the new plug-in to one or more workspaces with the Workspace Editor. See <a href="..\Start\Customizing_workspaces.htm#h">Customizing workspaces</a>. Once the item has been added to a workspace, it is available to any open file in Vectorworks without the need for importing the associated script into the active file.</p>
+  <p dir="ltr"><img src="../../assets/images/divider.png"/></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Specifying_the_plug-in_definition.htm#h">Specifying the plug-in definition</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Concept_Scripted_plug-ins.htm#h1">Concept: Scripted plug-ins</a></p>
+  <script type="text/javascript" language="JavaScript1.2">
+    //<![CDATA[
+    if (typeof(TextPopupInit) != 'function') TextPopupInit = new Function();
+    TextPopupInit('a321', 'POPUP29193442');
+    TextPopupInit('a322', 'POPUP29188842');
+    //]]>
+  </script>
+
+</div>
+  <p style="text-align: right;"> </p>
+  <p style="text-align: right;"><a href="http://www.vectorworks.net/support/help-feedback" target="_blank" title="Provide feedback">Was this page helpful?</a></p>
+  <p style="text-align: right;"> </p>
+
+</div>
+          <div class="RH-LAYOUT-BRS-container" id="rh-brs"></div>
+        </div>
+        <div class="RH-LAYOUT-RIGHTPANEL-container" id="rh-rightpanel"></div>
+      </div>
+    </div>
+  </main>
+  <footer role="contentinfo" class="RH-LAYOUT-FOOTER-container" id="rh-footer"></footer>
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = "../.."
+    gCommonRootRelPath = "../.."
+    gTopicId = "7.1.3.1_1"
+  
+//]]></script>
+
+
+  <script src="../../template/scripts/topicpage.js"></script>
+  <script src="../../whxdata/layoutconfig.js"></script>
+  <script src="../../whxdata/brsdata.js"></script>
+
+  
+    
+      
+          
+
+            
+              
+                <link rel="StyleSheet" href="../../template/StudioVW/font.css" type="text/css"/>
+                
+                  
+
+
+</body></html>

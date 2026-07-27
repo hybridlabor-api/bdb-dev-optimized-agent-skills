@@ -1,0 +1,169 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Rhino 9: net8.0 -->
+    <RhinoTarget Condition="'$(RhinoTarget)' == ''">R9</RhinoTarget>
+    <PluginOS Condition="'$(PluginOS)' == '' AND $([MSBuild]::IsOSPlatform('Windows'))">win</PluginOS>
+    <PluginOS Condition="'$(PluginOS)' == ''">osx</PluginOS>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <TargetExt>.rhp</TargetExt>
+    <NoWarn>NU1701</NoWarn>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>RhMcp</RootNamespace>
+    <AssemblyName>RhinoMcpPlatform</AssemblyName>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/bin/$(RhinoTarget)-$(PluginOS)/</BaseOutputPath>
+    <YakStagingDir>$(MSBuildProjectDirectory)/bin/$(RhinoTarget)-$(PluginOS)/$(Configuration)</YakStagingDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Version is inherited from rhino/Directory.Build.props (single source). -->
+    <Title>Rhino MCP Platform</Title>
+    <Company>McNeel</Company>
+    <Description>MCP server plugin for Rhino</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../acp/Acp.csproj" />
+    <!-- Link (not copy) the router's on-disk path contract so the plugin and
+         router share one definition of the listeners drop dir. Separate
+         assemblies, single source file: the consts cannot drift. -->
+    <Compile Include="../router/RouterPaths.cs" Link="RouterPaths.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="../../art/logo.svg" LogicalName="RhMcp.logo.svg" />
+    <EmbeddedResource Include="../../art/copy.svg" LogicalName="RhMcp.copy.svg" />
+    <EmbeddedResource Include="../../art/paperclip.svg" LogicalName="RhMcp.paperclip.svg" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <AspNetCoreRuntimeVersion>8.0.*</AspNetCoreRuntimeVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App.Runtime.win-x64" Version="$(AspNetCoreRuntimeVersion)" GeneratePathProperty="true" ExcludeAssets="all" PrivateAssets="all" Condition="'$(PluginOS)' == 'win'" />
+    <PackageReference Include="Microsoft.AspNetCore.App.Runtime.osx-arm64" Version="$(AspNetCoreRuntimeVersion)" GeneratePathProperty="true" ExcludeAssets="all" PrivateAssets="all" Condition="'$(PluginOS)' == 'osx'" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RhinoTarget)' == 'R8'">
+    <PackageReference Include="RhinoCommon" Version="8.29.26063.11001" ExcludeAssets="runtime" />
+    <PackageReference Include="Grasshopper" Version="8.29.26063.11001" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RhinoTarget)' == 'R9'">
+    <PackageReference Include="RhinoCommon" Version="9.0.26132.12305-wip" ExcludeAssets="runtime" />
+    <PackageReference Include="Grasshopper" Version="9.0.26132.12305-wip" />
+    <PackageReference Include="Grasshopper2" Version="9.0.26132.12305-wip" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RhinoTarget)' == 'R8'">
+    <Compile Remove="Tools/GH2/**/*.cs" />
+    <Compile Remove="Resources/GH2/**/*.cs" />
+  </ItemGroup>
+
+  <!-- Rewrite the manifest's `version:` line from $(Version) so the yak manifest
+       can never drift from the single source in Directory.Build.props. Runs as a
+       build dependency (keeps the checked-in file in sync) and before the yak
+       copy (so the staged package picks up the rewritten value). -->
+  <UsingTask TaskName="SyncManifestVersion"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ManifestPath ParameterType="System.String" Required="true" />
+      <Version ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        string[] lines = System.IO.File.ReadAllLines(ManifestPath);
+        bool changed = false;
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(lines[i], @"^\s*version\s*:"))
+            {
+                string updated = "version: " + Version;
+                if (lines[i] != updated)
+                {
+                    lines[i] = updated;
+                    changed = true;
+                }
+            }
+        }
+        if (changed)
+        {
+            System.IO.File.WriteAllLines(ManifestPath, lines);
+            Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High,
+                "[Rhino MCP] Synced manifest.yml version to " + Version);
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="SyncManifestVersion" BeforeTargets="Build;BuildYakPackage">
+    <SyncManifestVersion ManifestPath="$(MSBuildProjectDirectory)/manifest.yml" Version="$(Version)" />
+  </Target>
+
+  <Target Name="BuildYakPackage" AfterTargets="Build">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/icon.png" DestinationFolder="$(YakStagingDir)/" SkipUnchangedFiles="true" />
+    <PropertyGroup>
+      <_Manifest>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/manifest.yml'))</_Manifest>
+      <_Manifest>$([System.Text.RegularExpressions.Regex]::Replace($(_Manifest), '(?m)^version:.*$', 'version: $(Version)'))</_Manifest>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(YakStagingDir)/manifest.yml" Lines="$(_Manifest)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <PropertyGroup>
+    <RouterRids Condition="'$(RouterRids)' == '' AND '$(PluginOS)' == 'osx'">osx-arm64</RouterRids>
+    <RouterRids Condition="'$(RouterRids)' == ''">win-x64;win-arm64</RouterRids>
+  </PropertyGroup>
+
+  <!--
+  -->
+  <Target Name="BundleRouter" AfterTargets="Build">
+    <ItemGroup>
+      <_RouterRid Include="$([MSBuild]::Unescape($(RouterRids)))" />
+    </ItemGroup>
+    <!-- Publish one RID at a time via Exec -->
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)/../router"
+          Command="dotnet publish Router.csproj --configuration $(Configuration) --runtime %(_RouterRid.Identity) -p:RhinoTarget=$(RhinoTarget) --output &quot;$(YakStagingDir)/router/%(_RouterRid.Identity)&quot; --nologo" />
+    <!-- Strip debug artifacts after publish -->
+    <RemoveDir Directories="@(_RouterRid->'$(YakStagingDir)/router/%(Identity)/rhino-mcp-router.dsym')" />
+    <Delete Files="@(_RouterRid->'$(YakStagingDir)/router/%(Identity)/rhino-mcp-router.pdb')" />
+    <Message Importance="high" Text="[Rhino MCP] Bundled router RIDs: $(RouterRids)" />
+  </Target>
+
+  <!-- Bundle ASP.NET -->
+  <Target Name="BundleAspNetCoreFramework" AfterTargets="Build" Condition="'$(TargetFramework)' != ''">
+    <PropertyGroup>
+      <_FxDir Condition="'$(PluginOS)' == 'win'">$(PkgMicrosoft_AspNetCore_App_Runtime_win-x64)/runtimes/win-x64/lib/net8.0</_FxDir>
+      <_FxDir Condition="'$(PluginOS)' == 'osx'">$(PkgMicrosoft_AspNetCore_App_Runtime_osx-arm64)/runtimes/osx-arm64/lib/net8.0</_FxDir>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(_FxDir)')" Text="ASP.NET Core runtime pack not found at '$(_FxDir)' (PluginOS=$(PluginOS)). Run 'dotnet restore' for this PluginOS first." />
+    <ItemGroup>
+      <_AspNetCoreFiles Include="$(_FxDir)/*.dll"
+        Exclude="
+          $(_FxDir)/Microsoft.AspNetCore.Authentication.BearerToken.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Authentication.Cookies.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Authentication.OAuth.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Components*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Identity*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Mvc*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Razor*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Server.HttpSys.dll;
+          $(_FxDir)/Microsoft.AspNetCore.Server.IIS*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.SignalR*.dll;
+          $(_FxDir)/Microsoft.AspNetCore.StaticFiles.dll;
+          $(_FxDir)/Microsoft.Extensions.Identity*.dll
+        " />
+    </ItemGroup>
+    <Copy SourceFiles="@(_AspNetCoreFiles)" DestinationFolder="$(YakStagingDir)/net8.0/" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="[Rhino MCP] Bundled ASP.NET Core ($(PluginOS)) from $(_FxDir)" />
+  </Target>
+
+</Project>

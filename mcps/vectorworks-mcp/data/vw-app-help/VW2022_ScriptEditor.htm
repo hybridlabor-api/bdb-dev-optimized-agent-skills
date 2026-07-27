@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes"/>
+  <meta name="version" content="2020.0.0"/>
+  <link rel="StyleSheet" href="../../template/styles/topic.min.css" type="text/css"/>
+  <link rel="StyleSheet" data-skin="true" type="text/css" href="../../template/StudioVW/layout.css"/>
+  <link rel="StyleSheet" data-skin="true" href="../../template/StudioVW/userstyles.css" type="text/css"/>
+  
+    <link rel="shortcut icon" type="image/png" href="../../Icon_H.png"/>
+    
+<link rel="StyleSheet" href="../../assets/css/Vectorworks.css" type="text/css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="Originator" content="ImportMif"/>
+  <meta name="OriginalFile" content="C:\Documentation\27_Guide 2019\Scripts.fm"/>
+  <meta name="generator" content="Adobe RoboHelp 2020"/>
+  <title>Creating and editing script palettes and scripts</title>
+  
+<meta name="brsnext" value="VW2022_Guide/Scripts/Creating_and_editing_script_palettes_and_scripts.htm#TOC_Creating_scripts"/><meta name="brsprev" value="VW2022_Guide/Scripts/Creating custom_modification_scripts.htm"/></head>
+
+<body class="rh-BODY-wrapper">
+  <div class="cookie-widget-holder" id="cookie-status-widget-holder"></div>
+  <div class="RH-LAYOUT-HEADER-skip-content-container" id="skip-to-content"></div>
+  <header class="RH-LAYOUT-HEADER-container" role="banner">
+    <div class="RH-LAYOUT-HEADER-logo-box  ">
+      <div class="RH-LAYOUT-HEADER-logo" id="logo-holder"></div>
+      <div class="RH-LAYOUT-HEADER-title" id="topic-title-holder"></div>
+    </div>
+    <div class="RH-LAYOUT-HEADERMENU-container" id="header-menu"></div>
+    <div class="search-placeholder-class" id="search-with-help"></div>
+  </header>
+  <main role="main" class="RH-LAYOUT-BODY-container">
+    <div class="RH-LAYOUT-SEARCHRESULTS" id="rh-searchresults"></div>
+    <div class="RH-LAYOUT-LEFTPANEL-container" id="rh-leftpanel"></div>
+    <div class="rh-layout-BODY-main" id="rh-layout-main">
+      <div class="RH-LAYOUT-TOOLBAR-toolbar-box" id="rh-toolbar"></div>
+      <div class="rh-layout-BODY-body">
+        <div class="RH-LAYOUT-CENTERPANEL-container">
+          <div class="rh-layout-selectdetails" id="rh-selectdetails"></div>
+          <div class="RH-LAYOUT-CENTERPANEL-topic-box" id="rh-topic" dir="ltr">
+  <p><a id="Top"></a></p>
+  <div>
+  <h2 dir="ltr" id="h"><a id="XREF_46926_Creating_and"></a>Creating and editing script palettes<a id="CSH_985"></a> and scripts</h2>
+  <p dir="ltr">Document scripts can be created, saved, and executed within a Vectorworks file. Scripts must be nested in script palette folders. Use the Resource Manager to manage script palettes folders as well as individual document scripts.</p>
+  <h3 dir="ltr" id="h1"><a id="TOC_Creating_scripts"></a><a id="XREF_70311_Creating_Scripts"></a>Creating<a id="CSH_986"></a> scripts<a id="CSH_987"></a></h3>
+  <p dir="ltr">To create a script:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">From the Resource Manager, click <span class="Bold">New Resource</span>, select Script, and then click <span class="Bold">Create</span>. Alternatively, from the Resource Manager, select Scripts from the list of resource types on the tool bar, and click <span class="Bold">New Script</span>.</p>
+  <p class="Numbered" dir="ltr">Scripts must be placed in a script palette folder. Do one of the following:</p>
+  <p class="BulletIndwSpace" dir="ltr">If script palettes exist in the file, the Select Script Palette dialog box opens; select the palette to add the script to and click <span class="Bold">Select</span>, or click <span class="Bold">New Palette</span> to create a palette.</p>
+  <p class="BulletIndwSpace" dir="ltr">If no script palette exists, a new palette is created automatically; enter a name for a new palette.</p>
+  <p class="Numbered" dir="ltr">The Assign Name dialog box opens. Enter the name of the script.</p>
+  <p class="Numbered" dir="ltr">The Script Editor opens to begin a script editing session. Select the script language for the script: Python Script or VectorScript. The editor provides a basic authoring environment for script development and maintenance. Its features allow you to create, edit, and compile scripts, browse available functions, view errors, and perform other tasks associated with creating scripts. The script editor offers code hinting functionality to help reduce errors when scripting, including bracket matching, call tips, and auto-completion. Scripts are limited to 32,001 characters. For detailed developer-oriented documentation related to Python and VectorScript, please navigate to <span class="Jump"><a href="http://developer.vectorworks.net">developer.vectorworks.net</a></span>.</p>
+  <p class="Graphic" dir="ltr"><img src="editor.png"/> </p>
+  <p class="Indent" dir="ltr"><a class="dropspot" data-rhwidget="DropSpot" data-target="POPUP29191841" href="#"><span data-open-text="true" data-skip-index="true">Click to show/hide the parameters.</span><span data-close-text="true">Click to show/hide the parameters.</span></a></p>
+  <div data-targetname="POPUP29191841">
+    <table align="center" cellpadding="1" cellspacing="0" class="TableSmall" dir="ltr" style="border-collapse:collapse;" width="691">
+      <tbody>
+        <tr class="t1st" style="">
+          <td style="vertical-align: top;" width="149">
+            <p class="Heading_table" dir="ltr">Parameter</p>
+          </td>
+          <td style="vertical-align: top;" width="542">
+            <p class="Heading_table" dir="ltr">Description</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr"><span class="Bold">Editor</span> menu</p>
+            <p class="TableTool" dir="ltr"><img src="VSEditor_Button1.png"/> </p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr"> </p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Procedure</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">Opens the Procedures dialog box, which lists all the available script functions/procedures by category and provides a prototype as well as a brief description of what operation is performed by the function/procedure. The list serves as both a reference and a means of building the code by pasting the relevant function/procedure into the editor. Enter text in the search box to filter the list.</p>
+            <p class="CellBody" dir="ltr">Select the procedure or function and click <span class="Bold">OK</span> to add it to the current line of the script editor.</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr"><a id="CSH_988"></a>Criteria</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">Opens the Criteria dialog box, for automatically defining selection criteria in a script (see <a href="Creating custom_selection_scripts.htm#h">Creating custom selection scripts</a>)</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Tool/Attribute</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">Opens the Custom Tools dialog box, for saving the current tool and attribute state information into a script (see <a href="Creating_custom_tool_attribute_scripts.htm#h">Creating custom tool/attribute scripts</a>)</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Parameter<a id="CSH_989"></a></p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">The <span class="Bold">Parameter</span> command provides access to a plug-in objects’ parameter list for editing, when working on the script of a plug-in (see <a href="Plug-in_definition.htm#h">Plug-in definition</a>)</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBodyIndent" dir="ltr">Text File</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">The <span class="Bold">Text File</span> command allows script source code to be imported from external text files</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Compile Script</p>
+            <p class="TableTool" dir="ltr"><img src="VSEditor_Button3.png"/> </p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">The <span class="Bold">Compile Script</span> button allows a script to be compiled directly from the Script Editor without the need to execute the script. If errors exist within the script that prevent successful compilation, they will be displayed and can be resolved without the need to exit the script editor.</p>
+            <p class="Note" dir="ltr">While compiling VectorScripts reports all errors in the script code, compiling Python scripts reports only the syntax errors. For example, an undefined variable is not reported as an error for Python scripts, because this type of error is determined only during script execution. As a result, Python scripts report most errors when executed.</p>
+          </td>
+        </tr>
+        <tr style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody">Find/Replace</p>
+            <p class="TableTool"><img src="VSEditor_Find.png"/></p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody">Opens the Find and Replace dialog box to search the current script for text and optionally replace an instance or all instances of a word</p>
+          </td>
+        </tr>
+        <tr style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody">Undo/Redo</p>
+            <p class="TableTool"><img src="VSEditor_Undo.png"/></p>
+            <p class="TableTool"><img src="VSEditor_Redo.png"/></p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody">Undoes the last action, or redoes the just completed undo action; the same keyboard shortcuts that activate the main Vectorworks <span class="Bold">Undo</span> command (Ctrl+Z Windows, and Cmd+Z Mac) and <span class="Bold">Redo</span> command (Ctrl+Y Windows, and Cmd+Y Mac) activate the functions in this dialog box</p>
+          </td>
+        </tr>
+        <tr style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody">Show/Hide Special Characters</p>
+            <p class="TableTool"><img src="VSEditor_ShowChars.png"/></p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody">Toggles the display of the space, tab, and CR/LF (line break) symbols</p>
+          </td>
+        </tr>
+        <tr class="t1Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr">Language</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">Select Python or VectorScript for the script language</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="">
+          <td class="t1Col" style="vertical-align: top;" width="149">
+            <p class="CellBody" dir="ltr"><a id="Script_Options_command" data-indexterm="Script Options command"></a><a id="IX_Script_Options_command"></a>Script Options</p>
+            <p class="CellBody" dir="ltr">(Python scripts only)<a id="CSH_990"></a></p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="542">
+            <p class="CellBody" dir="ltr">Opens the Script Options<a id="CSH_991"></a> dialog box, which lists folders (environment paths) where imported modules are located, for Python scripts that require external libraries.</p>
+            <p class="Note" dir="ltr">This dialog box can also be accessed from <span class="Bold">Tools &gt; Plug-in &gt; Script Options</span>.</p>
+            <p class="CellBulletwSpace" dir="ltr" style="counter-set: prl-p-cellbulletwspace 0;"><span class="Bold">Add:</span> Select a folder location to add it to the list.</p>
+            <p class="CellBulletwSpace" dir="ltr"><span class="Bold">Remove:</span> Deletes the currently selected folder location.</p>
+            <p class="CellBulletwSpace" dir="ltr"><span class="Bold">Open Folder in OS:</span> Displays the contents of the selected folder in either Windows Explorer or Mac Finder.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p dir="ltr">Scripts can be edited, renamed, deleted, exported, imported, moved, and executed from the Resource Manager.</p>
+  <h3 dir="ltr" id="h2"><a id="TOC_Editing_scripts"></a><a id="XREF_97485_Editing_Scripts"></a>Editing scripts</h3>
+  <p dir="ltr">To edit an existing script:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">From the Resource Manager, right-click on the resource, and select <span class="Bold">Edit</span> from the context menu. Scripts are nested in script palette folders.</p>
+  <p class="Numbered" dir="ltr">The Script Editor opens, displaying the script source code. See <a href="Creating_and_editing_script_palettes_and_scripts.htm#h1">Creating scripts</a> for a description of the Script Editor.</p>
+  <h3 dir="ltr"><a id="TOC_Encrypting_scripts"></a><a id="Encrypt_Script_command" data-indexterm="Encrypt Script command"></a><a id="IX_Encrypt_Script_command"></a><a id="XREF_11303_Moving_a_Script_to"></a><a id="XREF_30357_Encrypting_Scripts"></a>Encrypting scripts<a id="CSH_992"></a></h3>
+  <div align="left">
+    <table cellpadding="1" cellspacing="0" class="TableLeft" dir="ltr" style="border-collapse:collapse;" width="312">
+      <tbody>
+        <tr class="t1st" style="height: 18.00pt;">
+          <td style="vertical-align: top;" width="139">
+            <p class="Heading_white" dir="ltr">Command</p>
+          </td>
+          <td style="vertical-align: top;" width="173">
+            <p class="Heading_white" dir="ltr">Path</p>
+          </td>
+        </tr>
+        <tr class="t2Row" style="height: 19.00pt;">
+          <td class="t1Col" style="vertical-align: top;" width="139">
+            <p class="CellBody" dir="ltr">Encrypt Script</p>
+          </td>
+          <td class="t2Col" style="vertical-align: top;" width="173">
+            <p class="CellBody" dir="ltr">Tools &gt; Plug-ins</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p dir="ltr">Encrypt a script to prevent editing.</p>
+  <p dir="ltr">To encrypt a script file:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">Select the command.</p>
+  <p class="Indent" dir="ltr">The Choose Script File dialog box opens.</p>
+  <p class="Numbered" dir="ltr">Locate and select the script file to encrypt.</p>
+  <p class="Numbered" dir="ltr">Click <span class="Bold">Open</span>.</p>
+  <p class="Indent" dir="ltr">The Save Encrypted VectorScript Code Document dialog box opens.</p>
+  <p class="Numbered" dir="ltr">Enter a new name for the script, and then select the location for saving the file.</p>
+  <p class="Numbered" dir="ltr">Click <span class="Bold">Save</span>.</p>
+  <p class="Indent" dir="ltr">The script is saved in an encrypted format.</p>
+  <p class="InsertDivider" dir="ltr"><img src="../../assets/images/divider.png"/></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Running_scripts.htm#h">Running scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="..\ResourceManager\Resource Manager.htm#h">Resource Manager</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Scripting.htm#h">Using scripts</a></p>
+  <script type="text/javascript" language="JavaScript1.2">
+    //<![CDATA[
+    if (typeof(TextPopupInit) != 'function') TextPopupInit = new Function();
+    TextPopupInit('a320', 'POPUP29191841');
+    //]]>
+  </script>
+
+</div>
+  <p style="text-align: right;"> </p>
+  <p style="text-align: right;"><a href="http://www.vectorworks.net/support/help-feedback" target="_blank" title="Provide feedback">Was this page helpful?</a></p>
+  <p style="text-align: right;"> </p>
+
+</div>
+          <div class="RH-LAYOUT-BRS-container" id="rh-brs"></div>
+        </div>
+        <div class="RH-LAYOUT-RIGHTPANEL-container" id="rh-rightpanel"></div>
+      </div>
+    </div>
+  </main>
+  <footer role="contentinfo" class="RH-LAYOUT-FOOTER-container" id="rh-footer"></footer>
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = "../.."
+    gCommonRootRelPath = "../.."
+    gTopicId = "7.1.1"
+  
+//]]></script>
+
+
+  <script src="../../template/scripts/topicpage.js"></script>
+  <script src="../../whxdata/layoutconfig.js"></script>
+  <script src="../../whxdata/brsdata.js"></script>
+
+  
+    
+      
+          
+
+            
+              
+                <link rel="StyleSheet" href="../../template/StudioVW/font.css" type="text/css"/>
+                
+                  
+
+
+</body></html>

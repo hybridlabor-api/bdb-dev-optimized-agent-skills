@@ -1,0 +1,449 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- Background — deep dark, near-black green-black -->
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0a0f0a"/>
+      <stop offset="55%" stop-color="#060a06"/>
+      <stop offset="100%" stop-color="#020402"/>
+    </radialGradient>
+
+    <!-- Gold (matches king-hippo exactly) -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Hood — very dark olive-charcoal -->
+    <radialGradient id="hoodGrad" cx="50%" cy="50%" r="58%">
+      <stop offset="0%" stop-color="#161f14"/>
+      <stop offset="55%" stop-color="#0f160d"/>
+      <stop offset="100%" stop-color="#070d06"/>
+    </radialGradient>
+
+    <!-- Hood left edge emerald glow -->
+    <linearGradient id="hoodEdgeL" x1="0%" y1="0%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#00E676" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00C853" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- Hood right edge emerald glow -->
+    <linearGradient id="hoodEdgeR" x1="100%" y1="0%" x2="0%" y2="80%">
+      <stop offset="0%" stop-color="#00E676" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00C853" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Face gradient -->
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c2819"/>
+      <stop offset="45%" stop-color="#141e12"/>
+      <stop offset="100%" stop-color="#0c130a"/>
+    </linearGradient>
+
+    <!-- Snout -->
+    <linearGradient id="snoutGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#192316"/>
+      <stop offset="100%" stop-color="#0e1a0b"/>
+    </linearGradient>
+
+    <!-- Emerald iris -->
+    <radialGradient id="emeraldIris" cx="38%" cy="35%" r="58%">
+      <stop offset="0%" stop-color="#69F0AE"/>
+      <stop offset="30%" stop-color="#00E676"/>
+      <stop offset="70%" stop-color="#00C853"/>
+      <stop offset="100%" stop-color="#006B29"/>
+    </radialGradient>
+
+    <!-- Slit pupil -->
+    <linearGradient id="slitPupil" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000"/>
+      <stop offset="50%" stop-color="#030303"/>
+      <stop offset="100%" stop-color="#000"/>
+    </linearGradient>
+
+    <!-- Wire glasses frame -->
+    <linearGradient id="wireFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c8c8c8"/>
+      <stop offset="50%" stop-color="#e8e8e8"/>
+      <stop offset="100%" stop-color="#a0a0a0"/>
+    </linearGradient>
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E676" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#00C853" stop-opacity="0.07"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Tongue -->
+    <linearGradient id="tongueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d32f2f"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+
+    <!-- Vest / collar -->
+    <linearGradient id="vestGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111111"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="lapelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="emeraldGlow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.85"/>
+    </filter>
+    <filter id="subtleShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Scale texture — small diamond shapes repeating -->
+    <pattern id="scalePat" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <path d="M4.5,0 L9,4.5 L4.5,9 L0,4.5 Z"
+            fill="none" stroke="#00E676" stroke-width="0.18" opacity="0.2"/>
+      <circle cx="4.5" cy="4.5" r="0.4" fill="#00E676" opacity="0.07"/>
+    </pattern>
+    <!-- Offset layer for denser scale coverage -->
+    <pattern id="scalePat2" x="4.5" y="4.5" width="9" height="9" patternUnits="userSpaceOnUse">
+      <path d="M4.5,0 L9,4.5 L4.5,9 L0,4.5 Z"
+            fill="none" stroke="#00C853" stroke-width="0.13" opacity="0.13"/>
+    </pattern>
+
+    <!-- Hood diamond wealth pattern -->
+    <pattern id="hoodDiamond" x="0" y="0" width="26" height="22" patternUnits="userSpaceOnUse">
+      <!-- Outer diamond -->
+      <path d="M13,2 L24,11 L13,20 L2,11 Z"
+            fill="none" stroke="#00E676" stroke-width="0.42" opacity="0.3"/>
+      <!-- Inner diamond -->
+      <path d="M13,6 L18,11 L13,16 L8,11 Z"
+            fill="none" stroke="#00E676" stroke-width="0.26" opacity="0.2"/>
+      <!-- Center -->
+      <circle cx="13" cy="11" r="0.65" fill="#00E676" opacity="0.14"/>
+      <!-- Corner tick marks (money/precision) -->
+      <path d="M13,2 L13,4" stroke="#FFD700" stroke-width="0.3" opacity="0.12"/>
+      <path d="M13,18 L13,20" stroke="#FFD700" stroke-width="0.3" opacity="0.12"/>
+    </pattern>
+
+  </defs>
+
+  <!-- ===================== BACKGROUND ===================== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle grid — emerald tinted, same opacity as king-hippo -->
+  <g opacity="0.028" stroke="#00E676" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- Ambient cobra aura glow behind character -->
+  <ellipse cx="200" cy="215" rx="135" ry="155" fill="#00E676" opacity="0.022"/>
+
+  <!-- ===================== VEST / COLLAR ===================== -->
+  <g filter="url(#hardShadow)">
+    <!-- Vest body -->
+    <path d="M100,375 L100,322 Q128,310 162,307 L238,307 Q272,310 300,322 L300,375 Z"
+          fill="url(#vestGrad)"/>
+
+    <!-- Shirt placket (centre) -->
+    <path d="M186,307 L186,375 L214,375 L214,307 Q200,300 186,307 Z"
+          fill="url(#shirtGrad)"/>
+
+    <!-- Collar points -->
+    <path d="M186,307 L174,286 L200,298 Z" fill="#1e1e1e" stroke="#111" stroke-width="0.5"/>
+    <path d="M214,307 L226,286 L200,298 Z" fill="#1e1e1e" stroke="#111" stroke-width="0.5"/>
+
+    <!-- Left lapel -->
+    <path d="M100,322 L128,310 L162,307 L186,307 L174,286 L144,295 L112,316 Z"
+          fill="url(#lapelGrad)" stroke="#0a0a0a" stroke-width="0.5"/>
+    <!-- Right lapel -->
+    <path d="M300,322 L272,310 L238,307 L214,307 L226,286 L256,295 L288,316 Z"
+          fill="url(#lapelGrad)" stroke="#0a0a0a" stroke-width="0.5"/>
+
+    <!-- Tie — narrow, dark charcoal -->
+    <path d="M196,298 L204,298 L207,345 L200,354 L193,345 Z"
+          fill="#0c0c0c" stroke="#1a1a1a" stroke-width="0.4"/>
+    <!-- Tie knot -->
+    <path d="M195,298 L200,293 L205,298 Z" fill="#141414"/>
+
+    <!-- Emerald tie bar — precision accessory -->
+    <rect x="196" y="319" width="8" height="3.5" rx="1.2"
+          fill="#00E676" opacity="0.75" filter="url(#softGlow)"/>
+    <rect x="196" y="319" width="8" height="1" rx="0.6" fill="#69F0AE" opacity="0.4"/>
+
+    <!-- Vest buttons — dark, understated -->
+    <circle cx="200" cy="335" r="2.2" fill="#1a1a1a" stroke="#282828" stroke-width="0.5"/>
+    <circle cx="200" cy="349" r="2.2" fill="#1a1a1a" stroke="#282828" stroke-width="0.5"/>
+    <circle cx="200" cy="363" r="2.2" fill="#1a1a1a" stroke="#282828" stroke-width="0.5"/>
+
+    <!-- Pocket square — emerald, left lapel -->
+    <path d="M122,304 L136,302 L135,310 L121,313 Z" fill="#00C853" opacity="0.5"/>
+    <path d="M122,304 L130,298 L136,302" fill="none" stroke="#00E676" stroke-width="0.6" opacity="0.7"/>
+  </g>
+
+  <!-- ===================== COBRA HOOD ===================== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Hood main body — wide spread, symmetrical cobra fan -->
+    <path d="M52,248
+             C36,204 42,160 66,136
+             C86,116 112,108 142,104
+             L200,100
+             L258,104
+             C288,108 314,116 334,136
+             C358,160 364,204 348,248
+             C336,278 318,296 296,307
+             L200,312
+             L104,307
+             C82,296 64,278 52,248 Z"
+          fill="url(#hoodGrad)"/>
+
+    <!-- Hood diamond/wealth pattern overlay -->
+    <path d="M52,248 C36,204 42,160 66,136 C86,116 112,108 142,104 L200,100 L258,104
+             C288,108 314,116 334,136 C358,160 364,204 348,248
+             C336,278 318,296 296,307 L200,312 L104,307
+             C82,296 64,278 52,248 Z"
+          fill="url(#hoodDiamond)" opacity="0.95"/>
+
+    <!-- Scale texture second layer -->
+    <path d="M52,248 C36,204 42,160 66,136 C86,116 112,108 142,104 L200,100 L258,104
+             C288,108 314,116 334,136 C358,160 364,204 348,248
+             C336,278 318,296 296,307 L200,312 L104,307
+             C82,296 64,278 52,248 Z"
+          fill="url(#scalePat2)" opacity="0.55"/>
+
+    <!-- Left hood edge — emerald highlight glow -->
+    <path d="M52,248 C36,204 42,160 66,136 C86,116 112,108 142,104 L168,102
+             L148,116 C120,124 96,134 78,154 C58,176 52,210 58,244 Z"
+          fill="url(#hoodEdgeL)" opacity="0.65"/>
+
+    <!-- Right hood edge — emerald highlight glow -->
+    <path d="M348,248 C364,204 358,160 334,136 C314,116 288,108 258,104 L232,102
+             L252,116 C280,124 304,134 322,154 C342,176 348,210 342,244 Z"
+          fill="url(#hoodEdgeR)" opacity="0.65"/>
+
+    <!-- Hood outer rim — emerald stroke -->
+    <path d="M52,248 C36,204 42,160 66,136 C86,116 112,108 142,104 L200,100 L258,104
+             C288,108 314,116 334,136 C358,160 364,204 348,248
+             C336,278 318,296 296,307 L200,312 L104,307
+             C82,296 64,278 52,248 Z"
+          fill="none" stroke="#00E676" stroke-width="1.4" opacity="0.4"
+          filter="url(#emeraldGlow)"/>
+
+    <!-- Structural ribs radiating from top center — left side -->
+    <path d="M200,100 C178,106 158,116 142,130" fill="none" stroke="#00E676" stroke-width="0.8" opacity="0.32"/>
+    <path d="M200,105 C170,114 144,130 124,150" fill="none" stroke="#00E676" stroke-width="0.6" opacity="0.22"/>
+    <path d="M200,110 C162,122 132,145 108,170" fill="none" stroke="#00E676" stroke-width="0.48" opacity="0.16"/>
+    <path d="M200,116 C156,132 120,160 92,192" fill="none" stroke="#00E676" stroke-width="0.36" opacity="0.11"/>
+    <path d="M200,122 C148,142 110,175 76,216" fill="none" stroke="#00E676" stroke-width="0.26" opacity="0.08"/>
+    <!-- Right side ribs (mirrored) -->
+    <path d="M200,100 C222,106 242,116 258,130" fill="none" stroke="#00E676" stroke-width="0.8" opacity="0.32"/>
+    <path d="M200,105 C230,114 256,130 276,150" fill="none" stroke="#00E676" stroke-width="0.6" opacity="0.22"/>
+    <path d="M200,110 C238,122 268,145 292,170" fill="none" stroke="#00E676" stroke-width="0.48" opacity="0.16"/>
+    <path d="M200,116 C244,132 280,160 308,192" fill="none" stroke="#00E676" stroke-width="0.36" opacity="0.11"/>
+    <path d="M200,122 C252,142 290,175 324,216" fill="none" stroke="#00E676" stroke-width="0.26" opacity="0.08"/>
+
+    <!-- Hood shadow depth planes — darkens the very sides for 3D -->
+    <path d="M52,248 C36,204 42,160 66,136 L92,148 C72,170 64,206 68,242 Z"
+          fill="#000" opacity="0.28"/>
+    <path d="M348,248 C364,204 358,160 334,136 L308,148 C328,170 336,206 332,242 Z"
+          fill="#000" opacity="0.28"/>
+
+    <!-- Hood top highlight — subtle bright band at crown -->
+    <path d="M164,101 Q200,96 236,101" fill="none" stroke="#00E676" stroke-width="1.5" opacity="0.22"/>
+
+  </g>
+
+  <!-- ===================== COBRA FACE ===================== -->
+  <g filter="url(#subtleShadow)">
+
+    <!-- Face oval — central, inside the hood -->
+    <path d="M143,175
+             C143,150 163,132 200,130
+             C237,132 257,150 257,175
+             C257,218 244,263 200,270
+             C156,263 143,218 143,175 Z"
+          fill="url(#faceGrad)"/>
+
+    <!-- Face scale texture -->
+    <path d="M143,175 C143,150 163,132 200,130 C237,132 257,150 257,175
+             C257,218 244,263 200,270 C156,263 143,218 143,175 Z"
+          fill="url(#scalePat)" opacity="0.9"/>
+    <path d="M143,175 C143,150 163,132 200,130 C237,132 257,150 257,175
+             C257,218 244,263 200,270 C156,263 143,218 143,175 Z"
+          fill="url(#scalePat2)" opacity="0.5"/>
+
+    <!-- Central face ridge — vertical emerald spine line -->
+    <path d="M200,130 L200,270" fill="none" stroke="#00E676" stroke-width="0.55" opacity="0.16"/>
+
+    <!-- Hard brow shelf — angular, menacing -->
+    <!-- Left brow -->
+    <path d="M145,180 L175,168 L200,166 L175,178 Z" fill="#0d1609" stroke="#0a1108" stroke-width="0.5"/>
+    <!-- Right brow -->
+    <path d="M255,180 L225,168 L200,166 L225,178 Z" fill="#0d1609" stroke="#0a1108" stroke-width="0.5"/>
+    <!-- Brow ridge line — thin emerald highlight -->
+    <path d="M147,178 Q172,167 200,165 Q228,167 253,178"
+          fill="none" stroke="#00E676" stroke-width="0.45" opacity="0.2"/>
+
+    <!-- Supraocular plates above eyes (snake anatomy) -->
+    <path d="M148,179 Q166,163 184,169" fill="#0c1509" opacity="0.8" stroke="#0a1107" stroke-width="0.4"/>
+    <path d="M252,179 Q234,163 216,169" fill="#0c1509" opacity="0.8" stroke="#0a1107" stroke-width="0.4"/>
+
+    <!-- ===================== EYES — slit pupil, emerald iris ===================== -->
+    <!-- Left eye socket shadow -->
+    <ellipse cx="172" cy="188" rx="21" ry="16" fill="#090e08"/>
+    <!-- Left iris — emerald, glowing -->
+    <ellipse cx="172" cy="188" rx="17" ry="13" fill="url(#emeraldIris)" filter="url(#emeraldGlow)"/>
+    <!-- Left slit pupil — vertical, narrow -->
+    <ellipse cx="172" cy="188" rx="3" ry="12.5" fill="url(#slitPupil)"/>
+    <!-- Left pupil edges — slight tapering at top/bottom -->
+    <ellipse cx="172" cy="177" rx="1.5" ry="1.5" fill="#000"/>
+    <ellipse cx="172" cy="199" rx="1.5" ry="1.5" fill="#000"/>
+    <!-- Left iris detail ring -->
+    <ellipse cx="172" cy="188" rx="17" ry="13" fill="none"
+             stroke="#00E676" stroke-width="0.5" opacity="0.3"/>
+    <!-- Left eye highlight spots -->
+    <ellipse cx="167" cy="182" rx="4.5" ry="2.5" fill="#fff" opacity="0.16"/>
+    <circle cx="166" cy="181" r="1.4" fill="#fff" opacity="0.3"/>
+    <!-- Left eyelid — heavy, hooded, cold -->
+    <path d="M151,183 Q172,171 193,183" fill="#0d1609" stroke="#0a1107" stroke-width="0.4"/>
+    <!-- Left lower lid -->
+    <path d="M153,192 Q172,200 191,192" fill="none" stroke="#0d1609" stroke-width="2.8"/>
+
+    <!-- Right eye socket shadow -->
+    <ellipse cx="228" cy="188" rx="21" ry="16" fill="#090e08"/>
+    <!-- Right iris -->
+    <ellipse cx="228" cy="188" rx="17" ry="13" fill="url(#emeraldIris)" filter="url(#emeraldGlow)"/>
+    <!-- Right slit pupil -->
+    <ellipse cx="228" cy="188" rx="3" ry="12.5" fill="url(#slitPupil)"/>
+    <ellipse cx="228" cy="177" rx="1.5" ry="1.5" fill="#000"/>
+    <ellipse cx="228" cy="199" rx="1.5" ry="1.5" fill="#000"/>
+    <ellipse cx="228" cy="188" rx="17" ry="13" fill="none"
+             stroke="#00E676" stroke-width="0.5" opacity="0.3"/>
+    <!-- Right eye highlight -->
+    <ellipse cx="223" cy="182" rx="4.5" ry="2.5" fill="#fff" opacity="0.16"/>
+    <circle cx="222" cy="181" r="1.4" fill="#fff" opacity="0.3"/>
+    <!-- Right eyelid -->
+    <path d="M207,183 Q228,171 249,183" fill="#0d1609" stroke="#0a1107" stroke-width="0.4"/>
+    <!-- Right lower lid -->
+    <path d="M209,192 Q228,200 247,192" fill="none" stroke="#0d1609" stroke-width="2.8"/>
+
+    <!-- ===================== WIRE-FRAME GLASSES ===================== -->
+    <!-- Thin, precise oval frames — precision instruments -->
+    <g filter="url(#subtleShadow)">
+      <!-- Left lens frame — thin oval -->
+      <ellipse cx="172" cy="189" rx="24" ry="18"
+               fill="url(#glassLens)" stroke="url(#wireFrame)" stroke-width="1.15"/>
+      <!-- Left anti-reflection glint -->
+      <path d="M155,180 Q168,175 182,179"
+            fill="none" stroke="url(#glassShine)" stroke-width="1" stroke-linecap="round"/>
+
+      <!-- Right lens frame -->
+      <ellipse cx="228" cy="189" rx="24" ry="18"
+               fill="url(#glassLens)" stroke="url(#wireFrame)" stroke-width="1.15"/>
+      <!-- Right glint -->
+      <path d="M211,180 Q224,175 238,179"
+            fill="none" stroke="url(#glassShine)" stroke-width="1" stroke-linecap="round"/>
+
+      <!-- Bridge — thin, precise -->
+      <path d="M196,189 Q200,185 204,189"
+            fill="none" stroke="url(#wireFrame)" stroke-width="1.05" stroke-linecap="round"/>
+
+      <!-- Temple arms extending to sides -->
+      <path d="M148,189 L128,193 Q114,196 110,210"
+            fill="none" stroke="url(#wireFrame)" stroke-width="0.95" stroke-linecap="round"/>
+      <path d="M252,189 L272,193 Q286,196 290,210"
+            fill="none" stroke="url(#wireFrame)" stroke-width="0.95" stroke-linecap="round"/>
+
+      <!-- Nose pad dots -->
+      <circle cx="195" cy="191" r="1.1" fill="#c0c0c0" opacity="0.55"/>
+      <circle cx="205" cy="191" r="1.1" fill="#c0c0c0" opacity="0.55"/>
+    </g>
+
+    <!-- ===================== SNOUT ===================== -->
+    <!-- Lower face — tapers to snout point -->
+    <path d="M158,234
+             C158,222 174,213 200,213
+             C226,213 242,222 242,234
+             C242,253 230,270 200,273
+             C170,270 158,253 158,234 Z"
+          fill="url(#snoutGrad)"/>
+    <path d="M158,234 C158,222 174,213 200,213 C226,213 242,222 242,234
+             C242,253 230,270 200,273 C170,270 158,253 158,234 Z"
+          fill="url(#scalePat)" opacity="0.75"/>
+
+    <!-- Jaw line — stern, immovable -->
+    <path d="M162,242 Q200,252 238,242"
+          fill="none" stroke="#0a0f09" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Lip ridge highlight -->
+    <path d="M166,240 Q200,249 234,240"
+          fill="none" stroke="#00E676" stroke-width="0.4" opacity="0.18"/>
+
+    <!-- Nostril slits — cobra anatomy, horizontal ellipses angled outward -->
+    <ellipse cx="188" cy="227" rx="7" ry="3.2" fill="#050805" transform="rotate(-10 188 227)"/>
+    <ellipse cx="212" cy="227" rx="7" ry="3.2" fill="#050805" transform="rotate(10 212 227)"/>
+
+    <!-- ===================== FORKED TONGUE ===================== -->
+    <!-- Tongue emerging — subtle, just peeking out -->
+    <path d="M196,251 Q200,254 204,251" fill="url(#tongueGrad)" stroke="#7f1d1d" stroke-width="0.4"/>
+    <!-- Left fork — flicking out -->
+    <path d="M197,251 Q190,264 182,275"
+          fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Right fork -->
+    <path d="M203,251 Q210,264 218,275"
+          fill="none" stroke="#c62828" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Fork tips -->
+    <circle cx="182" cy="275" r="1.8" fill="#c62828" filter="url(#softGlow)"/>
+    <circle cx="218" cy="275" r="1.8" fill="#c62828" filter="url(#softGlow)"/>
+
+  </g>
+
+  <!-- ===================== CFO TEXT ===================== -->
+  <text x="200" y="374"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="#FFD700" opacity="0.88">CFO</text>
+  <line x1="140" y1="382" x2="260" y2="382"
+        stroke="#FFD700" stroke-width="0.4" opacity="0.22"/>
+
+  <!-- ===================== CORNER MARKS (exact match to king-hippo) ===================== -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- ===================== GOLD RING ===================== -->
+  <rect x="12" y="12" width="376" height="376" rx="30"
+        fill="none" stroke="url(#gold)" stroke-width="0.6" opacity="0.18"/>
+
+</svg>

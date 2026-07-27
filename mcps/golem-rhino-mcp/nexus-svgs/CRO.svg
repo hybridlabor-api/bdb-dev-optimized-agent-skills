@@ -1,0 +1,429 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="cro-bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0e1020"/>
+      <stop offset="100%" stop-color="#04060c"/>
+    </radialGradient>
+    <linearGradient id="cro-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="cro-goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <!-- Wolf fur base — dark charcoal / gunmetal -->
+    <linearGradient id="wolf-main" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#3c4252"/>
+      <stop offset="45%" stop-color="#2a2f3e"/>
+      <stop offset="100%" stop-color="#181b26"/>
+    </linearGradient>
+    <!-- Lighter muzzle fur -->
+    <linearGradient id="wolf-muzzle" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#525c6e"/>
+      <stop offset="100%" stop-color="#3a4050"/>
+    </linearGradient>
+    <!-- Deep shadow plane -->
+    <linearGradient id="wolf-shadow-plane" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e0f18"/>
+      <stop offset="100%" stop-color="#1c1f2c"/>
+    </linearGradient>
+    <!-- Electric blue iris -->
+    <radialGradient id="iris-blue" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="#90CEFF"/>
+      <stop offset="25%" stop-color="#2979FF"/>
+      <stop offset="60%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </radialGradient>
+    <!-- Blue accent — ear tips, cheekbones -->
+    <linearGradient id="blue-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#448AFF"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+    <!-- Blazer / collar dark -->
+    <linearGradient id="blazer-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14161e"/>
+      <stop offset="100%" stop-color="#09090e"/>
+    </linearGradient>
+    <!-- Lapel -->
+    <linearGradient id="lapel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1f2e"/>
+      <stop offset="100%" stop-color="#0e0f18"/>
+    </linearGradient>
+    <!-- Sharp rectangular glass lens — blue tinted -->
+    <linearGradient id="lens-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0.28"/>
+      <stop offset="50%" stop-color="#0d47a1" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#1a3a8a" stop-opacity="0.32"/>
+    </linearGradient>
+    <linearGradient id="glass-frame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e0e0e"/>
+      <stop offset="50%" stop-color="#222222"/>
+      <stop offset="100%" stop-color="#0e0e0e"/>
+    </linearGradient>
+    <linearGradient id="lens-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Fur texture — directional hatch -->
+    <pattern id="fur-hatch" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="5" y2="5" stroke="#000000" stroke-width="0.4" opacity="0.09"/>
+      <line x1="2.5" y1="0" x2="5" y2="2.5" stroke="#000000" stroke-width="0.3" opacity="0.05"/>
+    </pattern>
+    <pattern id="fur-vertical" x="0" y="0" width="3" height="6" patternUnits="userSpaceOnUse">
+      <line x1="1.5" y1="0" x2="1.5" y2="6" stroke="#ffffff" stroke-width="0.3" opacity="0.04"/>
+    </pattern>
+    <!-- Blue eye ambient glow -->
+    <filter id="blue-glow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hard-shadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#000" flood-opacity="0.75"/>
+    </filter>
+    <filter id="soft-glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gold-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="inner-glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="32" fill="url(#cro-bg)"/>
+
+  <!-- Subtle grid — blue tint matches wolf energy -->
+  <g opacity="0.025" stroke="#2979FF" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- ===== WOLF CHARACTER ===== -->
+  <g filter="url(#hard-shadow)">
+
+    <!-- ===== BLAZER — sales executive collar ===== -->
+    <!-- Blazer body -->
+    <path d="M55,400 L55,358 Q78,328 132,318 L172,338 L200,344 L228,338 L268,318 Q322,328 345,358 L345,400 Z"
+          fill="url(#blazer-grad)"/>
+    <!-- Left lapel -->
+    <path d="M132,318 L172,338 L200,344 L172,385 L108,385 L85,352 Z"
+          fill="url(#lapel-grad)" stroke="#1a1d2c" stroke-width="0.6"/>
+    <!-- Right lapel -->
+    <path d="M268,318 L228,338 L200,344 L228,385 L292,385 L315,352 Z"
+          fill="url(#lapel-grad)" stroke="#1a1d2c" stroke-width="0.6"/>
+    <!-- Shirt/collar peep -->
+    <path d="M184,344 L200,360 L216,344 L200,338 Z" fill="#1c2038"/>
+    <!-- Lapel fold crease -->
+    <path d="M132,318 Q158,332 172,338" fill="none" stroke="#22253a" stroke-width="1.2" opacity="0.6"/>
+    <path d="M268,318 Q242,332 228,338" fill="none" stroke="#22253a" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- ===== MUSCULAR NECK ===== -->
+    <path d="M158,308 Q146,328 148,356 L252,356 Q254,328 242,308 Z"
+          fill="#282d3c"/>
+    <!-- Neck fur texture -->
+    <path d="M158,308 Q146,328 148,356 L252,356 Q254,328 242,308 Z"
+          fill="url(#fur-vertical)" opacity="0.6"/>
+    <!-- Sternocleidomastoid definition -->
+    <path d="M158,308 Q150,322 152,346" fill="none" stroke="#181b26" stroke-width="2.5" opacity="0.5"/>
+    <path d="M242,308 Q250,322 248,346" fill="none" stroke="#181b26" stroke-width="2.5" opacity="0.5"/>
+
+    <!-- ===== SKULL — angular, wedge-shaped wolf cranium ===== -->
+    <!-- Main skull mass -->
+    <path d="M88,192
+             C86,155 104,116 140,103
+             L178,96
+             L200,94
+             L222,96
+             L260,103
+             C296,116 314,155 312,192
+             C312,234 298,272 276,296
+             L244,310
+             L200,318
+             L156,310
+             L124,296
+             C102,272 88,234 88,192 Z"
+          fill="url(#wolf-main)"/>
+
+    <!-- Fur texture overlay -->
+    <path d="M88,192 C86,155 104,116 140,103 L178,96 L200,94 L222,96 L260,103
+             C296,116 314,155 312,192 C312,234 298,272 276,296
+             L244,310 L200,318 L156,310 L124,296
+             C102,272 88,234 88,192 Z"
+          fill="url(#fur-hatch)"/>
+
+    <!-- Left face shadow plane -->
+    <path d="M88,192 C86,155 104,116 140,103 L156,110 L148,255 Q118,258 102,240 C94,228 88,212 88,192 Z"
+          fill="#0c0e18" opacity="0.48"/>
+
+    <!-- Right face shadow plane -->
+    <path d="M312,192 C314,155 296,116 260,103 L244,110 L252,255 Q282,258 298,240 C306,228 312,212 312,192 Z"
+          fill="#0c0e18" opacity="0.48"/>
+
+    <!-- Center forehead light catch -->
+    <path d="M168,106 Q200,98 232,106 L242,172 Q200,182 158,172 Z"
+          fill="#424a5c" opacity="0.3"/>
+
+    <!-- ===== POINTED EARS — tall, sharp, alpha-predator ===== -->
+    <!-- Left ear outer shape -->
+    <path d="M110,170
+             C96,150 74,112 66,74
+             C63,54 77,46 91,60
+             C105,76 118,122 120,150
+             L120,170 Z"
+          fill="#252a38"/>
+    <!-- Left ear dark inner -->
+    <path d="M112,165
+             C100,148 82,116 77,86
+             C74,72 82,64 90,74
+             C98,86 110,120 114,146
+             L114,165 Z"
+          fill="#161820"/>
+    <!-- Left ear tip — electric blue accent -->
+    <path d="M66,74 C63,54 77,46 91,60 L78,66 Z"
+          fill="url(#blue-accent)" opacity="0.85"/>
+    <!-- Left ear rim blue glow -->
+    <path d="M70,80 C67,65 72,55 80,60 L74,70 Z"
+          fill="#2979FF" opacity="0.2" filter="url(#blue-glow)"/>
+    <!-- Left ear inner pinkish-blue fur -->
+    <path d="M86,106 C83,90 84,76 90,70 C95,82 97,106 99,128 Z"
+          fill="#1a2a60" opacity="0.65"/>
+
+    <!-- Right ear outer -->
+    <path d="M290,170
+             C304,150 326,112 334,74
+             C337,54 323,46 309,60
+             C295,76 282,122 280,150
+             L280,170 Z"
+          fill="#252a38"/>
+    <!-- Right ear dark inner -->
+    <path d="M288,165
+             C300,148 318,116 323,86
+             C326,72 318,64 310,74
+             C302,86 290,120 286,146
+             L286,165 Z"
+          fill="#161820"/>
+    <!-- Right ear tip — electric blue accent -->
+    <path d="M334,74 C337,54 323,46 309,60 L322,66 Z"
+          fill="url(#blue-accent)" opacity="0.85"/>
+    <!-- Right ear rim blue glow -->
+    <path d="M330,80 C333,65 328,55 320,60 L326,70 Z"
+          fill="#2979FF" opacity="0.2" filter="url(#blue-glow)"/>
+    <!-- Right ear inner fur -->
+    <path d="M314,106 C317,90 316,76 310,70 C305,82 303,106 301,128 Z"
+          fill="#1a2a60" opacity="0.65"/>
+
+    <!-- ===== CHEEKBONE BLUE ACCENT STREAKS ===== -->
+    <path d="M96,214 Q108,204 122,200" fill="none" stroke="#2979FF" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+    <path d="M304,214 Q292,204 278,200" fill="none" stroke="#2979FF" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+    <!-- Supporting fur ridge on cheeks -->
+    <path d="M92,228 Q108,216 126,212" fill="none" stroke="#363d50" stroke-width="2.5" opacity="0.65" stroke-linecap="round"/>
+    <path d="M308,228 Q292,216 274,212" fill="none" stroke="#363d50" stroke-width="2.5" opacity="0.65" stroke-linecap="round"/>
+    <path d="M94,242 Q110,232 128,228" fill="none" stroke="#2d3244" stroke-width="1.5" opacity="0.45" stroke-linecap="round"/>
+    <path d="M306,242 Q290,232 272,228" fill="none" stroke="#2d3244" stroke-width="1.5" opacity="0.45" stroke-linecap="round"/>
+
+    <!-- ===== BROW RIDGE — angular, severe predator brow ===== -->
+    <!-- Left brow shelf — angular wedge -->
+    <path d="M106,192 L180,174 L180,184 L108,202 Z" fill="#1c1f2c"/>
+    <path d="M110,195 L180,178 L180,183 L112,200 Z" fill="#12141c" opacity="0.65"/>
+    <!-- Right brow shelf -->
+    <path d="M294,192 L220,174 L220,184 L292,202 Z" fill="#1c1f2c"/>
+    <path d="M290,195 L220,178 L220,183 L288,200 Z" fill="#12141c" opacity="0.65"/>
+    <!-- Brow center deep furrow -->
+    <path d="M180,180 Q200,176 220,180" fill="none" stroke="#12141c" stroke-width="6" stroke-linecap="round"/>
+    <path d="M184,184 Q200,180 216,184" fill="none" stroke="#080a10" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Inner brow tension crease -->
+    <path d="M186,188 L194,182" fill="none" stroke="#0e101a" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/>
+    <path d="M214,188 L206,182" fill="none" stroke="#0e101a" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/>
+
+    <!-- Forehead fur strata lines -->
+    <path d="M148,148 Q200,140 252,148" fill="none" stroke="#1a1d28" stroke-width="1.8" opacity="0.5"/>
+    <path d="M152,158 Q200,150 248,158" fill="none" stroke="#1c2030" stroke-width="1.3" opacity="0.4"/>
+    <path d="M156,166 Q200,159 244,166" fill="none" stroke="#242838" stroke-width="1" opacity="0.3"/>
+
+    <!-- ===== EYES — electric blue, predator slit pupils ===== -->
+    <!-- Left eye socket depression -->
+    <ellipse cx="152" cy="205" rx="27" ry="16" fill="#0c0d16"/>
+    <!-- Left sclera — nearly hidden, dark -->
+    <ellipse cx="152" cy="205" rx="20" ry="12" fill="#181c2e"/>
+    <!-- Left iris — electric blue -->
+    <ellipse cx="154" cy="204" rx="14" ry="12" fill="url(#iris-blue)" filter="url(#blue-glow)"/>
+    <!-- Left pupil — vertical wolf slit -->
+    <ellipse cx="154" cy="204" rx="3.5" ry="9" fill="#020306"/>
+    <!-- Left specular highlight -->
+    <ellipse cx="149" cy="199" rx="4.5" ry="2.5" fill="#ffffff" opacity="0.78"/>
+    <ellipse cx="160" cy="207" rx="1.8" ry="1" fill="#90CEFF" opacity="0.5"/>
+    <!-- Left upper eyelid — heavy and hard -->
+    <path d="M126,198 Q146,182 184,196" fill="#1c1f2e" stroke="#12141c" stroke-width="1.2"/>
+    <path d="M128,201 Q148,186 182,199" fill="none" stroke="#080a10" stroke-width="2.2"/>
+    <!-- Left lower lid — tight -->
+    <path d="M130,210 Q152,218 178,210" fill="none" stroke="#1a1d28" stroke-width="1.2" opacity="0.5"/>
+    <!-- Eye ambient blue spill on fur -->
+    <ellipse cx="152" cy="205" rx="30" ry="18" fill="#2979FF" opacity="0.055" filter="url(#blue-glow)"/>
+
+    <!-- Right eye socket -->
+    <ellipse cx="248" cy="205" rx="27" ry="16" fill="#0c0d16"/>
+    <!-- Right sclera -->
+    <ellipse cx="248" cy="205" rx="20" ry="12" fill="#181c2e"/>
+    <!-- Right iris — electric blue -->
+    <ellipse cx="246" cy="204" rx="14" ry="12" fill="url(#iris-blue)" filter="url(#blue-glow)"/>
+    <!-- Right pupil — vertical slit -->
+    <ellipse cx="246" cy="204" rx="3.5" ry="9" fill="#020306"/>
+    <!-- Right specular highlight -->
+    <ellipse cx="241" cy="199" rx="4.5" ry="2.5" fill="#ffffff" opacity="0.78"/>
+    <ellipse cx="252" cy="207" rx="1.8" ry="1" fill="#90CEFF" opacity="0.5"/>
+    <!-- Right upper eyelid -->
+    <path d="M274,198 Q254,182 216,196" fill="#1c1f2e" stroke="#12141c" stroke-width="1.2"/>
+    <path d="M272,201 Q252,186 218,199" fill="none" stroke="#080a10" stroke-width="2.2"/>
+    <!-- Right lower lid -->
+    <path d="M270,210 Q248,218 222,210" fill="none" stroke="#1a1d28" stroke-width="1.2" opacity="0.5"/>
+    <!-- Eye ambient glow -->
+    <ellipse cx="248" cy="205" rx="30" ry="18" fill="#2979FF" opacity="0.055" filter="url(#blue-glow)"/>
+
+    <!-- ===== SHARP RECTANGULAR GLASSES — blue-tinted lenses ===== -->
+    <g>
+      <!-- Left lens frame — hard rectangle, no rounding -->
+      <rect x="118" y="191" width="66" height="30" rx="2" ry="2" fill="none" stroke="url(#glass-frame)" stroke-width="3.2"/>
+      <!-- Left lens fill -->
+      <rect x="120" y="193" width="62" height="26" rx="1.5" ry="1.5" fill="url(#lens-blue)"/>
+      <!-- Blue tint wash -->
+      <rect x="120" y="193" width="62" height="26" rx="1.5" ry="1.5" fill="#1565C0" opacity="0.08"/>
+      <!-- Lens top shine -->
+      <path d="M125,196 Q150,193 178,197" fill="none" stroke="url(#lens-shine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Right lens frame -->
+      <rect x="216" y="191" width="66" height="30" rx="2" ry="2" fill="none" stroke="url(#glass-frame)" stroke-width="3.2"/>
+      <!-- Right lens fill -->
+      <rect x="218" y="193" width="62" height="26" rx="1.5" ry="1.5" fill="url(#lens-blue)"/>
+      <rect x="218" y="193" width="62" height="26" rx="1.5" ry="1.5" fill="#1565C0" opacity="0.08"/>
+      <!-- Right shine -->
+      <path d="M223,196 Q248,193 276,197" fill="none" stroke="url(#lens-shine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Bridge — thin, minimal -->
+      <path d="M184,206 Q200,203 216,206" fill="none" stroke="url(#glass-frame)" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Temple arms — angular, going up to ears -->
+      <path d="M118,205 L96,196 Q86,192 84,174" fill="none" stroke="url(#glass-frame)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M282,205 L304,196 Q314,192 316,174" fill="none" stroke="url(#glass-frame)" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Frame corner details — screw dots -->
+      <circle cx="118" cy="191" r="1.8" fill="#303030"/>
+      <circle cx="184" cy="191" r="1.8" fill="#303030"/>
+      <circle cx="216" cy="191" r="1.8" fill="#303030"/>
+      <circle cx="282" cy="191" r="1.8" fill="#303030"/>
+      <circle cx="118" cy="221" r="1.8" fill="#303030"/>
+      <circle cx="184" cy="221" r="1.8" fill="#303030"/>
+      <circle cx="216" cy="221" r="1.8" fill="#303030"/>
+      <circle cx="282" cy="221" r="1.8" fill="#303030"/>
+      <circle cx="118" cy="206" r="1.2" fill="#3a3a3a"/>
+      <circle cx="282" cy="206" r="1.2" fill="#3a3a3a"/>
+    </g>
+
+    <!-- ===== ANGULAR SNOUT / MUZZLE — wolf wedge, narrower than hippo ===== -->
+    <!-- Muzzle base -->
+    <path d="M150,256
+             C150,240 168,226 200,226
+             C232,226 250,240 250,256
+             C250,280 236,305 200,312
+             C164,305 150,280 150,256 Z"
+          fill="url(#wolf-muzzle)"/>
+    <!-- Muzzle fur texture -->
+    <path d="M150,256 C150,240 168,226 200,226 C232,226 250,240 250,256
+             C250,280 236,305 200,312 C164,305 150,280 150,256 Z"
+          fill="url(#fur-hatch)" opacity="0.6"/>
+    <!-- Muzzle center ridge -->
+    <line x1="200" y1="226" x2="200" y2="298" stroke="#282d3c" stroke-width="1.5" opacity="0.45"/>
+
+    <!-- Wolf nose — compact, wedge shape -->
+    <path d="M179,240 Q200,232 221,240 L219,252 Q200,258 181,252 Z"
+          fill="#0e1018"/>
+    <path d="M182,242 Q200,236 218,242 L216,250 Q200,254 184,250 Z"
+          fill="#181b26"/>
+    <!-- Nose bridge highlight -->
+    <ellipse cx="193" cy="240" rx="5.5" ry="2.5" fill="#282d3c" opacity="0.75"/>
+    <ellipse cx="207" cy="241" rx="3" ry="1.5" fill="#282d3c" opacity="0.4"/>
+    <!-- Tip specular -->
+    <ellipse cx="192" cy="238" rx="2.5" ry="1" fill="#3a3f50" opacity="0.9"/>
+
+    <!-- Nasolabial groove -->
+    <line x1="200" y1="252" x2="200" y2="272" stroke="#181b26" stroke-width="2" opacity="0.65" stroke-linecap="round"/>
+
+    <!-- ===== SHARP TEETH — visible, confident snarl ===== -->
+    <!-- Lip line — slight open, aggressive -->
+    <path d="M162,274 Q180,270 200,272 Q220,270 238,274" fill="none" stroke="#181b26" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Lower lip curl -->
+    <path d="M166,281 Q182,286 200,284 Q218,286 234,281" fill="none" stroke="#181b26" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Tooth gap dark -->
+    <path d="M170,275 Q186,278 200,277 Q214,278 230,275" fill="#0a0b12" stroke-width="0" opacity="0.85"/>
+
+    <!-- Upper teeth — clean row -->
+    <path d="M173,275 L173,280 L179,280 L179,275" fill="#e8eaf4" opacity="0.92"/>
+    <path d="M181,274 L181,280 L187,280 L187,274" fill="#e8eaf4" opacity="0.92"/>
+    <path d="M189,273.5 L189,280 L196,280 L196,273.5" fill="#dde0ee" opacity="0.96"/>
+    <path d="M198,273 L198,280 L202,280 L202,273" fill="#dde0ee" opacity="0.96"/>
+    <path d="M204,273.5 L204,280 L211,280 L211,273.5" fill="#dde0ee" opacity="0.96"/>
+    <path d="M213,274 L213,280 L219,280 L219,274" fill="#e8eaf4" opacity="0.92"/>
+    <path d="M221,275 L221,280 L227,280 L227,275" fill="#e8eaf4" opacity="0.92"/>
+
+    <!-- Sharp canine fangs — left and right -->
+    <path d="M170,273 L165,286 L173,282 L173,273 Z" fill="#f2f4ff" opacity="0.97"/>
+    <path d="M230,273 L235,286 L227,282 L227,273 Z" fill="#f2f4ff" opacity="0.97"/>
+    <!-- Canine shadow inner edge -->
+    <line x1="170" y1="275" x2="173" y2="282" stroke="#c8cadc" stroke-width="0.8" opacity="0.6"/>
+    <line x1="230" y1="275" x2="227" y2="282" stroke="#c8cadc" stroke-width="0.8" opacity="0.6"/>
+
+    <!-- Jaw fur texture lines -->
+    <path d="M108,252 Q122,242 138,238" fill="none" stroke="#252a38" stroke-width="1.5" opacity="0.42" stroke-linecap="round"/>
+    <path d="M104,267 Q120,258 136,254" fill="none" stroke="#252a38" stroke-width="1.2" opacity="0.36" stroke-linecap="round"/>
+    <path d="M106,282 Q120,274 134,270" fill="none" stroke="#252a38" stroke-width="1" opacity="0.3" stroke-linecap="round"/>
+    <path d="M292,252 Q278,242 262,238" fill="none" stroke="#252a38" stroke-width="1.5" opacity="0.42" stroke-linecap="round"/>
+    <path d="M296,267 Q280,258 264,254" fill="none" stroke="#252a38" stroke-width="1.2" opacity="0.36" stroke-linecap="round"/>
+    <path d="M294,282 Q280,274 266,270" fill="none" stroke="#252a38" stroke-width="1" opacity="0.3" stroke-linecap="round"/>
+
+    <!-- Jaw definition edge -->
+    <path d="M120,292 Q140,304 162,310" fill="none" stroke="#181b26" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M280,292 Q260,304 238,310" fill="none" stroke="#181b26" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <!-- Chin underline -->
+    <path d="M174,308 Q200,315 226,308" fill="none" stroke="#242838" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+
+  </g>
+
+  <!-- ===== CRO TEXT — gold, premium ===== -->
+  <text x="200" y="372"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="url(#cro-gold)" opacity="0.88">CRO</text>
+  <line x1="120" y1="380" x2="280" y2="380" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- Gold ring accent -->
+  <ellipse cx="200" cy="384" rx="62" ry="1.5" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.14"/>
+
+  <!-- Corner marks — matching king-hippo style exactly -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- Inner blue corner accent — CRO signature electric blue -->
+  <g opacity="0.22" stroke="#2979FF" stroke-width="1" fill="none">
+    <path d="M28,40 L28,28 L40,28"/>
+    <path d="M372,40 L372,28 L360,28"/>
+    <path d="M28,360 L28,372 L40,372"/>
+    <path d="M372,360 L372,372 L360,372"/>
+  </g>
+
+</svg>

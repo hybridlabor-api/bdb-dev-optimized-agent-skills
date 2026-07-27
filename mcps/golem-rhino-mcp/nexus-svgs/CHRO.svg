@@ -1,0 +1,493 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0e1a18"/>
+      <stop offset="100%" stop-color="#04060c"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <!-- Elephant skin — dark grey, cool charcoal -->
+    <linearGradient id="elephantMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3c4048"/>
+      <stop offset="50%" stop-color="#2e3238"/>
+      <stop offset="100%" stop-color="#22252c"/>
+    </linearGradient>
+    <linearGradient id="elephantDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#32363c"/>
+      <stop offset="100%" stop-color="#181b20"/>
+    </linearGradient>
+    <!-- Ear gradient — outer face matches skin -->
+    <linearGradient id="earOuterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#383c42"/>
+      <stop offset="100%" stop-color="#242830"/>
+    </linearGradient>
+    <!-- Ear inner — warmer pink-brown undertone -->
+    <linearGradient id="earInnerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a3a34"/>
+      <stop offset="60%" stop-color="#3a2e2a"/>
+      <stop offset="100%" stop-color="#281e1a"/>
+    </linearGradient>
+    <!-- Teal accent gradient -->
+    <linearGradient id="tealAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4DB6AC"/>
+      <stop offset="50%" stop-color="#26A69A"/>
+      <stop offset="100%" stop-color="#00897B"/>
+    </linearGradient>
+    <!-- Tusk — ivory -->
+    <linearGradient id="tuskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EAE0CC"/>
+      <stop offset="100%" stop-color="#C8B89A"/>
+    </linearGradient>
+    <!-- Trunk -->
+    <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#363a40"/>
+      <stop offset="100%" stop-color="#1e2126"/>
+    </linearGradient>
+    <!-- Glass frame — dark metal -->
+    <linearGradient id="glassFrame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="50%" stop-color="#2e2e2e"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <!-- Glass lens — teal tinted -->
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#004D40" stop-opacity="0.20"/>
+      <stop offset="40%" stop-color="#00695C" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#004D40" stop-opacity="0.24"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Eye -->
+    <radialGradient id="eyeIris" cx="45%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#1C1200"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <!-- Cardigan/collar -->
+    <linearGradient id="cardiganGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c2028"/>
+      <stop offset="100%" stop-color="#10131a"/>
+    </linearGradient>
+    <!-- Gold ring -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFC107"/>
+    </linearGradient>
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="tealGlow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Skin pore texture pattern -->
+    <pattern id="skinTexture" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.6" fill="#000" opacity="0.05"/>
+      <circle cx="6" cy="6" r="0.6" fill="#000" opacity="0.05"/>
+      <circle cx="2" cy="6" r="0.35" fill="#000" opacity="0.03"/>
+      <circle cx="6" cy="2" r="0.35" fill="#000" opacity="0.03"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Faint teal ambient glow behind character mass -->
+  <ellipse cx="200" cy="240" rx="140" ry="105" fill="#26A69A" opacity="0.025"/>
+
+  <!-- Subtle gold grid -->
+  <g opacity="0.03" stroke="#FFD700" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- ===== CARDIGAN COLLAR — approachable, authoritative ===== -->
+  <g filter="url(#hardShadow)">
+    <!-- Collar body rising from bottom -->
+    <path d="M75,365 Q78,342 115,334 L158,326 Q172,322 200,321 Q228,322 242,326 L285,334 Q322,342 325,365 L325,400 L75,400 Z"
+          fill="url(#cardiganGrad)"/>
+    <!-- Ribbed knit texture lines -->
+    <path d="M98,342 Q150,337 200,336 Q250,337 302,342"
+          fill="none" stroke="#28303c" stroke-width="1.1" opacity="0.6"/>
+    <path d="M94,353 Q150,348 200,347 Q250,348 306,353"
+          fill="none" stroke="#28303c" stroke-width="0.9" opacity="0.45"/>
+    <path d="M90,364 Q150,359 200,358 Q250,359 310,364"
+          fill="none" stroke="#28303c" stroke-width="0.8" opacity="0.35"/>
+    <!-- V-neck left fold -->
+    <path d="M158,326 Q176,337 196,350"
+          fill="none" stroke="#2a3040" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M160,328 Q178,339 197,352"
+          fill="none" stroke="#38404e" stroke-width="1" opacity="0.4"/>
+    <!-- V-neck right fold -->
+    <path d="M242,326 Q224,337 204,350"
+          fill="none" stroke="#2a3040" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M240,328 Q222,339 203,352"
+          fill="none" stroke="#38404e" stroke-width="1" opacity="0.4"/>
+    <!-- Collar button -->
+    <circle cx="200" cy="354" r="4.5" fill="#1e2430"/>
+    <circle cx="200" cy="354" r="3" fill="none" stroke="#323a48" stroke-width="0.8"/>
+    <circle cx="200" cy="354" r="1.2" fill="#28303e"/>
+  </g>
+
+  <!-- ===== MAIN ELEPHANT CHARACTER ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- ===== LEFT EAR — large, spread wide ===== -->
+    <path d="M110,238
+             C72,226 28,200 22,158
+             C16,116 42,82 74,85
+             C96,87 112,106 120,130
+             C128,154 126,180 122,206
+             C118,224 116,234 114,242"
+          fill="url(#earOuterGrad)" stroke="#1a1e24" stroke-width="1"/>
+    <!-- Left ear inner skin — warmer tone -->
+    <path d="M110,238
+             C80,224 50,202 46,168
+             C42,134 60,108 82,110
+             C98,112 110,128 116,150
+             C122,170 120,194 118,214
+             C115,228 112,236 111,240"
+          fill="url(#earInnerGrad)" opacity="0.82"/>
+    <!-- Left ear skin texture -->
+    <path d="M110,238 C72,226 28,200 22,158 C16,116 42,82 74,85 C96,87 112,106 120,130 C128,154 126,180 122,206 C118,224 116,234 114,242"
+          fill="url(#skinTexture)" opacity="0.55"/>
+    <!-- Left ear wrinkle radiating lines -->
+    <path d="M52,122 Q70,114 90,120" fill="none" stroke="#1a1e24" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M44,143 Q64,134 86,138" fill="none" stroke="#1a1e24" stroke-width="1.0" opacity="0.42" stroke-linecap="round"/>
+    <path d="M38,168 Q58,158 82,162" fill="none" stroke="#1a1e24" stroke-width="1.0" opacity="0.36" stroke-linecap="round"/>
+    <path d="M40,194 Q60,186 84,188" fill="none" stroke="#1a1e24" stroke-width="0.9" opacity="0.30" stroke-linecap="round"/>
+    <path d="M48,218 Q66,212 88,214" fill="none" stroke="#1a1e24" stroke-width="0.8" opacity="0.24" stroke-linecap="round"/>
+    <!-- Teal accent edge — left ear outer rim (warm highlight) -->
+    <path d="M22,158 C16,116 42,82 74,85 C96,87 112,106 120,130"
+          fill="none" stroke="#26A69A" stroke-width="2.8" opacity="0.65" filter="url(#tealGlow)" stroke-linecap="round"/>
+    <!-- Secondary teal trace (subtle) -->
+    <path d="M26,180 C22,155 38,108 80,96"
+          fill="none" stroke="#26A69A" stroke-width="1.2" opacity="0.25" stroke-linecap="round"/>
+
+    <!-- ===== RIGHT EAR — large, spread wide ===== -->
+    <path d="M290,238
+             C328,226 372,200 378,158
+             C384,116 358,82 326,85
+             C304,87 288,106 280,130
+             C272,154 274,180 278,206
+             C282,224 284,234 286,242"
+          fill="url(#earOuterGrad)" stroke="#1a1e24" stroke-width="1"/>
+    <!-- Right ear inner skin -->
+    <path d="M290,238
+             C320,224 350,202 354,168
+             C358,134 340,108 318,110
+             C302,112 290,128 284,150
+             C278,170 280,194 282,214
+             C285,228 288,236 289,240"
+          fill="url(#earInnerGrad)" opacity="0.82"/>
+    <!-- Right ear skin texture -->
+    <path d="M290,238 C328,226 372,200 378,158 C384,116 358,82 326,85 C304,87 288,106 280,130 C272,154 274,180 278,206 C282,224 284,234 286,242"
+          fill="url(#skinTexture)" opacity="0.55"/>
+    <!-- Right ear wrinkle lines -->
+    <path d="M348,122 Q330,114 310,120" fill="none" stroke="#1a1e24" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M356,143 Q336,134 314,138" fill="none" stroke="#1a1e24" stroke-width="1.0" opacity="0.42" stroke-linecap="round"/>
+    <path d="M362,168 Q342,158 318,162" fill="none" stroke="#1a1e24" stroke-width="1.0" opacity="0.36" stroke-linecap="round"/>
+    <path d="M360,194 Q340,186 316,188" fill="none" stroke="#1a1e24" stroke-width="0.9" opacity="0.30" stroke-linecap="round"/>
+    <path d="M352,218 Q334,212 312,214" fill="none" stroke="#1a1e24" stroke-width="0.8" opacity="0.24" stroke-linecap="round"/>
+    <!-- Teal accent edge — right ear outer rim -->
+    <path d="M378,158 C384,116 358,82 326,85 C304,87 288,106 280,130"
+          fill="none" stroke="#26A69A" stroke-width="2.8" opacity="0.65" filter="url(#tealGlow)" stroke-linecap="round"/>
+    <path d="M374,180 C378,155 362,108 320,96"
+          fill="none" stroke="#26A69A" stroke-width="1.2" opacity="0.25" stroke-linecap="round"/>
+
+    <!-- ===== NECK BASE ===== -->
+    <path d="M132,315 Q132,345 168,350 L232,350 Q268,345 268,315 L264,298 L136,298 Z"
+          fill="#22252c"/>
+
+    <!-- ===== MAIN SKULL — broad, rounded dome, commanding ===== -->
+    <path d="M94,212
+             C94,155 130,110 172,106
+             L228,106
+             C270,110 306,155 306,212
+             C306,258 292,294 268,312
+             L132,312
+             C108,294 94,258 94,212 Z"
+          fill="url(#elephantMain)"/>
+
+    <!-- Skin texture on skull -->
+    <path d="M94,212 C94,155 130,110 172,106 L228,106 C270,110 306,155 306,212 C306,258 292,294 268,312 L132,312 C108,294 94,258 94,212 Z"
+          fill="url(#skinTexture)"/>
+
+    <!-- Side shadow planes — sculpt the face -->
+    <path d="M94,212 C94,182 104,158 124,142 L124,258 C108,258 94,240 94,212 Z"
+          fill="#10131a" opacity="0.28"/>
+    <path d="M306,212 C306,182 296,158 276,142 L276,258 C292,258 306,240 306,212 Z"
+          fill="#10131a" opacity="0.28"/>
+
+    <!-- ===== FOREHEAD DOME — prominent, intelligent ===== -->
+    <!-- Subtle dome highlight -->
+    <ellipse cx="200" cy="150" rx="58" ry="40" fill="#3e4248" opacity="0.35"/>
+    <!-- Dome specular highlight -->
+    <ellipse cx="192" cy="140" rx="28" ry="18" fill="#464a52" opacity="0.18"/>
+
+    <!-- Forehead horizontal wrinkle lines — aged wisdom -->
+    <path d="M150,146 Q175,138 200,137 Q225,138 250,146"
+          fill="none" stroke="#1c1f26" stroke-width="1.8" opacity="0.48" stroke-linecap="round"/>
+    <path d="M154,158 Q177,151 200,150 Q223,151 246,158"
+          fill="none" stroke="#1c1f26" stroke-width="1.4" opacity="0.38" stroke-linecap="round"/>
+    <path d="M157,170 Q178,164 200,163 Q222,164 243,170"
+          fill="none" stroke="#1c1f26" stroke-width="1.1" opacity="0.30" stroke-linecap="round"/>
+    <path d="M160,181 Q180,176 200,175 Q220,176 240,181"
+          fill="none" stroke="#1c1f26" stroke-width="0.9" opacity="0.22" stroke-linecap="round"/>
+
+    <!-- Central wisdom crease — vertical -->
+    <path d="M200,125 Q198,148 200,170"
+          fill="none" stroke="#181b22" stroke-width="1.6" opacity="0.38" stroke-linecap="round"/>
+
+    <!-- Teal forehead accent markings — two arcs, like tribal/wisdom marks -->
+    <path d="M174,135 Q200,126 226,135"
+          fill="none" stroke="#26A69A" stroke-width="2.0" opacity="0.60" stroke-linecap="round" filter="url(#softGlow)"/>
+    <path d="M180,143 Q200,136 220,143"
+          fill="none" stroke="#26A69A" stroke-width="1.3" opacity="0.38" stroke-linecap="round"/>
+    <!-- Small teal dot at crown center -->
+    <circle cx="200" cy="122" r="3.5" fill="#26A69A" opacity="0.35" filter="url(#softGlow)"/>
+    <circle cx="200" cy="122" r="1.8" fill="#4DB6AC" opacity="0.50"/>
+
+    <!-- ===== BROW RIDGE — calm, not angry — wise stillness ===== -->
+    <!-- Left brow plane — gently horizontal, not scowling -->
+    <path d="M114,200 L158,186 L164,200 L122,206 Z" fill="#24282e"/>
+    <!-- Right brow plane -->
+    <path d="M286,200 L242,186 L236,200 L278,206 Z" fill="#24282e"/>
+    <!-- Brow crease lines -->
+    <path d="M117,200 Q158,188 188,190" fill="none" stroke="#1a1e24" stroke-width="1.2" opacity="0.48"/>
+    <path d="M283,200 Q242,188 212,190" fill="none" stroke="#1a1e24" stroke-width="1.2" opacity="0.48"/>
+    <!-- Brow bridge connecting line -->
+    <line x1="188" y1="189" x2="212" y2="189" stroke="#24282e" stroke-width="5"/>
+
+    <!-- ===== CHEEK AREAS — rounded, full, warm ===== -->
+    <ellipse cx="140" cy="252" rx="32" ry="24" fill="#363a40" opacity="0.28"/>
+    <ellipse cx="260" cy="252" rx="32" ry="24" fill="#363a40" opacity="0.28"/>
+    <!-- Cheek wrinkle creases -->
+    <path d="M108,250 Q126,242 146,246"
+          fill="none" stroke="#1c1f26" stroke-width="1.2" opacity="0.40" stroke-linecap="round"/>
+    <path d="M106,263 Q124,255 144,259"
+          fill="none" stroke="#1c1f26" stroke-width="1.0" opacity="0.32" stroke-linecap="round"/>
+    <path d="M292,250 Q274,242 254,246"
+          fill="none" stroke="#1c1f26" stroke-width="1.2" opacity="0.40" stroke-linecap="round"/>
+    <path d="M294,263 Q276,255 256,259"
+          fill="none" stroke="#1c1f26" stroke-width="1.0" opacity="0.32" stroke-linecap="round"/>
+
+    <!-- ===== TUSKS — small, dignified ===== -->
+    <!-- Left tusk — curving outward and slightly down -->
+    <path d="M150,300 C144,310 134,320 122,318 C114,316 109,307 114,298 C118,292 126,290 134,294 C140,297 146,300 150,300 Z"
+          fill="url(#tuskGrad)" stroke="#C8B89A" stroke-width="0.8"/>
+    <path d="M146,302 C140,312 132,320 122,318"
+          fill="none" stroke="#EAE0CC" stroke-width="0.6" opacity="0.35"/>
+    <!-- Right tusk -->
+    <path d="M250,300 C256,310 266,320 278,318 C286,316 291,307 286,298 C282,292 274,290 266,294 C260,297 254,300 250,300 Z"
+          fill="url(#tuskGrad)" stroke="#C8B89A" stroke-width="0.8"/>
+    <path d="M254,302 C260,312 268,320 278,318"
+          fill="none" stroke="#EAE0CC" stroke-width="0.6" opacity="0.35"/>
+
+    <!-- ===== TRUNK — broad, curled slightly to right ===== -->
+    <!-- Trunk base emerging from face below nose bridge -->
+    <path d="M160,274
+             C155,282 150,296 152,312
+             C154,326 160,338 164,346
+             C168,354 174,360 180,360
+             C188,360 194,352 196,342
+             C198,332 196,320 192,310
+             C188,300 184,293 182,287
+             C180,281 180,276 182,272"
+          fill="url(#trunkGrad)" stroke="#181b20" stroke-width="1.2"/>
+    <!-- Trunk inner highlight line -->
+    <path d="M170,280 C173,288 176,298 178,310 C180,322 181,334 180,344 C179,352 177,358 179,360"
+          fill="none" stroke="#424650" stroke-width="1.5" opacity="0.28" stroke-linecap="round"/>
+    <!-- Trunk wrinkle ring lines -->
+    <path d="M154,300 Q170,295 181,297"
+          fill="none" stroke="#1c1f26" stroke-width="1.5" opacity="0.52" stroke-linecap="round"/>
+    <path d="M153,312 Q169,307 181,309"
+          fill="none" stroke="#1c1f26" stroke-width="1.3" opacity="0.46" stroke-linecap="round"/>
+    <path d="M154,324 Q170,319 181,321"
+          fill="none" stroke="#1c1f26" stroke-width="1.1" opacity="0.40" stroke-linecap="round"/>
+    <path d="M157,335 Q171,330 181,332"
+          fill="none" stroke="#1c1f26" stroke-width="1.0" opacity="0.34" stroke-linecap="round"/>
+    <path d="M162,346 Q173,342 181,343"
+          fill="none" stroke="#1c1f26" stroke-width="0.9" opacity="0.28" stroke-linecap="round"/>
+    <!-- Trunk tip curl -->
+    <path d="M180,360 C188,362 196,357 196,348"
+          fill="none" stroke="#282c32" stroke-width="1.5" opacity="0.55" stroke-linecap="round"/>
+    <!-- Trunk tip highlight -->
+    <ellipse cx="186" cy="358" rx="7" ry="4" fill="#2c3036" opacity="0.6" transform="rotate(-20,186,358)"/>
+
+    <!-- ===== EYES — small, deep-set, wise and steady ===== -->
+    <!-- Left eye socket depth -->
+    <ellipse cx="160" cy="208" rx="22" ry="15" fill="#1c1f26"/>
+    <!-- Left sclera — slightly yellow-white (aged wisdom) -->
+    <ellipse cx="160" cy="208" rx="16" ry="11" fill="#D4CABB"/>
+    <!-- Left iris — dark brown, deep -->
+    <ellipse cx="162" cy="207" rx="9.5" ry="10.5" fill="url(#eyeIris)"/>
+    <!-- Left pupil -->
+    <ellipse cx="163" cy="207" rx="5.5" ry="6" fill="#000"/>
+    <!-- Left catchlight — small, dignified -->
+    <circle cx="167" cy="204" r="2.2" fill="#fff" opacity="0.75"/>
+    <!-- Second faint catchlight -->
+    <circle cx="161" cy="202" r="1" fill="#fff" opacity="0.30"/>
+    <!-- Left upper eyelid — heavy, drooping slightly (wise age) -->
+    <path d="M138,202 Q152,191 184,202"
+          fill="#282c34" stroke="#1c1f26" stroke-width="1"/>
+    <path d="M140,204 Q154,194 182,204"
+          fill="none" stroke="#14171e" stroke-width="1.6"/>
+    <!-- Left lower eyelid crease -->
+    <path d="M142,214 Q160,219 180,214"
+          fill="none" stroke="#14171e" stroke-width="0.8" opacity="0.45"/>
+    <!-- Wrinkle at outer eye corner — laugh lines -->
+    <path d="M182,204 Q188,210 186,216"
+          fill="none" stroke="#1c1f26" stroke-width="0.9" opacity="0.40" stroke-linecap="round"/>
+    <path d="M182,207 Q190,214 188,220"
+          fill="none" stroke="#1c1f26" stroke-width="0.7" opacity="0.28" stroke-linecap="round"/>
+
+    <!-- Right eye socket depth -->
+    <ellipse cx="240" cy="208" rx="22" ry="15" fill="#1c1f26"/>
+    <!-- Right sclera -->
+    <ellipse cx="240" cy="208" rx="16" ry="11" fill="#D4CABB"/>
+    <!-- Right iris -->
+    <ellipse cx="242" cy="207" rx="9.5" ry="10.5" fill="url(#eyeIris)"/>
+    <!-- Right pupil -->
+    <ellipse cx="243" cy="207" rx="5.5" ry="6" fill="#000"/>
+    <!-- Right catchlight -->
+    <circle cx="247" cy="204" r="2.2" fill="#fff" opacity="0.75"/>
+    <circle cx="241" cy="202" r="1" fill="#fff" opacity="0.30"/>
+    <!-- Right upper eyelid -->
+    <path d="M262,202 Q248,191 216,202"
+          fill="#282c34" stroke="#1c1f26" stroke-width="1"/>
+    <path d="M260,204 Q246,194 218,204"
+          fill="none" stroke="#14171e" stroke-width="1.6"/>
+    <!-- Right lower eyelid crease -->
+    <path d="M258,214 Q240,219 220,214"
+          fill="none" stroke="#14171e" stroke-width="0.8" opacity="0.45"/>
+    <!-- Wrinkle outer right corner -->
+    <path d="M218,204 Q212,210 214,216"
+          fill="none" stroke="#1c1f26" stroke-width="0.9" opacity="0.40" stroke-linecap="round"/>
+    <path d="M218,207 Q210,214 212,220"
+          fill="none" stroke="#1c1f26" stroke-width="0.7" opacity="0.28" stroke-linecap="round"/>
+
+    <!-- ===== ROUND GLASSES — teal-tinted lenses, wise academic ===== -->
+    <g>
+      <!-- Left lens round frame -->
+      <circle cx="160" cy="208" r="27" fill="none" stroke="url(#glassFrame)" stroke-width="3.2"/>
+      <!-- Left lens tinted fill -->
+      <circle cx="160" cy="208" r="25" fill="url(#glassLens)"/>
+      <!-- Left lens teal color wash -->
+      <circle cx="160" cy="208" r="25" fill="#26A69A" opacity="0.055"/>
+      <!-- Left lens shine arc -->
+      <path d="M144,196 Q158,192 176,197"
+            fill="none" stroke="url(#glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Left lens lower faint reflection -->
+      <path d="M148,218 Q160,222 174,218"
+            fill="none" stroke="#fff" stroke-width="0.6" opacity="0.08" stroke-linecap="round"/>
+
+      <!-- Right lens round frame -->
+      <circle cx="240" cy="208" r="27" fill="none" stroke="url(#glassFrame)" stroke-width="3.2"/>
+      <!-- Right lens tinted fill -->
+      <circle cx="240" cy="208" r="25" fill="url(#glassLens)"/>
+      <!-- Right lens teal wash -->
+      <circle cx="240" cy="208" r="25" fill="#26A69A" opacity="0.055"/>
+      <!-- Right lens shine arc -->
+      <path d="M224,196 Q238,192 256,197"
+            fill="none" stroke="url(#glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M228,218 Q240,222 254,218"
+            fill="none" stroke="#fff" stroke-width="0.6" opacity="0.08" stroke-linecap="round"/>
+
+      <!-- Bridge — connecting both round lenses -->
+      <path d="M187,207 Q200,202 213,207"
+            fill="none" stroke="url(#glassFrame)" stroke-width="3.0" stroke-linecap="round"/>
+
+      <!-- Temple arms going toward ears -->
+      <path d="M133,207 L110,200 Q96,197 86,184"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M267,207 L290,200 Q304,197 314,184"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.6" stroke-linecap="round"/>
+
+      <!-- Frame hinge points -->
+      <circle cx="133" cy="207" r="2.0" fill="#3c3c3c"/>
+      <circle cx="267" cy="207" r="2.0" fill="#3c3c3c"/>
+      <circle cx="187" cy="205" r="1.3" fill="#3c3c3c"/>
+      <circle cx="213" cy="205" r="1.3" fill="#3c3c3c"/>
+    </g>
+
+    <!-- ===== MOUTH — calm, composed, dignified closed line ===== -->
+    <!-- Lips very subtle — trunk creature, calm set of mouth -->
+    <path d="M170,290 Q185,296 200,298 Q215,296 230,290"
+          fill="none" stroke="#14171e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Mouth corner definition lines -->
+    <path d="M138,284 Q155,288 170,290"
+          fill="none" stroke="#1c1f26" stroke-width="1.5" opacity="0.48"/>
+    <path d="M262,284 Q245,288 230,290"
+          fill="none" stroke="#1c1f26" stroke-width="1.5" opacity="0.48"/>
+    <!-- Very faint smile crease — dignified -->
+    <path d="M172,292 Q200,300 228,292"
+          fill="none" stroke="#181b22" stroke-width="0.9" opacity="0.35" stroke-linecap="round"/>
+
+  </g>
+
+  <!-- ===== GOLD RING at top center ===== -->
+  <g filter="url(#glow)">
+    <!-- Outer halo -->
+    <circle cx="200" cy="52" r="24" fill="none" stroke="url(#ringGrad)" stroke-width="0.8" opacity="0.3"/>
+    <!-- Main ring -->
+    <circle cx="200" cy="52" r="20" fill="none" stroke="url(#ringGrad)" stroke-width="3.0"/>
+    <!-- Inner accent ring -->
+    <circle cx="200" cy="52" r="16" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.45"/>
+    <!-- Ring gem — teal -->
+    <circle cx="200" cy="52" r="9" fill="#26A69A" opacity="0.32" filter="url(#innerGlow)"/>
+    <circle cx="200" cy="52" r="6" fill="#4DB6AC" opacity="0.52" filter="url(#innerGlow)"/>
+    <circle cx="200" cy="52" r="3.5" fill="#80CBC4" opacity="0.60"/>
+    <ellipse cx="198" cy="50" rx="2" ry="1.3" fill="#B2DFDB" opacity="0.55"/>
+    <!-- Cardinal tick marks on ring -->
+    <line x1="200" y1="28" x2="200" y2="32" stroke="url(#gold)" stroke-width="1.5" opacity="0.65"/>
+    <line x1="200" y1="72" x2="200" y2="76" stroke="url(#gold)" stroke-width="1.5" opacity="0.65"/>
+    <line x1="176" y1="52" x2="180" y2="52" stroke="url(#gold)" stroke-width="1.5" opacity="0.65"/>
+    <line x1="220" y1="52" x2="224" y2="52" stroke="url(#gold)" stroke-width="1.5" opacity="0.65"/>
+  </g>
+
+  <!-- ===== LABEL TEXT ===== -->
+  <text x="200" y="372"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="7"
+        fill="#FFD700" opacity="0.88">CHRO</text>
+  <line x1="108" y1="380" x2="292" y2="380"
+        stroke="#FFD700" stroke-width="0.4" opacity="0.22"/>
+
+  <!-- ===== CORNER MARKS — sharp, minimal, matching king-hippo ===== -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+</svg>

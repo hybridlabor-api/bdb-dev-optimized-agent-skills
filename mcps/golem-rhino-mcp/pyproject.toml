@@ -1,0 +1,105 @@
+[build-system]
+requires = ["hatchling<1.22", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "golem-3dmcp"
+dynamic = ["version"]
+description = "The most powerful MCP server for Rhinoceros 3D — 105 tools giving AI agents full read/write access to Rhino 8"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    { name = "King Hippopotamus" },
+]
+keywords = [
+    "mcp", "rhino", "rhinoceros", "3d", "cad", "grasshopper",
+    "claude", "ai", "model-context-protocol", "architecture",
+    "parametric-design", "computational-design"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+]
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "ruff>=0.4.0",
+    "mypy>=1.0",
+    "pre-commit>=3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-"
+Repository = "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-"
+Documentation = "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-/tree/main/docs"
+Issues = "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-/issues"
+Changelog = "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-/blob/main/CHANGELOG.md"
+
+[project.scripts]
+golem = "golem_3dmcp.cli:main"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/golem_3dmcp"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/golem_3dmcp"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = [
+    "N814",   # CamelCase imported as constant — Rhino convention (import Rhino.Geometry as RG)
+    "N806",   # Variable in function should be lowercase — constants in function scope
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/golem_3dmcp/_rhino_plugin/**" = ["E501", "F841", "F401", "I001", "UP"]  # Plugin runs inside Rhino (IronPython 2.7) — skip upgrade rules, import sorting, line length
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+exclude = ["src/golem_3dmcp/_rhino_plugin/"]
+
+[[tool.mypy.overrides]]
+module = "golem_3dmcp.tools.*"
+# mcp package provides untyped decorators when mypy runs without mcp stubs;
+# disable untyped-decorator for tool modules to avoid cascade noise.
+disable_error_code = ["untyped-decorator"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: requires Rhino running with plugin loaded",
+]

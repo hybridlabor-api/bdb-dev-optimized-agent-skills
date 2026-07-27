@@ -1,0 +1,430 @@
+{
+  "$schema": "https://glama.ai/schemas/glama.json",
+  "name": "golem-3dmcp",
+  "display_name": "GOLEM-3DMCP",
+  "description": "The most powerful MCP server for Rhinoceros 3D — 105 tools giving AI agents full read/write access to Rhino 8. Create geometry, run booleans, drive Grasshopper, capture viewports, and execute arbitrary Python scripts.",
+  "version": "0.1.0",
+  "repository": "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-",
+  "homepage": "https://github.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-",
+  "license": "MIT",
+  "runtime": "python",
+  "author": {
+    "name": "TheKingHippopotamus",
+    "url": "https://github.com/TheKingHippopotamus"
+  },
+  "categories": [
+    "Developer Tools",
+    "Autonomous Agents",
+    "Software Architecture"
+  ],
+  "tags": [
+    "rhino",
+    "rhinoceros",
+    "3d",
+    "cad",
+    "grasshopper",
+    "mcp",
+    "model-context-protocol",
+    "geometry",
+    "nurbs",
+    "parametric-design",
+    "computational-design",
+    "architecture",
+    "ai",
+    "claude"
+  ],
+  "installation": {
+    "command": "pip install golem-3dmcp",
+    "args": [],
+    "env": {
+      "GOLEM_RHINO_HOST": "127.0.0.1",
+      "GOLEM_RHINO_PORT": "9876",
+      "GOLEM_GH_PORT": "9877",
+      "GOLEM_TIMEOUT": "30"
+    }
+  },
+  "mcp": {
+    "command": "uvx",
+    "args": ["golem-3dmcp"],
+    "env": {
+      "GOLEM_RHINO_HOST": "127.0.0.1",
+      "GOLEM_RHINO_PORT": "9876"
+    },
+    "transport": "stdio"
+  },
+  "tools": [
+    {
+      "name": "get_document_info",
+      "description": "Get current Rhino document information including name, path, units, and object count."
+    },
+    {
+      "name": "list_layers",
+      "description": "List all layers in the current Rhino document with their properties."
+    },
+    {
+      "name": "create_layer",
+      "description": "Create a new layer with optional color, parent, and visibility settings."
+    },
+    {
+      "name": "delete_layer",
+      "description": "Delete a layer and optionally its objects."
+    },
+    {
+      "name": "list_objects",
+      "description": "List objects in the document with optional filtering by layer, type, and name."
+    },
+    {
+      "name": "get_object_info",
+      "description": "Get detailed information about a specific object by GUID."
+    },
+    {
+      "name": "get_selected_objects",
+      "description": "Get all currently selected objects in Rhino."
+    },
+    {
+      "name": "select_objects",
+      "description": "Select objects by their GUIDs."
+    },
+    {
+      "name": "deselect_all",
+      "description": "Deselect all objects in the document."
+    },
+    {
+      "name": "delete_objects",
+      "description": "Delete objects by their GUIDs."
+    },
+    {
+      "name": "hide_objects",
+      "description": "Show or hide objects in the viewport."
+    },
+    {
+      "name": "lock_objects",
+      "description": "Lock or unlock objects to prevent editing."
+    },
+    {
+      "name": "set_object_layer",
+      "description": "Move objects to a different layer."
+    },
+    {
+      "name": "set_object_name",
+      "description": "Set the name of an object."
+    },
+    {
+      "name": "set_user_text",
+      "description": "Set a key-value user text attribute on an object."
+    },
+    {
+      "name": "list_views",
+      "description": "List all viewport views in the document."
+    },
+    {
+      "name": "set_active_view",
+      "description": "Set the active viewport by name."
+    },
+    {
+      "name": "create_box",
+      "description": "Create a box with specified corner, width, depth, and height."
+    },
+    {
+      "name": "create_sphere",
+      "description": "Create a sphere with center point and radius."
+    },
+    {
+      "name": "create_cylinder",
+      "description": "Create a cylinder with base center, radius, and height."
+    },
+    {
+      "name": "create_cone",
+      "description": "Create a cone with base center, radius, and height."
+    },
+    {
+      "name": "create_torus",
+      "description": "Create a torus with center, major radius, and minor radius."
+    },
+    {
+      "name": "create_line",
+      "description": "Create a line between two 3D points."
+    },
+    {
+      "name": "create_arc",
+      "description": "Create an arc from center, radius, and angle range."
+    },
+    {
+      "name": "create_circle",
+      "description": "Create a circle with center point and radius."
+    },
+    {
+      "name": "create_polyline",
+      "description": "Create a polyline from a list of 3D points."
+    },
+    {
+      "name": "create_nurbs_curve",
+      "description": "Create a NURBS curve from control points with degree and weights."
+    },
+    {
+      "name": "create_point",
+      "description": "Create a point object at a 3D location."
+    },
+    {
+      "name": "create_text",
+      "description": "Create text at a specified location with font and height options."
+    },
+    {
+      "name": "boolean_union",
+      "description": "Perform boolean union on multiple solid objects."
+    },
+    {
+      "name": "boolean_difference",
+      "description": "Subtract one or more solids from a base solid."
+    },
+    {
+      "name": "boolean_intersection",
+      "description": "Compute the intersection of multiple solids."
+    },
+    {
+      "name": "mirror_objects",
+      "description": "Mirror objects across a plane."
+    },
+    {
+      "name": "array_objects_linear",
+      "description": "Create a linear array of objects with specified count and spacing."
+    },
+    {
+      "name": "array_objects_polar",
+      "description": "Create a polar (radial) array of objects around a center point."
+    },
+    {
+      "name": "group_objects",
+      "description": "Group objects together with an optional name."
+    },
+    {
+      "name": "ungroup_objects",
+      "description": "Remove objects from their group."
+    },
+    {
+      "name": "join_curves",
+      "description": "Join multiple curves into a single polycurve."
+    },
+    {
+      "name": "explode_object",
+      "description": "Explode a compound object into its constituent parts."
+    },
+    {
+      "name": "offset_curve",
+      "description": "Create an offset copy of a curve at a specified distance."
+    },
+    {
+      "name": "fillet_curves",
+      "description": "Create a fillet between two curves with a specified radius."
+    },
+    {
+      "name": "extrude_curve",
+      "description": "Extrude a curve along a direction vector to create a surface or solid."
+    },
+    {
+      "name": "loft_curves",
+      "description": "Create a lofted surface through multiple cross-section curves."
+    },
+    {
+      "name": "revolve_curve",
+      "description": "Revolve a curve around an axis to create a surface of revolution."
+    },
+    {
+      "name": "sweep_1_rail",
+      "description": "Sweep cross-section curves along a single rail curve."
+    },
+    {
+      "name": "sweep_2_rails",
+      "description": "Sweep cross-section curves along two rail curves."
+    },
+    {
+      "name": "patch_surface",
+      "description": "Create a patch surface from boundary curves and interior points."
+    },
+    {
+      "name": "planar_surface",
+      "description": "Create a planar surface from closed boundary curves."
+    },
+    {
+      "name": "cap_planar_holes",
+      "description": "Cap planar openings in an open surface or polysurface."
+    },
+    {
+      "name": "offset_surface",
+      "description": "Create an offset copy of a surface at a specified distance."
+    },
+    {
+      "name": "mesh_from_surface",
+      "description": "Generate a mesh from a surface or polysurface with density settings."
+    },
+    {
+      "name": "convert_to_nurbs",
+      "description": "Convert a mesh or SubD to a NURBS surface."
+    },
+    {
+      "name": "rebuild_surface",
+      "description": "Rebuild a surface with new point count and degree."
+    },
+    {
+      "name": "move_objects",
+      "description": "Move objects by a translation vector."
+    },
+    {
+      "name": "copy_objects",
+      "description": "Copy objects with a translation offset."
+    },
+    {
+      "name": "rotate_objects",
+      "description": "Rotate objects around a center point by an angle."
+    },
+    {
+      "name": "scale_objects",
+      "description": "Scale objects uniformly from a center point."
+    },
+    {
+      "name": "scale_objects_1d",
+      "description": "Scale objects in one direction from a center point."
+    },
+    {
+      "name": "scale_objects_2d",
+      "description": "Scale objects in two directions from a center point."
+    },
+    {
+      "name": "orient_objects",
+      "description": "Orient objects from one plane to another."
+    },
+    {
+      "name": "align_objects",
+      "description": "Align objects along a specified axis."
+    },
+    {
+      "name": "distribute_objects",
+      "description": "Distribute objects evenly along an axis."
+    },
+    {
+      "name": "apply_transform",
+      "description": "Apply a 4x4 transformation matrix to objects."
+    },
+    {
+      "name": "open_grasshopper_definition",
+      "description": "Open a Grasshopper definition file in Rhino."
+    },
+    {
+      "name": "close_grasshopper_definition",
+      "description": "Close the current Grasshopper definition."
+    },
+    {
+      "name": "run_grasshopper_definition",
+      "description": "Run a Grasshopper definition with input parameters and get outputs."
+    },
+    {
+      "name": "get_grasshopper_outputs",
+      "description": "Get the output values from the current Grasshopper definition."
+    },
+    {
+      "name": "set_grasshopper_input",
+      "description": "Set an input parameter value on a Grasshopper component."
+    },
+    {
+      "name": "list_grasshopper_components",
+      "description": "List all components in the current Grasshopper definition."
+    },
+    {
+      "name": "bake_grasshopper_objects",
+      "description": "Bake Grasshopper geometry into the Rhino document."
+    },
+    {
+      "name": "capture_viewport",
+      "description": "Capture a viewport screenshot as a base64-encoded PNG image."
+    },
+    {
+      "name": "set_camera",
+      "description": "Set the viewport camera position and target."
+    },
+    {
+      "name": "zoom_extents",
+      "description": "Zoom the viewport to fit all objects."
+    },
+    {
+      "name": "zoom_selected",
+      "description": "Zoom the viewport to fit selected objects."
+    },
+    {
+      "name": "set_display_mode",
+      "description": "Set the viewport display mode (wireframe, shaded, rendered, etc.)."
+    },
+    {
+      "name": "set_background_color",
+      "description": "Set the viewport background color."
+    },
+    {
+      "name": "add_named_view",
+      "description": "Save the current viewport as a named view."
+    },
+    {
+      "name": "restore_named_view",
+      "description": "Restore a previously saved named view."
+    },
+    {
+      "name": "get_document_path",
+      "description": "Get the file path of the current Rhino document."
+    },
+    {
+      "name": "save_document",
+      "description": "Save the current Rhino document."
+    },
+    {
+      "name": "save_document_as",
+      "description": "Save the current document to a new file path."
+    },
+    {
+      "name": "new_document",
+      "description": "Create a new empty Rhino document."
+    },
+    {
+      "name": "import_file",
+      "description": "Import geometry from an external file into the document."
+    },
+    {
+      "name": "export_objects",
+      "description": "Export selected objects to a file (STL, OBJ, STEP, IGES, etc.)."
+    },
+    {
+      "name": "export_document",
+      "description": "Export the entire document to a file format."
+    },
+    {
+      "name": "execute_python",
+      "description": "Execute arbitrary Python code with full RhinoCommon API access."
+    },
+    {
+      "name": "execute_rhinoscript",
+      "description": "Execute RhinoScript/VBScript code in Rhino."
+    },
+    {
+      "name": "evaluate_expression",
+      "description": "Evaluate a Python expression and return the result."
+    },
+    {
+      "name": "run_rhino_command",
+      "description": "Execute a Rhino command-line command."
+    }
+  ],
+  "related_servers": [
+    {
+      "name": "blender-mcp",
+      "url": "https://github.com/ahujasid/blender-mcp",
+      "description": "MCP server for Blender 3D — complementary 3D modeling tool."
+    },
+    {
+      "name": "filesystem",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+      "description": "MCP server for file system operations — useful for managing 3D model files."
+    },
+    {
+      "name": "github",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+      "description": "MCP server for GitHub — manage repositories and collaborate on 3D projects."
+    }
+  ]
+}

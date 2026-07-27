@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOLEM-3DMCP — MCP Server for Rhinoceros 3D</title>
+  <meta name="description" content="The most powerful MCP server for Rhinoceros 3D — 105 tools giving AI full read/write access to Rhino 8.">
+  <meta property="og:title" content="GOLEM-3DMCP">
+  <meta property="og:description" content="105 MCP tools giving AI agents full read/write access to Rhinoceros 3D 8.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-/main/nexus-pngs/king-hippo.png">
+  <link rel="icon" href="https://raw.githubusercontent.com/TheKingHippopotamus/GOLEM-3DMCP-Rhino-/main/nexus-pngs/king-hippo.png" type="image/png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d1d9e0;
+      --text: #1f2328;
+      --text-muted: #59636e;
+      --accent: #0969da;
+      --accent-hover: #0550ae;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    md-spawn {
+      display: block;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* GitHub-flavored markdown styling */
+    md-spawn img { max-width: 100%; height: auto; border-radius: 6px; }
+    md-spawn h1, md-spawn h2, md-spawn h3, md-spawn h4 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.3em;
+    }
+    md-spawn h1 { font-size: 2em; border-bottom: none; }
+    md-spawn h2 { font-size: 1.5em; }
+    md-spawn h3 { font-size: 1.25em; border-bottom: none; }
+    md-spawn p { margin: 0.75em 0; }
+    md-spawn a { color: var(--accent); text-decoration: none; }
+    md-spawn a:hover { text-decoration: underline; color: var(--accent-hover); }
+    md-spawn code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15em 0.35em;
+      font-size: 0.9em;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    md-spawn pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1em;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+    md-spawn pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.85em;
+    }
+    md-spawn blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 1em;
+      color: var(--text-muted);
+      margin: 1em 0;
+    }
+    md-spawn table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+    md-spawn th, md-spawn td {
+      border: 1px solid var(--border);
+      padding: 0.5em 0.75em;
+      text-align: left;
+    }
+    md-spawn th { background: var(--surface); font-weight: 600; }
+    md-spawn tr:nth-child(even) { background: rgba(22, 27, 34, 0.5); }
+    md-spawn ul, md-spawn ol { padding-left: 1.5em; margin: 0.5em 0; }
+    md-spawn li { margin: 0.25em 0; }
+    md-spawn hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5em 0;
+    }
+    md-spawn details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75em 1em;
+      margin: 0.75em 0;
+    }
+    md-spawn summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Navigation between sections */
+    .section-divider {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .section-divider hr {
+      border: none;
+      border-top: 2px solid var(--accent);
+      opacity: 0.3;
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.2em;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .back-to-top.visible { opacity: 1; }
+    .back-to-top:hover { background: var(--border); }
+  </style>
+</head>
+<body>
+  <md-spawn src="./README.md"></md-spawn>
+
+  <div class="section-divider"><hr></div>
+
+  <md-spawn src="./CONTRIBUTING.md"></md-spawn>
+
+  <a href="#" class="back-to-top" id="btt" aria-label="Back to top">&uarr;</a>
+
+  <script type="module" src="https://unpkg.com/md-spawn/dist/index.js"></script>
+  <script>
+    // Show back-to-top button on scroll
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+      btt.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+</body>
+</html>

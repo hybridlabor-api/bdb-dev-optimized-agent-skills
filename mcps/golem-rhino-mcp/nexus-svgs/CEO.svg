@@ -1,0 +1,557 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- Background -->
+    <radialGradient id="ceo-bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#12152a"/>
+      <stop offset="100%" stop-color="#04060c"/>
+    </radialGradient>
+
+    <!-- Gold palette -->
+    <linearGradient id="ceo-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="ceo-goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="ceo-goldSheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8DC"/>
+      <stop offset="40%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+
+    <!-- Lion face — warm dark slate with amber undertone -->
+    <linearGradient id="ceo-faceMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3e3728"/>
+      <stop offset="40%" stop-color="#2e2a1e"/>
+      <stop offset="100%" stop-color="#1c1914"/>
+    </linearGradient>
+    <linearGradient id="ceo-faceSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a4234"/>
+      <stop offset="100%" stop-color="#18140e"/>
+    </linearGradient>
+    <linearGradient id="ceo-muzzleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5c5040"/>
+      <stop offset="100%" stop-color="#3a3028"/>
+    </linearGradient>
+    <linearGradient id="ceo-muzzlePad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6e6052"/>
+      <stop offset="100%" stop-color="#504438"/>
+    </linearGradient>
+
+    <!-- Mane — deep amber-gold flaming tones -->
+    <radialGradient id="ceo-maneCore" cx="50%" cy="58%" r="52%">
+      <stop offset="0%" stop-color="#8B5e1a"/>
+      <stop offset="50%" stop-color="#6B4410"/>
+      <stop offset="100%" stop-color="#3d2608"/>
+    </radialGradient>
+    <linearGradient id="ceo-maneFlame" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#4a2c08"/>
+      <stop offset="35%" stop-color="#7a4c18"/>
+      <stop offset="68%" stop-color="#c87c2a"/>
+      <stop offset="100%" stop-color="#FFB83A" stop-opacity="0.65"/>
+    </linearGradient>
+    <linearGradient id="ceo-maneLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#261606" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#6b4012"/>
+      <stop offset="100%" stop-color="#a06020" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="ceo-maneRight" x1="100%" y1="50%" x2="0%" y2="50%">
+      <stop offset="0%" stop-color="#261606" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#6b4012"/>
+      <stop offset="100%" stop-color="#a06020" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="ceo-maneTop" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#d4902a" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#4a2c08" stop-opacity="0.35"/>
+    </linearGradient>
+
+    <!-- Eye gradient — lion amber -->
+    <radialGradient id="ceo-eyeIris" cx="40%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#d08c22"/>
+      <stop offset="38%" stop-color="#8B5010"/>
+      <stop offset="100%" stop-color="#3d2400"/>
+    </radialGradient>
+    <radialGradient id="ceo-pupil" cx="45%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#0a0800"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+
+    <!-- Suit/collar gradients -->
+    <linearGradient id="ceo-suitBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </linearGradient>
+    <linearGradient id="ceo-lapel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#262626"/>
+      <stop offset="100%" stop-color="#121212"/>
+    </linearGradient>
+    <linearGradient id="ceo-tie" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8B0000"/>
+      <stop offset="50%" stop-color="#680000"/>
+      <stop offset="100%" stop-color="#380000"/>
+    </linearGradient>
+    <linearGradient id="ceo-shirt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8e8e8"/>
+      <stop offset="100%" stop-color="#b8b8b8"/>
+    </linearGradient>
+
+    <!-- Glass lens — gold tint -->
+    <linearGradient id="ceo-glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a5c00" stop-opacity="0.12"/>
+      <stop offset="45%" stop-color="#c8960a" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#4a3800" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="ceo-glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="ceo-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ceo-softGlow">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ceo-hardShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+    <filter id="ceo-innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ceo-maneHalo">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Fur/skin texture patterns -->
+    <pattern id="ceo-furTexture" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="9" stroke="#000" stroke-width="0.5" opacity="0.07"/>
+      <line x1="5" y1="0" x2="9" y2="9" stroke="#000" stroke-width="0.4" opacity="0.05"/>
+    </pattern>
+    <pattern id="ceo-skinTexture" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="0.55" fill="#000" opacity="0.07"/>
+      <circle cx="3.8" cy="3.8" r="0.45" fill="#000" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#ceo-bg)"/>
+
+  <!-- Subtle gold grid -->
+  <g opacity="0.03" stroke="#FFD700" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- ===== GOLD ACCENT RING ===== -->
+  <circle cx="200" cy="200" r="176" fill="none" stroke="url(#ceo-gold)" stroke-width="1.2" opacity="0.18"/>
+  <circle cx="200" cy="200" r="173" fill="none" stroke="#FFD700" stroke-width="0.4" opacity="0.07"/>
+
+  <!-- ===== MANE GLOW HALO — warmth bleeding behind everything ===== -->
+  <ellipse cx="200" cy="212" rx="165" ry="150" fill="#b86c14" opacity="0.055" filter="url(#ceo-maneHalo)"/>
+
+  <!-- ===== SUIT BODY — at the very back ===== -->
+  <path d="M55,400 L55,348 Q78,328 118,318 L162,344 L200,324 L238,344 L282,318 Q322,328 345,348 L345,400 Z"
+        fill="url(#ceo-suitBody)"/>
+
+  <!-- Left lapel -->
+  <path d="M118,318 L162,344 L178,348 L170,400 L55,400 L55,348 Q78,328 118,318 Z"
+        fill="url(#ceo-lapel)"/>
+  <!-- Right lapel -->
+  <path d="M282,318 L238,344 L222,348 L230,400 L345,400 L345,348 Q322,328 282,318 Z"
+        fill="url(#ceo-lapel)"/>
+
+  <!-- Lapel notch peaks -->
+  <path d="M118,318 L158,352 L170,347" fill="#1e1e1e" stroke="#2e2e2e" stroke-width="0.5"/>
+  <path d="M282,318 L242,352 L230,347" fill="#1e1e1e" stroke="#2e2e2e" stroke-width="0.5"/>
+
+  <!-- Shirt front panel -->
+  <path d="M170,347 L200,324 L230,347 L222,400 L178,400 Z" fill="url(#ceo-shirt)"/>
+  <!-- Shirt button line -->
+  <line x1="200" y1="332" x2="200" y2="400" stroke="#aaa" stroke-width="0.6" opacity="0.5"/>
+  <circle cx="200" cy="342" r="2.2" fill="#c8c8c8"/>
+  <circle cx="200" cy="358" r="2.2" fill="#c8c8c8"/>
+  <circle cx="200" cy="374" r="2.2" fill="#c8c8c8"/>
+
+  <!-- Tie — dark crimson -->
+  <path d="M192,332 L200,336 L208,332 L213,360 L200,376 L187,360 Z" fill="url(#ceo-tie)"/>
+  <!-- Tie knot -->
+  <path d="M195,332 L200,336 L205,332 L200,340 Z" fill="#5a0000"/>
+  <!-- Tie highlight -->
+  <path d="M200,342 L204,362" fill="none" stroke="#c00000" stroke-width="0.7" opacity="0.28"/>
+
+  <!-- Collar points -->
+  <path d="M174,343 L188,333 L194,346 Z" fill="#d8d8d8"/>
+  <path d="M226,343 L212,333 L206,346 Z" fill="#d8d8d8"/>
+
+  <!-- Suit shoulder seam highlights -->
+  <path d="M118,318 Q98,334 82,352" fill="none" stroke="#2a2a2a" stroke-width="1.5" opacity="0.7"/>
+  <path d="M282,318 Q302,334 318,352" fill="none" stroke="#2a2a2a" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- ===== MANE — OUTER FLAME SPIKES (deepest layer) ===== -->
+  <g opacity="0.88">
+    <!-- Left far spikes -->
+    <path d="M200,215 L38,88 L66,148 Z" fill="#3a1e06" opacity="0.72"/>
+    <path d="M200,215 L25,145 L60,178 Z" fill="#482808" opacity="0.78"/>
+    <path d="M200,215 L22,200 L58,212 Z" fill="#3a1e06" opacity="0.68"/>
+    <path d="M200,215 L35,260 L64,254 Z" fill="#3a1e06" opacity="0.62"/>
+    <path d="M200,215 L52,310 L80,290 Z" fill="#3a1e06" opacity="0.56"/>
+    <!-- Right far spikes -->
+    <path d="M200,215 L362,88 L334,148 Z" fill="#3a1e06" opacity="0.72"/>
+    <path d="M200,215 L375,145 L340,178 Z" fill="#482808" opacity="0.78"/>
+    <path d="M200,215 L378,200 L342,212 Z" fill="#3a1e06" opacity="0.68"/>
+    <path d="M200,215 L365,260 L336,254 Z" fill="#3a1e06" opacity="0.62"/>
+    <path d="M200,215 L348,310 L320,290 Z" fill="#3a1e06" opacity="0.56"/>
+    <!-- Top spikes -->
+    <path d="M200,215 L165,16 L184,74 Z" fill="#5a3410" opacity="0.82"/>
+    <path d="M200,215 L200,10 L200,74 Z" fill="#6b4018" opacity="0.92"/>
+    <path d="M200,215 L235,16 L216,74 Z" fill="#5a3410" opacity="0.82"/>
+    <path d="M200,215 L144,22 L168,78 Z" fill="#4a2808" opacity="0.72"/>
+    <path d="M200,215 L256,22 L232,78 Z" fill="#4a2808" opacity="0.72"/>
+    <!-- Extra top-left and top-right detail -->
+    <path d="M200,215 L112,38 L148,95 Z" fill="#3a2008" opacity="0.65"/>
+    <path d="M200,215 L288,38 L252,95 Z" fill="#3a2008" opacity="0.65"/>
+  </g>
+
+  <!-- ===== MANE — MID MASS (softer, main volume) ===== -->
+  <g filter="url(#ceo-softGlow)">
+    <!-- Left mane body -->
+    <path d="M200,215
+             C200,215 90,135 55,162
+             C30,182 36,234 64,252
+             C86,266 112,260 132,262
+             C116,292 120,318 138,322
+             C158,328 178,312 188,300
+             C192,307 195,318 200,320
+             Z"
+          fill="url(#ceo-maneLeft)" opacity="0.96"/>
+    <!-- Right mane body -->
+    <path d="M200,215
+             C200,215 310,135 345,162
+             C370,182 364,234 336,252
+             C314,266 288,260 268,262
+             C284,292 280,318 262,322
+             C242,328 222,312 212,300
+             C208,307 205,318 200,320
+             Z"
+          fill="url(#ceo-maneRight)" opacity="0.96"/>
+    <!-- Top mane -->
+    <path d="M200,215
+             C200,215 132,78 146,46
+             C158,20 184,26 195,54
+             C198,36 200,18 200,18
+             C200,18 202,36 205,54
+             C216,26 242,20 254,46
+             C268,78 200,215 200,215 Z"
+          fill="url(#ceo-maneTop)" opacity="0.88"/>
+  </g>
+
+  <!-- ===== MANE — INNER CORE (main warm mass) ===== -->
+  <ellipse cx="200" cy="218" rx="136" ry="122" fill="url(#ceo-maneCore)" opacity="0.86"/>
+  <!-- Fur texture over mane -->
+  <ellipse cx="200" cy="218" rx="136" ry="122" fill="url(#ceo-furTexture)" opacity="0.48"/>
+
+  <!-- Mane edge flame stroke details -->
+  <!-- Left -->
+  <path d="M62,202 Q72,186 86,197 Q74,218 78,238" fill="none" stroke="#c87a18" stroke-width="1.6" opacity="0.38" stroke-linecap="round"/>
+  <path d="M56,222 Q68,206 84,214" fill="none" stroke="#d4902a" stroke-width="1.1" opacity="0.28" stroke-linecap="round"/>
+  <!-- Right -->
+  <path d="M338,202 Q328,186 314,197 Q326,218 322,238" fill="none" stroke="#c87a18" stroke-width="1.6" opacity="0.38" stroke-linecap="round"/>
+  <path d="M344,222 Q332,206 316,214" fill="none" stroke="#d4902a" stroke-width="1.1" opacity="0.28" stroke-linecap="round"/>
+  <!-- Top -->
+  <path d="M178,62 Q186,44 200,38 Q214,44 222,62" fill="none" stroke="#d4902a" stroke-width="1.6" opacity="0.38" stroke-linecap="round"/>
+  <path d="M192,50 Q200,30 200,30" fill="none" stroke="#FFB83A" stroke-width="1.2" opacity="0.32" stroke-linecap="round"/>
+
+  <!-- ===== LION HEAD — the core face ===== -->
+  <g filter="url(#ceo-hardShadow)">
+
+    <!-- Neck mass -->
+    <path d="M130,310 Q130,344 162,350 L238,350 Q270,344 270,310 L266,292 L134,292 Z"
+          fill="#222018"/>
+
+    <!-- Main skull — angular, broad jaw, high cheekbones -->
+    <path d="M80,220
+             C80,156 118,114 163,110
+             L237,110
+             C282,114 320,156 320,220
+             C320,268 304,302 274,316
+             L126,316
+             C96,302 80,268 80,220 Z"
+          fill="url(#ceo-faceMain)"/>
+
+    <!-- Skin texture overlay -->
+    <path d="M80,220 C80,156 118,114 163,110 L237,110 C282,114 320,156 320,220
+             C320,268 304,302 274,316 L126,316 C96,302 80,268 80,220 Z"
+          fill="url(#ceo-skinTexture)"/>
+
+    <!-- Face shadow planes — strong angular lighting -->
+    <!-- Left shadow -->
+    <path d="M80,220 C80,195 92,172 112,158 L112,258 C94,254 80,244 80,220 Z"
+          fill="#000" opacity="0.24"/>
+    <!-- Right shadow -->
+    <path d="M320,220 C320,195 308,172 288,158 L288,258 C306,254 320,244 320,220 Z"
+          fill="#000" opacity="0.24"/>
+
+    <!-- Cheekbone highlight catch lights -->
+    <path d="M112,198 Q126,188 150,191" fill="none" stroke="#6b5838" stroke-width="1.8" opacity="0.38" stroke-linecap="round"/>
+    <path d="M288,198 Q274,188 250,191" fill="none" stroke="#6b5838" stroke-width="1.8" opacity="0.38" stroke-linecap="round"/>
+
+    <!-- Forehead angular brow ridge planes -->
+    <path d="M150,148 Q200,138 250,148" fill="none" stroke="#18140e" stroke-width="2.2" opacity="0.48"/>
+    <path d="M156,158 Q200,148 244,158" fill="none" stroke="#18140e" stroke-width="1.1" opacity="0.28"/>
+
+    <!-- ===== EARS — pointed, sharp, lion ===== -->
+    <!-- Left ear -->
+    <path d="M95,178 C82,154 76,128 84,110 C89,97 105,102 108,118 C112,136 108,165 106,176"
+          fill="#3a3020" stroke="#28220e" stroke-width="1"/>
+    <!-- Left ear inner fur -->
+    <path d="M97,170 C87,150 84,132 88,118 C92,108 102,110 104,122 C106,136 103,158 101,168"
+          fill="#5a3c1a" opacity="0.48"/>
+    <!-- Left ear tip point -->
+    <path d="M84,110 L86,95 L95,108 Z" fill="#281e0a"/>
+
+    <!-- Right ear -->
+    <path d="M305,178 C318,154 324,128 316,110 C311,97 295,102 292,118 C288,136 292,165 294,176"
+          fill="#3a3020" stroke="#28220e" stroke-width="1"/>
+    <!-- Right ear inner fur -->
+    <path d="M303,170 C313,150 316,132 312,118 C308,108 298,110 296,122 C294,136 297,158 299,168"
+          fill="#5a3c1a" opacity="0.48"/>
+    <!-- Right ear tip -->
+    <path d="M316,110 L314,95 L305,108 Z" fill="#281e0a"/>
+
+    <!-- ===== BROW SHELF — massive, threatening, angular ===== -->
+    <!-- Left brow — slopes sharply inward -->
+    <path d="M98,196 L184,178 L184,200 L98,208 Z" fill="#18140e"/>
+    <path d="M100,196 Q140,185 182,182" fill="none" stroke="#3a3020" stroke-width="1.1" opacity="0.45"/>
+    <!-- Right brow -->
+    <path d="M302,196 L216,178 L216,200 L302,208 Z" fill="#18140e"/>
+    <path d="M300,196 Q260,185 218,182" fill="none" stroke="#3a3020" stroke-width="1.1" opacity="0.45"/>
+    <!-- Center brow bridge — hard angry line -->
+    <path d="M184,182 Q200,177 216,182" fill="#18140e" stroke="#18140e" stroke-width="5.5"/>
+    <!-- Brow furrow line — the scowl -->
+    <path d="M184,189 Q200,184 216,189" fill="none" stroke="#0d0b08" stroke-width="3" opacity="0.72"/>
+    <!-- Forehead center vertical crease -->
+    <path d="M200,110 Q200,148 200,166" fill="none" stroke="#18140e" stroke-width="1.2" opacity="0.22"/>
+
+    <!-- ===== MUZZLE — broad, squared, lion ===== -->
+    <path d="M116,254
+             C116,237 152,222 200,222
+             C248,222 284,237 284,254
+             C284,295 266,322 200,322
+             C134,322 116,295 116,254 Z"
+          fill="url(#ceo-muzzleGrad)"/>
+
+    <!-- Muzzle inner area -->
+    <path d="M133,258
+             C133,246 158,236 200,236
+             C242,236 267,246 267,258
+             C267,284 252,308 200,308
+             C148,308 133,284 133,258 Z"
+          fill="url(#ceo-muzzlePad)"/>
+
+    <!-- Muzzle texture — faint wrinkle lines -->
+    <path d="M155,258 Q178,253 200,255 Q222,253 245,258" fill="none" stroke="#3a3028" stroke-width="0.8" opacity="0.35"/>
+    <path d="M158,268 Q180,264 200,265 Q220,264 242,268" fill="none" stroke="#3a3028" stroke-width="0.6" opacity="0.25"/>
+
+    <!-- Muzzle shadow crease at cheek join -->
+    <path d="M118,248 Q130,238 150,234" fill="none" stroke="#18140e" stroke-width="2" opacity="0.42" stroke-linecap="round"/>
+    <path d="M282,248 Q270,238 250,234" fill="none" stroke="#18140e" stroke-width="2" opacity="0.42" stroke-linecap="round"/>
+
+    <!-- Whisker dots on muzzle pads -->
+    <circle cx="148" cy="270" r="2.2" fill="#18140e" opacity="0.5"/>
+    <circle cx="158" cy="278" r="2" fill="#18140e" opacity="0.4"/>
+    <circle cx="148" cy="285" r="1.6" fill="#18140e" opacity="0.34"/>
+    <circle cx="252" cy="270" r="2.2" fill="#18140e" opacity="0.5"/>
+    <circle cx="242" cy="278" r="2" fill="#18140e" opacity="0.4"/>
+    <circle cx="252" cy="285" r="1.6" fill="#18140e" opacity="0.34"/>
+
+    <!-- Whiskers — thin, extend past face -->
+    <path d="M151,272 L78,259" fill="none" stroke="#6b5838" stroke-width="0.9" opacity="0.32" stroke-linecap="round"/>
+    <path d="M154,280 L76,280" fill="none" stroke="#6b5838" stroke-width="0.8" opacity="0.26" stroke-linecap="round"/>
+    <path d="M152,287 L82,298" fill="none" stroke="#6b5838" stroke-width="0.8" opacity="0.22" stroke-linecap="round"/>
+    <path d="M249,272 L322,259" fill="none" stroke="#6b5838" stroke-width="0.9" opacity="0.32" stroke-linecap="round"/>
+    <path d="M246,280 L324,280" fill="none" stroke="#6b5838" stroke-width="0.8" opacity="0.26" stroke-linecap="round"/>
+    <path d="M248,287 L318,298" fill="none" stroke="#6b5838" stroke-width="0.8" opacity="0.22" stroke-linecap="round"/>
+
+    <!-- ===== NOSE — wide, squared, lion bridge ===== -->
+    <!-- Bridge -->
+    <path d="M188,247 Q200,242 212,247" fill="none" stroke="#281e0e" stroke-width="2.8" stroke-linecap="round" opacity="0.58"/>
+    <!-- Left nostril wing -->
+    <path d="M163,260 C156,250 160,238 170,238 C177,238 182,244 180,253 C178,262 170,268 163,260 Z"
+          fill="#0d0b08"/>
+    <ellipse cx="171" cy="249" rx="5.5" ry="4.5" fill="#080604" transform="rotate(-8, 171, 249)"/>
+    <!-- Right nostril wing -->
+    <path d="M237,260 C244,250 240,238 230,238 C223,238 218,244 220,253 C222,262 230,268 237,260 Z"
+          fill="#0d0b08"/>
+    <ellipse cx="229" cy="249" rx="5.5" ry="4.5" fill="#080604" transform="rotate(8, 229, 249)"/>
+    <!-- Philtrum center line -->
+    <path d="M200,253 L200,272" fill="none" stroke="#18140e" stroke-width="1.6" opacity="0.38" stroke-linecap="round"/>
+
+    <!-- ===== MOUTH — straight, locked, authoritative ===== -->
+    <path d="M153,295 Q200,303 247,295"
+          fill="none" stroke="#0d0b08" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Jaw line shadow -->
+    <path d="M112,290 Q128,298 153,295" fill="none" stroke="#28220e" stroke-width="1.6" opacity="0.38"/>
+    <path d="M288,290 Q272,298 247,295" fill="none" stroke="#28220e" stroke-width="1.6" opacity="0.38"/>
+
+    <!-- ===== EYES — narrow, intense, amber lion ===== -->
+    <!-- Left eye socket -->
+    <ellipse cx="150" cy="202" rx="28" ry="16" fill="#18140e"/>
+    <!-- Left sclera — just a sliver (deeply squinted) -->
+    <ellipse cx="150" cy="202" rx="22" ry="11" fill="#c8b888"/>
+    <!-- Left iris — amber gold -->
+    <ellipse cx="152" cy="201" rx="13" ry="11" fill="url(#ceo-eyeIris)"/>
+    <!-- Left pupil — vertical slit -->
+    <ellipse cx="153" cy="201" rx="4.2" ry="9" fill="url(#ceo-pupil)"/>
+    <!-- Left specular highlight -->
+    <circle cx="159" cy="196" r="2.8" fill="#fff" opacity="0.9"/>
+    <circle cx="157" cy="198" r="1.1" fill="#fff" opacity="0.5"/>
+    <!-- Left heavy upper lid -->
+    <path d="M122,198 Q140,184 180,194" fill="#2a2018" stroke="#18140e" stroke-width="1.1"/>
+    <path d="M124,201 Q144,188 178,198" fill="none" stroke="#0d0b08" stroke-width="2.2"/>
+    <!-- Left lower lid line -->
+    <path d="M128,207 Q150,212 174,207" fill="none" stroke="#28220e" stroke-width="1.2" opacity="0.45"/>
+
+    <!-- Right eye socket -->
+    <ellipse cx="250" cy="202" rx="28" ry="16" fill="#18140e"/>
+    <!-- Right sclera -->
+    <ellipse cx="250" cy="202" rx="22" ry="11" fill="#c8b888"/>
+    <!-- Right iris -->
+    <ellipse cx="252" cy="201" rx="13" ry="11" fill="url(#ceo-eyeIris)"/>
+    <!-- Right pupil -->
+    <ellipse cx="253" cy="201" rx="4.2" ry="9" fill="url(#ceo-pupil)"/>
+    <!-- Right specular highlight -->
+    <circle cx="259" cy="196" r="2.8" fill="#fff" opacity="0.9"/>
+    <circle cx="257" cy="198" r="1.1" fill="#fff" opacity="0.5"/>
+    <!-- Right heavy upper lid -->
+    <path d="M278,198 Q260,184 220,194" fill="#2a2018" stroke="#18140e" stroke-width="1.1"/>
+    <path d="M276,201 Q256,188 222,198" fill="none" stroke="#0d0b08" stroke-width="2.2"/>
+    <!-- Right lower lid line -->
+    <path d="M272,207 Q250,212 226,207" fill="none" stroke="#28220e" stroke-width="1.2" opacity="0.45"/>
+
+    <!-- ===== GLASSES — thin gold rectangular frames ===== -->
+    <g filter="url(#ceo-glow)">
+      <!-- Left lens frame — thin, precise gold -->
+      <rect x="118" y="188" width="64" height="30" rx="4" ry="4"
+            fill="none" stroke="url(#ceo-gold)" stroke-width="2.2"/>
+      <!-- Left lens -->
+      <rect x="120" y="190" width="60" height="26" rx="3.5" ry="3.5"
+            fill="url(#ceo-glassLens)"/>
+      <!-- Left lens shine -->
+      <path d="M124,193 Q142,190 174,195"
+            fill="none" stroke="url(#ceo-glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Right lens frame -->
+      <rect x="218" y="188" width="64" height="30" rx="4" ry="4"
+            fill="none" stroke="url(#ceo-gold)" stroke-width="2.2"/>
+      <!-- Right lens -->
+      <rect x="220" y="190" width="60" height="26" rx="3.5" ry="3.5"
+            fill="url(#ceo-glassLens)"/>
+      <!-- Right lens shine -->
+      <path d="M224,193 Q242,190 274,195"
+            fill="none" stroke="url(#ceo-glassShine)" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Bridge — single thin gold bar -->
+      <path d="M182,202 Q200,198 218,202"
+            fill="none" stroke="url(#ceo-gold)" stroke-width="2.1" stroke-linecap="round"/>
+
+      <!-- Temple arms — angled to ears -->
+      <path d="M118,200 L97,194 Q88,191 87,176"
+            fill="none" stroke="url(#ceo-gold)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M282,200 L303,194 Q312,191 313,176"
+            fill="none" stroke="url(#ceo-gold)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Frame hinge dots -->
+      <circle cx="118" cy="200" r="1.3" fill="#FFD700"/>
+      <circle cx="282" cy="200" r="1.3" fill="#FFD700"/>
+      <circle cx="182" cy="201" r="0.9" fill="#FFD700"/>
+      <circle cx="218" cy="201" r="0.9" fill="#FFD700"/>
+    </g>
+
+  </g>
+
+  <!-- ===== CROWN — three points, minimal, commanding ===== -->
+  <g filter="url(#ceo-glow)">
+    <!-- Crown base band -->
+    <path d="M122,142 L122,126 Q200,116 278,126 L278,142 Q200,152 122,142 Z"
+          fill="url(#ceo-gold)" stroke="#B8860B" stroke-width="0.5"/>
+    <!-- Crown band inner tint -->
+    <path d="M128,138 L128,130 Q200,122 272,130 L272,138 Q200,145 128,138 Z"
+          fill="#4A148C" opacity="0.16"/>
+
+    <!-- LEFT point -->
+    <path d="M122,126 L134,126 L128,78 L120,82 Z"
+          fill="url(#ceo-gold)" stroke="#B8860B" stroke-width="0.3"/>
+    <!-- CENTER point — tallest -->
+    <path d="M186,118 L214,118 L208,48 L192,48 Z"
+          fill="url(#ceo-gold)" stroke="#B8860B" stroke-width="0.3"/>
+    <!-- RIGHT point -->
+    <path d="M266,126 L278,126 L280,82 L272,78 Z"
+          fill="url(#ceo-gold)" stroke="#B8860B" stroke-width="0.3"/>
+
+    <!-- Point tip darkening (depth) -->
+    <path d="M122,80 L128,66 L134,80" fill="url(#ceo-goldDark)" opacity="0.48"/>
+    <path d="M194,52 L200,38 L206,52" fill="url(#ceo-goldDark)" opacity="0.62"/>
+    <path d="M268,80 L274,66 L280,80" fill="url(#ceo-goldDark)" opacity="0.48"/>
+
+    <!-- Center jewel — deep ruby red -->
+    <circle cx="200" cy="52" r="10" fill="#700000" filter="url(#ceo-innerGlow)"/>
+    <circle cx="200" cy="52" r="8"  fill="#a00000"/>
+    <ellipse cx="198" cy="49" rx="3.5" ry="2.5" fill="#FF6868" opacity="0.42"/>
+
+    <!-- Flanking gems on base band -->
+    <circle cx="162" cy="134" r="5" fill="#192d5a" filter="url(#ceo-innerGlow)"/>
+    <ellipse cx="161" cy="133" rx="2.2" ry="1.5" fill="#82B1FF" opacity="0.38"/>
+    <circle cx="238" cy="134" r="5" fill="#192d5a" filter="url(#ceo-innerGlow)"/>
+    <ellipse cx="237" cy="133" rx="2.2" ry="1.5" fill="#82B1FF" opacity="0.38"/>
+
+    <!-- Band horizontal rule -->
+    <line x1="130" y1="138" x2="270" y2="138" stroke="#FFE082" stroke-width="0.9" opacity="0.42"/>
+
+    <!-- Band diamond accents -->
+    <rect x="146" y="132" width="4.5" height="4.5" rx="0.5"
+          fill="#FFE082" transform="rotate(45, 148.25, 134.25)" opacity="0.62"/>
+    <rect x="197" y="130" width="5.5" height="5.5" rx="0.5"
+          fill="#FFD700" transform="rotate(45, 199.75, 132.75)" opacity="0.80"/>
+    <rect x="248" y="132" width="4.5" height="4.5" rx="0.5"
+          fill="#FFE082" transform="rotate(45, 250.25, 134.25)" opacity="0.62"/>
+
+    <!-- Cross-hatch texture on crown band -->
+    <g opacity="0.10" stroke="#B8860B" stroke-width="0.4">
+      <line x1="136" y1="127" x2="136" y2="141"/>
+      <line x1="148" y1="126" x2="148" y2="140"/>
+      <line x1="175" y1="123" x2="175" y2="138"/>
+      <line x1="225" y1="123" x2="225" y2="138"/>
+      <line x1="252" y1="126" x2="252" y2="140"/>
+      <line x1="264" y1="127" x2="264" y2="141"/>
+    </g>
+  </g>
+
+  <!-- ===== TEXT ===== -->
+  <text x="200" y="372"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="#FFD700" opacity="0.8">CEO</text>
+  <line x1="80" y1="380" x2="320" y2="380" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- Corner accent marks — same as king-hippo -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+</svg>

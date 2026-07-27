@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "golem-3dmcp": {
+      "command": "/Users/kinghippo/Documents/GOLEM-3DMCP/.venv/bin/python",
+      "args": ["-m", "mcp_server.server"],
+      "cwd": "/Users/kinghippo/Documents/GOLEM-3DMCP",
+      "env": {
+        "GOLEM_RHINO_HOST": "127.0.0.1",
+        "GOLEM_RHINO_PORT": "9876",
+        "GOLEM_GH_PORT": "9877",
+        "GOLEM_TIMEOUT": "30"
+      },
+      "timeout": 60000
+    }
+  }
+}

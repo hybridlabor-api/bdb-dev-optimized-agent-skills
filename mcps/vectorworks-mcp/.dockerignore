@@ -1,0 +1,8 @@
+# Reduce build context size and avoid errors from large data trees
+data
+index
+.git
+__pycache__/
+*.pyc
+*.log
+.env

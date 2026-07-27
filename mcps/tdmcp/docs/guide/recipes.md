@@ -1,0 +1,72 @@
+---
+description: "Recipe gallery for tdmcp, the TouchDesigner MCP server — ready-made visual systems you can build in TouchDesigner with a single prompt."
+---
+
+# Recipe gallery
+
+Recipes are **pre-built, tested networks** you can ask for by name — a fast way to
+get a known-good starting point you can then tweak. Just say:
+
+> *"Apply the **performable feedback tunnel** recipe and show me a preview."*
+
+The AI builds it, checks it, and previews it. From there, iterate in plain
+language like any other visual.
+
+## Built-in recipes
+
+| Recipe | What it makes | Level |
+| --- | --- | --- |
+| **Feedback Tunnel** | A hypnotic tunnel that feeds a transformed, blurred frame back into itself over a noise seed. | Beginner |
+| **Performable Feedback Tunnel** | The same tunnel, but with live knobs for decay, zoom, spin and blur — ready to perform, animate with an LFO, or snapshot as presets. | Intermediate |
+| **Decks + Layer Mixer (VJ A/B)** | Two source decks (A/B) with per-deck gain knobs, crossfaded through a compositeTOP mixer — the VJ-deck pattern from `create_decks` + `create_layer_mixer`. | Beginner |
+| **Audio Spectrum Bars** | A classic spectrum analyzer: live audio drawn as colored frequency bars. | Beginner |
+| **Reaction Diffusion** | A Gray-Scott reaction-diffusion simulation running on the GPU — organic, growing patterns. | Advanced |
+| **Noise Landscape** | A 3D terrain displaced by noise, shaded and rendered with an orbiting camera. | Intermediate |
+| **Particle Galaxy** | A swirling galaxy of particles from a sphere emitter, pushed by turbulence and gravity, glowing sprites. | Advanced |
+| **Webcam Glitch** | Live webcam through edge detection, RGB split, a feedback loop and a glitch shader. | Intermediate |
+| **Atemporal Body-Track Glitch Timeline** | 9:16 source-video template with clean footage, short green bug cuts, red small-point/line tracking trails and a performable `SceneMode` switch. | Advanced |
+| **Data Sonification** | Reads a data table into CHOPs and maps the values to both audio and a color ramp. | Intermediate |
+| **Projection Mapping** | Corner-pin keystone correction and edge feathering, ready to send to a projector. | Advanced |
+| **LED Strip Mapper** | Samples a visual down to one pixel per LED and streams colors out to an addressable LED strip. | Advanced |
+| **Kinect Silhouette** | Uses a Kinect Azure depth feed to isolate a body silhouette and drive a glowing outline. *(Needs Kinect Azure hardware.)* | Advanced |
+| **Depth Displacement + Post** | Synthetic depth map warps a ramp source through a Displace TOP, then a post stack (blur + level grade) finishes it — runs with zero hardware. | Intermediate |
+| **Kinetic Text Path Follow** | Kinetic text gliding smoothly along a deterministic circular path (sin/cos LFOs animating tx/ty on the Transform TOP) — placeholder until the native path-follow extension lands. | Intermediate |
+| **Kinetic Text Audio Reactive** | Manual-wiring template: kinetic text whose brightness pulses with the live audio bass band. Requires a one-line expression binding after import. | Intermediate |
+| **Optical Flow Particles** | CPU optical-flow (frame-diff + blur) drives a flow texture; the artist wires it into the particle render path after import. | Advanced |
+| **MediaPipe Face Overlay** | Manual-wire template: applies MediaPipe face landmarks (from `setup_face_tracking`) as a dot-cloud overlay over a live video source. | Intermediate |
+| **Scene Timeline Demo** | Declarative timeline with 3 scenes and crossfade, showcasing the `create_scene_timeline` Layer-1 orchestrator. | Intermediate |
+| **3D Scene Basic** | Foundational `create_3d_scene` template: geometry + camera + light + render pipeline — the starting point for 3D visuals. | Intermediate |
+| **Video Synth Oscillator** | Procedural Lissajous oscillator color synth from `create_video_synth` — analog video-synth look with live Speed / Freq / Color controls. | Beginner |
+| **Kinetic Text (Standalone)** | Text-only showcase of `create_kinetic_text` styles (Transform + Level + LFO) without any audio binding — pure typography pulse. | Beginner |
+| **Feedback Network Basic** | Minimal feedback TOP + level + composite pattern, the classic recursive look from `create_feedback_network`. | Beginner |
+| **GLSL Shader Basic** | Single GLSL TOP with inline shader showcasing `create_glsl_shader` with exposed uniform controls. | Intermediate |
+| **Pose Skeleton (Standalone)** | Placeholder skeleton renderer with instanced joints/bones, foundation for any custom pose source (no MediaPipe). | Intermediate |
+| **Particle System Basic** | Foundational `create_particle_system` template with grid emitter + force CHOP + geometry render. | Beginner |
+| **Audio Reactive Basic** | Minimal audio-in → analyze pattern from `create_audio_reactive`, ready for the artist to wire into a visual chain. | Beginner |
+| **Keyframe Animation Basic** | Animation COMP showcase with 2 channels + 5 keyframes, foundation for declarative camera/object motion. | Intermediate |
+
+::: tip Browse them live
+Ask *"list the available recipes"* and the AI will read them straight from the
+installed version, including any custom recipes you've saved to your
+[Obsidian vault](/reference/tools#obsidian-vault).
+:::
+
+## Hardware recipes
+
+A few recipes need extra gear:
+
+- **Kinect Silhouette** needs a **Kinect Azure** sensor.
+- **LED Strip Mapper** needs an **addressable LED strip** on a serial connection.
+- **Projection Mapping** assumes you have a **projector** to send the window to.
+
+They'll still build without the hardware so you can see the structure, but the
+live input/output won't do anything until the device is connected.
+
+## Save your own
+
+Made a look you love? Ask:
+
+> *"Save this network as a reusable recipe."*
+
+With an [Obsidian vault](/reference/tools#obsidian-vault) configured, it's stored
+as a Markdown note and shows up next to the built-ins for next time.

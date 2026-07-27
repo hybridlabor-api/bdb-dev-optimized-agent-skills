@@ -1,0 +1,137 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs and temporary files
+logs/*.log
+*.log
+*.swp
+.DS_Store
+to_clean/
+logs_backup/
+cleanup_backup/
+tmp/
+tests/test_resolve20_results.json
+tests/*_results.json
+
+# Configuration files with sensitive info
+# Don't ignore templates
+.mcp.json
+.mcp.json.backup
+.cursor/mcp.json
+claude_desktop_config.json
+!config-templates/*.template.json
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.specstory/
+.cursorindexingignore
+
+# Session-specific files
+*.session
+*.pid
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# Cursor
+.cursor/
+
+# macOS specific files
+.AppleDouble
+.LSOverride
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Keep the logs directory but not its contents
+logs/*
+!logs/.gitkeep
+
+# Any backup directories
+*_backup/
+
+# Cursor
+.cursor/
+
+# Autoresearch framework (local development only)
+autoresearch/
+
+# Autoresearch artifacts
+run.log
+*.log.bak
+results.tsv
+
+# Local planning notes
+timeline-edit-kernel-gameplan.md
+docs/demo-video-gameplan.md
+operational-client-safety-hardening-gameplan.md
+docs/_scratch/
+docs/_design/
+# Match gameplans / scratch artifacts anywhere in the tree, not just docs/ root.
+**/*gameplan*.md
+**/*ledger*.json
+**/*review-log*.md
+**/*session*.md
+
+# Resolve MCP media analysis artifacts
+.davinci-resolve-mcp-analysis/
+davinci-resolve-mcp-analysis/
+**/.davinci-resolve-mcp-analysis/
+**/davinci-resolve-mcp-analysis/
+
+# Local scratch / personal tooling attached to this project.
+# Holds things like the screenshot capture script, release-notes drafts,
+# and one-off repro scripts. Never shipped. See local/README.md.
+/local/
+.claude/launch.json

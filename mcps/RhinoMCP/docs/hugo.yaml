@@ -1,0 +1,78 @@
+baseURL: https://mcneel.github.io/RhinoMCP/
+title: Rhino MCP Platform
+languageCode: en-us
+
+enableRobotsTXT: true
+enableGitInfo: true
+enableEmoji: false
+hasCJKLanguage: false
+
+services:
+  googleAnalytics:
+    ID: ""
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+defaultContentLanguage: en
+languages:
+  en:
+    languageName: English
+    weight: 1
+    title: Rhino MCP Platform
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.146.0"
+  imports:
+    - path: github.com/imfing/hextra
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+menu:
+  main:
+    - name: Docs
+      pageRef: /docs
+      weight: 1
+    - name: Rhino
+      url: https://www.rhino3d.com
+      weight: 2
+    - name: Support
+      url: https://discourse.mcneel.com/c/rhino/artificial-intelligence-rhino/162
+      weight: 3
+    - name: GitHub
+      url: https://github.com/mcneel/RhinoMCP
+      weight: 10
+      params:
+        icon: github
+
+params:
+  description: A Rhino MCP Server for AI agents to create and edit in Rhino.
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo-dark.svg
+      width: 32
+      height: 32
+  page:
+    width: normal
+  theme:
+    default: system
+    displayToggle: true
+  footer:
+    enable: true
+    displayCopyright: false
+    displayPoweredBy: false
+  editURL:
+    enable: true
+    base: https://github.com/mcneel/RhinoMCP/edit/main/docs/content

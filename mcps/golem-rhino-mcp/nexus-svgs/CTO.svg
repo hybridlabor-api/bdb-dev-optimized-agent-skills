@@ -1,0 +1,545 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- Background -->
+    <radialGradient id="bg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#0d1520"/>
+      <stop offset="60%" stop-color="#060c14"/>
+      <stop offset="100%" stop-color="#020408"/>
+    </radialGradient>
+
+    <!-- Gold system -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Owl feather — dark slate base -->
+    <linearGradient id="owlMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a4252"/>
+      <stop offset="50%" stop-color="#2e3847"/>
+      <stop offset="100%" stop-color="#1e2633"/>
+    </linearGradient>
+    <linearGradient id="owlSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#252f3e"/>
+      <stop offset="100%" stop-color="#131b27"/>
+    </linearGradient>
+    <linearGradient id="owlLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4d5a6e"/>
+      <stop offset="100%" stop-color="#3a4560"/>
+    </linearGradient>
+
+    <!-- Facial disc — lighter oval zone -->
+    <radialGradient id="facialDisc" cx="50%" cy="50%" r="52%">
+      <stop offset="0%" stop-color="#525f74"/>
+      <stop offset="55%" stop-color="#414e62"/>
+      <stop offset="100%" stop-color="#2e3847"/>
+    </radialGradient>
+
+    <!-- Cyan lens tint -->
+    <linearGradient id="cyanLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00BCD4" stop-opacity="0.20"/>
+      <stop offset="40%" stop-color="#00ACC1" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#006064" stop-opacity="0.26"/>
+    </linearGradient>
+    <linearGradient id="cyanRim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="50%" stop-color="#242424"/>
+      <stop offset="100%" stop-color="#181818"/>
+    </linearGradient>
+    <linearGradient id="cyanShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00BCD4" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Eye amber iris -->
+    <radialGradient id="eyeAmber" cx="38%" cy="35%" r="58%">
+      <stop offset="0%" stop-color="#FF8F00"/>
+      <stop offset="45%" stop-color="#E65100"/>
+      <stop offset="100%" stop-color="#6D3200"/>
+    </radialGradient>
+    <radialGradient id="eyePupil" cx="45%" cy="42%" r="50%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+
+    <!-- Hoodie -->
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#181d28"/>
+      <stop offset="100%" stop-color="#0c0f18"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cyanGlow">
+      <feGaussianBlur stdDeviation="4.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000" flood-opacity="0.75"/>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Feather micro-texture -->
+    <pattern id="featherPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0,4 Q2,2 4,4 Q6,2 8,4" fill="none" stroke="#000" stroke-width="0.35" opacity="0.09"/>
+    </pattern>
+
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.025" stroke="#FFD700" stroke-width="0.4">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- Cyan atmosphere bloom -->
+  <radialGradient id="bloom" cx="50%" cy="45%" r="50%">
+    <stop offset="0%" stop-color="#00BCD4" stop-opacity="0.05"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="400" height="400" rx="32" fill="url(#bloom)"/>
+
+  <!-- ===== OWL CHARACTER — rendered with hardShadow group ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- ===== DARK HOODIE / COLLAR at bottom ===== -->
+    <path d="M55,400 L55,335
+             Q68,312 112,297 Q155,283 200,281
+             Q245,283 288,297 Q332,312 345,335
+             L345,400 Z"
+          fill="url(#hoodieGrad)"/>
+
+    <!-- Hoodie neckline crease -->
+    <path d="M132,320 Q165,307 200,303 Q235,307 268,320
+             Q255,333 200,337 Q145,333 132,320 Z"
+          fill="#10141e"/>
+
+    <!-- Hoodie fold lines left -->
+    <path d="M92,330 Q118,312 146,306"
+          fill="none" stroke="#242d3e" stroke-width="2.5" stroke-linecap="round" opacity="0.65"/>
+    <path d="M84,350 Q112,332 140,324"
+          fill="none" stroke="#1c2530" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <!-- Hoodie fold lines right -->
+    <path d="M308,330 Q282,312 254,306"
+          fill="none" stroke="#242d3e" stroke-width="2.5" stroke-linecap="round" opacity="0.65"/>
+    <path d="M316,350 Q288,332 260,324"
+          fill="none" stroke="#1c2530" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Hoodie top rim highlight -->
+    <path d="M57,337 Q68,315 110,300 Q155,285 200,283 Q245,285 290,300 Q332,315 343,337"
+          fill="none" stroke="#28303f" stroke-width="2" opacity="0.55"/>
+
+    <!-- ===== EAR TUFTS — pointed, angular, feathered ===== -->
+    <!-- Left tuft -->
+    <path d="M140,148
+             L148,110
+             L157,133
+             L162,116
+             L169,138
+             L156,150 Z"
+          fill="url(#owlMain)" stroke="#1a2030" stroke-width="1.2"/>
+    <!-- Tuft light face -->
+    <path d="M142,146 L151,114 L157,130 L162,118 L166,136 L154,148 Z"
+          fill="url(#owlLight)" opacity="0.35"/>
+    <!-- Tuft dark inner shadow -->
+    <path d="M150,116 L155,130 L160,120 L164,134 L156,143 Z"
+          fill="#16202e" opacity="0.55"/>
+    <!-- Cyan tuft tip accent -->
+    <path d="M146,113 L150,105 L155,109 L152,118 Z"
+          fill="#00BCD4" opacity="0.28"/>
+    <path d="M149,108 L150,105 L153,107"
+          fill="none" stroke="#00BCD4" stroke-width="0.8" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- Right tuft -->
+    <path d="M260,148
+             L252,110
+             L243,133
+             L238,116
+             L231,138
+             L244,150 Z"
+          fill="url(#owlMain)" stroke="#1a2030" stroke-width="1.2"/>
+    <path d="M258,146 L249,114 L243,130 L238,118 L234,136 L246,148 Z"
+          fill="url(#owlLight)" opacity="0.35"/>
+    <path d="M250,116 L245,130 L240,120 L236,134 L244,143 Z"
+          fill="#16202e" opacity="0.55"/>
+    <path d="M254,113 L250,105 L245,109 L248,118 Z"
+          fill="#00BCD4" opacity="0.28"/>
+    <path d="M251,108 L250,105 L247,107"
+          fill="none" stroke="#00BCD4" stroke-width="0.8" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- ===== MAIN OWL HEAD — wide, round ===== -->
+    <!-- Outer dark feather mass -->
+    <path d="M88,222
+             C86,175 94,140 120,118
+             C143,98 168,91 200,89
+             C232,91 257,98 280,118
+             C306,140 314,175 312,222
+             C312,272 298,308 274,320
+             L200,328
+             L126,320
+             C102,308 88,272 88,222 Z"
+          fill="url(#owlMain)"/>
+
+    <!-- Feather micro-texture layer -->
+    <path d="M88,222 C86,175 94,140 120,118 C143,98 168,91 200,89
+             C232,91 257,98 280,118 C306,140 314,175 312,222
+             C312,272 298,308 274,320 L200,328 L126,320
+             C102,308 88,272 88,222 Z"
+          fill="url(#featherPattern)"/>
+
+    <!-- Side shadow planes — depth -->
+    <path d="M88,222 C86,196 93,165 108,144 L114,274 C99,268 88,252 88,222 Z"
+          fill="#121b28" opacity="0.5"/>
+    <path d="M312,222 C314,196 307,165 292,144 L286,274 C301,268 312,252 312,222 Z"
+          fill="#121b28" opacity="0.5"/>
+
+    <!-- ===== FEATHER ROWS on outer head ===== -->
+    <!-- Top crown row -->
+    <path d="M152,96 Q170,89 184,93 Q192,87 200,89 Q208,87 216,93 Q230,89 248,96"
+          fill="none" stroke="#252f3e" stroke-width="1.8" opacity="0.6"/>
+    <path d="M136,104 Q160,95 180,99 Q200,93 220,99 Q244,95 264,104"
+          fill="none" stroke="#2e3847" stroke-width="1.5" opacity="0.55"/>
+    <path d="M120,118 Q150,106 175,110 Q200,104 225,110 Q255,106 280,118"
+          fill="none" stroke="#2e3847" stroke-width="1.5" opacity="0.45"/>
+    <path d="M106,136 Q140,122 170,126 Q200,120 230,126 Q264,122 294,136"
+          fill="none" stroke="#252f3e" stroke-width="1.2" opacity="0.4"/>
+    <path d="M94,158 Q125,143 158,146 Q200,140 242,146 Q275,143 306,158"
+          fill="none" stroke="#222b38" stroke-width="1" opacity="0.35"/>
+
+    <!-- Side feather rows — left -->
+    <path d="M90,182 Q104,168 120,164"
+          fill="none" stroke="#252f3e" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M88,202 Q103,188 119,184"
+          fill="none" stroke="#252f3e" stroke-width="1.1" opacity="0.42" stroke-linecap="round"/>
+    <path d="M89,222 Q104,208 120,204"
+          fill="none" stroke="#252f3e" stroke-width="1" opacity="0.36" stroke-linecap="round"/>
+    <path d="M92,242 Q108,230 124,226"
+          fill="none" stroke="#222b38" stroke-width="0.9" opacity="0.3" stroke-linecap="round"/>
+    <!-- Side feather rows — right -->
+    <path d="M310,182 Q296,168 280,164"
+          fill="none" stroke="#252f3e" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M312,202 Q297,188 281,184"
+          fill="none" stroke="#252f3e" stroke-width="1.1" opacity="0.42" stroke-linecap="round"/>
+    <path d="M311,222 Q296,208 280,204"
+          fill="none" stroke="#252f3e" stroke-width="1" opacity="0.36" stroke-linecap="round"/>
+    <path d="M308,242 Q292,230 276,226"
+          fill="none" stroke="#222b38" stroke-width="0.9" opacity="0.3" stroke-linecap="round"/>
+
+    <!-- Cyan feather-tip accent highlights — scattered on sides -->
+    <path d="M94,194 Q99,188 106,191"
+          fill="none" stroke="#00BCD4" stroke-width="1.2" opacity="0.32" stroke-linecap="round"/>
+    <path d="M91,214 Q97,208 104,211"
+          fill="none" stroke="#00BCD4" stroke-width="1" opacity="0.25" stroke-linecap="round"/>
+    <path d="M306,194 Q301,188 294,191"
+          fill="none" stroke="#00BCD4" stroke-width="1.2" opacity="0.32" stroke-linecap="round"/>
+    <path d="M309,214 Q303,208 296,211"
+          fill="none" stroke="#00BCD4" stroke-width="1" opacity="0.25" stroke-linecap="round"/>
+    <path d="M107,152 Q113,145 122,148"
+          fill="none" stroke="#00BCD4" stroke-width="1" opacity="0.28" stroke-linecap="round"/>
+    <path d="M293,152 Q287,145 278,148"
+          fill="none" stroke="#00BCD4" stroke-width="1" opacity="0.28" stroke-linecap="round"/>
+
+    <!-- ===== FOREHEAD CIRCUIT TRACES — etched into feathers ===== -->
+    <g stroke="#00BCD4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+      <!-- Main horizontal trunk -->
+      <polyline points="168,110 180,110 180,103 200,103 200,110 220,110 220,103 232,103"
+                fill="none" stroke-width="0.9"/>
+      <!-- Left branch up -->
+      <polyline points="180,103 180,96 188,96 188,101"
+                fill="none" stroke-width="0.75"/>
+      <!-- Right branch up -->
+      <polyline points="220,103 220,96 212,96 212,101"
+                fill="none" stroke-width="0.75"/>
+      <!-- Center vertical -->
+      <line x1="200" y1="103" x2="200" y2="95" stroke-width="0.9"/>
+      <!-- Center horizontal cap -->
+      <line x1="193" y1="95" x2="207" y2="95" stroke-width="0.7"/>
+      <!-- Solder pad nodes -->
+      <circle cx="188" cy="101" r="1.6" fill="#00BCD4" opacity="0.85"/>
+      <circle cx="212" cy="101" r="1.6" fill="#00BCD4" opacity="0.85"/>
+      <circle cx="200" cy="95" r="2.2" fill="#00BCD4" opacity="0.95"/>
+      <!-- Left micro-trace -->
+      <polyline points="160,112 166,112 166,107 173,107"
+                fill="none" stroke-width="0.6"/>
+      <circle cx="160" cy="112" r="1.1" fill="#00BCD4" opacity="0.6"/>
+      <!-- Right micro-trace -->
+      <polyline points="240,112 234,112 234,107 227,107"
+                fill="none" stroke-width="0.6"/>
+      <circle cx="240" cy="112" r="1.1" fill="#00BCD4" opacity="0.6"/>
+      <!-- Lower traces toward brow -->
+      <polyline points="176,116 176,122 184,122"
+                fill="none" stroke-width="0.6"/>
+      <polyline points="224,116 224,122 216,122"
+                fill="none" stroke-width="0.6"/>
+      <circle cx="184" cy="122" r="1.1" fill="#00BCD4" opacity="0.55"/>
+      <circle cx="216" cy="122" r="1.1" fill="#00BCD4" opacity="0.55"/>
+    </g>
+
+    <!-- ===== FACIAL DISC — lighter round face zone ===== -->
+    <ellipse cx="200" cy="220" rx="100" ry="92" fill="url(#facialDisc)" opacity="0.82"/>
+
+    <!-- Facial disc concentric feather ring arcs -->
+    <path d="M116,220 Q118,168 148,150"
+          fill="none" stroke="#3a4560" stroke-width="1.1" opacity="0.45"/>
+    <path d="M284,220 Q282,168 252,150"
+          fill="none" stroke="#3a4560" stroke-width="1.1" opacity="0.45"/>
+    <path d="M142,158 Q168,145 200,142 Q232,145 258,158"
+          fill="none" stroke="#3a4560" stroke-width="1" opacity="0.4"/>
+    <path d="M124,190 Q142,170 172,162 Q200,157 228,162 Q258,170 276,190"
+          fill="none" stroke="#3d4a5e" stroke-width="1.1" opacity="0.32"/>
+    <path d="M116,214 Q120,182 144,166 Q170,151 200,148 Q230,151 256,166 Q280,182 284,214"
+          fill="none" stroke="#404e60" stroke-width="0.9" opacity="0.28"/>
+
+    <!-- ===== BEAK — sharp, angular, downward pointing ===== -->
+    <path d="M187,248 L200,267 L213,248 Q210,244 200,242 Q190,244 187,248 Z"
+          fill="#2a3040"/>
+    <path d="M189,249 L200,265 L211,249 Q208,245 200,244 Q192,245 189,249 Z"
+          fill="#3c4658"/>
+    <!-- Beak center ridge -->
+    <line x1="200" y1="243" x2="200" y2="264"
+          stroke="#1e2633" stroke-width="0.9" opacity="0.65"/>
+    <!-- Beak highlight edge -->
+    <path d="M189,251 Q194,246 200,245"
+          fill="none" stroke="#515e72" stroke-width="0.9" opacity="0.45" stroke-linecap="round"/>
+    <!-- Beak tip shadow -->
+    <path d="M195,262 Q200,267 205,262"
+          fill="none" stroke="#1a2030" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- ===== EYES — large, round, intense ===== -->
+
+    <!-- Left eye socket rim (dark surround) -->
+    <circle cx="158" cy="207" r="34" fill="#18202e"/>
+    <circle cx="158" cy="207" r="30" fill="#101820"/>
+
+    <!-- Left sclera ring — just a hint of off-white -->
+    <circle cx="158" cy="207" r="27" fill="#cbb89a" opacity="0.08"/>
+
+    <!-- Left iris — amber gold -->
+    <circle cx="158" cy="207" r="24" fill="url(#eyeAmber)"/>
+    <!-- Iris detail rings -->
+    <circle cx="158" cy="207" r="20" fill="none" stroke="#7a3e00" stroke-width="1.6" opacity="0.55"/>
+    <circle cx="158" cy="207" r="15" fill="none" stroke="#5c2e00" stroke-width="1" opacity="0.45"/>
+    <!-- Iris radial texture spokes -->
+    <g opacity="0.22" stroke="#8b4500" stroke-width="0.7">
+      <line x1="158" y1="185" x2="158" y2="194"/>
+      <line x1="158" y1="220" x2="158" y2="229"/>
+      <line x1="136" y1="207" x2="145" y2="207"/>
+      <line x1="171" y1="207" x2="180" y2="207"/>
+      <line x1="141" y1="190" x2="148" y2="197"/>
+      <line x1="168" y1="217" x2="175" y2="224"/>
+      <line x1="141" y1="224" x2="148" y2="217"/>
+      <line x1="168" y1="197" x2="175" y2="190"/>
+    </g>
+
+    <!-- Left pupil — vertical narrowed oval (calculating stare) -->
+    <ellipse cx="158" cy="207" rx="7" ry="18" fill="url(#eyePupil)"/>
+
+    <!-- Left eye specular / shine -->
+    <circle cx="163" cy="198" r="4.5" fill="#fff" opacity="0.65"/>
+    <circle cx="165" cy="196" r="1.8" fill="#fff" opacity="0.45"/>
+
+    <!-- Left upper eyelid — heavy, narrowing the eye, serious -->
+    <path d="M130,196 Q148,183 186,194"
+          fill="#28344a" stroke="#18202e" stroke-width="1.2"/>
+    <path d="M133,198 Q151,186 183,196"
+          fill="none" stroke="#111a28" stroke-width="2.2"/>
+    <!-- Left lower lid -->
+    <path d="M131,218 Q150,226 185,218"
+          fill="#22303e" stroke="#18202e" stroke-width="0.8"/>
+
+    <!-- Right eye socket rim -->
+    <circle cx="242" cy="207" r="34" fill="#18202e"/>
+    <circle cx="242" cy="207" r="30" fill="#101820"/>
+
+    <!-- Right sclera -->
+    <circle cx="242" cy="207" r="27" fill="#cbb89a" opacity="0.08"/>
+
+    <!-- Right iris -->
+    <circle cx="242" cy="207" r="24" fill="url(#eyeAmber)"/>
+    <circle cx="242" cy="207" r="20" fill="none" stroke="#7a3e00" stroke-width="1.6" opacity="0.55"/>
+    <circle cx="242" cy="207" r="15" fill="none" stroke="#5c2e00" stroke-width="1" opacity="0.45"/>
+    <!-- Right iris spokes -->
+    <g opacity="0.22" stroke="#8b4500" stroke-width="0.7">
+      <line x1="242" y1="185" x2="242" y2="194"/>
+      <line x1="242" y1="220" x2="242" y2="229"/>
+      <line x1="220" y1="207" x2="229" y2="207"/>
+      <line x1="255" y1="207" x2="264" y2="207"/>
+      <line x1="225" y1="190" x2="232" y2="197"/>
+      <line x1="252" y1="217" x2="259" y2="224"/>
+      <line x1="225" y1="224" x2="232" y2="217"/>
+      <line x1="252" y1="197" x2="259" y2="190"/>
+    </g>
+
+    <!-- Right pupil -->
+    <ellipse cx="242" cy="207" rx="7" ry="18" fill="url(#eyePupil)"/>
+
+    <!-- Right specular -->
+    <circle cx="247" cy="198" r="4.5" fill="#fff" opacity="0.65"/>
+    <circle cx="249" cy="196" r="1.8" fill="#fff" opacity="0.45"/>
+
+    <!-- Right upper eyelid -->
+    <path d="M270,196 Q252,183 214,194"
+          fill="#28344a" stroke="#18202e" stroke-width="1.2"/>
+    <path d="M267,198 Q249,186 217,196"
+          fill="none" stroke="#111a28" stroke-width="2.2"/>
+    <!-- Right lower lid -->
+    <path d="M269,218 Q250,226 215,218"
+          fill="#22303e" stroke="#18202e" stroke-width="0.8"/>
+
+    <!-- ===== GLASSES — round, cyan-tinted, thin dark frames ===== -->
+    <!-- Left lens frame circle -->
+    <circle cx="158" cy="207" r="31" fill="none" stroke="url(#cyanRim)" stroke-width="3.2"/>
+    <!-- Left lens cyan fill -->
+    <circle cx="158" cy="207" r="29" fill="url(#cyanLens)"/>
+    <!-- Left frame inner hairline — cyan edge glow -->
+    <circle cx="158" cy="207" r="31" fill="none" stroke="#00BCD4" stroke-width="0.5" opacity="0.45"/>
+    <!-- Left lens primary reflection arc -->
+    <path d="M135,193 Q152,185 177,190"
+          fill="none" stroke="url(#cyanShine)" stroke-width="2.8" stroke-linecap="round"/>
+    <!-- Left lens secondary small reflection -->
+    <path d="M138,200 Q147,195 158,196"
+          fill="none" stroke="#00E5FF" stroke-width="0.9" stroke-linecap="round" opacity="0.3"/>
+
+    <!-- Right lens frame -->
+    <circle cx="242" cy="207" r="31" fill="none" stroke="url(#cyanRim)" stroke-width="3.2"/>
+    <!-- Right lens fill -->
+    <circle cx="242" cy="207" r="29" fill="url(#cyanLens)"/>
+    <!-- Right frame inner glow -->
+    <circle cx="242" cy="207" r="31" fill="none" stroke="#00BCD4" stroke-width="0.5" opacity="0.45"/>
+    <!-- Right lens reflection -->
+    <path d="M219,193 Q236,185 261,190"
+          fill="none" stroke="url(#cyanShine)" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M222,200 Q231,195 242,196"
+          fill="none" stroke="#00E5FF" stroke-width="0.9" stroke-linecap="round" opacity="0.3"/>
+
+    <!-- Bridge — short bar connecting lenses -->
+    <path d="M189,206 Q200,202 211,206"
+          fill="none" stroke="url(#cyanRim)" stroke-width="2.8" stroke-linecap="round"/>
+    <!-- Bridge center detail pip -->
+    <circle cx="200" cy="204" r="1.3" fill="#2a2a2a"/>
+
+    <!-- Temple arm — left -->
+    <path d="M127,202 L103,196 Q92,192 90,174"
+          fill="none" stroke="url(#cyanRim)" stroke-width="2.6" stroke-linecap="round"/>
+    <!-- Temple arm — right -->
+    <path d="M273,202 L297,196 Q308,192 310,174"
+          fill="none" stroke="url(#cyanRim)" stroke-width="2.6" stroke-linecap="round"/>
+
+    <!-- Frame hinge detail dots -->
+    <circle cx="127" cy="202" r="2.2" fill="#282828"/>
+    <circle cx="273" cy="202" r="2.2" fill="#282828"/>
+
+    <!-- ===== CHEEK FEATHER TUFTS ===== -->
+    <path d="M110,238 Q119,226 132,230 Q123,244 116,255 Z"
+          fill="#2a3444" stroke="#1a2030" stroke-width="0.9"/>
+    <path d="M290,238 Q281,226 268,230 Q277,244 284,255 Z"
+          fill="#2a3444" stroke="#1a2030" stroke-width="0.9"/>
+
+    <!-- Lower face feather rows -->
+    <path d="M126,263 Q154,254 178,257"
+          fill="none" stroke="#384050" stroke-width="1" opacity="0.48" stroke-linecap="round"/>
+    <path d="M274,263 Q246,254 222,257"
+          fill="none" stroke="#384050" stroke-width="1" opacity="0.48" stroke-linecap="round"/>
+    <path d="M128,275 Q158,267 182,269"
+          fill="none" stroke="#2e3847" stroke-width="0.85" opacity="0.4" stroke-linecap="round"/>
+    <path d="M272,275 Q242,267 218,269"
+          fill="none" stroke="#2e3847" stroke-width="0.85" opacity="0.4" stroke-linecap="round"/>
+
+    <!-- Chin area feathers -->
+    <path d="M154,291 Q175,285 200,284 Q225,285 246,291"
+          fill="none" stroke="#384050" stroke-width="1.1" opacity="0.38" stroke-linecap="round"/>
+    <path d="M160,298 Q178,294 200,293 Q222,294 240,298"
+          fill="none" stroke="#2e3847" stroke-width="0.8" opacity="0.3" stroke-linecap="round"/>
+
+    <!-- White throat patch — classic owl -->
+    <ellipse cx="200" cy="285" rx="28" ry="13" fill="#3e4c5e" opacity="0.55"/>
+    <path d="M178,281 Q190,276 200,275 Q210,276 222,281"
+          fill="none" stroke="#505e72" stroke-width="0.9" opacity="0.45"/>
+
+    <!-- Jaw definition -->
+    <path d="M126,293 Q160,303 200,305 Q240,303 274,293"
+          fill="none" stroke="#242e3e" stroke-width="1.5" opacity="0.42"/>
+
+  </g>
+
+  <!-- ===== CIRCUIT GLOW (passes on top of head, outside hardShadow) ===== -->
+  <g opacity="0.35" filter="url(#cyanGlow)">
+    <polyline points="180,103 180,96 188,96"
+              fill="none" stroke="#00BCD4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="220,103 220,96 212,96"
+              fill="none" stroke="#00BCD4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="200" y1="103" x2="200" y2="95"
+          stroke="#00BCD4" stroke-width="1.8"/>
+    <circle cx="200" cy="95" r="2.8" fill="#00BCD4"/>
+    <circle cx="188" cy="101" r="1.8" fill="#00BCD4" opacity="0.8"/>
+    <circle cx="212" cy="101" r="1.8" fill="#00BCD4" opacity="0.8"/>
+  </g>
+
+  <!-- ===== "CTO" TEXT ===== -->
+  <text x="200" y="373"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="url(#gold)" opacity="0.88">CTO</text>
+
+  <line x1="115" y1="381" x2="285" y2="381"
+        stroke="#FFD700" stroke-width="0.4" opacity="0.22"/>
+
+  <!-- Subtitle -->
+  <text x="200" y="392"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="6.5" font-weight="400" letter-spacing="4"
+        fill="#00BCD4" opacity="0.42">CHIEF TECHNOLOGY OFFICER</text>
+
+  <!-- ===== ACCENT RINGS ===== -->
+  <circle cx="200" cy="198" r="176"
+          fill="none" stroke="url(#gold)" stroke-width="0.6" opacity="0.11"/>
+  <circle cx="200" cy="198" r="169"
+          fill="none" stroke="#00BCD4" stroke-width="0.3" opacity="0.09"/>
+
+  <!-- ===== CORNER MARKS — matching king-hippo exactly ===== -->
+  <g opacity="0.15" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- Corner dots -->
+  <g fill="#FFD700" opacity="0.32">
+    <circle cx="20" cy="20" r="1.5"/>
+    <circle cx="380" cy="20" r="1.5"/>
+    <circle cx="20" cy="380" r="1.5"/>
+    <circle cx="380" cy="380" r="1.5"/>
+  </g>
+
+  <!-- Top center tick — cyan accent -->
+  <g opacity="0.38" stroke="#00BCD4" stroke-width="1" fill="none">
+    <path d="M195,16 L200,12 L205,16"/>
+    <line x1="200" y1="12" x2="200" y2="22"/>
+  </g>
+  <!-- Bottom center tick -->
+  <line x1="200" y1="388" x2="200" y2="396"
+        stroke="#00BCD4" stroke-width="1" opacity="0.28"/>
+
+</svg>

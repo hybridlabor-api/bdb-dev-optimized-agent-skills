@@ -1,0 +1,449 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#110e1f"/>
+      <stop offset="100%" stop-color="#04030c"/>
+    </radialGradient>
+
+    <!-- Gold gradients -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Fox fur — dark reddish-brown/auburn -->
+    <linearGradient id="foxMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6B2D0F"/>
+      <stop offset="45%" stop-color="#5A2409"/>
+      <stop offset="100%" stop-color="#3D1806"/>
+    </linearGradient>
+    <linearGradient id="foxMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A3412"/>
+      <stop offset="100%" stop-color="#4A1E06"/>
+    </linearGradient>
+    <linearGradient id="foxSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3D1806"/>
+      <stop offset="100%" stop-color="#5A2409"/>
+    </linearGradient>
+    <linearGradient id="foxEar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8B3A14"/>
+      <stop offset="100%" stop-color="#4A1E06"/>
+    </linearGradient>
+    <linearGradient id="foxEarInner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C4724A"/>
+      <stop offset="100%" stop-color="#8B3A14"/>
+    </linearGradient>
+
+    <!-- Muzzle/snout — lighter cream-tan -->
+    <linearGradient id="muzzleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C8956A"/>
+      <stop offset="100%" stop-color="#A8744A"/>
+    </linearGradient>
+    <linearGradient id="noseBridge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7A3412"/>
+      <stop offset="100%" stop-color="#5A2409"/>
+    </linearGradient>
+
+    <!-- Purple accent (#7C4DFF) -->
+    <linearGradient id="purpleAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B085FF"/>
+      <stop offset="50%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#4A148C"/>
+    </linearGradient>
+
+    <!-- Glasses — purple-tinted round lenses -->
+    <linearGradient id="glassLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#5722CC" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#7C4DFF" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="glassFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9C6FFF"/>
+      <stop offset="100%" stop-color="#5722CC"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8D0FF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#E8D0FF" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Turtleneck -->
+    <linearGradient id="turtleneck" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0d0d1a"/>
+    </linearGradient>
+    <linearGradient id="turtleneckRib" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#111128"/>
+      <stop offset="50%" stop-color="#22223a"/>
+      <stop offset="100%" stop-color="#111128"/>
+    </linearGradient>
+
+    <!-- Eye -->
+    <radialGradient id="eyeIris" cx="40%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#AA8800"/>
+      <stop offset="40%" stop-color="#8B6A00"/>
+      <stop offset="100%" stop-color="#3D2D00"/>
+    </radialGradient>
+    <radialGradient id="eyePupil" cx="45%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+
+    <!-- Nose -->
+    <radialGradient id="noseGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#2a1008"/>
+      <stop offset="100%" stop-color="#0d0504"/>
+    </radialGradient>
+
+    <!-- Geometric fur pattern accent -->
+    <linearGradient id="furStripe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#7C4DFF" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Gold ring gradient -->
+    <linearGradient id="ringGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000" flood-opacity="0.65"/>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="purpleGlow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle purple-tinted grid -->
+  <g opacity="0.03" stroke="#7C4DFF" stroke-width="0.3">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- Subtle purple ambient behind head -->
+  <ellipse cx="200" cy="210" rx="120" ry="110" fill="#7C4DFF" opacity="0.06" filter="url(#purpleGlow)"/>
+
+  <!-- ===== TURTLENECK COLLAR ===== -->
+  <g filter="url(#hardShadow)">
+    <!-- Collar body -->
+    <path d="M100,360 Q100,395 200,395 Q300,395 300,360 L290,330 Q290,318 200,315 Q110,318 110,330 Z"
+          fill="url(#turtleneck)"/>
+    <!-- Ribbing lines on turtleneck -->
+    <g stroke="#22223a" stroke-width="1.2" opacity="0.6">
+      <path d="M115,333 Q200,328 285,333"/>
+      <path d="M113,340 Q200,335 287,340"/>
+      <path d="M112,347 Q200,342 288,347"/>
+      <path d="M113,354 Q200,349 287,354"/>
+      <path d="M115,361 Q200,356 285,361"/>
+    </g>
+    <!-- Turtleneck fold highlight -->
+    <path d="M130,328 Q200,322 270,328" fill="none" stroke="#3a3a5c" stroke-width="1.5" opacity="0.5"/>
+    <!-- Purple geometric accent on collar -->
+    <path d="M148,335 L162,332 L176,335 L162,338 Z" fill="#7C4DFF" opacity="0.15"/>
+    <path d="M224,335 L238,332 L252,335 L238,338 Z" fill="#7C4DFF" opacity="0.15"/>
+  </g>
+
+  <!-- ===== FOX HEAD ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- ===== EARS — sharp triangular, upright ===== -->
+    <!-- Left ear outer -->
+    <path d="M108,215
+             C100,190 88,160 82,118
+             C88,108 102,110 115,125
+             C128,140 135,170 140,200"
+          fill="url(#foxEar)" stroke="#3D1806" stroke-width="1"/>
+    <!-- Left ear inner -->
+    <path d="M110,208
+             C104,186 94,160 89,125
+             C93,117 103,118 112,130
+             C121,143 127,168 132,196"
+          fill="url(#foxEarInner)" opacity="0.85"/>
+    <!-- Left ear tip darkening -->
+    <path d="M82,118 C85,108 95,106 104,112 L95,118 Z" fill="#2a0e04" opacity="0.7"/>
+    <!-- Left ear purple geometric accent -->
+    <path d="M94,132 L100,122 L106,132 L100,136 Z" fill="#7C4DFF" opacity="0.22"/>
+
+    <!-- Right ear outer -->
+    <path d="M292,215
+             C300,190 312,160 318,118
+             C312,108 298,110 285,125
+             C272,140 265,170 260,200"
+          fill="url(#foxEar)" stroke="#3D1806" stroke-width="1"/>
+    <!-- Right ear inner -->
+    <path d="M290,208
+             C296,186 306,160 311,125
+             C307,117 297,118 288,130
+             C279,143 273,168 268,196"
+          fill="url(#foxEarInner)" opacity="0.85"/>
+    <!-- Right ear tip darkening -->
+    <path d="M318,118 C315,108 305,106 296,112 L305,118 Z" fill="#2a0e04" opacity="0.7"/>
+    <!-- Right ear purple geometric accent -->
+    <path d="M306,132 L300,122 L294,132 L300,136 Z" fill="#7C4DFF" opacity="0.22"/>
+
+    <!-- ===== MAIN SKULL ===== -->
+    <!-- Neck/lower head transition -->
+    <path d="M125,325 Q125,340 155,345 L245,345 Q275,340 275,325 L268,308 L132,308 Z"
+          fill="#3D1806"/>
+
+    <!-- Main head shape — sleek, angular fox -->
+    <path d="M105,235
+             C105,175 135,130 165,118
+             L235,118
+             C265,130 295,175 295,235
+             C295,275 282,305 260,315
+             L140,315
+             C118,305 105,275 105,235 Z"
+          fill="url(#foxMain)"/>
+
+    <!-- Side shadow planes — gives angular, defined look -->
+    <path d="M105,235 C105,210 112,188 128,170 L128,270 C114,265 105,255 105,235 Z"
+          fill="#2a0e04" opacity="0.4"/>
+    <path d="M295,235 C295,210 288,188 272,170 L272,270 C286,265 295,255 295,235 Z"
+          fill="#2a0e04" opacity="0.4"/>
+
+    <!-- Cheekbone highlight planes -->
+    <path d="M112,238 C110,222 118,205 132,192 L148,225 C132,232 118,238 112,238 Z"
+          fill="#8B3A14" opacity="0.3"/>
+    <path d="M288,238 C290,222 282,205 268,192 L252,225 C268,232 282,238 288,238 Z"
+          fill="#8B3A14" opacity="0.3"/>
+
+    <!-- ===== GEOMETRIC FUR PATTERN — angular lines across face ===== -->
+    <!-- Left cheek geometric -->
+    <path d="M118,200 L138,188 L148,202 L128,214 Z" fill="url(#furStripe)"/>
+    <path d="M112,225 L128,215 L132,228 L116,238 Z" fill="url(#furStripe)"/>
+    <!-- Right cheek geometric -->
+    <path d="M282,200 L262,188 L252,202 L272,214 Z" fill="url(#furStripe)"/>
+    <path d="M288,225 L272,215 L268,228 L284,238 Z" fill="url(#furStripe)"/>
+
+    <!-- Forehead subtle center crease — alert, calculating -->
+    <path d="M178,150 Q200,144 222,150" fill="none" stroke="#2a0e04" stroke-width="1.5" opacity="0.45"/>
+
+    <!-- ===== WHITE/CREAM MUZZLE AREA — pointed fox snout ===== -->
+    <!-- Muzzle: starts mid-face, tapers to a point downward -->
+    <path d="M145,248
+             C145,235 168,222 200,220
+             C232,222 255,235 255,248
+             C255,278 230,312 200,318
+             C170,312 145,278 145,248 Z"
+          fill="url(#muzzleGrad)"/>
+
+    <!-- Muzzle highlight ridge down center -->
+    <path d="M200,222 L200,300" fill="none" stroke="#d4a07a" stroke-width="1.2" opacity="0.4"/>
+
+    <!-- Cheek-to-muzzle contrast line -->
+    <path d="M148,248 C152,240 160,233 170,228"
+          fill="none" stroke="#4A1E06" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <path d="M252,248 C248,240 240,233 230,228"
+          fill="none" stroke="#4A1E06" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- ===== NOSE — small, dark, fox-like ===== -->
+    <!-- Nose bridge fur stripe going down to nose -->
+    <path d="M200,220 L200,258" fill="none" stroke="#5A2409" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <!-- Nose shape — inverted triangle, sleek -->
+    <path d="M186,260 Q200,252 214,260 Q207,272 200,274 Q193,272 186,260 Z"
+          fill="url(#noseGrad)" stroke="#1a0804" stroke-width="0.8"/>
+    <!-- Nose highlight -->
+    <ellipse cx="195" cy="258" rx="4" ry="2.5" fill="#4a2010" opacity="0.5" transform="rotate(-10,195,258)"/>
+
+    <!-- ===== MOUTH — subtle knowing smirk ===== -->
+    <!-- Lip line — slight upturn on left side -->
+    <path d="M178,285 Q190,290 200,291 Q215,290 222,285"
+          fill="none" stroke="#8B5A3C" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Right smirk upturn — more pronounced -->
+    <path d="M222,285 Q228,280 232,278"
+          fill="none" stroke="#8B5A3C" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Subtle chin definition -->
+    <path d="M175,300 Q200,310 225,300" fill="none" stroke="#4A1E06" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+
+    <!-- ===== EYES — narrow, slightly lowered, calculating ===== -->
+    <!-- Left eye socket -->
+    <ellipse cx="155" cy="200" rx="24" ry="13" fill="#2a0e04"/>
+
+    <!-- Left eye white (sclera — minimal, just edges) -->
+    <ellipse cx="155" cy="200" rx="20" ry="10" fill="#d4c8a0"/>
+
+    <!-- Left iris — amber/golden fox eye -->
+    <ellipse cx="157" cy="200" rx="13" ry="10" fill="url(#eyeIris)"/>
+
+    <!-- Left pupil — vertical slit (fox-like) -->
+    <ellipse cx="157" cy="200" rx="4" ry="8" fill="url(#eyePupil)"/>
+
+    <!-- Left eye highlight -->
+    <ellipse cx="161" cy="196" rx="3" ry="2" fill="#fff" opacity="0.8"/>
+    <ellipse cx="153" cy="203" rx="1.2" ry="0.8" fill="#fff" opacity="0.35"/>
+
+    <!-- Left heavy upper eyelid — narrowed, sharp -->
+    <path d="M132,196 Q148,183 180,194"
+          fill="#3D1806" stroke="#2a0e04" stroke-width="0.8"/>
+    <path d="M134,197 Q150,185 178,196"
+          fill="none" stroke="#1a0804" stroke-width="1.8"/>
+
+    <!-- Left lower lid — slightly raised (smug) -->
+    <path d="M136,206 Q155,212 176,206"
+          fill="none" stroke="#2a0e04" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- Right eye socket -->
+    <ellipse cx="245" cy="200" rx="24" ry="13" fill="#2a0e04"/>
+
+    <!-- Right eye white -->
+    <ellipse cx="245" cy="200" rx="20" ry="10" fill="#d4c8a0"/>
+
+    <!-- Right iris -->
+    <ellipse cx="243" cy="200" rx="13" ry="10" fill="url(#eyeIris)"/>
+
+    <!-- Right pupil — vertical slit -->
+    <ellipse cx="243" cy="200" rx="4" ry="8" fill="url(#eyePupil)"/>
+
+    <!-- Right eye highlight -->
+    <ellipse cx="239" cy="196" rx="3" ry="2" fill="#fff" opacity="0.8"/>
+    <ellipse cx="247" cy="203" rx="1.2" ry="0.8" fill="#fff" opacity="0.35"/>
+
+    <!-- Right heavy upper eyelid -->
+    <path d="M268,196 Q252,183 220,194"
+          fill="#3D1806" stroke="#2a0e04" stroke-width="0.8"/>
+    <path d="M266,197 Q250,185 222,196"
+          fill="none" stroke="#1a0804" stroke-width="1.8"/>
+
+    <!-- Right lower lid — slightly raised -->
+    <path d="M264,206 Q245,212 224,206"
+          fill="none" stroke="#2a0e04" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- ===== ROUND GLASSES — purple-tinted ===== -->
+    <g filter="url(#softGlow)">
+      <!-- Left lens -->
+      <circle cx="155" cy="200" r="28" fill="url(#glassLens)"/>
+      <circle cx="155" cy="200" r="28" fill="none" stroke="url(#glassFrame)" stroke-width="2.8"/>
+      <!-- Left lens reflection arc -->
+      <path d="M137,188 Q150,184 173,192"
+            fill="none" stroke="url(#glassShine)" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Left lens secondary reflection -->
+      <path d="M140,194 Q150,191 164,194"
+            fill="none" stroke="url(#glassShine)" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Right lens -->
+      <circle cx="245" cy="200" r="28" fill="url(#glassLens)"/>
+      <circle cx="245" cy="200" r="28" fill="none" stroke="url(#glassFrame)" stroke-width="2.8"/>
+      <!-- Right lens reflection arc -->
+      <path d="M227,188 Q240,184 263,192"
+            fill="none" stroke="url(#glassShine)" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Right lens secondary reflection -->
+      <path d="M236,194 Q248,191 260,194"
+            fill="none" stroke="url(#glassShine)" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Bridge connecting lenses -->
+      <path d="M183,200 Q200,194 217,200"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.8" stroke-linecap="round"/>
+
+      <!-- Temple arms — extending to ears -->
+      <path d="M127,200 L105,194 Q96,192 92,176"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M273,200 L295,194 Q304,192 308,176"
+            fill="none" stroke="url(#glassFrame)" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Hinge dots -->
+      <circle cx="127" cy="200" r="2" fill="#7C4DFF" opacity="0.8"/>
+      <circle cx="273" cy="200" r="2" fill="#7C4DFF" opacity="0.8"/>
+
+      <!-- Purple glow on glass rims -->
+      <circle cx="155" cy="200" r="28" fill="none" stroke="#7C4DFF" stroke-width="0.8" opacity="0.35"/>
+      <circle cx="245" cy="200" r="28" fill="none" stroke="#7C4DFF" stroke-width="0.8" opacity="0.35"/>
+    </g>
+
+    <!-- ===== BROW RIDGES — sharp, angular ===== -->
+    <!-- Left brow — angled inward = calculating, not angry -->
+    <path d="M128,180 L172,172"
+          fill="none" stroke="#2a0e04" stroke-width="5" stroke-linecap="round"/>
+    <path d="M129,180 L173,172"
+          fill="none" stroke="#8B3A14" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Right brow — mirrors left -->
+    <path d="M272,180 L228,172"
+          fill="none" stroke="#2a0e04" stroke-width="5" stroke-linecap="round"/>
+    <path d="M271,180 L227,172"
+          fill="none" stroke="#8B3A14" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Brow inner sharp point — angular severity -->
+    <path d="M172,172 Q184,168 188,166"
+          fill="none" stroke="#1a0804" stroke-width="3" stroke-linecap="round"/>
+    <path d="M228,172 Q216,168 212,166"
+          fill="none" stroke="#1a0804" stroke-width="3" stroke-linecap="round"/>
+
+  </g>
+
+  <!-- ===== GOLD RING — bottom center ===== -->
+  <g filter="url(#glow)">
+    <circle cx="200" cy="350" r="16" fill="none" stroke="url(#ringGold)" stroke-width="3"/>
+    <circle cx="200" cy="350" r="10" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.4"/>
+    <!-- Ring gem -->
+    <circle cx="200" cy="350" r="5" fill="#7C4DFF" opacity="0.8"/>
+    <ellipse cx="198" cy="348" rx="2" ry="1.5" fill="#B085FF" opacity="0.6"/>
+  </g>
+
+  <!-- ===== CPO TEXT ===== -->
+  <text x="200" y="388"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15"
+        font-weight="700"
+        letter-spacing="6"
+        fill="#FFD700"
+        opacity="0.88">CPO</text>
+  <line x1="80" y1="396" x2="320" y2="396" stroke="#FFD700" stroke-width="0.4" opacity="0.2"/>
+
+  <!-- ===== CORNER MARKS — sharp, minimal ===== -->
+  <g opacity="0.18" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- ===== PURPLE ACCENT DETAILS — geometric design sensibility ===== -->
+  <!-- Top arc accent -->
+  <path d="M155,118 Q200,108 245,118"
+        fill="none" stroke="#7C4DFF" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Side geometric ticks — product roadmap lanes -->
+  <g stroke="#7C4DFF" stroke-width="0.7" opacity="0.2">
+    <line x1="20" y1="160" x2="30" y2="160"/>
+    <line x1="20" y1="175" x2="26" y2="175"/>
+    <line x1="20" y1="190" x2="30" y2="190"/>
+    <line x1="370" y1="160" x2="380" y2="160"/>
+    <line x1="374" y1="175" x2="380" y2="175"/>
+    <line x1="370" y1="190" x2="380" y2="190"/>
+  </g>
+
+  <!-- Outer border ring — subtle gold -->
+  <rect x="6" y="6" width="388" height="388" rx="30"
+        fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.12"/>
+
+</svg>

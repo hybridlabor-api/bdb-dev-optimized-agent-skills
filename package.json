@@ -1,0 +1,33 @@
+{
+  "name": "@hybridlabor-api/bdb-dev-optimized-agent-skills",
+  "version": "1.0.0",
+  "description": "Optimized Agent skills and MCP pack for BDB DEV",
+  "main": "installer.js",
+  "bin": {
+    "bdb-dev-optimized-agent-skills": "./installer.js",
+    "bdb-agent-skills-pro": "./installer.js",
+    "bdb-agent-skills": "./installer.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/issues"
+  },
+  "homepage": "https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills#readme",
+  "files": [
+    "installer.js",
+    "mcp_config.json",
+    "GEMINI.md",
+    "Project-overview.html",
+    "assets/",
+    "skills/",
+    "mcps/"
+  ],
+  "author": "BDB DEV",
+  "license": "ISC"
+}

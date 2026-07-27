@@ -1,0 +1,51 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'type/enhancement'
+      - 'feature'
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'type/bug'
+      - 'bug'
+      - 'fix'
+  - title: '📚 Documentation'
+    labels:
+      - 'area/docs'
+      - 'documentation'
+  - title: '🧰 Tools'
+    labels:
+      - 'area/tools'
+      - 'tooling'
+  - title: '🔌 Plugin'
+    labels:
+      - 'area/plugin'
+  - title: '🧪 Testing'
+    labels:
+      - 'area/testing'
+      - 'test'
+  - title: '📦 Maintenance'
+    labels:
+      - 'chore'
+      - 'maintenance'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&'
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+      - 'type/bug'
+      - 'bug'
+  default: patch
+template: |
+  ## Changes in this Release
+
+  $CHANGES

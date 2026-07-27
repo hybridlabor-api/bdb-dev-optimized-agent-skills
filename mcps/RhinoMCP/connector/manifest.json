@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/schemas/mcpb-manifest-v0.3.schema.json",
+  "manifest_version": "0.3",
+  "name": "rhino-mcp-platform",
+  "display_name": "Rhino MCP Platform",
+  "version": "0.1.3",
+  "description": "Desktop Connector for Rhino3d and Grasshopper",
+  "long_description": "An MCP bridge between Rhino3D, Grasshopper and Claude. You can use it as a modelling, scripting or plugin development assistant.\n\nRequires the Rhino-MCP-Platform plugin, installable from Rhino's PackageManager.",
+  "author": {
+    "name": "McNeel",
+    "email": "callum@mcneel.com",
+    "url": "https://github.com/mcneel/"
+  },
+  "homepage": "https://www.mcneel.com",
+  "documentation": "https://github.com/mcneel/RhinoMCP#readme",
+  "support": "https://discourse.mcneel.com/c/rhino/artificial-intelligence-rhino/162",
+  "icon": "icon-light.png",
+  "icons": [
+    { "src": "icon-light.png", "size": "512x512", "theme": "light" },
+    { "src": "icon-dark.png", "size": "512x512", "theme": "dark" }
+  ],
+  "screenshots": [
+    "screenshots/casa-rhino.png"
+  ],
+  "privacy_policies": [
+    "https://github.com/mcneel/RhinoMCP/blob/main/PRIVACY.md"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "router-launcher.mjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/router-launcher.mjs",
+        "--default-version",
+        "${user_config.rhino_version}",
+        "--startup-timeout",
+        "${user_config.startup_timeout}"
+      ],
+      "env": {
+        "RHINO_MCP_RHINO_EXE_8": "${user_config.rhino_8_location}",
+        "RHINO_MCP_RHINO_EXE_9": "${user_config.rhino_9_location}",
+        "RHINO_MCP_RHINO_EXE_WIP": "${user_config.rhino_wip_location}"
+      }
+    }
+  },
+  "user_config": {
+    "rhino_version": {
+      "type": "string",
+      "title": "Rhino Version",
+      "description": "Which Rhino Version? Accepted values: 8, 9, WIP.",
+      "required": false,
+      "default": "8"
+    },
+    "startup_timeout": {
+      "type": "number",
+      "title": "Rhino Startup Timeout (seconds)",
+      "description": "How long to wait for Rhino to launch and become ready before giving up. Raise this on slow machines or when a license/EULA dialog needs clearing.",
+      "required": false,
+      "default": 120
+    },
+    "rhino_8_location": {
+      "type": "string",
+      "title": "Custom Rhino 8 Location",
+      "description": "Advanced. Launch a specific Rhino 8 build instead of the installed one. Point to Rhino.exe (Windows) or the Rhino app bundle, e.g. Rhino 8.app (macOS). Leave blank to use the installed Rhino 8.",
+      "required": false,
+      "default": ""
+    },
+    "rhino_9_location": {
+      "type": "string",
+      "title": "Custom Rhino 9 Location",
+      "description": "Advanced. Launch a specific Rhino 9 build instead of the installed one. Point to Rhino.exe (Windows) or the Rhino app bundle (macOS). Also used to serve WIP tool calls. Leave blank to use the installed Rhino 9.",
+      "required": false,
+      "default": ""
+    },
+    "rhino_wip_location": {
+      "type": "string",
+      "title": "Custom Rhino WIP Location",
+      "description": "Advanced. Launch a specific Rhino WIP build instead of the installed one. Point to Rhino.exe (Windows) or the Rhino app bundle (macOS). Leave blank to use the installed Rhino WIP.",
+      "required": false,
+      "default": ""
+    }
+  },
+  "prompts": [
+    {
+      "name": "getting-started",
+      "description": "Walk through first-time setup of the Rhino 3D MCP connector.",
+      "text": "I'd like to try the Rhino 3D MCP connector for the first time. Help me confirm everything is wired up correctly: check that a Rhino slot is reachable, spawn one if not, then ask me what I'd like to build and create a simple example (e.g. a box) in Rhino so I can verify the connection end-to-end."
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=1.0.0",
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "keywords": ["rhino", "rhino3d", "mcneel", "cad", "3d", "mcp"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcneel/RhinoMCP"
+  }
+}

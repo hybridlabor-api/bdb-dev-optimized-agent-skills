@@ -1,0 +1,441 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0d1520"/>
+      <stop offset="100%" stop-color="#04060c"/>
+    </radialGradient>
+
+    <!-- Gold gradients -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#FFD700" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#FFC107" stop-opacity="0.45"/>
+    </linearGradient>
+
+    <!-- Peacock plumage — deep iridescent blue-green -->
+    <linearGradient id="plumageMain" x1="0%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#006064"/>
+      <stop offset="45%" stop-color="#00514e"/>
+      <stop offset="100%" stop-color="#00333a"/>
+    </linearGradient>
+    <linearGradient id="plumageNeck" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0097A7"/>
+      <stop offset="50%" stop-color="#00838F"/>
+      <stop offset="100%" stop-color="#004D5A"/>
+    </linearGradient>
+    <linearGradient id="plumageShade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#003840"/>
+      <stop offset="100%" stop-color="#001820"/>
+    </linearGradient>
+    <linearGradient id="plumageSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#004d54"/>
+      <stop offset="100%" stop-color="#002830"/>
+    </linearGradient>
+
+    <!-- Beak — horn/ivory -->
+    <linearGradient id="beakGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C0A860"/>
+      <stop offset="50%" stop-color="#A08840"/>
+      <stop offset="100%" stop-color="#7a6530"/>
+    </linearGradient>
+    <linearGradient id="beakLower" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#957a38"/>
+      <stop offset="100%" stop-color="#6b5820"/>
+    </linearGradient>
+
+    <!-- Crest feather gradients — hot pink / magenta -->
+    <linearGradient id="crestA" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#006064"/>
+      <stop offset="35%" stop-color="#880E4F"/>
+      <stop offset="70%" stop-color="#FF4081"/>
+      <stop offset="100%" stop-color="#FF80AB"/>
+    </linearGradient>
+    <linearGradient id="crestB" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#004D40"/>
+      <stop offset="40%" stop-color="#AD1457"/>
+      <stop offset="75%" stop-color="#E91E63"/>
+      <stop offset="100%" stop-color="#FF4081"/>
+    </linearGradient>
+    <linearGradient id="crestGold" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#004D40"/>
+      <stop offset="50%" stop-color="#FF8F00"/>
+      <stop offset="100%" stop-color="#FFD700"/>
+    </linearGradient>
+
+    <!-- Eye spot gradients -->
+    <radialGradient id="eyeSpot" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="22%" stop-color="#1565C0"/>
+      <stop offset="52%" stop-color="#004D40"/>
+      <stop offset="78%" stop-color="#FF4081" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#006064" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="eyeSpotSm" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="28%" stop-color="#0D47A1"/>
+      <stop offset="58%" stop-color="#00574B"/>
+      <stop offset="100%" stop-color="#006064" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Fierce amber/gold iris -->
+    <radialGradient id="irisGrad" cx="38%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#FFEE58"/>
+      <stop offset="35%" stop-color="#FF8F00"/>
+      <stop offset="100%" stop-color="#BF360C"/>
+    </radialGradient>
+
+    <!-- Aviator lens — pink tinted -->
+    <linearGradient id="lensL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.20"/>
+      <stop offset="50%" stop-color="#F06292" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="lensR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.20"/>
+      <stop offset="50%" stop-color="#F06292" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="55%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#282828"/>
+      <stop offset="50%" stop-color="#484848"/>
+      <stop offset="100%" stop-color="#282828"/>
+    </linearGradient>
+
+    <!-- High collar / scarf -->
+    <linearGradient id="scarfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#AD1457"/>
+      <stop offset="55%" stop-color="#880E4F"/>
+      <stop offset="100%" stop-color="#3E0028"/>
+    </linearGradient>
+    <linearGradient id="scarfSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardShadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000" flood-opacity="0.72"/>
+    </filter>
+    <filter id="crestGlow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="pinkBloom">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="400" height="400" rx="32" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.025" stroke="#FFD700" stroke-width="0.4">
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+  </g>
+
+  <!-- Atmospheric ambient glow behind character -->
+  <ellipse cx="200" cy="230" rx="130" ry="100" fill="#006064" opacity="0.05"/>
+
+  <!-- ===== GOLD RING ===== -->
+  <circle cx="200" cy="215" r="150" fill="none" stroke="url(#goldRing)" stroke-width="1.2" opacity="0.32"/>
+  <circle cx="200" cy="215" r="146" fill="none" stroke="url(#gold)" stroke-width="0.4" opacity="0.10"/>
+
+  <!-- ===== CREST FEATHERS — rising upward, hot pink / magenta tips ===== -->
+  <!-- Pink ambient bloom behind crest tips -->
+  <ellipse cx="200" cy="72" rx="68" ry="38" fill="#FF4081" opacity="0.07" filter="url(#pinkBloom)"/>
+
+  <g filter="url(#crestGlow)">
+    <!-- Far-left sweep -->
+    <path d="M150,150 C142,128 130,100 118,70 C112,54 106,38 102,22"
+          fill="none" stroke="url(#crestA)" stroke-width="2.4" stroke-linecap="round"/>
+    <ellipse cx="102" cy="20" rx="4.5" ry="6.5" fill="#FF80AB" opacity="0.88" transform="rotate(-22,102,20)"/>
+
+    <!-- Left outer -->
+    <path d="M158,144 C152,122 142,96 132,68 C126,52 120,36 116,20"
+          fill="none" stroke="url(#crestB)" stroke-width="2.6" stroke-linecap="round"/>
+    <ellipse cx="116" cy="18" rx="5" ry="7" fill="#FF4081" opacity="0.92" transform="rotate(-16,116,18)"/>
+
+    <!-- Left-center -->
+    <path d="M170,138 C165,116 158,90 152,64 C147,46 144,30 142,14"
+          fill="none" stroke="url(#crestA)" stroke-width="2.8" stroke-linecap="round"/>
+    <ellipse cx="142" cy="12" rx="5" ry="7" fill="#E91E63" opacity="0.95" transform="rotate(-9,142,12)"/>
+
+    <!-- Gold accent left -->
+    <path d="M182,134 C179,112 175,86 172,60 C170,44 168,28 167,12"
+          fill="none" stroke="url(#crestGold)" stroke-width="1.9" stroke-linecap="round"/>
+    <circle cx="167" cy="10" r="4.2" fill="#FFD700" opacity="0.88"/>
+
+    <!-- Center — tallest, most prominent -->
+    <path d="M200,130 C200,108 200,82 200,56 C200,40 200,24 200,8"
+          fill="none" stroke="url(#crestB)" stroke-width="3.6" stroke-linecap="round"/>
+    <ellipse cx="200" cy="6" rx="6.5" ry="9" fill="#FF4081" opacity="1.0"/>
+    <!-- Center highlight -->
+    <path d="M200,130 C200,108 200,82 200,56 C200,40 200,24 200,8"
+          fill="none" stroke="#FF80AB" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+
+    <!-- Gold accent right -->
+    <path d="M218,134 C221,112 225,86 228,60 C230,44 232,28 233,12"
+          fill="none" stroke="url(#crestGold)" stroke-width="1.9" stroke-linecap="round"/>
+    <circle cx="233" cy="10" r="4.2" fill="#FFD700" opacity="0.88"/>
+
+    <!-- Right-center -->
+    <path d="M230,138 C235,116 242,90 248,64 C253,46 256,30 258,14"
+          fill="none" stroke="url(#crestA)" stroke-width="2.8" stroke-linecap="round"/>
+    <ellipse cx="258" cy="12" rx="5" ry="7" fill="#E91E63" opacity="0.95" transform="rotate(9,258,12)"/>
+
+    <!-- Right outer -->
+    <path d="M242,144 C248,122 258,96 268,68 C274,52 280,36 284,20"
+          fill="none" stroke="url(#crestB)" stroke-width="2.6" stroke-linecap="round"/>
+    <ellipse cx="284" cy="18" rx="5" ry="7" fill="#FF4081" opacity="0.92" transform="rotate(16,284,18)"/>
+
+    <!-- Far-right sweep -->
+    <path d="M250,150 C258,128 270,100 282,70 C288,54 294,38 298,22"
+          fill="none" stroke="url(#crestA)" stroke-width="2.4" stroke-linecap="round"/>
+    <ellipse cx="298" cy="20" rx="4.5" ry="6.5" fill="#FF80AB" opacity="0.88" transform="rotate(22,298,20)"/>
+  </g>
+
+  <!-- ===== MAIN CHARACTER — head, neck, collar ===== -->
+  <g filter="url(#hardShadow)">
+
+    <!-- Neck column — upright, slender for peacock -->
+    <path d="M168,308 Q160,336 163,358 L237,358 Q240,336 232,308 Z"
+          fill="url(#plumageNeck)"/>
+
+    <!-- Neck iridescent sheen strips -->
+    <path d="M168,308 Q160,336 163,358 L178,358 L172,308 Z"
+          fill="#0097A7" opacity="0.20"/>
+    <path d="M232,308 L228,358 L237,358 Q240,336 232,308 Z"
+          fill="#004D5A" opacity="0.28"/>
+
+    <!-- Neck texture feather lines -->
+    <path d="M172,316 Q200,310 228,316" fill="none" stroke="#00838F" stroke-width="1.0" opacity="0.38"/>
+    <path d="M170,326 Q200,320 230,326" fill="none" stroke="#00838F" stroke-width="0.8" opacity="0.28"/>
+    <path d="M168,336 Q200,330 232,336" fill="none" stroke="#00838F" stroke-width="0.7" opacity="0.22"/>
+    <path d="M167,346 Q200,340 233,346" fill="none" stroke="#00838F" stroke-width="0.6" opacity="0.18"/>
+
+    <!-- Neck eye-spot patterns -->
+    <g filter="url(#softGlow)">
+      <ellipse cx="181" cy="322" rx="9.5" ry="6.5" fill="url(#eyeSpotSm)" opacity="0.78"/>
+      <ellipse cx="183" cy="340" rx="8" ry="5.5" fill="url(#eyeSpotSm)" opacity="0.68"/>
+      <ellipse cx="219" cy="322" rx="9.5" ry="6.5" fill="url(#eyeSpotSm)" opacity="0.78"/>
+      <ellipse cx="217" cy="340" rx="8" ry="5.5" fill="url(#eyeSpotSm)" opacity="0.68"/>
+      <ellipse cx="200" cy="332" rx="10.5" ry="7" fill="url(#eyeSpotSm)" opacity="0.62"/>
+    </g>
+
+    <!-- Main skull — proud, upright peacock head -->
+    <!-- Slightly narrower and more elegant than hippo -->
+    <path d="M122,218
+             C122,166 150,130 178,126
+             L222,126
+             C250,130 278,166 278,218
+             C278,260 264,290 244,304
+             L156,304
+             C136,290 122,260 122,218 Z"
+          fill="url(#plumageMain)"/>
+
+    <!-- Shadow planes — depth on sides -->
+    <path d="M122,218 C122,194 130,172 146,158 L146,266 C134,258 122,246 122,218 Z"
+          fill="#001820" opacity="0.38"/>
+    <path d="M278,218 C278,194 270,172 254,158 L254,266 C266,258 278,246 278,218 Z"
+          fill="#001820" opacity="0.38"/>
+
+    <!-- Crown iridescent sheen — top of head -->
+    <path d="M162,134 Q200,126 238,134 Q258,143 258,162 Q238,152 200,149 Q162,152 142,162 Q142,143 162,134 Z"
+          fill="#0097A7" opacity="0.24"/>
+
+    <!-- Fine scale texture on head -->
+    <path d="M156,157 Q200,147 244,157" fill="none" stroke="#006064" stroke-width="1.2" opacity="0.35"/>
+    <path d="M150,167 Q200,158 250,167" fill="none" stroke="#005055" stroke-width="0.9" opacity="0.25"/>
+    <path d="M144,177 Q200,169 256,177" fill="none" stroke="#003d44" stroke-width="0.7" opacity="0.20"/>
+
+    <!-- Brow shelf — sharp, assertive -->
+    <path d="M140,196 L182,184 L182,197 L140,202 Z" fill="#003d44"/>
+    <path d="M260,196 L218,184 L218,197 L260,202 Z" fill="#003d44"/>
+    <line x1="182" y1="188" x2="218" y2="188" stroke="#003d44" stroke-width="5.5"/>
+    <!-- Brow crease -->
+    <path d="M158,166 Q200,157 242,166" fill="none" stroke="#003040" stroke-width="1.5" opacity="0.45"/>
+
+    <!-- ===== BEAK — sharp, slightly raised (proud tilt) ===== -->
+    <!-- Upper mandible — angled slightly upward for pride -->
+    <path d="M178,238
+             C176,232 174,224 173,216
+             C172,209 173,203 178,200
+             L200,196
+             L222,200
+             C227,203 228,209 227,216
+             C226,224 224,232 222,238
+             Q211,246 200,248
+             Q189,246 178,238 Z"
+          fill="url(#beakGrad)"/>
+    <!-- Beak center ridge -->
+    <path d="M200,196 L200,248" fill="none" stroke="#7a6030" stroke-width="1.2" opacity="0.5"/>
+    <!-- Culmen hook at tip — subtle -->
+    <path d="M192,246 Q200,250 208,246 Q206,254 200,256 Q194,254 192,246 Z"
+          fill="#8a7030" opacity="0.75"/>
+    <!-- Nostril slits -->
+    <path d="M184,215 Q189,211 194,215" fill="none" stroke="#7a6030" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+    <path d="M206,215 Q211,211 216,215" fill="none" stroke="#7a6030" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+    <!-- Upper mandible highlight -->
+    <path d="M190,200 Q200,197 210,200" fill="none" stroke="#D4B870" stroke-width="1" opacity="0.55"/>
+    <!-- Lower mandible — closed tight -->
+    <path d="M180,240 Q200,250 220,240 Q212,258 200,260 Q188,258 180,240 Z"
+          fill="url(#beakLower)" opacity="0.88"/>
+
+    <!-- ===== EYES — intense, forward-facing, amber iris ===== -->
+    <!-- Left eye surround -->
+    <ellipse cx="160" cy="208" rx="21" ry="18" fill="#002830"/>
+    <!-- Left sclera -->
+    <ellipse cx="160" cy="208" rx="16" ry="13" fill="#EDE4CC"/>
+    <!-- Left iris -->
+    <ellipse cx="163" cy="207" rx="9.5" ry="10.5" fill="url(#irisGrad)"/>
+    <!-- Left pupil -->
+    <ellipse cx="164" cy="206" rx="5" ry="6" fill="#050505"/>
+    <!-- Left specular highlights -->
+    <circle cx="168" cy="202" r="3" fill="#fff" opacity="0.92"/>
+    <circle cx="162" cy="212" r="1.3" fill="#fff" opacity="0.32"/>
+    <!-- Left upper lid — sharp, sleek -->
+    <path d="M140,203 Q154,192 182,202" fill="#004040" stroke="#002828" stroke-width="1.2"/>
+    <path d="M142,205 Q156,195 180,204" fill="none" stroke="#001820" stroke-width="1.8"/>
+    <!-- Left lower lid subtle -->
+    <path d="M142,214 Q160,220 178,214" fill="none" stroke="#002828" stroke-width="0.9" opacity="0.4"/>
+
+    <!-- Right eye surround -->
+    <ellipse cx="240" cy="208" rx="21" ry="18" fill="#002830"/>
+    <!-- Right sclera -->
+    <ellipse cx="240" cy="208" rx="16" ry="13" fill="#EDE4CC"/>
+    <!-- Right iris -->
+    <ellipse cx="243" cy="207" rx="9.5" ry="10.5" fill="url(#irisGrad)"/>
+    <!-- Right pupil -->
+    <ellipse cx="244" cy="206" rx="5" ry="6" fill="#050505"/>
+    <!-- Right specular highlights -->
+    <circle cx="248" cy="202" r="3" fill="#fff" opacity="0.92"/>
+    <circle cx="242" cy="212" r="1.3" fill="#fff" opacity="0.32"/>
+    <!-- Right upper lid -->
+    <path d="M260,203 Q246,192 218,202" fill="#004040" stroke="#002828" stroke-width="1.2"/>
+    <path d="M258,205 Q244,195 220,204" fill="none" stroke="#001820" stroke-width="1.8"/>
+    <!-- Right lower lid subtle -->
+    <path d="M222,214 Q240,220 258,214" fill="none" stroke="#002828" stroke-width="0.9" opacity="0.4"/>
+
+    <!-- ===== AVIATOR GLASSES — pink-tinted, classic drop shape ===== -->
+    <g>
+      <!-- Left lens — aviator teardrop (wider at bottom) -->
+      <path d="M130,200 Q130,184 144,181 Q160,177 172,183 Q185,189 185,202 Q185,218 170,222 Q154,227 140,221 Q130,216 130,200 Z"
+            fill="none" stroke="url(#frameGrad)" stroke-width="3.0"/>
+      <path d="M132,200 Q132,186 145,183 Q160,179 171,185 Q183,191 183,202 Q183,217 169,221 Q154,225 141,220 Q132,215 132,200 Z"
+            fill="url(#lensL)"/>
+      <!-- Left lens shine -->
+      <path d="M138,186 Q152,183 167,187" fill="none" stroke="url(#glassShine)" stroke-width="2.2" stroke-linecap="round"/>
+
+      <!-- Right lens — aviator teardrop -->
+      <path d="M215,200 Q215,184 229,181 Q246,177 258,183 Q271,189 271,202 Q271,218 256,222 Q240,227 226,221 Q215,216 215,200 Z"
+            fill="none" stroke="url(#frameGrad)" stroke-width="3.0"/>
+      <path d="M217,200 Q217,186 230,183 Q246,179 257,185 Q269,191 269,202 Q269,217 255,221 Q240,225 227,220 Q217,215 217,200 Z"
+            fill="url(#lensR)"/>
+      <!-- Right lens shine -->
+      <path d="M223,186 Q238,183 254,187" fill="none" stroke="url(#glassShine)" stroke-width="2.2" stroke-linecap="round"/>
+
+      <!-- Bridge — slim aviator bridge -->
+      <path d="M185,198 Q200,193 215,198" fill="none" stroke="url(#frameGrad)" stroke-width="2.6" stroke-linecap="round"/>
+
+      <!-- Temple arms -->
+      <path d="M130,202 Q108,196 100,180" fill="none" stroke="url(#frameGrad)" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M271,202 Q293,196 300,180" fill="none" stroke="url(#frameGrad)" stroke-width="2.8" stroke-linecap="round"/>
+
+      <!-- Frame joints -->
+      <circle cx="130" cy="202" r="1.8" fill="#5a5a5a"/>
+      <circle cx="271" cy="202" r="1.8" fill="#5a5a5a"/>
+      <circle cx="185" cy="196" r="1.2" fill="#4a4a4a"/>
+      <circle cx="215" cy="196" r="1.2" fill="#4a4a4a"/>
+    </g>
+
+  </g><!-- end hardShadow group -->
+
+  <!-- ===== EYE-SPOT FEATHER PATTERNS — lower head / collar region ===== -->
+  <g filter="url(#softGlow)">
+    <!-- Large eye spots at collar line -->
+    <ellipse cx="174" cy="299" rx="13.5" ry="9.5" fill="url(#eyeSpot)" opacity="0.76"/>
+    <ellipse cx="200" cy="297" rx="14.5" ry="10.5" fill="url(#eyeSpot)" opacity="0.82"/>
+    <ellipse cx="226" cy="299" rx="13.5" ry="9.5" fill="url(#eyeSpot)" opacity="0.76"/>
+    <!-- Flanking smaller spots -->
+    <ellipse cx="157" cy="290" rx="9" ry="6.5" fill="url(#eyeSpotSm)" opacity="0.60"/>
+    <ellipse cx="243" cy="290" rx="9" ry="6.5" fill="url(#eyeSpotSm)" opacity="0.60"/>
+  </g>
+
+  <!-- ===== HIGH COLLAR / SCARF — marketing = style ===== -->
+  <g filter="url(#hardShadow)">
+    <!-- Scarf main body -->
+    <path d="M142,353 Q152,338 164,330 L236,330 Q248,338 258,353 Q236,368 200,370 Q164,368 142,353 Z"
+          fill="url(#scarfGrad)"/>
+    <!-- Scarf fold / left drape -->
+    <path d="M142,353 Q134,346 136,336 Q152,338 164,330 Z"
+          fill="#7B1040" opacity="0.75"/>
+    <!-- Scarf fold / right drape -->
+    <path d="M258,353 Q266,346 264,336 Q248,338 236,330 Z"
+          fill="#7B1040" opacity="0.75"/>
+    <!-- Scarf texture lines -->
+    <path d="M158,335 Q200,329 242,335" fill="none" stroke="#FF4081" stroke-width="1.2" opacity="0.35"/>
+    <path d="M150,346 Q200,341 250,346" fill="none" stroke="#FF4081" stroke-width="0.9" opacity="0.22"/>
+    <!-- Sheen overlay -->
+    <path d="M152,342 Q200,337 248,342" fill="none" stroke="url(#scarfSheen)" stroke-width="2.8" opacity="0.55"/>
+    <!-- Gold lapel pin -->
+    <circle cx="200" cy="352" r="5" fill="url(#gold)" filter="url(#softGlow)"/>
+    <circle cx="200" cy="352" r="2.2" fill="#FFF8E1" opacity="0.72"/>
+  </g>
+
+  <!-- ===== CMO TEXT ===== -->
+  <text x="200" y="392"
+        text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="15" font-weight="700" letter-spacing="8"
+        fill="#FFD700" opacity="0.85">CMO</text>
+  <line x1="88" y1="399" x2="312" y2="399" stroke="#FFD700" stroke-width="0.4" opacity="0.18"/>
+
+  <!-- ===== CORNER MARKS ===== -->
+  <g opacity="0.18" stroke="#FFD700" stroke-width="1.5" fill="none">
+    <path d="M20,45 L20,20 L45,20"/>
+    <path d="M380,45 L380,20 L355,20"/>
+    <path d="M20,355 L20,380 L45,380"/>
+    <path d="M380,355 L380,380 L355,380"/>
+  </g>
+
+  <!-- Gold ring tick marks — subtle compass -->
+  <g opacity="0.18" stroke="#FFD700" stroke-width="1.2" fill="none">
+    <line x1="200" y1="65" x2="200" y2="72"/>
+    <line x1="200" y1="358" x2="200" y2="365"/>
+    <line x1="50" y1="215" x2="57" y2="215"/>
+    <line x1="343" y1="215" x2="350" y2="215"/>
+  </g>
+
+</svg>

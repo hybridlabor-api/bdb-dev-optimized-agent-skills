@@ -1,0 +1,48 @@
+get:
+  summary: Get TouchDesigner information
+  description: Returns information about the TouchDesigner
+  operationId: get_td_info
+  responses:
+    "200":
+      description: TouchDesigner information
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - success
+              - data
+              - error
+            properties:
+              success:
+                description: Whether the operation was successful
+                type: boolean
+              data:
+                nullable: true
+                type: object
+                required:
+                  - mcpApiVersion
+                  - osName
+                  - osVersion
+                  - server
+                  - version
+                properties:
+                  mcpApiVersion:
+                    type: string
+                    description: Version of the TouchDesigner MCP API server
+                  osName:
+                    type: string
+                    description: Operating system name
+                  osVersion:
+                    type: string
+                    description: Operating system version
+                  server:
+                    type: string
+                    description: Server name (typically "TouchDesigner")
+                  version:
+                    type: string
+                    description: TouchDesigner version number
+              error:
+                nullable: true
+                description: Error message if the operation was not successful
+                type: string

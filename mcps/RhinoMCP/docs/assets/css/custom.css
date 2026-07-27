@@ -1,0 +1,640 @@
+/* Hextra's card template wraps title+subtitle in `mt-auto`, which bottom-aligns
+   content inside flex-column cards. When titles wrap to different line counts
+   across a row, that makes the tops misalign. Force top-alignment instead. */
+.hextra-card > div {
+  margin-top: 0 !important;
+}
+
+/* Card fill: tint with the primary blue at rest (replacing Hextra's default
+   gray) and deepen slightly on hover, with a blue rim matching the hero-button. */
+.hextra-card {
+  background-color: color-mix(in srgb, var(--hx-color-primary-600) 5%, transparent) !important;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.dark .hextra-card {
+  background-color: color-mix(in srgb, var(--hx-color-primary-600) 10%, transparent) !important;
+}
+.hextra-card:hover {
+  background-color: color-mix(in srgb, var(--hx-color-primary-600) 10%, transparent) !important;
+  box-shadow: 0 0 0 2px var(--hx-color-primary-600);
+  border-color: var(--hx-color-primary-600);
+}
+.dark .hextra-card:hover {
+  background-color: color-mix(in srgb, var(--hx-color-primary-600) 20%, transparent) !important;
+}
+
+/* Home page "Get Started!" hero button — bumped size + Lato Bold Italic.
+   The button is rendered by Hextra's hero-button shortcode; the wrapping div
+   in _index.md carries `.hero-button-wrap` so we can target the <a> reliably.
+   !important needed to beat Hextra's hx:* utility classes on the anchor. */
+.hero-button-wrap > a {
+  font-family: "Lato", sans-serif !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  padding: 0.6rem 1.5rem !important;
+}
+
+/* Home page intro paragraph — wrapped in <div class="lead"> in _index.md.
+   The wrapper div suppresses the prose top-margin the <p> would normally
+   inherit after an <h2>, so restore breathing room on the wrapper. */
+.lead {
+  margin-top: 1.25rem;
+}
+.lead p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Bump card title + subtitle sizes one step. Subtitle needs higher specificity
+   to beat Hextra's `hx:text-sm` utility. */
+.hextra-card .hextra-card-icon {
+  font-size: 1.125rem;
+}
+.hextra-card .hextra-card-subtitle {
+  font-size: 1rem;
+}
+
+/* Body copy — Roboto. Font loaded in layouts/partials/custom/head-end.html. */
+:root {
+  --hx-font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Navbar project title — Lato Black. Font is loaded in
+   layouts/partials/custom/head-end.html. */
+.hextra-nav-container > nav > a > span.hx\:font-extrabold {
+  font-family: "Lato", sans-serif !important;
+  font-weight: 900 !important;
+}
+
+/* Headings — Lato site-wide. H1 in Black (900), H2-H6 in Bold (700). */
+main#content h1,
+main#content h2,
+main#content h3,
+main#content h4,
+main#content h5,
+main#content h6 {
+  font-family: "Lato", sans-serif;
+}
+main#content h1 { font-weight: 900; }
+
+/* Page H1 with an assistant logo — sized to match the cap-height of the Lato
+   Black H1 and nudged for optical alignment. Icon comes from the `icon:`
+   frontmatter via the docs/single.html layout override. The explicit
+   inline-block on the SVG overrides Tailwind base's `svg { display: block }`. */
+/* Breathing room between breadcrumb and the page H1. */
+.page-title-row {
+  margin-top: 1.25rem;
+}
+
+/* Intro blockquote (e.g. the "This guide assumes..." on Getting Started).
+   Lato Regular Italic, one step larger than body, with a soft orange wash and
+   matching orange left border. !important matches the pattern used for the
+   hero button and navbar title to beat Hextra/Tailwind utility classes that
+   may set fonts further down the cascade. */
+blockquote.page-alert {
+  font-family: "Lato", sans-serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: 1.125rem;
+  background-color: rgba(251, 146, 60, 0.1);
+  border-left-color: rgb(251, 146, 60) !important;
+  border-radius: 0 0.375rem 0.375rem 0;
+  padding: 0.75rem 1rem !important;
+  color: rgb(75, 85, 99) !important;
+}
+.dark blockquote.page-alert {
+  background-color: rgba(251, 146, 60, 0.18);
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Note blockquote — same Lato Italic treatment as .page-alert but with a soft
+   green wash, used for asides and "by the way" callouts. */
+blockquote.page-note {
+  font-family: "Lato", sans-serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: 1.125rem;
+  background-color: rgba(34, 197, 94, 0.1);
+  border-left-color: rgb(34, 197, 94) !important;
+  border-radius: 0 0.375rem 0.375rem 0;
+  padding: 0.75rem 1rem !important;
+  color: rgb(75, 85, 99) !important;
+}
+.dark blockquote.page-note {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Story blockquote — extended narrative intro with a dark-blue wash and
+   matching border. Same Lato treatment as .page-alert and .page-note, but
+   left upright (not italic) since stories are longer to read. */
+blockquote.page-story {
+  font-family: "Lato", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 1.125rem;
+  background-color: rgba(29, 78, 216, 0.1);
+  border-left-color: rgb(29, 78, 216) !important;
+  border-radius: 0 0.375rem 0.375rem 0;
+  padding: 0.75rem 1rem !important;
+  color: rgb(75, 85, 99) !important;
+}
+.dark blockquote.page-story {
+  background-color: rgba(29, 78, 216, 0.2);
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Hero "scene" typography — centered Lato in a fixed-height "video frame".
+   Each paragraph appears one at a time: fades in, holds, fades out as the
+   next one fades in. The final paragraph (.scene-finale) holds 3x as long
+   as the others and stays visible after the sequence ends. The
+   reduced-motion branch falls back to a stacked, all-visible layout. */
+.page-story-scene {
+  position: relative;
+  max-width: 720px;
+  margin: 1.5rem auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+  height: 8rem;
+}
+.page-story-scene .scene-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 2rem);
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.65;
+  margin: 0;
+  color: rgb(55, 65, 81);          /* gray-700 */
+}
+.dark .page-story-scene .scene-line {
+  color: rgb(209, 213, 219);       /* gray-300 */
+}
+.page-story-scene .scene-finale {
+  font-size: 1.6rem;
+}
+
+/* Auto-play sequence — loops infinitely. All eleven paragraphs share a
+   55-second loop, each getting a 5-second slot: 0.75s fade-in, 3.5s hold,
+   0.75s fade-out. */
+@media (prefers-reduced-motion: no-preference) {
+  .page-story-scene .scene-line {
+    opacity: 0;
+  }
+  .page-story-scene .scene-line-1  { animation: scene-line-1  55s ease-out infinite; }
+  .page-story-scene .scene-line-2  { animation: scene-line-2  55s ease-out infinite; }
+  .page-story-scene .scene-line-3  { animation: scene-line-3  55s ease-out infinite; }
+  .page-story-scene .scene-line-4  { animation: scene-line-4  55s ease-out infinite; }
+  .page-story-scene .scene-line-5  { animation: scene-line-5  55s ease-out infinite; }
+  .page-story-scene .scene-line-6  { animation: scene-line-6  55s ease-out infinite; }
+  .page-story-scene .scene-line-7  { animation: scene-line-7  55s ease-out infinite; }
+  .page-story-scene .scene-line-8  { animation: scene-line-8  55s ease-out infinite; }
+  .page-story-scene .scene-line-9  { animation: scene-line-9  55s ease-out infinite; }
+  .page-story-scene .scene-line-10 { animation: scene-line-10 55s ease-out infinite; }
+  .page-story-scene .scene-line-11 { animation: scene-line-11 55s ease-out infinite; }
+}
+
+/* Each scene occupies a 9.09% slot of the 55s loop: 1.36% fade-in, 6.36% hold, 1.36% fade-out. */
+@keyframes scene-line-1 {
+  0%            { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  1.4%, 7.7%    { opacity: 1; transform: translate(-50%, -50%); }
+  9.1%, 100%    { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-2 {
+  0%, 9.1%      { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  10.5%, 16.8%  { opacity: 1; transform: translate(-50%, -50%); }
+  18.2%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-3 {
+  0%, 18.2%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  19.5%, 25.9%  { opacity: 1; transform: translate(-50%, -50%); }
+  27.3%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-4 {
+  0%, 27.3%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  28.6%, 35%    { opacity: 1; transform: translate(-50%, -50%); }
+  36.4%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-5 {
+  0%, 36.4%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  37.7%, 44.1%  { opacity: 1; transform: translate(-50%, -50%); }
+  45.5%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-6 {
+  0%, 45.5%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  46.8%, 53.2%  { opacity: 1; transform: translate(-50%, -50%); }
+  54.5%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-7 {
+  0%, 54.5%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  55.9%, 62.3%  { opacity: 1; transform: translate(-50%, -50%); }
+  63.6%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-8 {
+  0%, 63.6%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  65%, 71.4%    { opacity: 1; transform: translate(-50%, -50%); }
+  72.7%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-9 {
+  0%, 72.7%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  74.1%, 80.5%  { opacity: 1; transform: translate(-50%, -50%); }
+  81.8%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+@keyframes scene-line-10 {
+  0%, 81.8%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  83.2%, 89.5%  { opacity: 1; transform: translate(-50%, -50%); }
+  90.9%, 100%   { opacity: 0; transform: translate(-50%, -50%); }
+}
+/* Finale visible 50s–55s, then fades out so the loop restart is graceful. */
+@keyframes scene-line-11 {
+  0%, 90.9%     { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  92.3%, 98.6%  { opacity: 1; transform: translate(-50%, -50%); }
+  100%          { opacity: 0; transform: translate(-50%, -50%); }
+}
+
+/* Brand emphasis inside the finale: "Rhino MCP" set in Lato Black, upright
+   (overriding the surrounding <em>'s italic). */
+.page-story-scene .rhino-mcp {
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Reduced-motion fallback: stacked, all-visible layout — no cross-fade,
+   no fixed height (paragraphs would otherwise overflow each other). */
+@media (prefers-reduced-motion: reduce) {
+  .page-story-scene {
+    height: auto;
+  }
+  .page-story-scene .scene-line {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: auto;
+    margin: 0 0 1.75rem;
+    opacity: 1;
+  }
+  .page-story-scene .scene-finale {
+    margin-top: 2.5rem;
+  }
+}
+
+/* Hextra warning callout ({{< callout type="warning" >}}) — recolor from
+   Hextra's amber to the docs orange. Background/border match .page-alert;
+   text matches the inline-code orange. */
+.hx\:bg-amber-100.hx\:border-amber-200 {
+  background-color: rgba(251, 146, 60, 0.1) !important;
+  border-color: rgb(251, 146, 60) !important;
+  color: rgb(194, 65, 12) !important;
+}
+.dark .hx\:dark\:bg-amber-900\/30.hx\:dark\:border-amber-200\/30 {
+  background-color: rgba(251, 146, 60, 0.18) !important;
+  border-color: rgb(251, 146, 60) !important;
+  color: rgb(253, 186, 116) !important;
+}
+
+.page-title-icon {
+  display: inline-block;
+  margin-right: 0.4em;
+}
+.page-title-icon svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
+/* Inline code highlight — soft orange background, matching border, and orange
+   text. Targets only inline <code> in body prose (not code blocks, which live
+   inside <pre> and keep Hextra's syntax-highlighted styling). Overrides
+   Hextra's near-invisible 3% black tint. */
+.content :not(pre) > code {
+  background-color: rgba(251, 146, 60, 0.08) !important;
+  border-color: rgba(251, 146, 60, 0.3) !important;
+  color: rgb(194, 65, 12) !important;
+}
+.dark .content :not(pre) > code {
+  background-color: rgba(251, 146, 60, 0.12) !important;
+  border-color: rgba(251, 146, 60, 0.35) !important;
+  color: rgb(253, 186, 116) !important;
+}
+
+/* Inline icons from the {{< icon >}} shortcode (used in the homepage prose)
+   default to vertical-align: text-bottom, which sits visually low next to
+   regular text. Nudge them up to roughly the middle of the lowercase x-height. */
+.hextra-icon {
+  vertical-align: -0.15em !important;
+}
+
+/* Sidebar nav-link icon (set per page via `icon:` frontmatter). Inherits the
+   link's text color through currentColor, so it follows hover and active
+   states automatically. */
+.sidebar-link-icon {
+  display: inline-block;
+  margin-right: 0.45em;
+}
+.sidebar-link-icon svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
+main#content h2,
+main#content h3,
+main#content h4,
+main#content h5,
+main#content h6 { font-weight: 700; }
+
+/* AI prompt component — replaces blockquote-style prompts with a labelled
+   block, sparkle icon, and copy-to-clipboard button. */
+.ai-prompt {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background:
+    linear-gradient(135deg, rgba(139, 92, 246, 0.06), rgba(99, 102, 241, 0.04) 40%, rgba(236, 72, 153, 0.04));
+  overflow: hidden;
+}
+
+.dark .ai-prompt {
+  border-color: rgba(167, 139, 250, 0.45);
+  background:
+    linear-gradient(135deg, rgba(139, 92, 246, 0.14), rgba(99, 102, 241, 0.08) 40%, rgba(236, 72, 153, 0.08));
+}
+
+.ai-prompt-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.dark .ai-prompt-header {
+  border-bottom-color: rgba(167, 139, 250, 0.25);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.ai-prompt-icon {
+  display: inline-flex;
+  color: #8b5cf6;
+  animation: ai-prompt-sparkle 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.4));
+}
+
+.dark .ai-prompt-icon {
+  color: #c4b5fd;
+}
+
+@keyframes ai-prompt-sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.12) rotate(8deg); opacity: 0.85; }
+}
+
+.ai-prompt-label {
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6d28d9;
+}
+
+.dark .ai-prompt-label {
+  color: #c4b5fd;
+}
+
+.ai-prompt-copy {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.ai-prompt-copy:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.6);
+}
+
+.dark .ai-prompt-copy:hover {
+  background: rgba(167, 139, 250, 0.18);
+}
+
+.ai-prompt-copy.copied {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.55);
+  color: #15803d;
+}
+
+.dark .ai-prompt-copy.copied {
+  color: #86efac;
+}
+
+.ai-prompt-body {
+  padding: 0.85rem 1rem;
+  color: inherit;
+}
+
+.ai-prompt-body > :first-child {
+  margin-top: 0;
+}
+
+.ai-prompt-body > :last-child {
+  margin-bottom: 0;
+}
+
+.ai-prompt-body p {
+  margin: 0.5em 0;
+}
+
+.gh-repo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.02);
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.gh-repo:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.dark .gh-repo {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dark .gh-repo:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.gh-repo-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.gh-repo-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.gh-repo-arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.yak-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.02);
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.yak-install:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.dark .yak-install {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dark .yak-install:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.yak-install-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.yak-install-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.35rem;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.dark .yak-install-badge {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.yak-install-arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.dl-asset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0.55rem 0.9rem 0.55rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.02);
+  color: inherit;
+  text-decoration: none;
+  max-width: 24rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.dl-asset:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
+.dark .dl-asset {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.dark .dl-asset:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.dl-asset-thumb {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.dl-asset-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.dl-asset-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-asset-size {
+  font-size: 0.78rem;
+  color: rgba(0, 0, 0, 0.55);
+  margin-top: 0.1rem;
+}
+
+.dark .dl-asset-size {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dl-asset-icon {
+  flex-shrink: 0;
+  opacity: 0.45;
+  transition: opacity 0.15s ease;
+}
+
+.dl-asset:hover .dl-asset-icon {
+  opacity: 0.85;
+}

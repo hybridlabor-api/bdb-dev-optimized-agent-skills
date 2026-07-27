@@ -1,0 +1,46 @@
+# Version control
+.git
+.gitignore
+
+# Python artifacts
+__pycache__
+*.py[cod]
+*.egg-info
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv
+venv
+env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Testing & CI
+tests/
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov/
+.github/
+
+# Documentation (not needed in container)
+docs/
+screenshots/
+nexus-pngs/
+*.md
+!README.md
+
+# Misc
+.env
+.env.*
+.pre-commit-config.yaml
+.mcp.json
+setup.sh
+node_modules/

@@ -1,0 +1,92 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "bdb_unreal_mcp": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/unreal_mcp/dist/cli.js"]
+    },
+    "bdb_rhino_mcp": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/RhinoMCP/shared/router-launcher.mjs", "--default-version", "8"]
+    },
+    "bdb_rhino_mcp_fallback": {
+      "command": "uv",
+      "args": ["--directory", "__MCPS_DIR__/golem-rhino-mcp", "run", "-m", "mcp_server"]
+    },
+    "bdb_davinci_mcp": {
+      "command": "uv",
+      "args": ["run", "-r", "__MCPS_DIR__/davinci-resolve-mcp-free/requirements.txt", "__MCPS_DIR__/davinci-resolve-mcp-free/src/resolve_mcp_bridge.py"]
+    },
+    "bdb_davinci_mcp_studio": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/davinci-resolve-mcp/bin/davinci-resolve-mcp.mjs"]
+    },
+    "bdb_davinci_mcp_fallback": {
+      "command": "uv",
+      "args": ["--directory", "__MCPS_DIR__/davinci-mcp-professional", "run", "main.py"]
+    },
+    "bdb_grandma3_mcp": {
+      "command": "uv",
+      "args": ["run", "__MCPS_DIR__/grandma3_mcp.py"]
+    },
+    "bdb_resolume_mcp": {
+      "command": "uv",
+      "args": ["run", "__MCPS_DIR__/resolume_mcp.py"]
+    },
+    "adobe_mcp": {
+      "command": "uv",
+      "args": ["run", "__MCPS_DIR__/adobe_mcp.py"]
+    },
+    "adobe_uxp_mcp": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/adobe_uxp_mcp/index.js"]
+    },
+    "bdb_blender_mcp": {
+      "command": "uv",
+      "args": ["--directory", "__MCPS_DIR__/blender-mcp", "run", "-m", "blender_mcp.server"]
+    },
+    "bdb_blender_mcp_fallback": {
+      "command": "uv",
+      "args": ["--directory", "__MCPS_DIR__/blender-mcp-server", "run", "-m", "blender_mcp_server"]
+    },
+    "bdb_after_effects_mcp": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/after-effects-mcp/build/index.js"]
+    },
+    "bdb_after_effects_mcp_fallback": {
+      "command": "go",
+      "args": ["run", "__MCPS_DIR__/ae-mcp/cmd/ae-mcp"]
+    },
+    "bdb_vectorworks_mcp": {
+      "command": "uv",
+      "args": ["run", "-r", "__MCPS_DIR__/vectorworks-mcp/requirements.txt", "__MCPS_DIR__/vectorworks-mcp/app/mcp_server.py"]
+    },
+    "bdb_td_minddesigner": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/tdmcp/dist/index.js"]
+    },
+    "bdb_td_backup": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/touchdesigner-mcp/dist/cli.js", "--stdio"]
+    },
+    "zavora_computer_use": {
+      "command": "node",
+      "args": ["__MCPS_DIR__/computer-use-mcp/dist/server.js"]
+    },
+    "bdb_windows_computer_use": {
+      "command": "uv",
+      "args": ["run", "--directory", "__MCPS_DIR__/windows-computer-use-mcp", "run_server.py"]
+    },
+    "memb_mcp": {
+      "command": "__PYTHON_BIN__",
+      "args": ["__MCPS_DIR__/memb-mcp/run.py"]
+    }
+  }
+}

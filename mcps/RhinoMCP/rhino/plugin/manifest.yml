@@ -1,0 +1,10 @@
+---
+name: Rhino-MCP-Platform
+version: 0.1.5
+authors:
+- Callum Sykes
+- Dan Cascaval
+- Claude
+description: An MCP Server for Rhino made by McNeel
+icon: icon.png
+url: https://mcneel.github.io/RhinoMCP/

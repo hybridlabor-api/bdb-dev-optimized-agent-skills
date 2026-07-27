@@ -1,0 +1,129 @@
+/**
+ * Optional embedding support for semantic operator search. Talks to an OpenAI-compatible
+ * `/embeddings` endpoint (the same `TDMCP_LLM_BASE_URL` the local copilot uses — Ollama by
+ * default). It is strictly opt-in: search_operators only calls this when `semantic: true`,
+ * and falls back to keyword ranking if the endpoint is unavailable, so the zero-config
+ * install is never affected.
+ */
+
+export interface EmbedConfig {
+  llmBaseUrl: string;
+  llmModel: string;
+  llmApiKey?: string;
+}
+
+/** Embeds a batch of texts; returns one vector per input. Throws if the endpoint is unreachable. */
+export async function embedTexts(
+  texts: string[],
+  config: EmbedConfig,
+  timeoutMs = 20000,
+): Promise<number[][]> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(`${config.llmBaseUrl.replace(/\/$/, "")}/embeddings`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        ...(config.llmApiKey ? { authorization: `Bearer ${config.llmApiKey}` } : {}),
+      },
+      body: JSON.stringify({ model: config.llmModel, input: texts }),
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`embeddings endpoint returned HTTP ${res.status}`);
+    const json = (await res.json()) as { data?: Array<{ embedding: number[] }> };
+    if (!json.data?.length) throw new Error("embeddings endpoint returned no data");
+    return json.data.map((d) => d.embedding);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Process-lifetime cache of text → embedding, keyed by `model \u0000 text` so switching the
+ * configured model never returns stale vectors. Operator summaries are static, so after the
+ * first semantic search their embeddings are reused across every later query — only the
+ * query itself (and any newly-surfaced candidate) hits the endpoint. Bounded with LRU
+ * eviction so a flood of unique queries can't grow it without limit, while the heavily-reused
+ * operator embeddings stay resident.
+ */
+const EMBED_CACHE = new Map<string, number[]>();
+const EMBED_CACHE_MAX = 4096;
+
+function cacheKey(model: string, text: string): string {
+  return `${model}\u0000${text}`;
+}
+
+function cacheGet(key: string): number[] | undefined {
+  const hit = EMBED_CACHE.get(key);
+  if (hit) {
+    // Touch: move to most-recently-used so it survives eviction.
+    EMBED_CACHE.delete(key);
+    EMBED_CACHE.set(key, hit);
+  }
+  return hit;
+}
+
+function cacheSet(key: string, vec: number[]): void {
+  if (EMBED_CACHE.size >= EMBED_CACHE_MAX) {
+    const oldest = EMBED_CACHE.keys().next().value;
+    if (oldest !== undefined) EMBED_CACHE.delete(oldest);
+  }
+  EMBED_CACHE.set(key, vec);
+}
+
+/** Clears the embedding cache. For tests, and after a model/endpoint change. */
+export function clearEmbedCache(): void {
+  EMBED_CACHE.clear();
+}
+
+/**
+ * Like {@link embedTexts}, but serves known texts from the in-memory cache and only sends the
+ * cache misses to the endpoint (then caches them). Results stay in the original input order.
+ * Failures propagate exactly as embedTexts so the caller's keyword fallback still applies, and
+ * nothing is cached on failure (transient outages retry next call).
+ */
+export async function embedTextsCached(
+  texts: string[],
+  config: EmbedConfig,
+  timeoutMs = 20000,
+): Promise<number[][]> {
+  const out: Array<number[] | undefined> = new Array(texts.length);
+  const missIdx: number[] = [];
+  const missTexts: string[] = [];
+  for (let i = 0; i < texts.length; i++) {
+    const text = texts[i] as string;
+    const hit = cacheGet(cacheKey(config.llmModel, text));
+    if (hit) out[i] = hit;
+    else {
+      missIdx.push(i);
+      missTexts.push(text);
+    }
+  }
+  if (missTexts.length > 0) {
+    const fresh = await embedTexts(missTexts, config, timeoutMs);
+    for (let j = 0; j < missIdx.length; j++) {
+      const idx = missIdx[j] as number;
+      const vec = fresh[j] as number[];
+      out[idx] = vec;
+      cacheSet(cacheKey(config.llmModel, texts[idx] as string), vec);
+    }
+  }
+  return out as number[][];
+}
+
+/** Cosine similarity of two equal-length vectors (0 when either is degenerate). */
+export function cosineSimilarity(a: number[], b: number[]): number {
+  const n = Math.min(a.length, b.length);
+  let dot = 0;
+  let na = 0;
+  let nb = 0;
+  for (let i = 0; i < n; i++) {
+    const x = a[i] as number;
+    const y = b[i] as number;
+    dot += x * y;
+    na += x * x;
+    nb += y * y;
+  }
+  return na > 0 && nb > 0 ? dot / (Math.sqrt(na) * Math.sqrt(nb)) : 0;
+}

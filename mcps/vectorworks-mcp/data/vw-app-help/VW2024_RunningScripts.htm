@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes"/>
+  <meta name="version" content="2022.1.0"/>
+  <link rel="StyleSheet" href="../../template/styles/topic.min.css" type="text/css"/>
+  <link rel="StyleSheet" data-skin="true" type="text/css" href="../../template/BlueLagoonVW/layout.css"/>
+  <link rel="StyleSheet" data-skin="true" href="../../template/BlueLagoonVW/userstyles.css" type="text/css"/>
+  
+    <link rel="shortcut icon" type="image/png" href="../../Icon_H.png"/>
+    
+  <script data-relpath="../.." src="../../template/scripts/csh-redirect.js" type="text/javascript"></script>
+<link rel="StyleSheet" href="../../assets/css/Vectorworks.css" type="text/css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Running scripts</title>
+  <meta name="generator" content="Adobe RoboHelp 2022"/>
+  <meta name="Originator" content="ImportMif"/>
+  <meta name="OriginalFile" content="C:\Documentation\27_Guide 2019\Scripts.fm"/>
+  
+  <meta name="search-keywords" content="Run Script command"/>
+  <meta name="rh-index-keywords" content="Run Script command"/>
+<meta name="rh-version" content="2022.3.93"/><meta name="brsnext" value="VW2024_Guide/Scripts/Concept_Scripted_plug-ins.htm"/><meta name="brsprev" value="VW2024_Guide/Scripts/Creating_and_editing_script_palettes_and_scripts.htm"/></head>
+
+<body class="rh-BODY-wrapper">
+  <div class="cookie-widget-holder" id="cookie-status-widget-holder"></div>
+  <div class="RH-LAYOUT-HEADER-skip-content-container" id="skip-to-content"></div>
+  <header class="RH-LAYOUT-HEADER-container" role="banner">
+    <div class="RH-LAYOUT-HEADER-logo-box  ">
+      <div class="RH-LAYOUT-HEADER-logo" id="logo-holder"></div>
+      <div class="RH-LAYOUT-HEADER-title" id="topic-title-holder"></div>
+    </div>
+    <div class="RH-LAYOUT-HEADERMENU-container" id="header-menu"></div>
+    <div class="search-placeholder-class" id="search-with-help"></div>
+  </header>
+  <main role="main" class="RH-LAYOUT-BODY-container">
+    <div class="RH-LAYOUT-SEARCHRESULTS" id="rh-searchresults"></div>
+    <div class="RH-LAYOUT-LEFTPANEL-container" id="rh-leftpanel"></div>
+    <div class="rh-layout-BODY-main" id="rh-layout-main">
+      <div class="RH-LAYOUT-TOOLBAR-toolbar-box" id="rh-toolbar"></div>
+      <div class="rh-layout-BODY-body">
+        <div class="RH-LAYOUT-CENTERPANEL-container">
+          <div class="rh-layout-selectdetails" id="rh-selectdetails"></div>
+          <div class="RH-LAYOUT-CENTERPANEL-topic-box" id="rh-topic" dir="ltr">
+  <p><a id="Top"></a></p>
+  <div>
+  <h1 dir="ltr" id="h"><a id="XREF_41293_Running_Scripts"></a><a id="CSH_993"></a>Running scripts</h1>
+  <p dir="ltr">Document scripts can be executed in a variety of ways.</p>
+  <h2 dir="ltr">Running scripts from the Resource Manager</h2>
+  <p dir="ltr">From the Resource Manager, right-click on the script resource, and select <span class="Bold">Run</span> from the context menu.</p>
+  <p dir="ltr">Alternatively, double-click on the script resource or drag the script resource into the drawing area.</p>
+  <h2 dir="ltr">Running scripts from the script palette</h2>
+  <p dir="ltr">To run a script from a script palette:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">Open the script palette that contains the script to run. Do one of the following:</p>
+  <p class="BulletIndwSpace" dir="ltr">Select <span class="Bold">Window &gt; Script Palettes</span> and select the script palette containing the desired script.</p>
+  <p class="BulletIndwSpace" dir="ltr">From the Resource Manager, select Scripts from the list of resource types on the tool bar. Right-click on the palette in the resource viewer pane, and select <span class="Bold">Open</span> from the context menu.</p>
+  <p class="Indent" dir="ltr">The script palette opens.</p>
+  <p class="Numbered" dir="ltr">From the script palette, double-click the script to run it.</p>
+  <h2 dir="ltr">Running scripts from files</h2>
+  <p dir="ltr">Some scripts may exist as text files only, if they were created in a separate text editor program or exported from the Vectorworks program. These scripts are not available from the Resource Manager.</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">Select <span class="Bold">Tools &gt; Plug-ins &gt; Run Script</span> (or <span class="Bold">File &gt; Import &gt; Import Script</span>).</p>
+  <p class="Indent" dir="ltr">The Choose Script File (or Import Script Drawing Document) dialog box opens.</p>
+  <p class="Numbered" dir="ltr">Select the desired script file and click <span class="Bold">Open</span> to run the script.</p>
+  <h2 dir="ltr"><a id="XREF_49098_Running_Scripts"></a>Running scripts from worksheets</h2>
+  <p dir="ltr">Often data for objects that you might want to report in a worksheet is not accessible with a worksheet formula. For example, landscape area objects contain planting rates and percentages for multiple plant types, but the information is stored internally. You could create a script to extract the planting rates for each plant type in an area, and then run the script from a worksheet using the <span class="SourceCode">DataBaseByScript</span> (or the <span class="SourceCode">RunScript)</span> function. When the function is used in a database header cell, the script returns values for each object that meets the specified criteria.</p>
+  <p class="Note" dir="ltr">When running a script from a worksheet, you are prompted to confirm that you wish to run the script.</p>
+  <p dir="ltr">If the Vectorworks Landmark product is installed, several Python scripts are provided in the default content:</p>
+  <p class="Indent" dir="ltr">[Vectorworks]\Libraries\Defaults\Reports_Schedules\Landmark Schedules</p>
+  <p dir="ltr">Use these scripts as they are, or use them as samples to create your own scripts. To see examples of these scripts in a worksheet, select the <span class="Bold">Create Report</span> command, and open the preformatted schedule Landscape Area-Mass Planting.</p>
+  <p dir="ltr">For more information about extracting data from drawing objects, see <a href="..\Worksheets\Worksheet_functions.htm#h">Worksheet functions</a>.</p>
+  <p dir="ltr">If the Vectorworks Landmark product is not installed, samples and an article on this topic are provided in the developer-oriented documentation here:</p>
+  <p class="Indent" dir="ltr"><a href="http://developer.vectorworks.net" target="_blank">developer.vectorworks.net</a></p>
+  <h2 dir="ltr"><a id="CSH_994"></a>Script errors</h2>
+  <p dir="ltr">If an error occurs during script execution, an alert dialog box opens.</p>
+  <p dir="ltr">To handle script errors:</p>
+  <p class="Numbered1" dir="ltr" style="counter-set: prl-p-numbered1 0;">From the alert dialog box, click <span class="Bold">View Error Output</span>.</p>
+  <p class="Numbered" dir="ltr">The Script Errors dialog box opens, displaying the nature of the error and the line where the error occurred.</p>
+  <p class="Numbered" dir="ltr">To edit the script, click <span class="Bold">Edit Script</span>, or double-click a script line to edit that line. The Script Editor opens for making corrections to the script.</p>
+  <p dir="ltr"><img src="../../assets/images/divider.png"/></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Creating_and_editing_script_palettes_and_scripts.htm#h">Creating and editing script palettes and scripts</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="..\ResourceManager\Resource Manager.htm#h">Resource Manager</a></p>
+  <p class="RelatedTopics" dir="ltr"><a href="Using_scripts.htm#h">Using scripts</a></p>
+
+</div>
+  <p style="text-align: right;"> </p>
+  <p style="text-align: right;"><a href="http://www.vectorworks.net/support/help-feedback" target="_blank" title="Provide feedback">Was this page helpful?</a></p>
+  <p style="text-align: right;"> </p>
+
+</div>
+          <div class="RH-LAYOUT-BRS-container" id="rh-brs"></div>
+        </div>
+        <div class="RH-LAYOUT-RIGHTPANEL-container" id="rh-rightpanel"></div>
+      </div>
+    </div>
+  </main>
+  <footer role="contentinfo" class="RH-LAYOUT-FOOTER-container" id="rh-footer"></footer>
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = "../.."
+    gCommonRootRelPath = "../.."
+    gTopicId = "7.1.0_5"
+  
+//]]></script>
+
+
+  <script src="../../template/scripts/topicpage.js"></script>
+  <script src="../../whxdata/layoutconfig.js"></script>
+  <script src="../../whxdata/brsdata.js"></script>
+
+  
+    
+
+            
+
+
+</body></html>
