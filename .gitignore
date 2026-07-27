@@ -10,3 +10,6 @@ build/
 .DS_Store
 *.db
 *.log
+.env
+.env.*
+.npmrc
