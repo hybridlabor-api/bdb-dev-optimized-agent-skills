@@ -1,4 +1,4 @@
-![BDB DEV Media | Event – Optimized Antigravity Skills](header.png)
+![BDB DEV Media | Event – Optimized Agent Skills](header.png)
 
 # 🚀 BDB DEV - Optimized Creative & Full-Stack Skills Pack
 
