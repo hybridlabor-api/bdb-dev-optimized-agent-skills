@@ -62,17 +62,14 @@ TARGET_FILES = [
 ]
 
 
-def scan_directory(root_dir: str) -> List[Dict[str, Any]]:
+def scan_directory(root_dir: str, project_name: str) -> List[Dict[str, Any]]:
     """Scan root_dir recursively for key project architecture files."""
     documents = []
-    print(f"🔍 Scanning directory: {root_dir}...")
+    print(f"🔍 Scanning directory: {root_dir} for project '{project_name}'...")
 
     for dirpath, dirnames, filenames in os.walk(root_dir):
         # Skip ignored directories
         dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS and not d.startswith(".")]
-
-        rel_path = os.path.relpath(dirpath, root_dir)
-        project_name = os.path.basename(dirpath) if rel_path != "." else os.path.basename(root_dir)
 
         # Check for openwiki docs
         openwiki_dir = os.path.join(dirpath, ".openwiki")
@@ -161,7 +158,7 @@ def scan_antigravity_transcripts(max_sessions: int = 20) -> List[Dict[str, Any]]
     return documents
 
 
-def ingest_to_memb(memory: Any, documents: List[Dict[str, Any]], category: str = "project_architecture"):
+def ingest_to_memb(memory: Any, documents: List[Dict[str, Any]], category: str):
     """Ingest extracted documents into memB vector memory."""
     print(f"💾 Ingesting {len(documents)} document snippets into memB (~/.MemBDB/memb.db)...")
     success_count = 0
@@ -223,7 +220,7 @@ The `memB` architecture is brutally optimized for ultra-fast inference on small,
     with open(os.path.join(vault_dir, "agent.md"), "w", encoding="utf-8") as f:
         f.write(agent_md_content)
     
-    all_mem = memory.get_all(user_id="bdb_developer", limit=10000)
+    all_mem = memory.get_all(filters={"user_id": "bdb_developer"}, limit=10000)
     results = all_mem.get("results", []) if all_mem else []
     
     tree = {}
@@ -298,9 +295,10 @@ The `memB` architecture is brutally optimized for ultra-fast inference on small,
 
 def main():
     parser = argparse.ArgumentParser(description="memB Deep Ingestion Tool")
-    parser.add_argument("path", nargs="?", default="/Users/timrennings/bdb-dev", help="Directory path to scan (default: /Users/timrennings/bdb-dev)")
+    parser.add_argument("path", nargs="?", default="/Users/timrennings/bdb-dev", help="File or directory path to ingest")
+    parser.add_argument("--project", help="Explicit project name (defaults to folder basename)")
     parser.add_argument("--transcripts", action="store_true", help="Also mine past Antigravity conversation logs")
-    parser.add_argument("--category", default="project_architecture", help="Memory category (default: project_architecture)")
+    parser.add_argument("--category", default="project_architecture", help="Memory category (e.g. 3D_Engine, Styling_System)")
     args = parser.parse_args()
 
     target_path = os.path.abspath(args.path)
@@ -309,7 +307,25 @@ def main():
         sys.exit(1)
 
     memory = init_memory()
-    docs = scan_directory(target_path)
+    docs = []
+
+    if os.path.isfile(target_path):
+        project_name = args.project or os.path.basename(os.path.dirname(target_path))
+        try:
+            with open(target_path, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            if content:
+                docs.append({
+                    "source": os.path.basename(target_path),
+                    "project": project_name,
+                    "type": "custom_file",
+                    "content": content[:4000]
+                })
+        except Exception as e:
+            print(f"Error reading file {target_path}: {e}", file=sys.stderr)
+    else:
+        project_name = args.project or os.path.basename(target_path)
+        docs = scan_directory(target_path, project_name)
 
     if args.transcripts:
         chat_docs = scan_antigravity_transcripts(max_sessions=30)
