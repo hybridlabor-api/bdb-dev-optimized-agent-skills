@@ -1,11 +1,18 @@
 import socket
+import argparse
 from typing import Optional
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("BDB grandMA3 MCP")
 
-OSC_IP = "127.0.0.1"
-OSC_PORT = 8000
+parser = argparse.ArgumentParser()
+parser.add_argument("--ip", default="127.0.0.1", help="Target IP")
+parser.add_argument("--port", default="8080", help="WebAPI Port")
+parser.add_argument("--mode", default="webapi_only", help="Operation Mode")
+args, _ = parser.parse_known_args()
+
+OSC_IP = args.ip
+OSC_PORT = 8001  # Use 8001 for grandMA3 callbacks to avoid conflict with TouchDesigner/Resolume (8000)
 
 def send_osc_message(address: str, argument: Optional[str] = None) -> str:
     """Send a simple OSC string message."""

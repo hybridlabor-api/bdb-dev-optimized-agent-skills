@@ -34,7 +34,7 @@
     },
     "bdb_grandma3_mcp": {
       "command": "uv",
-      "args": ["run", "__MCPS_DIR__/grandma3_mcp.py"]
+      "args": ["run", "__MCPS_DIR__/grandma3_mcp.py", "--ip", "127.0.0.1", "--port", "8080", "--mode", "webapi_only"]
     },
     "bdb_resolume_mcp": {
       "command": "uv",
