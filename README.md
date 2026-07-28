@@ -1,8 +1,27 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/hybridlabor-api/bdb-dev-optimized-agent-skills/main/docs/assets/banner.png" alt="BDB Agent Skills Banner" width="100%">
-  <h3><strong>BDB-DEV OPTIMIZED AGENT SKILLS</strong></h3>
-  <p>The definitive repository for elite, AI-driven software and creative technology workflows.</p>
-</div>
+![BDB DEV Media | Event – Optimized Agent Skills](header.png)
+
+# 🚀 BDB DEV - Optimized Creative & Full-Stack Skills Pack
+
+Welcome to the **BDB DEV Skills & MCP Configuration** repository. This project serves as the backbone of our creative and full-stack development ecosystem, supercharging AI agents with highly specialized capabilities tailored for the event and creative technology industry, as well as general-purpose software engineering.
+
+While optimized for **Google Antigravity**, this skills pack and MCP configuration is **100% universal** and works seamlessly with all modern AI agents and developer interfaces, including **Claude Desktop, Claude Code, Cursor, Aider, Roo Code, Cline, and Windsurf**.
+
+> 🎙 **Audio Deep Dive: "Give AI Agents Control of Creative Software"**  
+> <video src="assets/Give_AI_Agents_Control_of_Creative_Software.mp4" controls></video>
+
+---
+
+## 🌟 144 Optimized Skills
+
+We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144 Optimized Skills** (featuring a native OpenWiki documentation engine in v1.3.3, and the **memB local semantic memory brain in v2.0.0**).
+
+These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency and context awareness.
+
+### 💻 Beyond Events: Normal Software & App Coding
+While heavily optimized for the creative tech industry, these skills are deeply rooted in core software engineering:
+- **Full-Stack Development**: Spinning up Next.js App Router boilerplates, building scalable Node.js microservices, and crafting interactive frontends.
+- **App Development**: Architecting databases, designing REST APIs, and building standard web and mobile applications from scratch.
+- **Design & Quality Assurance**: Auditing UI/UX patterns (utilizing `ui-ux-pro-max`), enforcing clean code principles, and setting up strict CI/CD pipelines.
 
 ---
 
