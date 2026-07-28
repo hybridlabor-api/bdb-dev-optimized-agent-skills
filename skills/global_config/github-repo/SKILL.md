@@ -22,6 +22,16 @@ The **`github-repo`** skill establishes strict standards for building, organizin
 
 ---
 
+## 1.1 ⚡ Mandatory Prerequisite: Automatic OpenWiki Check
+
+Whenever the `github-repo` skill is invoked, the agent MUST perform an automated pre-flight check:
+
+1. **Check `.openwiki/` Existence**: Verify if `.openwiki/` directory exists and contains `quickstart.md`, `architecture.md`, and release notes.
+2. **Automatic Execution of `openwiki-skill`**: If `.openwiki/` is missing, empty, or stale, **automatically invoke `openwiki-skill` first** before performing repo structure or README edits.
+3. **Handshake**: Allow `openwiki-skill` to scan the codebase and populate `.openwiki/`, then resume `github-repo` tasks (README layout, dynamic badges, CI/CD workflows, sanitization audit).
+
+---
+
 ## 2. 🔒 Mandatory Sanitization & Privacy Rules (Clean-Repo Engine)
 
 Before pushing any commit to GitHub, execute this 5-point sanitization audit:
