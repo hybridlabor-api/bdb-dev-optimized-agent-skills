@@ -78,14 +78,16 @@ def export_to_obsidian_vault(vault_dir: Optional[str] = None) -> str:
         f.write("# 🧠 memB Knowledge Graph & Vault Index\n\n")
         f.write(f"> **Total Memories Indexed:** `{len(rows)}` | **Projects:** `{len(projects_map)}` | **Categories:** `{len(categories_map)}`\n\n")
         
-        f.write("## 🌐 Visual Knowledge Graph\n\n```mermaid\ngraph TD\n")
-        f.write("    Brain[🧠 memB Vector Memory]\n")
+        f.write("## 🌐 Visual Knowledge Graph\n\n```mermaid\nmindmap\n")
+        f.write("  root((🧠 memB Vector Memory))\n")
+        f.write("    Projects\n")
         for proj in projects_map.keys():
-            safe_p = re.sub(r'[^a-zA-Z0-9]', '_', proj)
-            f.write(f"    Brain --> P_{safe_p}[[{proj}]]\n")
+            safe_p = re.sub(r'[^a-zA-Z0-9_\- ]', '', proj)
+            f.write(f"      [{safe_p}]\n")
+        f.write("    Categories\n")
         for cat in categories_map.keys():
-            safe_c = re.sub(r'[^a-zA-Z0-9]', '_', cat)
-            f.write(f"    Brain --> C_{safe_c}[[{cat}]]\n")
+            safe_c = re.sub(r'[^a-zA-Z0-9_\- ]', '', cat)
+            f.write(f"      ({safe_c})\n")
         f.write("```\n\n")
 
         f.write("## 📂 Projects Overview\n")
