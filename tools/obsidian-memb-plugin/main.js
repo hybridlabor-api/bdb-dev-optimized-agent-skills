@@ -235,7 +235,8 @@ tags:
     await this.injectSexyGraphSettings();
   }
   async injectSexyGraphSettings() {
-    const graphPath = ".obsidian/graph.json";
+    const configDir = this.app.vault.configDir || ".obsidian";
+    const graphPath = `${configDir}/graph.json`;
     const sexyConfig = {
       "collapse-filter": true,
       "search": "",
@@ -252,17 +253,14 @@ tags:
         {
           "query": "path:memB_Knowledge_Graph/God_Mode.md",
           "color": { "a": 1, "rgb": 16766720 }
-          // Vibrant Gold
         },
         {
           "query": "tag:#memB/project",
           "color": { "a": 1, "rgb": 5291775 }
-          // Neon Cyan/Blue
         },
         {
           "query": "tag:#memB/category",
           "color": { "a": 1, "rgb": 16733610 }
-          // Hot Pink/Magenta
         }
       ],
       "collapse-display": false,
@@ -279,11 +277,7 @@ tags:
       "close": false
     };
     try {
-      const fs = require("fs");
-      const path2 = require("path");
-      const basePath = this.app.vault.adapter.basePath;
-      const fullGraphPath = path2.join(basePath, graphPath);
-      fs.writeFileSync(fullGraphPath, JSON.stringify(sexyConfig, null, 2));
+      await this.app.vault.adapter.write(graphPath, JSON.stringify(sexyConfig, null, 2));
     } catch (e) {
       console.error("Failed to inject graph settings:", e);
     }

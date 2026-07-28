@@ -180,7 +180,9 @@ except Exception as e:
     }
     
     async injectSexyGraphSettings() {
-        const graphPath = '.obsidian/graph.json';
+        const configDir = this.app.vault.configDir || ".obsidian";
+        const graphPath = `${configDir}/graph.json`;
+        
         const sexyConfig = {
             "collapse-filter": true,
             "search": "",
@@ -196,15 +198,15 @@ except Exception as e:
             "colorGroups": [
                 {
                     "query": "path:memB_Knowledge_Graph/God_Mode.md",
-                    "color": { "a": 1, "rgb": 16766720 } // Vibrant Gold
+                    "color": { "a": 1, "rgb": 16766720 }
                 },
                 {
                     "query": "tag:#memB/project",
-                    "color": { "a": 1, "rgb": 5291775 } // Neon Cyan/Blue
+                    "color": { "a": 1, "rgb": 5291775 }
                 },
                 {
                     "query": "tag:#memB/category",
-                    "color": { "a": 1, "rgb": 16733610 } // Hot Pink/Magenta
+                    "color": { "a": 1, "rgb": 16733610 }
                 }
             ],
             "collapse-display": false,
@@ -222,14 +224,7 @@ except Exception as e:
         };
         
         try {
-            const fs = require('fs');
-            const path = require('path');
-            // @ts-ignore (Accessing internal obsidian vault path)
-            const basePath = this.app.vault.adapter.basePath;
-            const fullGraphPath = path.join(basePath, graphPath);
-            
-            // Overwrite graph.json to guarantee the sexy layout
-            fs.writeFileSync(fullGraphPath, JSON.stringify(sexyConfig, null, 2));
+            await this.app.vault.adapter.write(graphPath, JSON.stringify(sexyConfig, null, 2));
         } catch (e) {
             console.error("Failed to inject graph settings:", e);
         }
