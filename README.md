@@ -1,5 +1,9 @@
 ![BDB DEV Media | Event – Optimized Agent Skills](header.png)
 
+🌐 **Language / Sprache**: **English** | [ 🇩🇪 Deutsch ](README.de.md)
+
+---
+
 # 🚀 BDB DEV - Optimized Creative & Full-Stack Skills Pack
 
 [![CI](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions)
