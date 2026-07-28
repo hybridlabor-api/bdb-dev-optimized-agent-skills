@@ -106,131 +106,106 @@ except Exception as e:
     }
   }
   async generateVaultFiles(entries) {
-    var _a, _b;
     const rootFolder = "memB_Knowledge_Graph";
     await this.ensureFolder(rootFolder);
     await this.ensureFolder(`${rootFolder}/Projects`);
     await this.ensureFolder(`${rootFolder}/Categories`);
-    const projectsMap = /* @__PURE__ */ new Map();
-    const categoriesMap = /* @__PURE__ */ new Map();
-    const godModeEntries = [];
+    await this.ensureFolder(`${rootFolder}/Memories`);
+    const projectsSet = /* @__PURE__ */ new Set();
+    const categoriesSet = /* @__PURE__ */ new Set();
     for (const entry of entries) {
-      const p = entry.project;
-      const c = entry.category;
-      if (c === "godmode" || p === "Global") {
-        godModeEntries.push(entry);
-      }
-      if (p && p !== "Global") {
-        if (!projectsMap.has(p))
-          projectsMap.set(p, []);
-        (_a = projectsMap.get(p)) == null ? void 0 : _a.push(entry);
-      }
-      if (!categoriesMap.has(c))
-        categoriesMap.set(c, []);
-      (_b = categoriesMap.get(c)) == null ? void 0 : _b.push(entry);
+      if (entry.project && entry.project !== "Global")
+        projectsSet.add(entry.project);
+      if (entry.category && entry.category !== "godmode")
+        categoriesSet.add(entry.category);
     }
     let godModeContent = `# \u{1F451} GOD MODE: General Knowledge
 
 `;
-    godModeContent += `> **Total Memories:** ${entries.length} | **Projects:** ${projectsMap.size}
+    godModeContent += `> **Total Memories:** ${entries.length}
 
 `;
-    godModeContent += `## \u{1F310} Global Memories
+    godModeContent += `This is the absolute center of the BDB memB Architecture.
 
 `;
-    for (const item of godModeEntries) {
-      godModeContent += `> [!NOTE] Global Record (${item.id.substring(0, 8)})
-`;
-      godModeContent += `> **Date:** ${item.created_at}
->
-`;
-      const lines = item.data.split("\n");
-      for (const l of lines) {
-        godModeContent += `> ${l}
-`;
-      }
-      godModeContent += `
----
-
-`;
-    }
-    godModeContent += `
-## \u{1F4C2} Sub-Projects (Branching Nodes)
-
-`;
-    projectsMap.forEach((v, k) => {
-      godModeContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} memories)
-`;
-    });
     await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
-    for (const [proj, items] of projectsMap.entries()) {
+    for (const proj of projectsSet) {
       let pContent = `---
 project: "${proj}"
-total_memories: ${items.length}
 tags:
   - memB/project
 ---
 
 `;
-      pContent += `# \u{1F680} Project: ${proj}
+      pContent += `# \u{1F680} Project Hub: ${proj}
 
 `;
       pContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
 `;
-      pContent += `## \u{1F4DC} Documented Memories & Decisions
-
+      pContent += `*This is a structural hub. All memories related to ${proj} gravitate here.*
 `;
-      for (const item of items) {
-        pContent += `> [!NOTE] Memory Record (${item.id.substring(0, 8)})
-`;
-        pContent += `> **Category:** [[${rootFolder}/Categories/${item.category}|#${item.category}]]
-`;
-        pContent += `> **Date:** ${item.created_at}
->
-`;
-        const lines = item.data.split("\n");
-        for (const l of lines) {
-          pContent += `> ${l}
-`;
-        }
-        pContent += `
----
-
-`;
-      }
       await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}.md`, pContent);
     }
-    for (const [cat, items] of categoriesMap.entries()) {
+    for (const cat of categoriesSet) {
       let cContent = `---
 category: "${cat}"
-total_memories: ${items.length}
 tags:
   - memB/category
 ---
 
 `;
-      cContent += `# \u{1F3F7}\uFE0F Category: ${cat}
+      cContent += `# \u{1F3F7}\uFE0F Category Hub: ${cat}
 
 `;
       cContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
 `;
-      cContent += `## \u{1F4DC} Category Entries
+      cContent += `*This is a structural hub. All memories categorized as ${cat} gravitate here.*
+`;
+      await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);
+    }
+    for (const item of entries) {
+      const shortId = item.id.substring(0, 8);
+      let mContent = `---
+id: "${item.id}"
+date: "${item.created_at}"
+tags:
+  - memB/memory
+---
 
 `;
-      for (const item of items) {
+      mContent += `# \u{1F9E0} Memory: ${shortId}
+
+`;
+      if (item.project === "Global" && item.category === "godmode") {
+        mContent += `**Linked to:** [[${rootFolder}/God_Mode|God Mode]]
+
+`;
+      } else {
         if (item.project && item.project !== "Global") {
-          cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
+          mContent += `**Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
+`;
+        } else {
+          mContent += `**Project:** [[${rootFolder}/God_Mode|God Mode]]
 `;
         }
-        cContent += `  \`\`\`text
-  ${item.data.substring(0, 300).replace(/\n/g, " ")}...
-  \`\`\`
-
+        if (item.category && item.category !== "godmode") {
+          mContent += `**Category:** [[${rootFolder}/Categories/${item.category}|${item.category}]]
+`;
+        } else {
+          mContent += `**Category:** [[${rootFolder}/God_Mode|God Mode]]
+`;
+        }
+        mContent += `
 `;
       }
-      await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);
+      mContent += `## \u{1F4DC} Payload
+
+`;
+      mContent += `${item.data}
+`;
+      await this.writeOrUpdateFile(`${rootFolder}/Memories/${shortId}.md`, mContent);
     }
     await this.injectSexyGraphSettings();
   }
@@ -261,19 +236,23 @@ tags:
         {
           "query": "tag:#memB/category",
           "color": { "a": 1, "rgb": 16733610 }
+        },
+        {
+          "query": "tag:#memB/memory",
+          "color": { "a": 1, "rgb": 8947967 }
         }
       ],
       "collapse-display": false,
-      "showArrow": true,
+      "showArrow": false,
       "textFadeMultiplier": -1,
-      "nodeSizeMultiplier": 1.4,
-      "lineSizeMultiplier": 1.2,
+      "nodeSizeMultiplier": 1.1,
+      "lineSizeMultiplier": 0.5,
       "collapse-forces": false,
-      "centerStrength": 0.4,
-      "repelStrength": 14.5,
-      "linkStrength": 1,
-      "linkDistance": 250,
-      "scale": 0.8,
+      "centerStrength": 0.2,
+      "repelStrength": 16.5,
+      "linkStrength": 0.8,
+      "linkDistance": 150,
+      "scale": 0.7,
       "close": false
     };
     try {

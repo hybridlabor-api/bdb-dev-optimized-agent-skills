@@ -95,87 +95,72 @@ except Exception as e:
         await this.ensureFolder(rootFolder);
         await this.ensureFolder(`${rootFolder}/Projects`);
         await this.ensureFolder(`${rootFolder}/Categories`);
+        await this.ensureFolder(`${rootFolder}/Memories`);
         
-        const projectsMap = new Map<string, any[]>();
-        const categoriesMap = new Map<string, any[]>();
-        const godModeEntries: any[] = [];
+        const projectsSet = new Set<string>();
+        const categoriesSet = new Set<string>();
         
+        // 1. Gather all unique Projects and Categories
         for (const entry of entries) {
-            const p = entry.project;
-            const c = entry.category;
-            
-            if (c === "godmode" || p === "Global") {
-                godModeEntries.push(entry);
-            }
-            
-            if (p && p !== "Global") {
-                if (!projectsMap.has(p)) projectsMap.set(p, []);
-                projectsMap.get(p)?.push(entry);
-            }
-            
-            if (!categoriesMap.has(c)) categoriesMap.set(c, []);
-            categoriesMap.get(c)?.push(entry);
+            if (entry.project && entry.project !== "Global") projectsSet.add(entry.project);
+            if (entry.category && entry.category !== "godmode") categoriesSet.add(entry.category);
         }
         
-        // 1. Generate God Mode (Central Hub)
+        // 2. Generate God Mode (Central Hub)
         let godModeContent = `# 👑 GOD MODE: General Knowledge\n\n`;
-        godModeContent += `> **Total Memories:** ${entries.length} | **Projects:** ${projectsMap.size}\n\n`;
-        
-        godModeContent += `## 🌐 Global Memories\n\n`;
-        for (const item of godModeEntries) {
-            godModeContent += `> [!NOTE] Global Record (${item.id.substring(0,8)})\n`;
-            godModeContent += `> **Date:** ${item.created_at}\n>\n`;
-            const lines = item.data.split('\n');
-            for (const l of lines) { godModeContent += `> ${l}\n`; }
-            godModeContent += `\n---\n\n`;
-        }
-
-        godModeContent += `\n## 📂 Sub-Projects (Branching Nodes)\n\n`;
-        projectsMap.forEach((v, k) => {
-            godModeContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} memories)\n`;
-        });
-        
+        godModeContent += `> **Total Memories:** ${entries.length}\n\n`;
+        godModeContent += `This is the absolute center of the BDB memB Architecture.\n\n`;
         await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
         
-        // 2. Generate Project Files (Leaves)
-        for (const [proj, items] of projectsMap.entries()) {
-            let pContent = `---\nproject: "${proj}"\ntotal_memories: ${items.length}\ntags:\n  - memB/project\n---\n\n`;
-            pContent += `# 🚀 Project: ${proj}\n\n`;
-            // Crucial: Link back to God Mode to form the radial graph
+        // 3. Generate Project Hubs
+        for (const proj of projectsSet) {
+            let pContent = `---\nproject: "${proj}"\ntags:\n  - memB/project\n---\n\n`;
+            pContent += `# 🚀 Project Hub: ${proj}\n\n`;
             pContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]\n\n`;
-            pContent += `## 📜 Documented Memories & Decisions\n\n`;
-            
-            for (const item of items) {
-                pContent += `> [!NOTE] Memory Record (${item.id.substring(0,8)})\n`;
-                pContent += `> **Category:** [[${rootFolder}/Categories/${item.category}|#${item.category}]]\n`;
-                pContent += `> **Date:** ${item.created_at}\n>\n`;
-                
-                const lines = item.data.split('\n');
-                for (const l of lines) { pContent += `> ${l}\n`; }
-                pContent += `\n---\n\n`;
-            }
-            
+            pContent += `*This is a structural hub. All memories related to ${proj} gravitate here.*\n`;
             await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}.md`, pContent);
         }
         
-        // 3. Generate Category Files (Tags / Interconnects)
-        for (const [cat, items] of categoriesMap.entries()) {
-            let cContent = `---\ncategory: "${cat}"\ntotal_memories: ${items.length}\ntags:\n  - memB/category\n---\n\n`;
-            cContent += `# 🏷️ Category: ${cat}\n\n`;
+        // 4. Generate Category Hubs
+        for (const cat of categoriesSet) {
+            let cContent = `---\ncategory: "${cat}"\ntags:\n  - memB/category\n---\n\n`;
+            cContent += `# 🏷️ Category Hub: ${cat}\n\n`;
             cContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]\n\n`;
-            cContent += `## 📜 Category Entries\n\n`;
-            
-            for (const item of items) {
-                if (item.project && item.project !== "Global") {
-                    cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]\n`;
-                }
-                cContent += `  \`\`\`text\n  ${item.data.substring(0, 300).replace(/\n/g, ' ')}...\n  \`\`\`\n\n`;
-            }
-            
+            cContent += `*This is a structural hub. All memories categorized as ${cat} gravitate here.*\n`;
             await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);
         }
         
-        // 4. Inject Sexy Graph Settings
+        // 5. Generate Individual Memories (The Neurons)
+        for (const item of entries) {
+            const shortId = item.id.substring(0, 8);
+            let mContent = `---\nid: "${item.id}"\ndate: "${item.created_at}"\ntags:\n  - memB/memory\n---\n\n`;
+            mContent += `# 🧠 Memory: ${shortId}\n\n`;
+            
+            // Connect to Parent Hubs to create gravitational pull
+            if (item.project === "Global" && item.category === "godmode") {
+                mContent += `**Linked to:** [[${rootFolder}/God_Mode|God Mode]]\n\n`;
+            } else {
+                if (item.project && item.project !== "Global") {
+                    mContent += `**Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]\n`;
+                } else {
+                    mContent += `**Project:** [[${rootFolder}/God_Mode|God Mode]]\n`;
+                }
+                
+                if (item.category && item.category !== "godmode") {
+                    mContent += `**Category:** [[${rootFolder}/Categories/${item.category}|${item.category}]]\n`;
+                } else {
+                    mContent += `**Category:** [[${rootFolder}/God_Mode|God Mode]]\n`;
+                }
+                mContent += `\n`;
+            }
+            
+            mContent += `## 📜 Payload\n\n`;
+            mContent += `${item.data}\n`;
+            
+            await this.writeOrUpdateFile(`${rootFolder}/Memories/${shortId}.md`, mContent);
+        }
+        
+        // 6. Inject Sexy Graph Settings
         await this.injectSexyGraphSettings();
     }
     
@@ -207,19 +192,23 @@ except Exception as e:
                 {
                     "query": "tag:#memB/category",
                     "color": { "a": 1, "rgb": 16733610 }
+                },
+                {
+                    "query": "tag:#memB/memory",
+                    "color": { "a": 1, "rgb": 8947967 } 
                 }
             ],
             "collapse-display": false,
-            "showArrow": true,
+            "showArrow": false, 
             "textFadeMultiplier": -1,
-            "nodeSizeMultiplier": 1.4,
-            "lineSizeMultiplier": 1.2,
+            "nodeSizeMultiplier": 1.1,
+            "lineSizeMultiplier": 0.5,
             "collapse-forces": false,
-            "centerStrength": 0.4,
-            "repelStrength": 14.5,
-            "linkStrength": 1,
-            "linkDistance": 250,
-            "scale": 0.8,
+            "centerStrength": 0.2,
+            "repelStrength": 16.5,
+            "linkStrength": 0.8,
+            "linkDistance": 150,
+            "scale": 0.7,
             "close": false
         };
         
