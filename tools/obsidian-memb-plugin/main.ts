@@ -98,36 +98,52 @@ except Exception as e:
         
         const projectsMap = new Map<string, any[]>();
         const categoriesMap = new Map<string, any[]>();
+        const godModeEntries: any[] = [];
         
         for (const entry of entries) {
             const p = entry.project;
             const c = entry.category;
             
-            if (!projectsMap.has(p)) projectsMap.set(p, []);
-            projectsMap.get(p)?.push(entry);
+            if (c === "godmode" || p === "Global") {
+                godModeEntries.push(entry);
+            }
+            
+            if (p && p !== "Global") {
+                if (!projectsMap.has(p)) projectsMap.set(p, []);
+                projectsMap.get(p)?.push(entry);
+            }
             
             if (!categoriesMap.has(c)) categoriesMap.set(c, []);
             categoriesMap.get(c)?.push(entry);
         }
         
-        // 1. Generate Index
-        let indexContent = `# 🧠 memB Knowledge Graph Dashboard\n\n`;
-        indexContent += `> **Total Memories Indexed:** ${entries.length} | **Projects:** ${projectsMap.size} | **Categories:** ${categoriesMap.size}\n\n`;
-        indexContent += `## 📂 Projects Overview\n`;
+        // 1. Generate God Mode (Central Hub)
+        let godModeContent = `# 👑 GOD MODE: General Knowledge\n\n`;
+        godModeContent += `> **Total Memories:** ${entries.length} | **Projects:** ${projectsMap.size}\n\n`;
+        
+        godModeContent += `## 🌐 Global Memories\n\n`;
+        for (const item of godModeEntries) {
+            godModeContent += `> [!NOTE] Global Record (${item.id.substring(0,8)})\n`;
+            godModeContent += `> **Date:** ${item.created_at}\n>\n`;
+            const lines = item.data.split('\n');
+            for (const l of lines) { godModeContent += `> ${l}\n`; }
+            godModeContent += `\n---\n\n`;
+        }
+
+        godModeContent += `\n## 📂 Sub-Projects (Branching Nodes)\n\n`;
         projectsMap.forEach((v, k) => {
-            indexContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} notes)\n`;
-        });
-        indexContent += `\n## 🏷️ Categories\n`;
-        categoriesMap.forEach((v, k) => {
-            indexContent += `- [[${rootFolder}/Categories/${k}|${k}]] (${v.length} notes)\n`;
+            godModeContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} memories)\n`;
         });
         
-        await this.writeOrUpdateFile(`${rootFolder}/Dashboard.md`, indexContent);
+        await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
         
-        // 2. Generate Project Files
+        // 2. Generate Project Files (Leaves)
         for (const [proj, items] of projectsMap.entries()) {
             let pContent = `---\nproject: "${proj}"\ntotal_memories: ${items.length}\ntags:\n  - memB/project\n---\n\n`;
-            pContent += `# 🚀 Project: ${proj}\n\nBack to [[${rootFolder}/Dashboard|Main Index]]\n\n## 📜 Documented Memories & Decisions\n\n`;
+            pContent += `# 🚀 Project: ${proj}\n\n`;
+            // Crucial: Link back to God Mode to form the radial graph
+            pContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]\n\n`;
+            pContent += `## 📜 Documented Memories & Decisions\n\n`;
             
             for (const item of items) {
                 pContent += `> [!NOTE] Memory Record (${item.id.substring(0,8)})\n`;
@@ -135,23 +151,25 @@ except Exception as e:
                 pContent += `> **Date:** ${item.created_at}\n>\n`;
                 
                 const lines = item.data.split('\n');
-                for (const l of lines) {
-                    pContent += `> ${l}\n`;
-                }
+                for (const l of lines) { pContent += `> ${l}\n`; }
                 pContent += `\n---\n\n`;
             }
             
             await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}.md`, pContent);
         }
         
-        // 3. Generate Category Files
+        // 3. Generate Category Files (Tags / Interconnects)
         for (const [cat, items] of categoriesMap.entries()) {
             let cContent = `---\ncategory: "${cat}"\ntotal_memories: ${items.length}\ntags:\n  - memB/category\n---\n\n`;
-            cContent += `# 🏷️ Category: ${cat}\n\nBack to [[${rootFolder}/Dashboard|Main Index]]\n\n## 📜 Category Entries\n\n`;
+            cContent += `# 🏷️ Category: ${cat}\n\n`;
+            cContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]\n\n`;
+            cContent += `## 📜 Category Entries\n\n`;
             
             for (const item of items) {
-                cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]\n`;
-                cContent += `  \`\`\`text\n  ${item.data.substring(0, 300)}...\n  \`\`\`\n\n`;
+                if (item.project && item.project !== "Global") {
+                    cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]\n`;
+                }
+                cContent += `  \`\`\`text\n  ${item.data.substring(0, 300).replace(/\n/g, ' ')}...\n  \`\`\`\n\n`;
             }
             
             await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);

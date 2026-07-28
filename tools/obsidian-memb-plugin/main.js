@@ -113,36 +113,56 @@ except Exception as e:
     await this.ensureFolder(`${rootFolder}/Categories`);
     const projectsMap = /* @__PURE__ */ new Map();
     const categoriesMap = /* @__PURE__ */ new Map();
+    const godModeEntries = [];
     for (const entry of entries) {
       const p = entry.project;
       const c = entry.category;
-      if (!projectsMap.has(p))
-        projectsMap.set(p, []);
-      (_a = projectsMap.get(p)) == null ? void 0 : _a.push(entry);
+      if (c === "godmode" || p === "Global") {
+        godModeEntries.push(entry);
+      }
+      if (p && p !== "Global") {
+        if (!projectsMap.has(p))
+          projectsMap.set(p, []);
+        (_a = projectsMap.get(p)) == null ? void 0 : _a.push(entry);
+      }
       if (!categoriesMap.has(c))
         categoriesMap.set(c, []);
       (_b = categoriesMap.get(c)) == null ? void 0 : _b.push(entry);
     }
-    let indexContent = `# \u{1F9E0} memB Knowledge Graph Dashboard
+    let godModeContent = `# \u{1F451} GOD MODE: General Knowledge
 
 `;
-    indexContent += `> **Total Memories Indexed:** ${entries.length} | **Projects:** ${projectsMap.size} | **Categories:** ${categoriesMap.size}
+    godModeContent += `> **Total Memories:** ${entries.length} | **Projects:** ${projectsMap.size}
 
 `;
-    indexContent += `## \u{1F4C2} Projects Overview
+    godModeContent += `## \u{1F310} Global Memories
+
+`;
+    for (const item of godModeEntries) {
+      godModeContent += `> [!NOTE] Global Record (${item.id.substring(0, 8)})
+`;
+      godModeContent += `> **Date:** ${item.created_at}
+>
+`;
+      const lines = item.data.split("\n");
+      for (const l of lines) {
+        godModeContent += `> ${l}
+`;
+      }
+      godModeContent += `
+---
+
+`;
+    }
+    godModeContent += `
+## \u{1F4C2} Sub-Projects (Branching Nodes)
+
 `;
     projectsMap.forEach((v, k) => {
-      indexContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} notes)
+      godModeContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} memories)
 `;
     });
-    indexContent += `
-## \u{1F3F7}\uFE0F Categories
-`;
-    categoriesMap.forEach((v, k) => {
-      indexContent += `- [[${rootFolder}/Categories/${k}|${k}]] (${v.length} notes)
-`;
-    });
-    await this.writeOrUpdateFile(`${rootFolder}/Dashboard.md`, indexContent);
+    await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
     for (const [proj, items] of projectsMap.entries()) {
       let pContent = `---
 project: "${proj}"
@@ -154,9 +174,11 @@ tags:
 `;
       pContent += `# \u{1F680} Project: ${proj}
 
-Back to [[${rootFolder}/Dashboard|Main Index]]
+`;
+      pContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
-## \u{1F4DC} Documented Memories & Decisions
+`;
+      pContent += `## \u{1F4DC} Documented Memories & Decisions
 
 `;
       for (const item of items) {
@@ -190,16 +212,20 @@ tags:
 `;
       cContent += `# \u{1F3F7}\uFE0F Category: ${cat}
 
-Back to [[${rootFolder}/Dashboard|Main Index]]
+`;
+      cContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
-## \u{1F4DC} Category Entries
+`;
+      cContent += `## \u{1F4DC} Category Entries
 
 `;
       for (const item of items) {
-        cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
+        if (item.project && item.project !== "Global") {
+          cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
 `;
+        }
         cContent += `  \`\`\`text
-  ${item.data.substring(0, 300)}...
+  ${item.data.substring(0, 300).replace(/\n/g, " ")}...
   \`\`\`
 
 `;
