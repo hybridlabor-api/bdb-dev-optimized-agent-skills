@@ -40,21 +40,21 @@ While heavily optimized for the creative tech industry, these skills are deeply 
 ## 🔄 BDB Software Engineering Pipeline & Slash Commands
 
 ```text
- IDEATE          DEFINE         PLAN           BUILD          VERIFY         SHIP
- ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
- │ Grill│ ───▶ │ Idea │ ───▶ │ Spec │ ───▶ │ Code │ ───▶ │  QA  │ ───▶ │  Go  │
- │  Me  │      │Refine│      │  PRD │      │ Impl │      │ Gate │      │ Live │
- └──────┘      └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
-/grill-me    /bdbrainstorm     /plan        /subagents      /review       /ship
+ IDEATE & MEDIA STORM     DEFINE & SCAFFOLD      PLAN & SPEC      BUILD & MCPs       VERIFY        SHIP
+ ┌──────────────────┐    ┌─────────────────┐    ┌───────────┐    ┌────────────┐   ┌──────────┐   ┌──────────┐
+ │ Grill Me & Media │ ──▶│  Folder Select  │ ──▶│ Spec &    │ ──▶│ Subagents  │──▶│ QA Gate  │──▶│ OpenWiki │
+ │   Brainstorming  │    │ OpenWiki & Repo │    │   Plan    │    │ & MCP Dev  │   │ Review   │   │  & Push  │
+ └──────────────────┘    └─────────────────┘    └───────────┘    └────────────┘   └──────────┘   └──────────┘
+/grill-me /bdbmediastorm  /openwiki /github-repo    /plan          /subagents       /review        /ship
 ```
 
-AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** philosophy:
+AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** and **BDBMediaStorm** philosophy:
 
-- **1. IDEATE (`/grill-me`)**: Actively challenge the user's initial ideas. Conduct an interactive interview to uncover blind spots and align on robust design decisions.
-- **2. DEFINE (`/bdbrainstorm`)**: Multi-agent brainstorming. Spawn specialized subagents (UI/UX Visionary, Tech Architect, Devil's Advocate) to debate and refine the scope before code is written.
+- **1. IDEATE & MEDIA STORM (`/grill-me`, `/bdbrainstorm`, `/bdbmediastorm`)**: Actively challenge ideas or conduct multi-agent media/event-tech brainstorming. Spawns specialized subagents (CI/Design Expert, Real Time Architect, MCP Implementer) to validate hardware, 3D scenography (Rhino, Blender, Unreal), protocols (OSC, Art-Net), and MCP compatibility.
+- **2. DEFINE & SCAFFOLD (`openwiki-skill`, `github-repo`)**: Confirm target workspace directory with the user, then autonomously initialize project documentation, `agent.md`, `.openwiki/` structures, and GitHub repo standards.
 - **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to `ui-ux-pro-max` standards.
-- **4. BUILD (`/subagents`)**: Subagent-driven development. The master orchestrator delegates specific component creation and refactoring tasks to independent subagents.
-- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX audits.
+- **4. BUILD (`/subagents`)**: Subagent-driven development. The master orchestrator delegates specific component creation, node patching, and refactoring tasks to independent subagents.
+- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX or signal-flow audits.
 - **6. SHIP (`/ship`)**: Commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
 
 ---
