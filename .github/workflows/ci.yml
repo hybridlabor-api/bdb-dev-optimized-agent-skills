@@ -23,5 +23,5 @@ jobs:
         
       - name: Validate JSON files
         run: |
-          # Use jq to validate all JSON files
-          find . -name "*.json" -not -path "*/node_modules/*" -not -path "*/vendor/*" -print0 | xargs -0 -I {} jq empty {}
+          # Use jq to validate all JSON files (exclude json with comments like tsconfig/vscode/tauri)
+          find . -name "*.json" -not -path "*/node_modules/*" -not -path "*/vendor/*" -not -name "tsconfig*.json" -not -path "*/.vscode/*" -not -name "tauri.conf.json" -not -name "launchSettings.json" -not -name "paint_elements.json" -print0 | xargs -0 -I {} jq empty {}
