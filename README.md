@@ -2,6 +2,14 @@
 
 # 🚀 BDB DEV - Optimized Creative & Full-Stack Skills Pack
 
+[![CI](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions)
+[![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/bdb-dev-optimized-agent-skills.svg)](https://www.npmjs.com/package/@hybridlabor-api/bdb-dev-optimized-agent-skills)
+[![runtime](https://img.shields.io/badge/node-20+-blue.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
+[![license](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+[![skills](https://img.shields.io/badge/skills-144%20curated-brightgreen.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
+
+> **Supercharging AI coding agents with 144 hyper-curated skills, 22 local MCPs, and deep integrations for the creative technology industry.**
+
 Welcome to the **BDB DEV Skills & MCP Configuration** repository. This project serves as the backbone of our creative and full-stack development ecosystem, supercharging AI agents with highly specialized capabilities tailored for the event and creative technology industry, as well as general-purpose software engineering.
 
 While optimized for **Google Antigravity**, this skills pack and MCP configuration is **100% universal** and works seamlessly with all modern AI agents and developer interfaces, including **Claude Desktop, Claude Code, Cursor, Aider, Roo Code, Cline, and Windsurf**.
