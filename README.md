@@ -156,6 +156,10 @@ To make these MCP integrations accessible to AI agents, we provide **11 dedicate
 
 BDB OS v1.3.3 introduces a fully **Gemini-Native OpenWiki** engine designed to autonomously maintain codebase wikis, README entries, and release notes across all your active projects.
 
+### 📚 Documentation & Wiki
+- **Entrypoint:** [.openwiki/quickstart.md](.openwiki/quickstart.md)
+- **Reference guides:** [architecture.md](.openwiki/architecture.md), [release_notes.md](.openwiki/release_notes.md), [decisions.md](.openwiki/decisions.md)
+
 <details>
 <summary><strong>🧠 How It Works</strong></summary>
 
