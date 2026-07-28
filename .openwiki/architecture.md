@@ -7,7 +7,12 @@ This document tracks the technical structure of the skills pack.
 - **OpenWiki Daemon (`openwiki_daemon.py`)**: A Python background process running on a schedule (LaunchAgent / Task Scheduler) that directly queries the Gemma 4 API (via `google-genai` SDK) to update codebase markdown without spinning up new agent instances.
 - **memB Core Module**: A required local semantic memory layer utilizing ONNX-quantized models and SQLite to retain agent context safely.
 
+## 🔄 BDB Agent Pipeline Architecture
+- **6-Stage Lifecycle:** DEFINE (`/spec`) -> PLAN (`/plan`) -> BUILD (`/build`) -> VERIFY (`/test`) -> REVIEW (`/review`) -> SHIP (`/ship`).
+- **`agent-pipeline` Skill:** Defines stage transitions, slash command triggers, and QA validation checkpoints.
+
 ## Directory Structure
 - Each skill is contained in a separate subdirectory.
 - A `SKILL.md` file defines the prompt, behavior, and capabilities.
 - Additional scripts (Python, Bash) reside in the skill's `scripts/` folder.
+

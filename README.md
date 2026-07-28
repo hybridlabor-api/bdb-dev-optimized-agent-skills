@@ -25,6 +25,28 @@ While heavily optimized for the creative tech industry, these skills are deeply 
 
 ---
 
+## 🔄 BDB Software Engineering Pipeline & Slash Commands
+
+```
+DEFINE          PLAN           BUILD          VERIFY         REVIEW          SHIP
+ ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
+ │ Idea │ ───▶ │ Spec │ ───▶ │ Code │ ───▶ │ Test │ ───▶ │  QA  │ ───▶ │  Go  │
+ │Refine│      │  PRD │      │ Impl │      │Debug │      │ Gate │      │ Live │
+ └──────┘      └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
+  /spec          /plan          /build        /test         /review       /ship
+```
+
+AI agents follow this structured 6-stage lifecycle for end-to-end software development:
+
+- **1. DEFINE (`/spec`)**: Refine the idea, define scope, and elicit missing requirements.
+- **2. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans.
+- **3. BUILD (`/build`)**: Execute code implementation, component creation, and refactoring.
+- **4. VERIFY (`/test`)**: Run automated unit test suites, type checking, and debug log extraction.
+- **5. REVIEW (`/review`)**: Perform QA gate reviews, secret scans, and UI/UX audits (`ui-ux-pro-max`).
+- **6. SHIP (`/ship`)**: Commit, push private repositories, update OpenWiki docs, and deploy live.
+
+---
+
 ## 🧠 BDBrainstorm: The Ultimate Ideation Engine
 
 Included in this optimized arsenal is our proprietary **BDBrainstorm** skill.
