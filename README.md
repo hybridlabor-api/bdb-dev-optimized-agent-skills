@@ -19,17 +19,12 @@
 
 AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** philosophy:
 
-<details>
-<summary><strong>View Pipeline Stages</strong></summary>
-
 - **1. IDEATE (`/grill-me`)**: Actively challenge the user's initial ideas. Conduct an interactive interview to uncover blind spots and align on robust design decisions.
 - **2. DEFINE (`/bdbrainstorm`)**: Multi-agent brainstorming. Spawn specialized subagents (UI/UX Visionary, Tech Architect, Devil's Advocate) to debate and refine the scope before code is written.
 - **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to `ui-ux-pro-max` standards.
 - **4. BUILD (`/subagents`)**: Subagent-driven development. The master orchestrator delegates specific component creation and refactoring tasks to independent subagents.
 - **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX audits.
 - **6. SHIP (`/ship`)**: Commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
-
-</details>
 
 ---
 
@@ -231,12 +226,10 @@ You can run diagnostic and benchmarking commands directly in your terminal:
 
 ## 🛠️ Installation
 
-<details>
-<summary><strong>🆚 Which Version Should I Use?</strong></summary>
+### 🆚 Which Version Should I Use?
 
 - **Agent Skills Version (`bdb-dev-optimized-agent-skills`)**: Includes all optimized skills, interactive MCP selection UI, and **active background daemons**. It automatically installs and orchestrates the `memB` local semantic memory engine and the `OpenWiki` self-documenting git-hooks. Best for fully autonomous, long-term project management.
 - **Legacy Antigravity Version (`bdb-antigravity-skills@legacy`)**: The original antigravity pack.
-</details>
 
 The installer is built using an interactive Node-based menu. It allows you to:
 1. **Backup & Overwrite**: Safely backups existing configuration files and overrides them.
@@ -245,9 +238,6 @@ The installer is built using an interactive Node-based menu. It allows you to:
 ### Option 1: Ask Your AI Agent (Easiest)
 Simply tell your assistant:
 > "Please run `npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills` to install the skills pack and configure the local MCP servers."
-
-<details>
-<summary><strong>Alternative Installation Methods</strong></summary>
 
 ### Option 2: Command Line (Global via NPX)
 Run the script globally in your terminal:
@@ -271,7 +261,6 @@ cd bdb-dev-optimized-agent-skills
 chmod +x installer.sh
 ./installer.sh
 ```
-</details>
 
 **The installer script will automatically:**
 1. Back up your existing global and workspace skills safely.
