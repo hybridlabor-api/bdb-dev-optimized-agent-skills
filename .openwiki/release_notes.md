@@ -1,5 +1,9 @@
 # Release Notes
 
+## v2.2.1
+- **memB Core Architecture Update**: `memb_ingest.py` now natively generates an AI-first flat-file markdown vault (Top-Down Radial God Mode Topology) to allow native zero-compute context navigation for local 30MB SLMs.
+- Replaced `_CLAUDE.md` with a universal `agent.md` operating manual for the vector engine in the vault.
+
 ## v2.2.0
 - Relicensed project under Apache 2.0 Licensing.
 - Added **memB Deep Ingestion Tool** (`memb_ingest.py`) and new `/memb-ingest` skill.
