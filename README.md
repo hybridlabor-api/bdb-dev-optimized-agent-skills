@@ -5,7 +5,7 @@
 [![CI](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions)
 [![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/bdb-dev-optimized-agent-skills.svg)](https://www.npmjs.com/package/@hybridlabor-api/bdb-dev-optimized-agent-skills)
 [![runtime](https://img.shields.io/badge/node-20+-blue.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
-[![license](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![skills](https://img.shields.io/badge/skills-144%20curated-brightgreen.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
 
 > **Supercharging AI coding agents with 144 hyper-curated skills, 22 local MCPs, and deep integrations for the creative technology industry.**
