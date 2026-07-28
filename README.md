@@ -202,19 +202,30 @@ tail -f ~/.openwiki/daemon.log
 
 ---
 
-## 🧠 memB: Custom Semantic Brain (v2.0.0)
+## 🧠 memB: Custom Semantic Brain (v2.2.1)
 
-BDB OS v2.0.0 introduces a fully integrated local, offline-first semantic memory brain based on **memB**. 
+BDB OS introduces a fully integrated local, offline-first semantic memory brain based on **memB**. It provides zero-compute context for SLMs and an AI-first flat-file vault architecture.
 
 <details>
-<summary><strong>⚙️ Specifications & Capabilities</strong></summary>
+<summary><strong>⚙️ How the Ecosystem Works (Skills, Vaults, & Obsidian)</strong></summary>
 
-1. **Dynamic Flower Graph Layout:** Rather than utilizing hardcoded scopes, `memB` structures your memory into a flower-like layout:
-   * **General Knowledge Hub (`category="godmode"`):** Stores universal preferences and developer specifications globally.
-   * **Dynamic Project Leaves (`project_id="<current-directory-basename>"`):** The system dynamically resolves the active workspace directory name to segment and fetch project-specific learnings, preventing context pollution.
-2. **Offline Vector Embeddings:** Bundles a pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model and tokenizer. Vector calculations run locally in milliseconds.
-3. **Data Sovereignty (Zero Telemetry):** Designed from the ground up to ensure absolute data sovereignty, with no remote logging, tracking, or analytics endpoints present in the codebase.
-4. **Secret Filtration:** Blocks or redacts passwords, raw API keys, and connection strings prior to database injection.
+### 1. Ingestion via the `/memb-ingest` Skill
+The ecosystem includes a deeply integrated skill (`/memb-ingest`). When an agent runs this, the `memb_ingest.py` script recursively scans your project (reading `.openwiki`, `agent.md`, transcripts, and architecture files). 
+* **Offline Vector Embeddings:** It bundles a pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model to chunk and store these learnings natively in a fast SQLite vector store (`~/.MemBDB/memb.db`), all without hitting external APIs.
+
+### 2. Autonomous AI-First Vault Generation
+Once ingestion completes, memB natively generates a **physical Markdown Vault** (`~/.MemBDB/memB_Vault`) structured around a strict "God Mode" radial topology:
+* **Zero-Compute Context:** A universal `agent.md` and a master `God_Mode.md` are written to the root. Small 30MB local inference models can instantly orient themselves macroscopically by reading these physical files without spending context tokens on complex database calls.
+* **Micro-Targeted RAG:** For precise execution, the small LLMs query the vector DB to retrieve just the exact 3-5 sub-files needed.
+
+### 3. The Obsidian Visualization Plugin
+memB includes a native **Obsidian Plugin** (`obsidian-memb-plugin`) that acts as a visual UI over your physical vault.
+* **Top-Down Radial Tree:** It reads the generated `memB_Vault` and maps it visually using Obsidian's graph view. 
+* By strictly using directional parent-to-child links (e.g., God Mode -> Projects -> Category -> Neuron), the Obsidian graph blossoms outward like a flower, completely preventing the "black hole" context clustering seen in unstructured graph databases.
+
+### 4. Data Sovereignty & Security
+* **Zero Telemetry:** Absolute data sovereignty with no remote tracking.
+* **Secret Filtration:** Blocks passwords, raw API keys, and connection strings before injection.
 </details>
 
 ---
