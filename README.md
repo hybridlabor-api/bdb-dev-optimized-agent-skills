@@ -6,17 +6,7 @@
 
 ---
 
-<details>
-<summary><strong>🧠 BDBrainstorm: The Ultimate Ideation Engine</strong></summary>
-
-Included in this optimized arsenal is our proprietary **BDBrainstorm** skill.
-
-BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, subagent-driven development, and extreme UI/UX design workflows to force a comprehensive, multi-agent ideation process. It stress-tests designs, architectures the systems behind them, and outputs actionable, high-fidelity implementation plans.
-
-</details>
-
-<details>
-<summary><strong>🔄 BDB Software Engineering Pipeline & Slash Commands</strong></summary>
+## 🔄 BDB Software Engineering Pipeline & Slash Commands
 
 ```text
  IDEATE          DEFINE         PLAN           BUILD          VERIFY         SHIP
@@ -29,6 +19,9 @@ BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, 
 
 AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** philosophy:
 
+<details>
+<summary><strong>View Pipeline Stages</strong></summary>
+
 - **1. IDEATE (`/grill-me`)**: Actively challenge the user's initial ideas. Conduct an interactive interview to uncover blind spots and align on robust design decisions.
 - **2. DEFINE (`/bdbrainstorm`)**: Multi-agent brainstorming. Spawn specialized subagents (UI/UX Visionary, Tech Architect, Devil's Advocate) to debate and refine the scope before code is written.
 - **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to `ui-ux-pro-max` standards.
@@ -38,17 +31,116 @@ AI agents follow this structured lifecycle, deeply integrated with the **BDBrain
 
 </details>
 
+---
+
+## 🧠 BDBrainstorm: The Ultimate Ideation Engine
+
+Included in this optimized arsenal is our proprietary **BDBrainstorm** skill.
+
+BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, subagent-driven development, and extreme UI/UX design workflows to force a comprehensive, multi-agent ideation process. It stress-tests designs, architectures the systems behind them, and outputs actionable, high-fidelity implementation plans.
+
+---
+
+## 🔌 22 Custom Local MCP Integrations
+
+Rather than relying on skeletal python mocks or broken remote APIs, this repository bundles **22 custom, local MCP wrappers** (in the `mcps/` directory). These are built/warmed automatically and allow your AI assistant to read, write, and execute commands within the industry's leading creative software.
+
 <details>
-<summary><strong>🌐 OpenWiki Native System</strong></summary>
+<summary><strong>🎨 Adobe Creative Cloud (Illustrator, Photoshop, After Effects, Premiere Pro)</strong></summary>
+
+We provide a dual-engine architecture optimized for macOS and Windows environments:
+- **Direct OS-Native Bridge (`bdb_adobe_mcp`)**: Runs zero-install scripting.
+  - **macOS:** Targets application bundle IDs directly via AppleScript `do javascript` / `DoScript` command streams.
+  - **Windows:** Automatically queries and instantiates local COM objects via PowerShell wrapper scripts and executes transient `.jsx` ExtendScript code.
+- **Cross-Platform UXP WebSocket Bridge (`bdb_adobe_uxp_mcp`)**: A three-tier WebSocket proxy (Node.js server on port 8080 + native UXP developer plugins) for deep DOM manipulation and persistent WebSocket sessions inside Photoshop and Premiere Pro, running identically on Windows and macOS.
+</details>
+
+<details>
+<summary><strong>🎬 DaVinci Resolve (Triple Coverage)</strong></summary>
+
+- **Primary: `bdb_davinci_mcp`**: Works on both the **Free and Studio** versions using a workspace script menu loop. Exposes 162 tools (Timeline, clips, markers, grades, Fusion) and includes local CPU-based AI models (Meta Demucs v4 for voice isolation, faster-whisper for auto-subtitles, and rembg for background removal).
+- **Studio: `bdb_davinci_mcp_studio`**: The official Node.js server (wrapping samuelgursky) for advanced direct timeline and project management in Resolve Studio.
+- **Fallback: `bdb_davinci_mcp_fallback`**: Hoyt-harness professional python server for Studio scripting.
+</details>
+
+<details>
+<summary><strong>📐 Rhino 3D & Grasshopper (Twin-Engine)</strong></summary>
+
+- **Primary: `bdb_rhino_mcp`**: McNeel's official connector (managed via Yak router) for native reading/writing of Rhino geometric layouts.
+- **Fallback: `bdb_rhino_mcp_fallback`**: The GOLEM 3D server with 105 tools to dynamically manipulate Rhino 8 assets, execute scripts, and solve Grasshopper definitions.
+</details>
+
+<details>
+<summary><strong>🏗️ Additional Specialized Integrations (Unreal, TouchDesigner, Vectorworks, etc.)</strong></summary>
+
+### 🏗️ Vectorworks
+- **Primary: `bdb_vectorworks_mcp`**: Semantic RAG-based search index over VectorScript and Vectorworks API documentation (port 8765) for automated CAD drafting.
+
+### 🎮 Unreal Engine
+- **Primary: `bdb_unreal_mcp`**: Connects via the Unreal Engine 5 Web Remote Control API (port 30010) and the `gimmeDG` toolset. Allows the agent to query, spawn actors, edit materials, write Blueprints, and automate level/sequencer manipulation.
+
+### 🧊 Blender (Twin-Engine)
+- **Primary: `bdb_blender_mcp`**: BlenderMCP socket integration for scene layout, mesh generation, and viewport controls.
+- **Fallback: `bdb_blender_mcp_fallback`**: djeada's python server for managing Blender TCP connections and raw python scripting.
+
+### 🎛️ TouchDesigner (Twin-Engine)
+- **Primary: `bdb_touchdesigner_mcp`**: MindDesigner-Bridge (`tdmcp`) on port 9980 to read and write networks via custom `.tox` structures.
+- **Fallback: `bdb_touchdesigner_mcp_fallback`**: fallback TCP-based node query and inspector.
+
+### 💡 grandMA3 & Resolume
+- **grandMA3**: `bdb_ma3_mcp` sends OSC/UDP command streams directly to your grandMA3 console (port 8000) to automate cues, macros, and patch fixtures.
+- **Resolume**: `bdb_resolume_mcp` wraps Arena's REST API (port 8080) to sequence layers, query statuses, and trigger clips.
+
+### 🖥️ OS Control (Dual-Engine)
+- **macOS/Linux: `zavora_computer_use`**: Bundled with precompiled native Rust NAPI binary objects (macOS arm64/x64, Linux) to control mouse, keyboard, windows, and apps without runtime compile errors.
+- **Windows: `bdb_windows_computer_use`**: Native python-based Win32 / COM / UIAutomation controller with local OCR (Tesseract) support for advanced Windows GUI automation.
+
+### 🧠 Local Semantic Brain (memB)
+- **`memb_mcp`**: Exposes standard long-term memory tools (`add_memory`, `search_memory`, `delete_memory`, `list_memories`) using a completely local, offline-first vector engine (powered by a bundled 30MB ONNX model and SQLite).
+</details>
+
+---
+
+## 📖 11 Specialized System Skills
+
+To make these MCP integrations accessible to AI agents, we provide **11 dedicated system skills** inside the `skills/global_config/` directory. If an AI agent imports this pack, it will immediately read these markdown files to learn the tool signatures, expected arguments, ExtendScript hooks, and common troubleshooting steps for each application.
+
+<details>
+<summary><strong>View System Skills List</strong></summary>
+
+- [`bdb-unreal-mcp.md`](skills/global_config/bdb-unreal-mcp.md)
+- [`bdb-rhino-mcp.md`](skills/global_config/bdb-rhino-mcp.md)
+- [`bdb-davinci-mcp.md`](skills/global_config/bdb-davinci-mcp.md)
+- [`bdb-blender-mcp.md`](skills/global_config/bdb-blender-mcp.md)
+- [`bdb-after-effects-mcp.md`](skills/global_config/bdb-after-effects-mcp.md)
+- [`bdb-vectorworks-mcp.md`](skills/global_config/bdb-vectorworks-mcp.md)
+- [`bdb-touchdesigner-mcp.md`](skills/global_config/bdb-touchdesigner-mcp.md)
+- [`bdb-computer-use-mcp.md`](skills/global_config/bdb-computer-use-mcp.md)
+- [`bdb-grandma3-mcp.md`](skills/global_config/bdb-grandma3-mcp.md)
+- [`bdb-resolume-mcp.md`](skills/global_config/bdb-resolume-mcp.md)
+- [`bdb-adobe-suite-mcp.md`](skills/global_config/bdb-adobe-suite-mcp.md)
+- [`bdb-memb-mcp.md`](skills/global_config/bdb-memb-mcp.md)
+- [`openwiki-skill`](skills/global_config/openwiki-skill/SKILL.md): Direct Gemini-native integration of OpenWiki for autonomous, high-agency documentation management and release notes maintenance.
+- [`memb-skill`](skills/global_config/memb-skill/SKILL.md): BDB local-first long-term memory engine (memB). Query, remember, and adapt preferences, code architectures, and developer patterns across tasks.
+</details>
+
+---
+
+## 🌐 OpenWiki Native System
 
 BDB OS v1.3.3 introduces a fully **Gemini-Native OpenWiki** engine designed to autonomously maintain codebase wikis, README entries, and release notes across all your active projects.
 
-### 🧠 How It Works
+<details>
+<summary><strong>🧠 How It Works</strong></summary>
+
 1. **No Node CLI Overhead:** Rather than utilizing an external Javascript engine and model API keys, the system runs inside your local Antigravity environment, leveraging the 1M+ context window of **Gemini 3.5 Flash** for free.
 2. **Git Evidence Loop:** The daemon executes a sub-second Python helper ([openwiki_helper.py](skills/global_config/openwiki-skill/scripts/openwiki_helper.py)) to parse Git changes and unstaged diffs.
 3. **Smart Updates:** If code changes are detected, it invokes the global `agy` CLI client in print-mode to update `.openwiki/` markdown pages and root entrypoints, then commits documentation updates separately using the prefix `docs(wiki): update project specs [auto]`.
+</details>
 
-### ⚙️ Setting Up the Background Daemon
+<details>
+<summary><strong>⚙️ Setting Up the Background Daemon</strong></summary>
+
 To ensure your project documentation never goes out of date, configure the background daemon:
 
 #### On macOS (LaunchAgent)
@@ -76,43 +168,53 @@ powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.gemini\config\skills
 ```bash
 tail -f ~/.openwiki/daemon.log
 ```
-
 </details>
 
-<details>
-<summary><strong>🧠 memB: Custom Semantic Brain (v2.0.0)</strong></summary>
+---
+
+## 🧠 memB: Custom Semantic Brain (v2.0.0)
 
 BDB OS v2.0.0 introduces a fully integrated local, offline-first semantic memory brain based on **memB**. 
 
-### ⚙️ Specifications & Capabilities
+<details>
+<summary><strong>⚙️ Specifications & Capabilities</strong></summary>
+
 1. **Dynamic Flower Graph Layout:** Rather than utilizing hardcoded scopes, `memB` structures your memory into a flower-like layout:
    * **General Knowledge Hub (`category="godmode"`):** Stores universal preferences and developer specifications globally.
    * **Dynamic Project Leaves (`project_id="<current-directory-basename>"`):** The system dynamically resolves the active workspace directory name to segment and fetch project-specific learnings, preventing context pollution.
 2. **Offline Vector Embeddings:** Bundles a pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model and tokenizer. Vector calculations run locally in milliseconds.
 3. **Data Sovereignty (Zero Telemetry):** Designed from the ground up to ensure absolute data sovereignty, with no remote logging, tracking, or analytics endpoints present in the codebase.
 4. **Secret Filtration:** Blocks or redacts passwords, raw API keys, and connection strings prior to database injection.
-
 </details>
 
-<details>
-<summary><strong>⚡ Heimdall Token Saver: CLI Context Compression (v2.6.3)</strong></summary>
+---
+
+## ⚡ Heimdall Token Saver: CLI Context Compression (v2.6.3)
 
 **Heimdall Token Saver** is an ultra-fast context compression engine designed to drastically reduce context window usage for CLI tool execution outputs in AI agent workflows.
 
-### ⚙️ Purpose & Performance
+<details>
+<summary><strong>⚙️ Purpose & Performance</strong></summary>
+
 - **Automatic CLI Output Context Compression:** Reduces token overhead by **60–99%** on high-volume CLI tool outputs without impacting agent understanding.
 - **Zero Information Loss Guarantee:** Preserves all error messages, failed assertions, stack traces, exit codes, and actionable debugging context while stripping redundant whitespace, progress spinners, and repetitive logs.
 - **Automatic Secret Redaction:** Automatically detects and redacts passwords, tokens, API keys, and sensitive environment variables prior to inserting command output into agent context windows.
+</details>
 
-### 🔬 Technical Specifications & Processors
+<details>
+<summary><strong>🔬 Technical Specifications & Processors</strong></summary>
+
 - **36 Specialized Processors:** Includes tailored compression rules for:
   - **Version Control & Dev Tools:** `git` (status, diff, log, branch)
   - **Testing Frameworks:** `pytest`, `jest`, `cargo test`, `vitest`, `go test`
   - **Containers & Infrastructure:** `docker`, `kubectl`, `terraform`
   - **Package Managers & Build Systems:** `npm`, `yarn`, `pnpm`, `pip`, `cargo`, `go` package listings and build outputs
 - **Preservation Rules:** Guarantees line numbers, error traces, and exact failure sites remain 100% intact for immediate root-cause diagnosis.
+</details>
 
-### 🔌 Agent Integration & Hooks
+<details>
+<summary><strong>🔌 Agent Integration & Hooks</strong></summary>
+
 - **Automated Hook Installation:** Configured and installed seamlessly via `installer.js`.
 - **Supported Harnesses:**
   - **Claude Code:** Integrated via `PreToolUse` hook.
@@ -123,84 +225,18 @@ You can run diagnostic and benchmarking commands directly in your terminal:
 - **Check Version:** `token-saver version`
 - **View Savings & Usage Statistics:** `token-saver stats`
 - **Benchmark Command Savings:** `token-saver benchmark '<command>'`
-
 </details>
 
-<details>
-<summary><strong>🔌 22 Custom Local MCP Integrations</strong></summary>
+---
 
-Rather than relying on skeletal python mocks or broken remote APIs, this repository bundles **22 custom, local MCP wrappers** (in the `mcps/` directory). These are built/warmed automatically and allow your AI assistant to read, write, and execute commands within the industry's leading creative software.
-
-### 🎨 Adobe Creative Cloud (Illustrator, Photoshop, After Effects, Premiere Pro)
-We provide a dual-engine architecture optimized for macOS and Windows environments:
-- **Direct OS-Native Bridge (`bdb_adobe_mcp`)**: Runs zero-install scripting.
-  - **macOS:** Targets application bundle IDs directly via AppleScript `do javascript` / `DoScript` command streams.
-  - **Windows:** Automatically queries and instantiates local COM objects via PowerShell wrapper scripts and executes transient `.jsx` ExtendScript code.
-- **Cross-Platform UXP WebSocket Bridge (`bdb_adobe_uxp_mcp`)**: A three-tier WebSocket proxy (Node.js server on port 8080 + native UXP developer plugins) for deep DOM manipulation and persistent WebSocket sessions inside Photoshop and Premiere Pro, running identically on Windows and macOS.
-
-### 🎬 DaVinci Resolve (Triple Coverage)
-- **Primary: `bdb_davinci_mcp`**: Works on both the **Free and Studio** versions using a workspace script menu loop. Exposes 162 tools (Timeline, clips, markers, grades, Fusion) and includes local CPU-based AI models (Meta Demucs v4 for voice isolation, faster-whisper for auto-subtitles, and rembg for background removal).
-- **Studio: `bdb_davinci_mcp_studio`**: The official Node.js server (wrapping samuelgursky) for advanced direct timeline and project management in Resolve Studio.
-- **Fallback: `bdb_davinci_mcp_fallback`**: Hoyt-harness professional python server for Studio scripting.
-
-### 📐 Rhino 3D & Grasshopper (Twin-Engine)
-- **Primary: `bdb_rhino_mcp`**: McNeel's official connector (managed via Yak router) for native reading/writing of Rhino geometric layouts.
-- **Fallback: `bdb_rhino_mcp_fallback`**: The GOLEM 3D server with 105 tools to dynamically manipulate Rhino 8 assets, execute scripts, and solve Grasshopper definitions.
-
-### 🏗️ Vectorworks
-- **Primary: `bdb_vectorworks_mcp`**: Semantic RAG-based search index over VectorScript and Vectorworks API documentation (port 8765) for automated CAD drafting.
-
-### 🎮 Unreal Engine
-- **Primary: `bdb_unreal_mcp`**: Connects via the Unreal Engine 5 Web Remote Control API (port 30010) and the `gimmeDG` toolset. Allows the agent to query, spawn actors, edit materials, write Blueprints, and automate level/sequencer manipulation.
-
-### 🧊 Blender (Twin-Engine)
-- **Primary: `bdb_blender_mcp`**: BlenderMCP socket integration for scene layout, mesh generation, and viewport controls.
-- **Fallback: `bdb_blender_mcp_fallback`**: djeada's python server for managing Blender TCP connections and raw python scripting.
-
-### 🎛️ TouchDesigner (Twin-Engine)
-- **Primary: `bdb_touchdesigner_mcp`**: MindDesigner-Bridge (`tdmcp`) on port 9980 to read and write networks via custom `.tox` structures.
-- **Fallback: `bdb_touchdesigner_mcp_fallback`**: fallback TCP-based node query and inspector.
-
-### 💡 grandMA3 & Resolume
-- **grandMA3**: `bdb_ma3_mcp` sends OSC/UDP command streams directly to your grandMA3 console (port 8000) to automate cues, macros, and patch fixtures.
-- **Resolume**: `bdb_resolume_mcp` wraps Arena's REST API (port 8080) to sequence layers, query statuses, and trigger clips.
-
-### 🖥️ OS Control (Dual-Engine)
-- **macOS/Linux: `zavora_computer_use`**: Bundled with precompiled native Rust NAPI binary objects (macOS arm64/x64, Linux) to control mouse, keyboard, windows, and apps without runtime compile errors.
-- **Windows: `bdb_windows_computer_use`**: Native python-based Win32 / COM / UIAutomation controller with local OCR (Tesseract) support for advanced Windows GUI automation.
-
-### 🧠 Local Semantic Brain (memB)
-- **`memb_mcp`**: Exposes standard long-term memory tools (`add_memory`, `search_memory`, `delete_memory`, `list_memories`) using a completely local, offline-first vector engine (powered by a bundled 30MB ONNX model and SQLite).
-
-</details>
+## 🛠️ Installation
 
 <details>
-<summary><strong>📖 11 Specialized System Skills</strong></summary>
+<summary><strong>🆚 Which Version Should I Use?</strong></summary>
 
-To make these MCP integrations accessible to AI agents, we provide **11 dedicated system skills** inside the `skills/global_config/` directory. If an AI agent imports this pack, it will immediately read these markdown files to learn the tool signatures, expected arguments, ExtendScript hooks, and common troubleshooting steps for each application:
-- [`bdb-unreal-mcp.md`](skills/global_config/bdb-unreal-mcp.md)
-- [`bdb-rhino-mcp.md`](skills/global_config/bdb-rhino-mcp.md)
-- [`bdb-davinci-mcp.md`](skills/global_config/bdb-davinci-mcp.md)
-- [`bdb-blender-mcp.md`](skills/global_config/bdb-blender-mcp.md)
-- [`bdb-after-effects-mcp.md`](skills/global_config/bdb-after-effects-mcp.md)
-- [`bdb-vectorworks-mcp.md`](skills/global_config/bdb-vectorworks-mcp.md)
-- [`bdb-touchdesigner-mcp.md`](skills/global_config/bdb-touchdesigner-mcp.md)
-- [`bdb-computer-use-mcp.md`](skills/global_config/bdb-computer-use-mcp.md)
-- [`bdb-grandma3-mcp.md`](skills/global_config/bdb-grandma3-mcp.md)
-- [`bdb-resolume-mcp.md`](skills/global_config/bdb-resolume-mcp.md)
-- [`bdb-adobe-suite-mcp.md`](skills/global_config/bdb-adobe-suite-mcp.md)
-- [`bdb-memb-mcp.md`](skills/global_config/bdb-memb-mcp.md)
-- [`openwiki-skill`](skills/global_config/openwiki-skill/SKILL.md): Direct Gemini-native integration of OpenWiki for autonomous, high-agency documentation management and release notes maintenance.
-- [`memb-skill`](skills/global_config/memb-skill/SKILL.md): BDB local-first long-term memory engine (memB). Query, remember, and adapt preferences, code architectures, and developer patterns across tasks.
-
-</details>
-
-<details>
-<summary><strong>🛠️ Installation</strong></summary>
-
-### 🆚 Which Version Should I Use?
 - **Agent Skills Version (`bdb-dev-optimized-agent-skills`)**: Includes all optimized skills, interactive MCP selection UI, and **active background daemons**. It automatically installs and orchestrates the `memB` local semantic memory engine and the `OpenWiki` self-documenting git-hooks. Best for fully autonomous, long-term project management.
 - **Legacy Antigravity Version (`bdb-antigravity-skills@legacy`)**: The original antigravity pack.
+</details>
 
 The installer is built using an interactive Node-based menu. It allows you to:
 1. **Backup & Overwrite**: Safely backups existing configuration files and overrides them.
@@ -210,9 +246,11 @@ The installer is built using an interactive Node-based menu. It allows you to:
 Simply tell your assistant:
 > "Please run `npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills` to install the skills pack and configure the local MCP servers."
 
+<details>
+<summary><strong>Alternative Installation Methods</strong></summary>
+
 ### Option 2: Command Line (Global via NPX)
 Run the script globally in your terminal:
-
 ```bash
 npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills
 ```
@@ -233,6 +271,7 @@ cd bdb-dev-optimized-agent-skills
 chmod +x installer.sh
 ./installer.sh
 ```
+</details>
 
 **The installer script will automatically:**
 1. Back up your existing global and workspace skills safely.
@@ -243,5 +282,3 @@ chmod +x installer.sh
 
 ---
 *Elevate your agency. Dominate the workflow.*
-
-</details>
