@@ -108,6 +108,33 @@ A top-tier `README.md` MUST include a clean row of dynamic shields/badges direct
 
 ---
 
+### 🌐 Multi-Language README Standard (Trilingual Switcher)
+
+When preparing repositories for international audiences, provide multi-language READMEs with a top-bar language navigation switcher placed directly under the header banner:
+
+1. **File Naming Standards**:
+   - `README.md` (Default English - GitHub root entrypoint)
+   - `README.de.md` (Deutsch / German)
+   - `README.pt.md` (Português / Portuguese)
+
+2. **Top-Bar Language Switcher Syntax**:
+   - **In `README.md` (English)**:
+     ```markdown
+     🌐 **Language / Sprache / Idioma**: **English** | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇵🇹 Português ](README.pt.md)
+     ```
+   - **In `README.de.md` (Deutsch)**:
+     ```markdown
+     🌐 **Sprache / Language / Idioma**: [ 🇬🇧 English ](README.md) | **Deutsch** | [ 🇵🇹 Português ](README.pt.md)
+     ```
+   - **In `README.pt.md` (Português)**:
+     ```markdown
+     🌐 **Idioma / Language / Sprache**: [ 🇬🇧 English ](README.md) | [ 🇩🇪 Deutsch ](README.de.md) | **Português**
+     ```
+
+3. **Parity Requirement**: All language versions MUST maintain 100% section parity (Header, Badges, Features, Architecture diagrams, Quickstart commands, CLI reference, License).
+
+---
+
 ## ✨ Features
 
 - **Key Feature 1**: Brief description emphasizing benefits.
