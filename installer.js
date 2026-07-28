@@ -549,8 +549,52 @@ promptMode(({ mode, platform, customPaths }) => {
             console.log(` -> Saved credentials to ${envPath}`);
         }
 
+async function promptMemBIngestion(mcpCodeTarget) {
+    if (isAutoYes) return;
+    
+    console.log(`\n${colors.cyan}${colors.bold}🧠 memB Deep Memory Ingestion${colors.reset}`);
+    const doIngest = await new Promise((resolve) => {
+        rl.question(`${colors.yellow}Would you like to scan & ingest a project directory into memB memory? (y/N): ${colors.reset}`, (answer) => {
+            resolve(answer.trim().toLowerCase() === 'y');
+        });
+    });
+
+    if (!doIngest) return;
+
+    const targetDir = await new Promise((resolve) => {
+        rl.question(`${colors.yellow}Enter project directory path to scan [default: current workspace]: ${colors.reset}`, (answer) => {
+            resolve(answer.trim() || process.cwd());
+        });
+    });
+
+    const includeTranscripts = await new Promise((resolve) => {
+        rl.question(`${colors.yellow}Include past conversation logs/transcripts? (y/N): ${colors.reset}`, (answer) => {
+            resolve(answer.trim().toLowerCase() === 'y');
+        });
+    });
+
+    const pythonBin = process.platform === 'win32'
+        ? path.join(mcpCodeTarget, 'memb-mcp', '.venv', 'Scripts', 'python.exe')
+        : path.join(mcpCodeTarget, 'memb-mcp', '.venv', 'bin', 'python');
+        
+    const ingestScript = path.join(mcpCodeTarget, 'memb-mcp', 'memb_ingest.py');
+
+    if (fs.existsSync(ingestScript) && fs.existsSync(pythonBin)) {
+        console.log(` -> Running memB deep ingestion on: ${targetDir}...`);
+        try {
+            const cmd = `"${pythonBin}" "${ingestScript}" "${targetDir}"${includeTranscripts ? ' --transcripts' : ''}`;
+            execSync(cmd, { stdio: 'inherit' });
+        } catch (e) {
+            console.log(` -> Failed to run ingestion script: ${e.message}`);
+        }
+    } else {
+        console.log(` -> Ingestion script or python environment not found.`);
+    }
+}
+
         await installOpenWikiDaemon(creds.gemini, targetSkillDir);
         await installTokenSaver(platform);
+        await promptMemBIngestion(mcpCodeTarget);
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
         console.log(`${colors.green}${colors.bold} 🎉 Installation complete! The environment now has the ${colors.reset}`);
