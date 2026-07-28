@@ -51,6 +51,19 @@ Começamos com um conjunto massivo de mais de 1.400 skills. Após rigorosos test
 
 ---
 
+## 🔌 22 Integrações Locais Personalizadas de MCP
+
+Este repositório empacota **22 wrappers de MCP personalizados** (no diretório `mcps/`), permitindo que seu assistente de IA controle softwares líderes de mercado:
+- **Adobe Creative Cloud (`bdb_adobe_mcp`, `bdb_adobe_uxp_mcp`)**: Photoshop, Premiere, After Effects, Illustrator.
+- **DaVinci Resolve (`bdb_davinci_mcp`, `bdb_davinci_mcp_studio`)**: Edição de vídeo, Color Grading, Fusion e modelos de IA locais.
+- **Rhino 3D & Grasshopper (`bdb_rhino_mcp`)**: Geometria 3D paramétrica.
+- **Unreal Engine 5 (`bdb_unreal_mcp`)**: Web Remote Control API, spawning de atores e automação de Blueprints.
+- **TouchDesigner (`bdb_touchdesigner_mcp`)**: Redes de mídia em tempo real e estruturas `.tox`.
+- **Blender, grandMA3, Resolume & Vectorworks**: Automação 3D, mesas de iluminação, servidores de mídia e CAD.
+- **memB Semantic Brain (`memb_mcp`)**: Memória vetorial local para preferência e contexto de código.
+
+---
+
 ## ⚡ Instalação Rápida
 
 ```bash

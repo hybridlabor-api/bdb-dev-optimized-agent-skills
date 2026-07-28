@@ -26,7 +26,7 @@ Aus über 1.400 Skill-Vorlagen haben wir nach intensiven Tests die **144 effekti
 
 Diese Skills sind präzise optimiert, damit KI-Agenten keine Zeit mit redundanten Aufgaben verschwenden, sondern mit maximaler Autonomie und Kontextbewusstsein agieren.
 
-### 💻 Software & App Development
+### 💻 Jenseits von Events: Software & App Development
 - **Full-Stack Development**: Next.js App Router Boilerplates, skalierbare Node.js Microservices und interaktive Web-Apps.
 - **App Engineering**: Datenbank-Architektur, REST APIs und plattformübergreifende Anwendungen.
 - **Design & QS**: UI/UX Audits via `ui-ux-pro-max`, Clean Code Prinzipien und CI/CD Pipelines.
@@ -59,7 +59,40 @@ Teil dieses optimierten Arsenals ist unsere proprietäre **BDBrainstorm** Skill.
 
 ---
 
-## ⚡ Schnellstart & Installation
+## 🔌 22 Custom Lokale MCP Integrationen
+
+Dieses Repository enthält **22 spezialisierte lokale MCP-Wrapper** (im Ordner `mcps/`), mit denen KI-Agenten führende Software steuern können:
+- **Adobe Creative Cloud (`bdb_adobe_mcp`, `bdb_adobe_uxp_mcp`)**: Photoshop, Premiere, After Effects, Illustrator.
+- **DaVinci Resolve (`bdb_davinci_mcp`, `bdb_davinci_mcp_studio`)**: Videoschnitt, Color Grading, Fusion & KI-Voice-Isolation.
+- **Rhino 3D & Grasshopper (`bdb_rhino_mcp`)**: Parametrische 3D-Geometrie.
+- **Unreal Engine 5 (`bdb_unreal_mcp`)**: Web Remote Control API, Actor Spawning & Blueprint Automation.
+- **TouchDesigner (`bdb_touchdesigner_mcp`)**: Realtime Media & Node Network Control.
+- **Blender, grandMA3, Resolume & Vectorworks**: Vollwertige Steuerung von 3D, Lichtpulten, Medienservern und CAD.
+- **memB Semantic Brain (`memb_mcp`)**: Lokales, offlinetaugliches Vektor-Gedächtnis.
+
+---
+
+## 📖 11 Spezialisierte System Skills
+
+- [`bdb-unreal-mcp.md`](skills/global_config/bdb-unreal-mcp.md)
+- [`bdb-rhino-mcp.md`](skills/global_config/bdb-rhino-mcp.md)
+- [`bdb-davinci-mcp.md`](skills/global_config/bdb-davinci-mcp.md)
+- [`bdb-blender-mcp.md`](skills/global_config/bdb-blender-mcp.md)
+- [`bdb-after-effects-mcp.md`](skills/global_config/bdb-after-effects-mcp.md)
+- [`bdb-vectorworks-mcp.md`](skills/global_config/bdb-vectorworks-mcp.md)
+- [`bdb-touchdesigner-mcp.md`](skills/global_config/bdb-touchdesigner-mcp.md)
+- [`bdb-computer-use-mcp.md`](skills/global_config/bdb-computer-use-mcp.md)
+- [`bdb-grandma3-mcp.md`](skills/global_config/bdb-grandma3-mcp.md)
+- [`bdb-resolume-mcp.md`](skills/global_config/bdb-resolume-mcp.md)
+- [`bdb-adobe-suite-mcp.md`](skills/global_config/bdb-adobe-suite-mcp.md)
+- [`bdb-memb-mcp.md`](skills/global_config/bdb-memb-mcp.md)
+- [`openwiki-skill`](skills/global_config/openwiki-skill/SKILL.md)
+- [`memb-skill`](skills/global_config/memb-skill/SKILL.md)
+- [`github-repo`](skills/global_config/github-repo/SKILL.md)
+
+---
+
+## ⚡ Installation & Optionen
 
 ```bash
 # Automatische Installation via NPX (unterstützt Antigravity, Claude, Cursor, Windsurf)
