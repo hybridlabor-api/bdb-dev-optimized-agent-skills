@@ -174,6 +174,65 @@ except Exception as e:
             
             await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);
         }
+        
+        // 4. Inject Sexy Graph Settings
+        await this.injectSexyGraphSettings();
+    }
+    
+    async injectSexyGraphSettings() {
+        const graphPath = '.obsidian/graph.json';
+        const sexyConfig = {
+            "collapse-filter": true,
+            "search": "",
+            "showSearch": false,
+            "searchItemExclude": "",
+            "searchItemTags": false,
+            "searchItemAttachment": false,
+            "hideUnresolved": true,
+            "showTags": false,
+            "showAttachments": false,
+            "hideOrphans": true,
+            "collapse-color-groups": false,
+            "colorGroups": [
+                {
+                    "query": "path:memB_Knowledge_Graph/God_Mode.md",
+                    "color": { "a": 1, "rgb": 16766720 } // Vibrant Gold
+                },
+                {
+                    "query": "tag:#memB/project",
+                    "color": { "a": 1, "rgb": 5291775 } // Neon Cyan/Blue
+                },
+                {
+                    "query": "tag:#memB/category",
+                    "color": { "a": 1, "rgb": 16733610 } // Hot Pink/Magenta
+                }
+            ],
+            "collapse-display": false,
+            "showArrow": true,
+            "textFadeMultiplier": -1,
+            "nodeSizeMultiplier": 1.4,
+            "lineSizeMultiplier": 1.2,
+            "collapse-forces": false,
+            "centerStrength": 0.4,
+            "repelStrength": 14.5,
+            "linkStrength": 1,
+            "linkDistance": 250,
+            "scale": 0.8,
+            "close": false
+        };
+        
+        try {
+            const fs = require('fs');
+            const path = require('path');
+            // @ts-ignore (Accessing internal obsidian vault path)
+            const basePath = this.app.vault.adapter.basePath;
+            const fullGraphPath = path.join(basePath, graphPath);
+            
+            // Overwrite graph.json to guarantee the sexy layout
+            fs.writeFileSync(fullGraphPath, JSON.stringify(sexyConfig, null, 2));
+        } catch (e) {
+            console.error("Failed to inject graph settings:", e);
+        }
     }
     
     async ensureFolder(folderPath: string) {
