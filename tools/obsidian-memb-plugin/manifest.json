@@ -1,0 +1,10 @@
+{
+  "id": "memb-obsidian-sync",
+  "name": "memB AI Memory Sync",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Natively syncs BDB memB vector memories into Obsidian Markdown to create an interactive radial knowledge graph.",
+  "author": "BDB DEV",
+  "authorUrl": "https://github.com/hybridlabor-api",
+  "isDesktopOnly": true
+}
