@@ -54,10 +54,35 @@ Use `search_memory` at the beginning of a task to load context.
 *   Use `list_memories` to audit active records.
 *   Use `delete_memory` with a UUID to remove outdated or erroneous facts.
 
+## 🚨 CRITICAL DIRECTIVE: AI-FIRST VAULT NAVIGATION 🚨
+
+> [!CAUTION]
+> **DO NOT use arbitrary `find`, `ls -R`, or arbitrary file searches to discover project architecture!**
+> The `memB` ecosystem natively maintains a physical **AI-First Vault** at `~/.MemBDB/memB_Vault/`.
+> 1. **Always read `~/.MemBDB/memB_Vault/God_Mode.md` FIRST** to understand the ecosystem topology.
+> 2. Navigate the tree via the `_Hub.md` files.
+> 3. Only search the actual workspace filesystem for raw code editing once you know the exact file path.
+
 ---
 
-## 🚀 Workflow Pattern
+## 🧠 Agentic Ingestion (Intelligent Vault Building)
 
-1.  **Task Start (Context Loading):** Query `search_memory` using keywords from the user prompt and passing the active `project_id` if working in a specific project.
+You are responsible for intelligently categorized ingestion. Do NOT rely on static rules. When asked to ingest a project into memB:
+1. **Analyze the Target:** Briefly scan the target directory to understand the project's purpose (e.g. 3D WebGL site, Python API, React Native app).
+2. **Design Semantic Categories:** Dynamically invent highly precise categories tailored to the project (e.g., `3D_Engine`, `Routing_Logic`, `Database_Schemas`, `Styling_System`).
+3. **Targeted Ingestion:** Execute the Python ingestion tool explicitly for specific files and categories, rather than doing a blind root scan. 
+
+**Execution:**
+Use the `run_command` tool to execute `memb_ingest.py` on specific files or folders, explicitly passing the `--project` and `--category` flags.
+```bash
+/Users/timrennings/.gemini/mcps/memb-mcp/.venv/bin/python /Users/timrennings/bdb-dev/bdb-dev-optimized-agent-skills/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
+```
+*(By injecting files one-by-one or in smart batches with precise categories, you build a flawless physical AI Vault that other agents can navigate intuitively).*
+
+---
+
+## 🚀 Micro-Targeted RAG (Task Execution)
+
+1.  **Task Start (Context Loading):** If `God_Mode.md` shows the project exists, read its Hubs. If you need highly specific snippets, use the `search_memory` MCP tool to query the vector DB.
 2.  **Execution:** Proceed with coding, applying the retrieved styles and preferences.
 3.  **Task End (Knowledge Capture):** If you resolved a complex setup bug or the user specified a new preference, run `add_memory` to persist it.
