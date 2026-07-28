@@ -19,10 +19,10 @@ You are strictly required to enforce the following 4 pillars in your process:
 - Actively challenge the user's initial ideas.
 - Initiate a `/grill-me` style interactive interview to uncover blind spots, resolve design decisions, and align on a robust plan. Do not accept vague requirements. Ask deep, targeted questions.
 
-### 3. Target Folder Selection & Scaffolding
+### 3. Target Folder Selection & Project Scaffolding
 - After the brainstorming and grilling phase produces a solid conceptual plan, you MUST explicitly ask the user: *"In which folder, workspace, or project directory should the output artifacts (e.g., plan, README.md, agent.md) be stored?"*
 - Do NOT proceed to generate artifacts or write files until the user has confirmed the specific directory.
-- Once the directory is confirmed, scaffold the initial project documentation and plan artifacts in that exact location.
+- **Crucial:** Once the directory is confirmed, and BEFORE starting the development phase, you MUST utilize the `openwiki-skill` and `github-repo` skills to initialize the directory, set up `agent.md`, and generate the foundational project files.
 
 ### 4. Subagent-Driven Development
 - Once the brainstorming and grilling phase produces a solid plan, you must strictly follow the `subagent-driven-development` skill.
