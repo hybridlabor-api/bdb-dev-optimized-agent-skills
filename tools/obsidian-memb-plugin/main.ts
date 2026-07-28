@@ -181,12 +181,25 @@ except Exception as e:
     }
     
     async generateMemoryNode(item: any, folderPath: string, parentLink: string) {
-        const shortId = item.id.substring(0, 8);
+        const title = this.getMemoryTitle(item.data, item.id);
+        
         let mContent = `---\nid: "${item.id}"\ndate: "${item.created_at}"\ntags:\n  - memB/memory\n---\n\n`;
-        mContent += `# 🧠 ${shortId}\n\n`;
+        mContent += `# 🧠 ${title.replace(/_/g, ' ')}\n\n`;
         mContent += `**Parent:** ${parentLink}\n\n`;
         mContent += `## 📜 Payload\n\n${item.data}\n`;
-        await this.writeOrUpdateFile(`${folderPath}/${shortId}.md`, mContent);
+        await this.writeOrUpdateFile(`${folderPath}/${title}.md`, mContent);
+    }
+    
+    getMemoryTitle(data: string, id: string): string {
+        if (!data) return id.substring(0, 8);
+        // Clean up markdown and extract 3-4 meaningful words
+        let clean = data.replace(/[^\w\säöüßÄÖÜ]/g, ' ').replace(/\s+/g, ' ').trim();
+        let words = clean.split(' ').filter(w => w.length > 2).slice(0, 4);
+        
+        if (words.length === 0) return id.substring(0, 8);
+        
+        // Combine words and append a tiny ID slice to guarantee uniqueness
+        return words.join('_') + "_" + id.substring(0, 4);
     }
     
     async injectSexyGraphSettings() {

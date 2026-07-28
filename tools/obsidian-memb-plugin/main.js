@@ -215,7 +215,7 @@ tags:
     await this.injectSexyGraphSettings();
   }
   async generateMemoryNode(item, folderPath, parentLink) {
-    const shortId = item.id.substring(0, 8);
+    const title = this.getMemoryTitle(item.data, item.id);
     let mContent = `---
 id: "${item.id}"
 date: "${item.created_at}"
@@ -224,7 +224,7 @@ tags:
 ---
 
 `;
-    mContent += `# \u{1F9E0} ${shortId}
+    mContent += `# \u{1F9E0} ${title.replace(/_/g, " ")}
 
 `;
     mContent += `**Parent:** ${parentLink}
@@ -234,7 +234,16 @@ tags:
 
 ${item.data}
 `;
-    await this.writeOrUpdateFile(`${folderPath}/${shortId}.md`, mContent);
+    await this.writeOrUpdateFile(`${folderPath}/${title}.md`, mContent);
+  }
+  getMemoryTitle(data, id) {
+    if (!data)
+      return id.substring(0, 8);
+    let clean = data.replace(/[^\w\säöüßÄÖÜ]/g, " ").replace(/\s+/g, " ").trim();
+    let words = clean.split(" ").filter((w) => w.length > 2).slice(0, 4);
+    if (words.length === 0)
+      return id.substring(0, 8);
+    return words.join("_") + "_" + id.substring(0, 4);
   }
   async injectSexyGraphSettings() {
     const configDir = this.app.vault.configDir || ".obsidian";
