@@ -124,5 +124,18 @@ def delete_memory(memory_id: str) -> str:
     memory.delete(memory_id)
     return f"Successfully deleted memory with ID {memory_id}"
 
+@mcp.tool()
+def export_obsidian_vault(target_path: Optional[str] = None) -> str:
+    """Exports all memB local vector memories into an Obsidian Flavored Markdown Vault with Wikilinks, Tags, and Mermaid Knowledge Graphs.
+    
+    Args:
+        target_path: Optional destination directory for the Obsidian Vault (default: ~/.MemBDB/obsidian_vault).
+    """
+    try:
+        from memb_obsidian import export_to_obsidian_vault
+        return export_to_obsidian_vault(target_path)
+    except Exception as e:
+        return f"Failed to export Obsidian Vault: {e}"
+
 if __name__ == "__main__":
     mcp.run()
