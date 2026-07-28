@@ -115,11 +115,11 @@ except Exception as e:
         indexContent += `> **Total Memories Indexed:** ${entries.length} | **Projects:** ${projectsMap.size} | **Categories:** ${categoriesMap.size}\n\n`;
         indexContent += `## 📂 Projects Overview\n`;
         projectsMap.forEach((v, k) => {
-            indexContent += `- [[Projects/${k}|${k}]] (${v.length} notes)\n`;
+            indexContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} notes)\n`;
         });
         indexContent += `\n## 🏷️ Categories\n`;
         categoriesMap.forEach((v, k) => {
-            indexContent += `- [[Categories/${k}|${k}]] (${v.length} notes)\n`;
+            indexContent += `- [[${rootFolder}/Categories/${k}|${k}]] (${v.length} notes)\n`;
         });
         
         await this.writeOrUpdateFile(`${rootFolder}/Dashboard.md`, indexContent);
@@ -127,11 +127,11 @@ except Exception as e:
         // 2. Generate Project Files
         for (const [proj, items] of projectsMap.entries()) {
             let pContent = `---\nproject: "${proj}"\ntotal_memories: ${items.length}\ntags:\n  - memB/project\n---\n\n`;
-            pContent += `# 🚀 Project: ${proj}\n\nBack to [[Dashboard|Main Index]]\n\n## 📜 Documented Memories & Decisions\n\n`;
+            pContent += `# 🚀 Project: ${proj}\n\nBack to [[${rootFolder}/Dashboard|Main Index]]\n\n## 📜 Documented Memories & Decisions\n\n`;
             
             for (const item of items) {
                 pContent += `> [!NOTE] Memory Record (${item.id.substring(0,8)})\n`;
-                pContent += `> **Category:** [[Categories/${item.category}|#${item.category}]]\n`;
+                pContent += `> **Category:** [[${rootFolder}/Categories/${item.category}|#${item.category}]]\n`;
                 pContent += `> **Date:** ${item.created_at}\n>\n`;
                 
                 const lines = item.data.split('\n');
@@ -147,10 +147,10 @@ except Exception as e:
         // 3. Generate Category Files
         for (const [cat, items] of categoriesMap.entries()) {
             let cContent = `---\ncategory: "${cat}"\ntotal_memories: ${items.length}\ntags:\n  - memB/category\n---\n\n`;
-            cContent += `# 🏷️ Category: ${cat}\n\nBack to [[Dashboard|Main Index]]\n\n## 📜 Category Entries\n\n`;
+            cContent += `# 🏷️ Category: ${cat}\n\nBack to [[${rootFolder}/Dashboard|Main Index]]\n\n## 📜 Category Entries\n\n`;
             
             for (const item of items) {
-                cContent += `- **Project:** [[Projects/${item.project}|${item.project}]]\n`;
+                cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]\n`;
                 cContent += `  \`\`\`text\n  ${item.data.substring(0, 300)}...\n  \`\`\`\n\n`;
             }
             

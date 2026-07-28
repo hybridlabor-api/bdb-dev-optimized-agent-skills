@@ -132,14 +132,14 @@ except Exception as e:
     indexContent += `## \u{1F4C2} Projects Overview
 `;
     projectsMap.forEach((v, k) => {
-      indexContent += `- [[Projects/${k}|${k}]] (${v.length} notes)
+      indexContent += `- [[${rootFolder}/Projects/${k}|${k}]] (${v.length} notes)
 `;
     });
     indexContent += `
 ## \u{1F3F7}\uFE0F Categories
 `;
     categoriesMap.forEach((v, k) => {
-      indexContent += `- [[Categories/${k}|${k}]] (${v.length} notes)
+      indexContent += `- [[${rootFolder}/Categories/${k}|${k}]] (${v.length} notes)
 `;
     });
     await this.writeOrUpdateFile(`${rootFolder}/Dashboard.md`, indexContent);
@@ -154,7 +154,7 @@ tags:
 `;
       pContent += `# \u{1F680} Project: ${proj}
 
-Back to [[Dashboard|Main Index]]
+Back to [[${rootFolder}/Dashboard|Main Index]]
 
 ## \u{1F4DC} Documented Memories & Decisions
 
@@ -162,7 +162,7 @@ Back to [[Dashboard|Main Index]]
       for (const item of items) {
         pContent += `> [!NOTE] Memory Record (${item.id.substring(0, 8)})
 `;
-        pContent += `> **Category:** [[Categories/${item.category}|#${item.category}]]
+        pContent += `> **Category:** [[${rootFolder}/Categories/${item.category}|#${item.category}]]
 `;
         pContent += `> **Date:** ${item.created_at}
 >
@@ -190,13 +190,13 @@ tags:
 `;
       cContent += `# \u{1F3F7}\uFE0F Category: ${cat}
 
-Back to [[Dashboard|Main Index]]
+Back to [[${rootFolder}/Dashboard|Main Index]]
 
 ## \u{1F4DC} Category Entries
 
 `;
       for (const item of items) {
-        cContent += `- **Project:** [[Projects/${item.project}|${item.project}]]
+        cContent += `- **Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
 `;
         cContent += `  \`\`\`text
   ${item.data.substring(0, 300)}...
