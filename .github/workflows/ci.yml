@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Syntax & Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Check JS Syntax
+        run: node --check installer.js
+        
+      - name: Validate JSON files
+        run: |
+          # Use jq to validate all JSON files
+          find . -name "*.json" -not -path "*/node_modules/*" -not -path "*/vendor/*" -print0 | xargs -0 -I {} jq empty {}
