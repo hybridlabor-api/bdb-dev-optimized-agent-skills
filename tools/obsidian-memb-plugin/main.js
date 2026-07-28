@@ -130,32 +130,22 @@ except Exception as e:
     godModeContent += `> **Total Ecosystem Memories:** ${totalMemories}
 
 `;
-    godModeContent += `## \u{1F30C} Ecosystem Topology (Map of Content)
+    godModeContent += `## \u{1F30C} Projects
 
 `;
-    for (const [proj, categories] of Object.entries(tree)) {
-      const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
-      godModeContent += `### [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]] (${projMemories} memories)
-`;
-      for (const [cat, items] of Object.entries(categories)) {
-        godModeContent += `- **[[${rootFolder}/Projects/${proj}/${cat}/_Hub|${cat}]]**: ${items.length} records
-`;
-      }
-      godModeContent += `
+    for (const proj of Object.keys(tree)) {
+      godModeContent += `- [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]]
 `;
     }
     await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
     for (const [proj, categories] of Object.entries(tree)) {
       await this.ensureFolder(`${rootFolder}/Projects/${proj}`);
-      const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
       let pContent = `---
 tags:
   - memB/project
 ---
 
 # \u{1F680} Project: ${proj}
-
-**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
 ## Sub-Clusters
 `;
@@ -173,12 +163,10 @@ tags:
 
 # \u{1F3F7}\uFE0F Category: ${cat}
 
-**Parent:** [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]]
-
 `;
         const CLUSTER_SIZE = 25;
         if (items.length > CLUSTER_SIZE) {
-          cContent += `## Memory Clusters (Auto-Balanced)
+          cContent += `## Memory Clusters
 `;
           const numClusters = Math.ceil(items.length / CLUSTER_SIZE);
           for (let i = 0; i < numClusters; i++) {
@@ -193,12 +181,14 @@ tags:
 
 # \u{1F30C} ${clusterName} (${cat})
 
-**Parent:** [[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]
-
+## \u{1F9E0} Memories
 `;
             const clusterItems = items.slice(i * CLUSTER_SIZE, (i + 1) * CLUSTER_SIZE);
             for (const item of clusterItems) {
-              await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}/${clusterName}`, `[[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub|${clusterName}]]`);
+              const title = this.getMemoryTitle(item.data, item.id);
+              clContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/${title}|${title.replace(/_/g, " ")}]]
+`;
+              await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}/${clusterName}`, title);
             }
             await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub.md`, clContent);
           }
@@ -206,7 +196,10 @@ tags:
           cContent += `## \u{1F9E0} Memories
 `;
           for (const item of items) {
-            await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}`, `[[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]`);
+            const title = this.getMemoryTitle(item.data, item.id);
+            cContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${title}|${title.replace(/_/g, " ")}]]
+`;
+            await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}`, title);
           }
         }
         await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/${cat}/_Hub.md`, cContent);
@@ -214,8 +207,7 @@ tags:
     }
     await this.injectSexyGraphSettings();
   }
-  async generateMemoryNode(item, folderPath, parentLink) {
-    const title = this.getMemoryTitle(item.data, item.id);
+  async generateMemoryNode(item, folderPath, title) {
     let mContent = `---
 id: "${item.id}"
 date: "${item.created_at}"
@@ -225,9 +217,6 @@ tags:
 
 `;
     mContent += `# \u{1F9E0} ${title.replace(/_/g, " ")}
-
-`;
-    mContent += `**Parent:** ${parentLink}
 
 `;
     mContent += `## \u{1F4DC} Payload

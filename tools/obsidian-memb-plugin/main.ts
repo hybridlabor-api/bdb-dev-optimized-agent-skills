@@ -112,28 +112,22 @@ except Exception as e:
             totalMemories++;
         }
         
-        // 2. Generate God Mode (Central Hub & MOC)
+        // 2. Generate God Mode (Level 0) - Links to Projects
         let godModeContent = `# 👑 GOD MODE: Core Knowledge Base\n\n`;
         godModeContent += `> **Total Ecosystem Memories:** ${totalMemories}\n\n`;
-        godModeContent += `## 🌌 Ecosystem Topology (Map of Content)\n\n`;
+        godModeContent += `## 🌌 Projects\n\n`;
         
-        for (const [proj, categories] of Object.entries(tree)) {
-            const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
-            godModeContent += `### [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]] (${projMemories} memories)\n`;
-            for (const [cat, items] of Object.entries(categories)) {
-                godModeContent += `- **[[${rootFolder}/Projects/${proj}/${cat}/_Hub|${cat}]]**: ${items.length} records\n`;
-            }
-            godModeContent += `\n`;
+        for (const proj of Object.keys(tree)) {
+            godModeContent += `- [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]]\n`;
         }
         await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
         
-        // 3. Generate Strict Tree Hierarchy (Projects -> Categories -> Clusters -> Neurons)
+        // 3. Generate Strict Top-Down Hierarchy
         for (const [proj, categories] of Object.entries(tree)) {
             await this.ensureFolder(`${rootFolder}/Projects/${proj}`);
             
-            // Project Hub
-            const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
-            let pContent = `---\ntags:\n  - memB/project\n---\n\n# 🚀 Project: ${proj}\n\n**Parent:** [[${rootFolder}/God_Mode|God Mode]]\n\n## Sub-Clusters\n`;
+            // Project Hub (Level 1) - Links to Categories
+            let pContent = `---\ntags:\n  - memB/project\n---\n\n# 🚀 Project: ${proj}\n\n## Sub-Clusters\n`;
             for (const cat of Object.keys(categories)) {
                 pContent += `- [[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]\n`;
             }
@@ -142,13 +136,12 @@ except Exception as e:
             for (const [cat, items] of Object.entries(categories)) {
                 await this.ensureFolder(`${rootFolder}/Projects/${proj}/${cat}`);
                 
-                // Category Hub
-                let cContent = `---\ntags:\n  - memB/category\n---\n\n# 🏷️ Category: ${cat}\n\n**Parent:** [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]]\n\n`;
+                // Category Hub (Level 2) - Links to Clusters or Memories
+                let cContent = `---\ntags:\n  - memB/category\n---\n\n# 🏷️ Category: ${cat}\n\n`;
                 
-                // Auto-Balancing: Sub-clustering if > 25 items
                 const CLUSTER_SIZE = 25;
                 if (items.length > CLUSTER_SIZE) {
-                    cContent += `## Memory Clusters (Auto-Balanced)\n`;
+                    cContent += `## Memory Clusters\n`;
                     const numClusters = Math.ceil(items.length / CLUSTER_SIZE);
                     
                     for (let i = 0; i < numClusters; i++) {
@@ -156,19 +149,23 @@ except Exception as e:
                         await this.ensureFolder(`${rootFolder}/Projects/${proj}/${cat}/${clusterName}`);
                         cContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub|${clusterName}]]\n`;
                         
-                        // Cluster Hub
-                        let clContent = `---\ntags:\n  - memB/cluster\n---\n\n# 🌌 ${clusterName} (${cat})\n\n**Parent:** [[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]\n\n`;
+                        // Cluster Hub (Level 3) - Links to Memories
+                        let clContent = `---\ntags:\n  - memB/cluster\n---\n\n# 🌌 ${clusterName} (${cat})\n\n## 🧠 Memories\n`;
                         
                         const clusterItems = items.slice(i * CLUSTER_SIZE, (i + 1) * CLUSTER_SIZE);
                         for (const item of clusterItems) {
-                            await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}/${clusterName}`, `[[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub|${clusterName}]]`);
+                            const title = this.getMemoryTitle(item.data, item.id);
+                            clContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/${title}|${title.replace(/_/g, ' ')}]]\n`;
+                            await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}/${clusterName}`, title);
                         }
                         await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub.md`, clContent);
                     }
                 } else {
                     cContent += `## 🧠 Memories\n`;
                     for (const item of items) {
-                        await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}`, `[[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]`);
+                        const title = this.getMemoryTitle(item.data, item.id);
+                        cContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${title}|${title.replace(/_/g, ' ')}]]\n`;
+                        await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}`, title);
                     }
                 }
                 
@@ -180,12 +177,9 @@ except Exception as e:
         await this.injectSexyGraphSettings();
     }
     
-    async generateMemoryNode(item: any, folderPath: string, parentLink: string) {
-        const title = this.getMemoryTitle(item.data, item.id);
-        
+    async generateMemoryNode(item: any, folderPath: string, title: string) {
         let mContent = `---\nid: "${item.id}"\ndate: "${item.created_at}"\ntags:\n  - memB/memory\n---\n\n`;
         mContent += `# 🧠 ${title.replace(/_/g, ' ')}\n\n`;
-        mContent += `**Parent:** ${parentLink}\n\n`;
         mContent += `## 📜 Payload\n\n${item.data}\n`;
         await this.writeOrUpdateFile(`${folderPath}/${title}.md`, mContent);
     }
