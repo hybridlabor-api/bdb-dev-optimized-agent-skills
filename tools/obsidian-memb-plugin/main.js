@@ -109,65 +109,114 @@ except Exception as e:
     const rootFolder = "memB_Knowledge_Graph";
     await this.ensureFolder(rootFolder);
     await this.ensureFolder(`${rootFolder}/Projects`);
-    await this.ensureFolder(`${rootFolder}/Categories`);
-    await this.ensureFolder(`${rootFolder}/Memories`);
-    const projectsSet = /* @__PURE__ */ new Set();
-    const categoriesSet = /* @__PURE__ */ new Set();
+    const tree = {};
+    let totalMemories = 0;
     for (const entry of entries) {
-      if (entry.project && entry.project !== "Global")
-        projectsSet.add(entry.project);
-      if (entry.category && entry.category !== "godmode")
-        categoriesSet.add(entry.category);
+      let p = entry.project || "Global";
+      let c = entry.category || "General";
+      if (c === "godmode") {
+        p = "Global";
+      }
+      if (!tree[p])
+        tree[p] = {};
+      if (!tree[p][c])
+        tree[p][c] = [];
+      tree[p][c].push(entry);
+      totalMemories++;
     }
-    let godModeContent = `# \u{1F451} GOD MODE: General Knowledge
+    let godModeContent = `# \u{1F451} GOD MODE: Core Knowledge Base
 
 `;
-    godModeContent += `> **Total Memories:** ${entries.length}
+    godModeContent += `> **Total Ecosystem Memories:** ${totalMemories}
 
 `;
-    godModeContent += `This is the absolute center of the BDB memB Architecture.
+    godModeContent += `## \u{1F30C} Ecosystem Topology (Map of Content)
 
 `;
+    for (const [proj, categories] of Object.entries(tree)) {
+      const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
+      godModeContent += `### [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]] (${projMemories} memories)
+`;
+      for (const [cat, items] of Object.entries(categories)) {
+        godModeContent += `- **[[${rootFolder}/Projects/${proj}/${cat}/_Hub|${cat}]]**: ${items.length} records
+`;
+      }
+      godModeContent += `
+`;
+    }
     await this.writeOrUpdateFile(`${rootFolder}/God_Mode.md`, godModeContent);
-    for (const proj of projectsSet) {
+    for (const [proj, categories] of Object.entries(tree)) {
+      await this.ensureFolder(`${rootFolder}/Projects/${proj}`);
+      const projMemories = Object.values(categories).reduce((acc, val) => acc + val.length, 0);
       let pContent = `---
-project: "${proj}"
 tags:
   - memB/project
 ---
 
-`;
-      pContent += `# \u{1F680} Project Hub: ${proj}
+# \u{1F680} Project: ${proj}
 
-`;
-      pContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
+**Parent:** [[${rootFolder}/God_Mode|God Mode]]
 
+## Sub-Clusters
 `;
-      pContent += `*This is a structural hub. All memories related to ${proj} gravitate here.*
+      for (const cat of Object.keys(categories)) {
+        pContent += `- [[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]
 `;
-      await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}.md`, pContent);
-    }
-    for (const cat of categoriesSet) {
-      let cContent = `---
-category: "${cat}"
+      }
+      await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/_Hub.md`, pContent);
+      for (const [cat, items] of Object.entries(categories)) {
+        await this.ensureFolder(`${rootFolder}/Projects/${proj}/${cat}`);
+        let cContent = `---
 tags:
   - memB/category
 ---
 
-`;
-      cContent += `# \u{1F3F7}\uFE0F Category Hub: ${cat}
+# \u{1F3F7}\uFE0F Category: ${cat}
+
+**Parent:** [[${rootFolder}/Projects/${proj}/_Hub|Project: ${proj}]]
 
 `;
-      cContent += `**Parent:** [[${rootFolder}/God_Mode|God Mode]]
+        const CLUSTER_SIZE = 25;
+        if (items.length > CLUSTER_SIZE) {
+          cContent += `## Memory Clusters (Auto-Balanced)
+`;
+          const numClusters = Math.ceil(items.length / CLUSTER_SIZE);
+          for (let i = 0; i < numClusters; i++) {
+            const clusterName = `Cluster_${i + 1}`;
+            await this.ensureFolder(`${rootFolder}/Projects/${proj}/${cat}/${clusterName}`);
+            cContent += `- [[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub|${clusterName}]]
+`;
+            let clContent = `---
+tags:
+  - memB/cluster
+---
+
+# \u{1F30C} ${clusterName} (${cat})
+
+**Parent:** [[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]
 
 `;
-      cContent += `*This is a structural hub. All memories categorized as ${cat} gravitate here.*
+            const clusterItems = items.slice(i * CLUSTER_SIZE, (i + 1) * CLUSTER_SIZE);
+            for (const item of clusterItems) {
+              await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}/${clusterName}`, `[[${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub|${clusterName}]]`);
+            }
+            await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/${cat}/${clusterName}/_Hub.md`, clContent);
+          }
+        } else {
+          cContent += `## \u{1F9E0} Memories
 `;
-      await this.writeOrUpdateFile(`${rootFolder}/Categories/${cat}.md`, cContent);
+          for (const item of items) {
+            await this.generateMemoryNode(item, `${rootFolder}/Projects/${proj}/${cat}`, `[[${rootFolder}/Projects/${proj}/${cat}/_Hub|Category: ${cat}]]`);
+          }
+        }
+        await this.writeOrUpdateFile(`${rootFolder}/Projects/${proj}/${cat}/_Hub.md`, cContent);
+      }
     }
-    for (const item of entries) {
-      const shortId = item.id.substring(0, 8);
-      let mContent = `---
+    await this.injectSexyGraphSettings();
+  }
+  async generateMemoryNode(item, folderPath, parentLink) {
+    const shortId = item.id.substring(0, 8);
+    let mContent = `---
 id: "${item.id}"
 date: "${item.created_at}"
 tags:
@@ -175,39 +224,17 @@ tags:
 ---
 
 `;
-      mContent += `# \u{1F9E0} Memory: ${shortId}
+    mContent += `# \u{1F9E0} ${shortId}
 
 `;
-      if (item.project === "Global" && item.category === "godmode") {
-        mContent += `**Linked to:** [[${rootFolder}/God_Mode|God Mode]]
+    mContent += `**Parent:** ${parentLink}
 
 `;
-      } else {
-        if (item.project && item.project !== "Global") {
-          mContent += `**Project:** [[${rootFolder}/Projects/${item.project}|${item.project}]]
-`;
-        } else {
-          mContent += `**Project:** [[${rootFolder}/God_Mode|God Mode]]
-`;
-        }
-        if (item.category && item.category !== "godmode") {
-          mContent += `**Category:** [[${rootFolder}/Categories/${item.category}|${item.category}]]
-`;
-        } else {
-          mContent += `**Category:** [[${rootFolder}/God_Mode|God Mode]]
-`;
-        }
-        mContent += `
-`;
-      }
-      mContent += `## \u{1F4DC} Payload
+    mContent += `## \u{1F4DC} Payload
 
+${item.data}
 `;
-      mContent += `${item.data}
-`;
-      await this.writeOrUpdateFile(`${rootFolder}/Memories/${shortId}.md`, mContent);
-    }
-    await this.injectSexyGraphSettings();
+    await this.writeOrUpdateFile(`${folderPath}/${shortId}.md`, mContent);
   }
   async injectSexyGraphSettings() {
     const configDir = this.app.vault.configDir || ".obsidian";
@@ -238,6 +265,10 @@ tags:
           "color": { "a": 1, "rgb": 16733610 }
         },
         {
+          "query": "tag:#memB/cluster",
+          "color": { "a": 1, "rgb": 16733610 }
+        },
+        {
           "query": "tag:#memB/memory",
           "color": { "a": 1, "rgb": 8947967 }
         }
@@ -248,10 +279,10 @@ tags:
       "nodeSizeMultiplier": 1.1,
       "lineSizeMultiplier": 0.5,
       "collapse-forces": false,
-      "centerStrength": 0.2,
-      "repelStrength": 16.5,
-      "linkStrength": 0.8,
-      "linkDistance": 150,
+      "centerStrength": 0.5,
+      "repelStrength": 18.5,
+      "linkStrength": 1,
+      "linkDistance": 90,
       "scale": 0.7,
       "close": false
     };
