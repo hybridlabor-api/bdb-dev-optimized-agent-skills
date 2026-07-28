@@ -72,18 +72,29 @@ Before pushing any commit to GitHub, execute this 5-point sanitization audit:
 
 ---
 
-## 4. High-Impact README Layout Standard
+## 4. High-Impact README Layout Standard & Dynamic Badges
 
-A top-tier `README.md` follows this structured section order:
+A top-tier `README.md` MUST include a clean row of dynamic shields/badges directly under the main title. Badges MUST be tailored to the specific repository owner, repository name, tech stack, license, test coverage, and key project metric.
 
+### Standard Badge Row Formula
 ```markdown
 # Project Name
 
 [![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<owner>/<repo>/actions)
-[![npm version](https://badge.fury.io/js/<package>.svg)](https://www.npmjs.com/package/<package>)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![coverage](https://img.shields.io/badge/coverage-94%25-brightgreen.svg)](https://github.com/<owner>/<repo>)
+[![runtime](https://img.shields.io/badge/<runtime>-<version>-blue.svg)](https://github.com/<owner>/<repo>)
+[![license](https://img.shields.io/badge/license-<license>-blue.svg)](LICENSE)
+[![key metric](https://img.shields.io/badge/<metric_name>-<value>-brightgreen.svg)](https://github.com/<owner>/<repo>)
 
 > **High-impact tagline explaining what the project does in 1-2 concise sentences.**
+```
+
+### Dynamic Badge Adaptation Guidelines
+- **`CI Status Badge`**: Points to `.github/workflows/ci.yml` in the specific repository (`CI | passing`).
+- **`Coverage Badge`**: Reflects actual test suite coverage (e.g. `coverage | 94%`).
+- **`Runtime / Language Badge`**: Matches the primary runtime (e.g., `python | 3.10+`, `node | 18+`, `go | 1.22+`).
+- **`License Badge`**: Matches the project's `LICENSE` file (`license | Apache 2.0`, `license | MIT`).
+- **`Key Metric Badge`**: Highlights the primary value or performance metric (e.g. `avg savings | 67%`, `downloads | 10k+`).
 
 ---
 
