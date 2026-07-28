@@ -4,6 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const os = require('os');
+const https = require('https');
+
+const pkgPath = path.join(__dirname, 'package.json');
+let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '1.1.0' };
+if (fs.existsSync(pkgPath)) {
+    try { pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')); } catch (e) {}
+}
 
 const colors = {
     reset: "\x1b[0m",
@@ -15,9 +22,34 @@ const colors = {
     dim: "\x1b[2m"
 };
 
+function checkForUpdates() {
+    return new Promise((resolve) => {
+        const req = https.get(`https://registry.npmjs.org/${pkg.name}/latest`, { timeout: 1500 }, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try {
+                    const latest = JSON.parse(data).version;
+                    if (latest && latest !== pkg.version) {
+                        console.log(`${colors.yellow}${colors.bold}╭───────────────────────────────────────────────────────────╮${colors.reset}`);
+                        console.log(`${colors.yellow}${colors.bold}│  💡 Update available: ${colors.dim}${pkg.version}${colors.reset}${colors.yellow}${colors.bold} ➔ ${colors.green}${latest}${colors.reset}                   │${colors.reset}`);
+                        console.log(`${colors.yellow}${colors.bold}│  Run: ${colors.cyan}npx ${pkg.name}@latest${colors.reset}                       │${colors.reset}`);
+                        console.log(`${colors.yellow}${colors.bold}╰───────────────────────────────────────────────────────────╯${colors.reset}\n`);
+                    }
+                } catch (e) {}
+                resolve();
+            });
+        });
+        req.on('error', () => resolve());
+        req.on('timeout', () => { req.destroy(); resolve(); });
+    });
+}
+
 console.log(`\n${colors.cyan}${colors.bold}=========================================================${colors.reset}`);
-console.log(`${colors.cyan}${colors.bold} 🚀 Starting BDB Optimized Agent Skills Installation${colors.reset}`);
+console.log(`${colors.cyan}${colors.bold} 🚀 Starting BDB Optimized Agent Skills Installation (v${pkg.version})${colors.reset}`);
 console.log(`${colors.cyan}${colors.bold}=========================================================${colors.reset}\n`);
+
+checkForUpdates();
 
 const rl = readline.createInterface({
   input: process.stdin,
