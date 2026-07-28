@@ -3,6 +3,7 @@
 import json
 import re
 from typing import Any
+
 from src.processors.base import Processor
 
 
@@ -16,7 +17,13 @@ class BdbTouchdesignerProcessor(Processor):
     def can_handle(self, command: str) -> bool:
         return any(
             kw in command.lower()
-            for kw in ["bdb_td", "touchdesigner", "get_td_nodes", "get_td_node_parameters", "mcp_td"]
+            for kw in [
+                "bdb_td",
+                "touchdesigner",
+                "get_td_nodes",
+                "get_td_node_parameters",
+                "mcp_td",
+            ]
         )
 
     def process(self, command: str, output: str) -> str:
@@ -34,9 +41,10 @@ class BdbTouchdesignerProcessor(Processor):
             lines = output_str.splitlines()
             result = []
             for line in lines:
-                if any(err_kw in line.lower() for err_kw in ["error", "warning", "cook", "fail", "exception"]):
-                    result.append(line)
-                elif line.startswith(("/", "op:", "COMP:", "TOP:", "CHOP:", "DAT:")):
+                if any(
+                    err_kw in line.lower()
+                    for err_kw in ["error", "warning", "cook", "fail", "exception"]
+                ) or line.startswith(("/", "op:", "COMP:", "TOP:", "CHOP:", "DAT:")):
                     result.append(line)
             return "\n".join(result) if result else output_str[:400]
 
@@ -47,7 +55,17 @@ class BdbTouchdesignerProcessor(Processor):
             compressed = {}
             for k, v in data.items():
                 # Always preserve critical keys
-                if k in ("name", "path", "type", "error", "errors", "cook_error", "val", "value", "id"):
+                if k in (
+                    "name",
+                    "path",
+                    "type",
+                    "error",
+                    "errors",
+                    "cook_error",
+                    "val",
+                    "value",
+                    "id",
+                ):
                     compressed[k] = self._compress_td_json(v)
                 elif isinstance(v, (dict, list)):
                     sub = self._compress_td_json(v)
@@ -68,7 +86,10 @@ class BdbUnrealProcessor(Processor):
     hook_patterns = [r"bdb_unreal_\w+", r"unreal_\w+", r"mcp_unreal_\w+"]
 
     def can_handle(self, command: str) -> bool:
-        return any(kw in command.lower() for kw in ["unreal", "bdb_unreal", "control_actor", "manage_blueprint"])
+        return any(
+            kw in command.lower()
+            for kw in ["unreal", "bdb_unreal", "control_actor", "manage_blueprint"]
+        )
 
     def process(self, command: str, output: str) -> str:
         output_str = output.strip()
@@ -82,7 +103,12 @@ class BdbUnrealProcessor(Processor):
         except Exception:
             lines = output_str.splitlines()
             result = [
-                l for l in lines if any(k in l.lower() for k in ["error", "warning", "pcg", "blueprint", "actor", "logunreal"])
+                l
+                for l in lines
+                if any(
+                    k in l.lower()
+                    for k in ["error", "warning", "pcg", "blueprint", "actor", "logunreal"]
+                )
             ]
             return "\n".join(result) if result else output_str[:500]
 
@@ -92,7 +118,17 @@ class BdbUnrealProcessor(Processor):
         if isinstance(data, dict):
             compressed = {}
             for k, v in data.items():
-                if k in ("name", "actor", "class", "location", "rotation", "scale", "error", "status", "id"):
+                if k in (
+                    "name",
+                    "actor",
+                    "class",
+                    "location",
+                    "rotation",
+                    "scale",
+                    "error",
+                    "status",
+                    "id",
+                ):
                     compressed[k] = self._compress_unreal_json(v)
                 elif isinstance(v, (dict, list)):
                     sub = self._compress_unreal_json(v)
@@ -112,7 +148,10 @@ class BdbAfterEffectsProcessor(Processor):
     hook_patterns = [r"bdb_after_effects_\w+", r"ae-mcp", r"after_effects_\w+"]
 
     def can_handle(self, command: str) -> bool:
-        return any(kw in command.lower() for kw in ["after_effects", "ae-mcp", "extendscript", "create-composition"])
+        return any(
+            kw in command.lower()
+            for kw in ["after_effects", "ae-mcp", "extendscript", "create-composition"]
+        )
 
     def process(self, command: str, output: str) -> str:
         output_str = output.strip()
@@ -125,7 +164,10 @@ class BdbAfterEffectsProcessor(Processor):
         except Exception:
             lines = output_str.splitlines()
             filtered = [
-                l for l in lines if not re.search(r"Rendering frame \d+|Progress: \d+%", l) and any(
+                l
+                for l in lines
+                if not re.search(r"Rendering frame \d+|Progress: \d+%", l)
+                and any(
                     k in l.lower() for k in ["error", "layer", "comp", "effect", "render", "result"]
                 )
             ]
@@ -136,7 +178,8 @@ class BdbAfterEffectsProcessor(Processor):
             return {
                 k: self._clean_ae_json(v)
                 for k, v in data.items()
-                if k in ("name", "index", "layer", "comp", "error", "effects", "status") or (v not in (None, "", []))
+                if k in ("name", "index", "layer", "comp", "error", "effects", "status")
+                or (v not in (None, "", []))
             }
         elif isinstance(data, list):
             return [self._clean_ae_json(i) for i in data if i is not None]
@@ -163,14 +206,21 @@ class BdbDavinciProcessor(Processor):
             return json.dumps(self._clean_davinci_json(data), separators=(",", ":"))
         except Exception:
             lines = output_str.splitlines()
-            return "\n".join([l for l in lines if any(k in l.lower() for k in ["error", "clip", "timeline", "track", "render"])])
+            return "\n".join(
+                [
+                    l
+                    for l in lines
+                    if any(k in l.lower() for k in ["error", "clip", "timeline", "track", "render"])
+                ]
+            )
 
     def _clean_davinci_json(self, data: Any) -> Any:
         if isinstance(data, dict):
             return {
                 k: self._clean_davinci_json(v)
                 for k, v in data.items()
-                if k in ("name", "clip", "track", "start", "end", "error", "status", "id") or (v not in (None, "", []))
+                if k in ("name", "clip", "track", "start", "end", "error", "status", "id")
+                or (v not in (None, "", []))
             }
         elif isinstance(data, list):
             return [self._clean_davinci_json(i) for i in data if i is not None]
@@ -185,7 +235,10 @@ class BdbCreativeSuiteProcessor(Processor):
     hook_patterns = [r"bdb_resolume_\w+", r"bdb_rhino_\w+", r"adobe_uxp_\w+"]
 
     def can_handle(self, command: str) -> bool:
-        return any(kw in command.lower() for kw in ["resolume", "rhino", "adobe_uxp", "photoshop", "premiere"])
+        return any(
+            kw in command.lower()
+            for kw in ["resolume", "rhino", "adobe_uxp", "photoshop", "premiere"]
+        )
 
     def process(self, command: str, output: str) -> str:
         output_str = output.strip()
@@ -196,7 +249,13 @@ class BdbCreativeSuiteProcessor(Processor):
             data = json.loads(output_str)
             return json.dumps(data, separators=(",", ":"))
         except Exception:
-            return "\n".join([l for l in output_str.splitlines() if any(k in l.lower() for k in ["error", "layer", "clip", "geom", "status"])])
+            return "\n".join(
+                [
+                    l
+                    for l in output_str.splitlines()
+                    if any(k in l.lower() for k in ["error", "layer", "clip", "geom", "status"])
+                ]
+            )
 
 
 class BdbMembProcessor(Processor):
@@ -207,7 +266,9 @@ class BdbMembProcessor(Processor):
     hook_patterns = [r"memb_\w+", r"search_memory", r"add_memory"]
 
     def can_handle(self, command: str) -> bool:
-        return any(kw in command.lower() for kw in ["memb", "add_memory", "search_memory", "godmode"])
+        return any(
+            kw in command.lower() for kw in ["memb", "add_memory", "search_memory", "godmode"]
+        )
 
     def process(self, command: str, output: str) -> str:
         output_str = output.strip()
@@ -220,12 +281,14 @@ class BdbMembProcessor(Processor):
                 compressed = []
                 for item in data:
                     if isinstance(item, dict):
-                        compressed.append({
-                            "id": item.get("id"),
-                            "category": item.get("category"),
-                            "project_id": item.get("project_id"),
-                            "text": item.get("text", item.get("content", ""))
-                        })
+                        compressed.append(
+                            {
+                                "id": item.get("id"),
+                                "category": item.get("category"),
+                                "project_id": item.get("project_id"),
+                                "text": item.get("text", item.get("content", "")),
+                            }
+                        )
                 return json.dumps(compressed, separators=(",", ":"))
             return json.dumps(data, separators=(",", ":"))
         except Exception:
