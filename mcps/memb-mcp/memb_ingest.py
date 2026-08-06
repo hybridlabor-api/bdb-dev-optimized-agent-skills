@@ -68,6 +68,26 @@ def scan_directory(root_dir: str, project_name: str) -> List[Dict[str, Any]]:
     documents = []
     print(f"🔍 Scanning directory: {root_dir} for project '{project_name}'...")
 
+    # If the target path is directly a .openwiki directory or contains .openwiki
+    if os.path.basename(root_dir.rstrip("/")) == ".openwiki" or "/.openwiki" in root_dir:
+        for wiki_file in os.listdir(root_dir):
+            if wiki_file.endswith(".md"):
+                w_path = os.path.join(root_dir, wiki_file)
+                try:
+                    with open(w_path, "r", encoding="utf-8") as f:
+                        content = f.read().strip()
+                    if content:
+                        documents.append({
+                            "source": f"{project_name}/.openwiki/{wiki_file}",
+                            "project": project_name,
+                            "type": "openwiki_doc",
+                            "content": content[:3000]
+                        })
+                except Exception:
+                    pass
+        if documents:
+            return documents
+
     for dirpath, dirnames, filenames in os.walk(root_dir):
         # Skip ignored directories
         dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS and not d.startswith(".")]
@@ -298,7 +318,7 @@ The `memB` architecture is brutally optimized for ultra-fast inference on small,
 
 def main():
     parser = argparse.ArgumentParser(description="memB Deep Ingestion Tool")
-    parser.add_argument("path", nargs="?", default="/Users/timrennings/bdb-dev", help="File or directory path to ingest")
+    parser.add_argument("path", nargs="?", default=os.path.expanduser("~/bdb-dev"), help="File or directory path to ingest")
     parser.add_argument("--project", help="Explicit project name (defaults to folder basename)")
     parser.add_argument("--transcripts", action="store_true", help="Also mine past Antigravity conversation logs")
     parser.add_argument("--category", default="project_architecture", help="Memory category (e.g. 3D_Engine, Styling_System)")

@@ -740,6 +740,7 @@ async function promptMemBIngestion(mcpCodeTarget) {
     if (fs.existsSync(ingestScript) && fs.existsSync(pythonBin)) {
         console.log(` -> Running memB deep ingestion on: ${targetDir}...`);
         try {
+            const { execSync } = require('child_process');
             const cmd = `"${pythonBin}" "${ingestScript}" "${targetDir}"${includeTranscripts ? ' --transcripts' : ''}`;
             execSync(cmd, { stdio: 'inherit' });
         } catch (e) {

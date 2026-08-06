@@ -165,26 +165,37 @@ To make these MCP integrations accessible to AI agents, we provide **11 dedicate
 
 ---
 
-## 🌐 OpenWiki Native System
+## 🌐 OpenWiki & RepoGraph Code Health Engine (v2.4.0)
 
-BDB OS v1.3.3 introduces a fully **Gemini-Native OpenWiki** engine designed to autonomously maintain codebase wikis, README entries, and release notes across all your active projects.
+The **OpenWiki Engine** autonomously maintains living codebase documentation, architecture specs, ADRs, release notes, and real-time code health analytics across all your active projects.
 
-### 📚 Documentation & Wiki
-- **Entrypoint:** [.openwiki/quickstart.md](.openwiki/quickstart.md)
-- **Reference guides:** [architecture.md](.openwiki/architecture.md), [release_notes.md](.openwiki/release_notes.md), [decisions.md](.openwiki/decisions.md)
+### 📚 Documentation & Dashboard
+- **Entrypoint & Setup:** [.openwiki/quickstart.md](.openwiki/quickstart.md)
+- **Architecture & Ecosystem:** [.openwiki/architecture.md](.openwiki/architecture.md)
+- **Design Decisions (ADRs):** [.openwiki/decisions.md](.openwiki/decisions.md)
+- **Changelog & History:** [.openwiki/release_notes.md](.openwiki/release_notes.md)
+- **Code Health Report:** [.openwiki/code_health.md](.openwiki/code_health.md)
+- **Interactive Live Dashboard:** [.openwiki/code_health_dashboard.html](.openwiki/code_health_dashboard.html)
 
 <details>
-<summary><strong>🧠 How It Works</strong></summary>
+<summary><strong>🧠 Multi-Provider LLM & Zero-Token RepoGraph Architecture</strong></summary>
 
-1. **No Node CLI Overhead:** Rather than utilizing an external Javascript engine and model API keys, the system runs inside your local Antigravity environment, leveraging the 1M+ context window of **Gemini 3.5 Flash** for free.
-2. **Git Evidence Loop:** The daemon executes a sub-second Python helper ([openwiki_helper.py](skills/global_config/openwiki-skill/scripts/openwiki_helper.py)) to parse Git changes and unstaged diffs.
-3. **Smart Updates:** If code changes are detected, it invokes the global `agy` CLI client in print-mode to update `.openwiki/` markdown pages and root entrypoints, then commits documentation updates separately using the prefix `docs(wiki): update project specs [auto]`.
+1. **Multi-Provider LLM Agility:** Decoupled from single-vendor lock-in. Configure any LLM backend via environment variables:
+   - **Google GenAI:** `gemma-4-12b-it` (default via `google-genai` SDK)
+   - **Groq:** `llama-3.3-70b-versatile` (ultra-low latency)
+   - **Grok / xAI:** `grok-2-latest`
+   - **Nvidia NIM:** `meta/llama-3.3-70b-instruct`
+   - **OpenRouter:** `anthropic/claude-3.5-sonnet` (200+ models)
+   - **OpenAI:** `gpt-4o-mini` / `gpt-4o`
+   - **Offline / Local:** Ollama (`llama3`), LM Studio, or any OpenAI-compatible endpoint.
+2. **RepoGraph Zero-Token Git Analytics:** Analyzes 90-day hotspot velocity, single-author bus factor risk, and maintainability index purely through deterministic local Git analysis—costing **0 LLM tokens**.
+3. **Repowise-Grade Live HTML Dashboard:** `.openwiki/code_health_dashboard.html` provides 6 visual SVG panels (Galaxy Cluster Map, Risk Donut, Bus Factor Matrix, Commit Velocity Churn, Hotspot Leaderboard, Architecture Health Radar) with **60-second live auto-refresh** and integrated memB ADR telemetry.
 </details>
 
 <details>
 <summary><strong>⚙️ Setting Up the Background Daemon</strong></summary>
 
-To ensure your project documentation never goes out of date, configure the background daemon:
+To ensure your project documentation and code health dashboards never go out of date, configure the background daemon:
 
 #### On macOS (LaunchAgent)
 ```bash
@@ -197,21 +208,37 @@ powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.gemini\config\skills
 ```
 
 #### For All Platforms: Register Projects & Monitor
-**Register Projects:** Add absolute directory paths to your projects config file at `~/.openwiki/projects.json`:
+**Register Projects:** Add workspace paths to your config file at `~/.openwiki/projects.json`:
 ```json
 {
   "projects": [
-    "/Users/<your-username>/bdb-dev-optimized-agent-skills",
-    "/Users/<your-username>/Web-Projects/your-project"
+    "~/bdb-dev/bdb-dev-optimized-agent-skills",
+    "~/Projects/your-active-project"
   ],
   "interval_seconds": 3600
 }
 ```
-**Monitor Execution:** Tail the active logs to see background scan actions and documentation rebuild status:
+
+**Monitor Execution:** Tail the active logs to inspect background documentation rebuild status:
 ```bash
 tail -f ~/.openwiki/daemon.log
 ```
 </details>
+
+---
+
+## 🎨 Modular Creator Extension Suite (`bdb-dev-creator-extension`)
+
+To keep the core skills pack fast and lightweight (<25MB), heavy 3D generation, cinema video production, and ComfyUI pipelines are decoupled into the companion **BDB Creator Extension**:
+
+- **🔷 3D Generation Suite (`engines/3d/`):** Microsoft TRELLIS (high-fidelity image-to-3D), Stability AI TripoSR (<0.5s image-to-mesh), and parametric CadQuery text-to-CAD (STEP/STL/URDF).
+- **🎬 Cinema Video Suite (`engines/video/`):** OpenMontage AI orchestrator, 100+ Remotion cinema-grade motion templates (`video-shotcraft`), and Palmier Pro macOS NLE HTTP MCP server (`http://127.0.0.1:19789/mcp`).
+- **🎨 Local ComfyUI MCP (`mcps/comfyui-mcp/`):** Local FLUX, SDXL, and Wan2.1 generative pipelines exposed over Model Context Protocol.
+
+Link the suite alongside your core skills:
+```bash
+git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git
+```
 
 ---
 

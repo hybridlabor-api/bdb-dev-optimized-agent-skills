@@ -1,19 +1,124 @@
 # Architecture
 
-This document tracks the technical structure of the skills pack.
+This document tracks the technical architecture and modular structure of the **BDB Agent OS Ecosystem**.
 
-## Core Components
-- **installer.js**: A Node.js interactive CLI that copies MCP configurations and global skills into `~/.gemini/config/`.
-- **OpenWiki Daemon (`openwiki_daemon.py`)**: A Python background process running on a schedule (LaunchAgent / Task Scheduler) that directly queries the Gemma 4 API (via `google-genai` SDK) to update codebase markdown without spinning up new agent instances.
-- **memB Core Module**: A required local semantic memory layer utilizing ONNX-quantized models and SQLite to retain agent context safely. Features deep ingestion tools (`memb_ingest.py`) and a native Obsidian Vault exporter/visualizer.
-- **Auto-Update Checker**: A non-blocking background task that checks for npm releases.
-- **Obsidian Vault Plugin**: A native plugin that syncs memB knowledge to Obsidian using radial mindmap Mermaid graphs.
+---
+
+## 🏛️ Ecosystem Topology & Modular Decoupling
+
+The ecosystem is partitioned into two dedicated layers to balance high-speed agent agility with specialized heavy-compute creative pipelines:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│              bdb-dev-optimized-agent-skills (Core Backbone)             │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
+│  │ 144 Curated      │  │ memB Semantic    │  │ OpenWiki Multi-LLM    │  │
+│  │ Agent Skills     │  │ Memory Engine    │  │ & RepoGraph Engine    │  │
+│  └──────────────────┘  └──────────────────┘  └───────────────────────┘  │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
+│  │ Heimdall Token   │  │ 22 Core Local    │  │ 6-Stage Agent         │  │
+│  │ Saver CLI Engine │  │ Creative MCPs    │  │ Pipeline Engine       │  │
+│  └──────────────────┘  └──────────────────┘  └───────────────────────┘  │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                    Modular Add-on / Fork Architecture
+                                     │
+┌────────────────────────────────────▼────────────────────────────────────┐
+│               bdb-dev-creator-extension (Heavy Compute)                 │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
+│  │ 3D Generation    │  │ Video Production │  │ ComfyUI MCP Engine    │  │
+│  │ (TRELLIS/TripoSR)│  │ (OpenMontage/NLE)│  │ (FLUX/SDXL/Wan2.1)    │  │
+│  └──────────────────┘  └──────────────────┘  └───────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Core Skills Backbone (`bdb-dev-optimized-agent-skills`)**:
+   - Ultra-lightweight, high-speed skill execution engine.
+   - Bundles universal agent skills, 22 core local MCP servers, memB semantic memory, OpenWiki daemon, and Heimdall Token Saver.
+2. **Creator Extension Suite (`bdb-dev-creator-extension`)**:
+   - Standalone modular extension containing heavy CUDA/ML models, 3D parametric & mesh generators (TRELLIS, TripoSR, text-to-cad), automated cinema video pipelines (OpenMontage, Remotion Video-Shotcraft, Palmier Pro NLE MCP), and local ComfyUI rendering workflows.
+
+---
+
+## ⚙️ Core Subsystems
+
+### 1. Multi-Provider OpenWiki Engine (`openwiki_daemon.py`)
+A continuous, non-intrusive background daemon that maintains codebase documentation, changelogs, architecture specs, and design decisions in `.openwiki/`.
+- **Multi-Provider LLM Support:** Fully decoupled from vendor lock-in with unified OpenAI-compatible and Google GenAI adapters:
+  - **Google:** `gemma-4-12b-it` (via `google-genai` SDK)
+  - **Groq:** `llama-3.3-70b-versatile` (ultra-low latency)
+  - **Grok / xAI:** `grok-2-latest`
+  - **Nvidia NIM:** `meta/llama-3.3-70b-instruct`
+  - **OpenRouter:** `anthropic/claude-3.5-sonnet` and 200+ models
+  - **OpenAI:** `gpt-4o-mini` / `gpt-4o`
+  - **Local Offline / Self-Hosted:** Ollama (`llama3`), LM Studio, or any custom OpenAI-compatible endpoint
+- **Configuration:** Controlled via `OPENWIKI_PROVIDER`, `OPENWIKI_MODEL`, and `OPENWIKI_BASE_URL` environment variables.
+
+### 2. RepoGraph Deterministic Code Health Analytics (Zero-Token Git Engine)
+A 100% deterministic, zero-token cost analysis subsystem embedded in the OpenWiki pipeline:
+- **90-Day Hotspot Tracking:** Scans commit velocity and file churn frequency over rolling 90-day intervals to compute relative defect risk.
+- **Single-Author Bus Factor Analysis:** Automatically identifies mission-critical files touched by only one contributor.
+- **Maintainability & Churn Scoring:** Evaluates codebase stability without sending source files to external LLMs.
+- **Interactive HTML Dashboard (`.openwiki/code_health_dashboard.html`):** Repowise-grade visualization featuring:
+  - 6 SVG visual panels: Galaxy Cluster Map, Defect Risk Donut, Bus Factor Matrix, Commit Velocity Churn, Hotspot Leaderboard, Architecture Health Radar.
+  - 60-second live auto-refresh (`<meta http-equiv="refresh" content="60">`).
+  - Integrated memB sync card displaying recent Architectural Decision Records (ADRs).
+
+### 3. memB Local Semantic Memory Brain
+An offline-first, local vector database and knowledge management engine:
+- **Vector Embedding Engine:** Pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model coupled with a local SQLite database (`~/.MemBDB/memb.db`).
+- **Semantic Ingestion Tool (`memb_ingest.py`):** Ingests `.openwiki`, `agent.md`, ADRs, and session transcripts using targeted `--project` and `--category` flags.
+- **Physical Radial Vault (`God_Mode.md`):** Generates an AI-first directional markdown vault (`~/.MemBDB/memB_Vault`) designed for zero-compute orientation by local SLMs.
+- **Obsidian Graph Plugin (`obsidian-memb-plugin`):** Directional parent-to-child graph visualizer preventing context clustering.
+
+### 4. Heimdall Token Saver CLI Context Compression Engine
+- Reduces agent context overhead by **60–99%** on high-volume CLI tool outputs across 36 specialized processors.
+- Enforces strict zero-information-loss rules on stack traces, exit codes, and test assertions with automated secret redaction.
+
+---
 
 ## 🔄 BDB Agent Pipeline Architecture
-- **6-Stage Lifecycle:** DEFINE (`/spec`) -> PLAN (`/plan`) -> BUILD (`/build`) -> VERIFY (`/test`) -> REVIEW (`/review`) -> SHIP (`/ship`).
-- **`agent-pipeline` Skill:** Defines stage transitions, slash command triggers, and QA validation checkpoints. Includes extended ideation flows like `/bdbmediastorm` and `/bdbrainstorm`, and repository preparation using `github-repo`.
 
-## Directory Structure
-- Each skill is contained in a separate subdirectory.
-- A `SKILL.md` file defines the prompt, behavior, and capabilities.
-- Additional scripts (Python, Bash) reside in the skill's `scripts/` folder.
+The 6-stage structured lifecycle enforces quality and deterministic verification across all AI agents:
+
+```text
+DEFINE (/spec) ──▶ PLAN (/plan) ──▶ BUILD (/build) ──▶ VERIFY (/test) ──▶ REVIEW (/review) ──▶ SHIP (/ship)
+```
+
+- **DEFINE (`/spec`, `openwiki-skill`, `github-repo`):** Requirements gathering, workspace confirmation, `agent.md` and `.openwiki/` scaffolding.
+- **PLAN (`/plan`, `/grill-me`, `/bdbrainstorm`):** Multi-agent stress-testing, UI/UX specifications, architectural plans.
+- **BUILD (`/build`, `/subagents`):** Delegated task execution with specialized subagents and 22 custom local MCPs.
+- **VERIFY (`/test`):** Automated test runs, linters, and signal-flow verifications.
+- **REVIEW (`/review`):** Security audits, secret scanning, code health checks, and design compliance.
+- **SHIP (`/ship`):** Documentation updates, private git push, and automated memB synchronization.
+
+---
+
+## 📁 Repository Directory Structure
+
+```text
+bdb-dev-optimized-agent-skills/
+├── .openwiki/                       # Living architectural & codebase documentation
+│   ├── quickstart.md                # Developer onboarding and setup
+│   ├── architecture.md              # System design, data flows, and subsystem topology
+│   ├── decisions.md                 # Architecture Decision Records (ADRs)
+│   ├── release_notes.md             # Version changelogs and feature history
+│   ├── code_health.md               # Deterministic RepoGraph metrics & hotspot report
+│   └── code_health_dashboard.html   # Repowise-grade 6-panel live SVG dashboard
+├── mcps/                            # 22 local MCP servers for creative & system tooling
+│   ├── bdb_adobe_mcp/               # macOS AppleScript & Windows COM ExtendScript bridges
+│   ├── bdb_davinci_mcp/             # Resolve 162-tool suite & local AI audio models
+│   ├── bdb_rhino_mcp/               # McNeel Rhino 3D & Grasshopper connectors
+│   ├── bdb_touchdesigner_mcp/       # MindDesigner TouchDesigner TCP/OSC bridge
+│   ├── bdb_unreal_mcp/              # Unreal Engine 5 Web Remote Control bridge
+│   ├── bdb_ma3_mcp/                 # grandMA3 OSC/UDP automation
+│   ├── bdb_resolume_mcp/            # Resolume Arena REST API controller
+│   ├── memb-mcp/                    # memB local SQLite + ONNX vector memory server
+│   └── zavora_computer_use/         # Native precompiled OS automation binaries
+├── skills/                          # 144 curated agent skills
+│   ├── global_config/               # System skills (openwiki-skill, memb-skill, MCP docs)
+│   └── ...                          # Domain-specific development and creative skills
+├── tools/                           # Ecosystem tool extensions (e.g. obsidian-memb-plugin)
+├── installer.js                     # Interactive CLI installer and daemon manager
+└── README.md                        # Master documentation and quick reference
+```
