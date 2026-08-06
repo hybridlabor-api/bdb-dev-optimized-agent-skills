@@ -746,8 +746,36 @@ async function promptMemBIngestion(mcpCodeTarget) {
     }
 }
 
+async function promptCreatorExtension(mcpConfigPath) {
+    if (isAutoYes) return;
+    
+    console.log(`\n${colors.magenta}${colors.bold}🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI)${colors.reset}`);
+    const doInstall = await new Promise((resolve) => {
+        rl.question(`${colors.yellow}Möchtest du das Plugin 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines) einrichten? (y/N): ${colors.reset}`, (answer) => {
+            resolve(answer.trim().toLowerCase() === 'y');
+        });
+    });
+
+    if (!doInstall) return;
+
+    const creatorDir = path.join(path.dirname(srcDir), 'bdb-dev-creator-extension');
+    const installerScript = path.join(creatorDir, 'installer.js');
+
+    if (fs.existsSync(installerScript)) {
+        console.log(` -> Starte Setup der BDB Creator Extension...`);
+        try {
+            execSync(`node "${installerScript}"`, { stdio: 'inherit' });
+        } catch (e) {
+            console.log(` -> Hinweis beim Ausführen des Creator Extension Setups: ${e.message}`);
+        }
+    } else {
+        console.log(` -> BDB Creator Extension Verzeichnis nicht gefunden unter ${creatorDir}.`);
+    }
+}
+
         await installOpenWikiDaemon(creds.gemini, targetSkillDir, { provider: creds.openwikiProvider, model: creds.openwikiModel, baseUrl: creds.openwikiBaseUrl });
         await installTokenSaver(platform);
+        await promptCreatorExtension(mcpConfigPath);
         await promptMemBIngestion(mcpCodeTarget);
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
