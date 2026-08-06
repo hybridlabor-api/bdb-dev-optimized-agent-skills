@@ -247,10 +247,14 @@ function promptMode(callback) {
 
 async function promptMcpSelection(mcpsDir) {
     if (isAutoYes) {
-        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name); } catch(e) { return []; }
+        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== '__pycache__').map(d => d.name); } catch(e) { return []; }
     }
     let availableMcps = [];
-    try { availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name); } catch(e) { return []; }
+    try { 
+        availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
+            .filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== '__pycache__')
+            .map(d => d.name); 
+    } catch(e) { return []; }
     if (availableMcps.length === 0) return [];
 
     const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
@@ -571,11 +575,11 @@ promptMode(({ mode, platform, customPaths }) => {
 
     (async () => {
         const mcpSrcDir = path.join(srcDir, 'mcps');
+        const mcpCodeTarget = path.join(targetMcpDir, 'mcps');
         const selectedMcps = await promptMcpSelection(mcpSrcDir);
         
         if (selectedMcps.length > 0) {
             fs.mkdirSync(targetMcpDir, { recursive: true });
-            const mcpCodeTarget = path.join(targetMcpDir, 'mcps');
             if (!fs.existsSync(mcpCodeTarget)) fs.mkdirSync(mcpCodeTarget, { recursive: true });
 
             console.log(`\nInstalling ${selectedMcps.length} selected MCPs...`);
