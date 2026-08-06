@@ -332,9 +332,100 @@ def write_code_health_page(project_dir, health):
     try:
         with open(health_path, "w") as f:
             f.write(content)
+            
+        # Also write a beautiful HTML dashboard (Repowise SVG style)
+        html_path = os.path.join(wiki_dir, "code_health_dashboard.html")
+        html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoGraph Code Health Dashboard</title>
+    <style>
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+            background-color: #17131D;
+            color: #EEEAF4;
+            margin: 0; padding: 40px;
+        }}
+        .header {{ margin-bottom: 40px; }}
+        h1 {{ font-size: 30px; font-weight: 700; letter-spacing: -.4px; margin: 0 0 10px 0; }}
+        .sub {{ font-size: 15px; color: #A79DB3; margin: 0; }}
+        .card {{
+            background-color: #211B29;
+            border: 1px solid rgba(213,197,232,.10);
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }}
+        .lbl {{ font-size: 11.5px; font-weight: 700; letter-spacing: 1.1px; color: #EEEAF4; margin-bottom: 20px; display: block; }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }}
+        .metric-box {{
+            background-color: #110D17;
+            border: 1px solid rgba(213,197,232,.10);
+            border-radius: 9px;
+            padding: 20px;
+        }}
+        .chiplbl {{ font-size: 10.5px; color: #A79DB3; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 10px; display: block; }}
+        .chipval {{ font-size: 24px; font-weight: 700; }}
+        .val-high {{ color: #F2A03D; }}
+        .val-good {{ color: #34D399; }}
+        .val-neutral {{ color: #A98FC4; }}
+        table {{ width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }}
+        th, td {{ text-align: left; padding: 12px 10px; border-bottom: 1px solid rgba(213,197,232,.05); }}
+        th {{ color: #A79DB3; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }}
+        code {{ background: rgba(213,197,232,.1); padding: 3px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; color: #A98FC4; }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>RepoGraph Code Health</h1>
+        <p class="sub">Generated {now} · Zero LLM · Git-based Analytics</p>
+    </div>
+    
+    <div class="card">
+        <span class="lbl">CODE METRICS</span>
+        <div class="grid">
+            <div class="metric-box">
+                <span class="chiplbl">Hotspot Files</span>
+                <span class="chipval val-high">{len(health["hotspots"])}</span>
+            </div>
+            <div class="metric-box">
+                <span class="chiplbl">Bus Factor Risk</span>
+                <span class="chipval val-good">{len(health["bus_factor"])}</span>
+            </div>
+            <div class="metric-box">
+                <span class="chiplbl">Active Authors</span>
+                <span class="chipval val-neutral">{len(health["commit_freq"])}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <span class="lbl">🔥 HOTSPOTS (LAST 90 DAYS)</span>
+            <table>
+                <tr><th>File</th><th>Changes</th></tr>
+                {"".join(f"<tr><td><code>{f}</code></td><td class='{('val-high' if c >= 10 else 'val-good')}'>{c}</td></tr>" for f, c in health["hotspots"][:5])}
+            </table>
+        </div>
+        <div class="card">
+            <span class="lbl">👤 BUS FACTOR (SINGLE AUTHOR)</span>
+            <table>
+                <tr><th>File</th><th>Author</th></tr>
+                {"".join(f"<tr><td><code>{f}</code></td><td>{a}</td></tr>" for f, a in health["bus_factor"][:5])}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+"""
+        with open(html_path, "w") as f:
+            f.write(html)
+            
         return True
     except Exception as e:
-        log(f"Error writing code_health.md: {e}")
+        log(f"Error writing code health: {e}")
         return False
 
 
