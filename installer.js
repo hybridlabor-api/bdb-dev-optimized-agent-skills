@@ -289,22 +289,70 @@ async function promptMcpSelection(mcpsDir) {
 }
 
 async function promptCredentials() {
-    if (isAutoYes) return { gemini: "", github: "" };
+    if (isAutoYes) return { gemini: "", github: "", openwikiProvider: "google", openwikiModel: "", openwikiBaseUrl: "" };
     return new Promise((resolve) => {
         console.log(`\n${colors.magenta}${colors.bold}--- Integrations & Credentials ---${colors.reset}`);
-        rl.question(`${colors.yellow}Enter your GEMINI_API_KEY for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (gemini) => {
-            rl.question(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (github) => {
-                resolve({ gemini: gemini.trim(), github: github.trim() });
-            });
+
+        // Step 1: LLM Provider for OpenWiki
+        console.log(`\n${colors.cyan}${colors.bold}OpenWiki Documentation Engine - LLM Provider${colors.reset}`);
+        console.log(`  ${colors.dim}[1] Gemma 4 12B  – Google AI Studio (FREE, default)${colors.reset}`);
+        console.log(`  ${colors.dim}[2] GPT-4o-mini  – OpenAI API (requires key)${colors.reset}`);
+        console.log(`  ${colors.dim}[3] Gemini 2.5 Flash – Google AI Studio (FREE, faster)${colors.reset}`);
+        console.log(`  ${colors.dim}[4] Ollama (local, no API key, no cost – e.g. llama3, phi3)${colors.reset}`);
+
+        rl.question(`${colors.yellow}Choose provider [1-4, default: 1]: ${colors.reset}`, (choice) => {
+            let provider = "google", model = "", baseUrl = "";
+            if (choice.trim() === "2") { provider = "openai"; model = "gpt-4o-mini"; }
+            else if (choice.trim() === "3") { provider = "google"; model = "gemini-2.5-flash"; }
+            else if (choice.trim() === "4") { provider = "ollama"; model = "llama3"; }
+
+            const askModel = (afterModel) => {
+                const defaultModel = model || (provider === "google" ? "gemma-4-12b-it" : provider === "openai" ? "gpt-4o-mini" : "llama3");
+                rl.question(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`, (m) => {
+                    if (m.trim()) model = m.trim();
+                    afterModel();
+                });
+            };
+
+            const askApiKey = (afterKey) => {
+                if (provider === "ollama") { afterKey(""); return; }
+                const keyName = provider === "openai" ? "OPENAI_API_KEY" : "GEMINI_API_KEY";
+                rl.question(`${colors.yellow}Enter your ${keyName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, afterKey);
+            };
+
+            const askBaseUrl = (afterUrl) => {
+                if (provider === "ollama") {
+                    rl.question(`${colors.yellow}Ollama base URL [default: http://localhost:11434/v1]: ${colors.reset}`, (u) => {
+                        afterUrl(u.trim() || "http://localhost:11434/v1");
+                    });
+                } else { afterUrl(""); }
+            };
+
+            const askGitHub = (apiKey, bUrl) => {
+                rl.question(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (github) => {
+                    resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: bUrl });
+                });
+            };
+
+            askModel(() => askApiKey((apiKey) => askBaseUrl((bUrl) => askGitHub(apiKey, bUrl))));
         });
     });
 }
 
-async function installOpenWikiDaemon(apiKey, targetSkillDir) {
-    if (!apiKey) { console.log(' -> Skipping OpenWiki Daemon background installation.'); return; }
+async function installOpenWikiDaemon(apiKey, targetSkillDir, openwikiEnv = {}) {
+    if (!apiKey && openwikiEnv.provider !== "ollama") { console.log(' -> Skipping OpenWiki Daemon background installation.'); return; }
     console.log('\nInstalling OpenWiki Daemon...');
     const { spawn, execSync } = require('child_process');
     const scriptBase = path.join(targetSkillDir, 'openwiki-skill', 'scripts');
+
+    const daemonEnv = Object.assign({}, process.env, {
+        GEMINI_API_KEY:     openwikiEnv.provider === 'google' ? apiKey : '',
+        OPENAI_API_KEY:     openwikiEnv.provider === 'openai' ? apiKey : '',
+        OPENWIKI_PROVIDER:  openwikiEnv.provider  || 'google',
+        OPENWIKI_MODEL:     openwikiEnv.model      || '',
+        OPENWIKI_BASE_URL:  openwikiEnv.baseUrl    || '',
+    });
+
     return new Promise((resolve) => {
         let command, args;
         if (os.platform() === 'win32') {
@@ -316,7 +364,7 @@ async function installOpenWikiDaemon(apiKey, targetSkillDir) {
             args = [scriptPath];
             try { fs.chmodSync(scriptPath, '755'); } catch (e) {}
         }
-        const child = spawn(command, args, { stdio: 'inherit', env: Object.assign({}, process.env, { GEMINI_API_KEY: apiKey }) });
+        const child = spawn(command, args, { stdio: 'inherit', env: daemonEnv });
         child.on('close', (code) => {
             if (code === 0) {
                 console.log(' -> OpenWiki Daemon installed successfully.');
@@ -324,7 +372,7 @@ async function installOpenWikiDaemon(apiKey, targetSkillDir) {
                 try {
                     const pythonCmd = os.platform() === 'win32' ? 'python' : 'python3';
                     const daemonPath = path.join(scriptBase, 'openwiki_daemon.py');
-                    execSync(`${pythonCmd} "${daemonPath}" --one-shot`, { stdio: 'ignore', env: Object.assign({}, process.env, { GEMINI_API_KEY: apiKey }) });
+                    execSync(`${pythonCmd} "${daemonPath}" --one-shot`, { stdio: 'ignore', env: daemonEnv });
                     console.log(' -> Daemon auto-started successfully.');
                 } catch(e) {
                     console.warn(` -> Could not auto-start daemon: ${e.message}`);
@@ -675,7 +723,7 @@ async function promptMemBIngestion(mcpCodeTarget) {
     }
 }
 
-        await installOpenWikiDaemon(creds.gemini, targetSkillDir);
+        await installOpenWikiDaemon(creds.gemini, targetSkillDir, { provider: creds.openwikiProvider, model: creds.openwikiModel, baseUrl: creds.openwikiBaseUrl });
         await installTokenSaver(platform);
         await promptMemBIngestion(mcpCodeTarget);
         
