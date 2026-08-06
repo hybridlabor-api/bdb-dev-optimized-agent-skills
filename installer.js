@@ -295,19 +295,45 @@ async function promptCredentials() {
 
         // Step 1: LLM Provider for OpenWiki
         console.log(`\n${colors.cyan}${colors.bold}OpenWiki Documentation Engine - LLM Provider${colors.reset}`);
-        console.log(`  ${colors.dim}[1] Gemma 4 12B  – Google AI Studio (FREE, default)${colors.reset}`);
-        console.log(`  ${colors.dim}[2] GPT-4o-mini  – OpenAI API (requires key)${colors.reset}`);
-        console.log(`  ${colors.dim}[3] Gemini 2.5 Flash – Google AI Studio (FREE, faster)${colors.reset}`);
-        console.log(`  ${colors.dim}[4] Ollama (local, no API key, no cost – e.g. llama3, phi3)${colors.reset}`);
+        console.log(`  ${colors.dim}[1] Gemma 4 12B / Gemini   – Google AI Studio (FREE, default)${colors.reset}`);
+        console.log(`  ${colors.dim}[2] Groq                   – Ultra-Fast Llama 3.3 70B (Groq API)${colors.reset}`);
+        console.log(`  ${colors.dim}[3] Grok / xAI            – Grok 2 (api.x.ai)${colors.reset}`);
+        console.log(`  ${colors.dim}[4] Nvidia NIM            – Llama 3.3 70B (integrate.api.nvidia.com)${colors.reset}`);
+        console.log(`  ${colors.dim}[5] OpenRouter            – Claude 3.5, Qwen, Kimi, Llama (openrouter.ai)${colors.reset}`);
+        console.log(`  ${colors.dim}[6] OpenAI                – GPT-4o-mini / GPT-4o (api.openai.com)${colors.reset}`);
+        console.log(`  ${colors.dim}[7] Ollama / LM Studio    – Local LLM (no API key, no cost)${colors.reset}`);
+        console.log(`  ${colors.dim}[8] Custom OpenAI API     – Custom Base URL + API Key + Model${colors.reset}`);
 
-        rl.question(`${colors.yellow}Choose provider [1-4, default: 1]: ${colors.reset}`, (choice) => {
-            let provider = "google", model = "", baseUrl = "";
-            if (choice.trim() === "2") { provider = "openai"; model = "gpt-4o-mini"; }
-            else if (choice.trim() === "3") { provider = "google"; model = "gemini-2.5-flash"; }
-            else if (choice.trim() === "4") { provider = "ollama"; model = "llama3"; }
+        rl.question(`${colors.yellow}Choose provider [1-8, default: 1]: ${colors.reset}`, (choice) => {
+            let provider = "google", model = "", baseUrl = "", keyEnvName = "GEMINI_API_KEY";
+            const c = choice.trim();
+
+            if (c === "2")      { provider = "groq";       model = "llama-3.3-70b-versatile"; keyEnvName = "GROQ_API_KEY"; }
+            else if (c === "3") { provider = "grok";       model = "grok-2-latest";           keyEnvName = "XAI_API_KEY"; }
+            else if (c === "4") { provider = "nvidia";     model = "meta/llama-3.3-70b-instruct"; keyEnvName = "NVIDIA_API_KEY"; baseUrl = "https://integrate.api.nvidia.com/v1"; }
+            else if (c === "5") { provider = "openrouter"; model = "anthropic/claude-3.5-sonnet"; keyEnvName = "OPENROUTER_API_KEY"; }
+            else if (c === "6") { provider = "openai";     model = "gpt-4o-mini";            keyEnvName = "OPENAI_API_KEY"; }
+            else if (c === "7") { provider = "ollama";     model = "llama3";                 baseUrl = "http://localhost:11434/v1"; }
+            else if (c === "8") { provider = "custom";     keyEnvName = "OPENWIKI_API_KEY"; }
+
+            const askBaseUrl = (afterUrl) => {
+                if (c === "8") {
+                    rl.question(`${colors.yellow}Custom Base URL [e.g. https://integrate.api.nvidia.com/v1]: ${colors.reset}`, (u) => {
+                        baseUrl = u.trim();
+                        afterUrl();
+                    });
+                } else if (c === "7") {
+                    rl.question(`${colors.yellow}Ollama Base URL [default: http://localhost:11434/v1]: ${colors.reset}`, (u) => {
+                        if (u.trim()) baseUrl = u.trim();
+                        afterUrl();
+                    });
+                } else {
+                    afterUrl();
+                }
+            };
 
             const askModel = (afterModel) => {
-                const defaultModel = model || (provider === "google" ? "gemma-4-12b-it" : provider === "openai" ? "gpt-4o-mini" : "llama3");
+                const defaultModel = model || (provider === "google" ? "gemma-4-12b-it" : "gpt-4o-mini");
                 rl.question(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`, (m) => {
                     if (m.trim()) model = m.trim();
                     afterModel();
@@ -316,41 +342,38 @@ async function promptCredentials() {
 
             const askApiKey = (afterKey) => {
                 if (provider === "ollama") { afterKey(""); return; }
-                const keyName = provider === "openai" ? "OPENAI_API_KEY" : "GEMINI_API_KEY";
-                rl.question(`${colors.yellow}Enter your ${keyName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, afterKey);
+                rl.question(`${colors.yellow}Enter your ${keyEnvName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, afterKey);
             };
 
-            const askBaseUrl = (afterUrl) => {
-                if (provider === "ollama") {
-                    rl.question(`${colors.yellow}Ollama base URL [default: http://localhost:11434/v1]: ${colors.reset}`, (u) => {
-                        afterUrl(u.trim() || "http://localhost:11434/v1");
-                    });
-                } else { afterUrl(""); }
-            };
-
-            const askGitHub = (apiKey, bUrl) => {
+            const askGitHub = (apiKey) => {
                 rl.question(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (github) => {
-                    resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: bUrl });
+                    resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: baseUrl });
                 });
             };
 
-            askModel(() => askApiKey((apiKey) => askBaseUrl((bUrl) => askGitHub(apiKey, bUrl))));
+            askBaseUrl(() => askModel(() => askApiKey((apiKey) => askGitHub(apiKey))));
         });
     });
 }
 
 async function installOpenWikiDaemon(apiKey, targetSkillDir, openwikiEnv = {}) {
-    if (!apiKey && openwikiEnv.provider !== "ollama") { console.log(' -> Skipping OpenWiki Daemon background installation.'); return; }
+    const prov = openwikiEnv.provider || "google";
+    if (!apiKey && !["ollama", "lmstudio"].includes(prov)) { console.log(' -> Skipping OpenWiki Daemon background installation (no API key provided).'); return; }
     console.log('\nInstalling OpenWiki Daemon...');
     const { spawn, execSync } = require('child_process');
     const scriptBase = path.join(targetSkillDir, 'openwiki-skill', 'scripts');
 
     const daemonEnv = Object.assign({}, process.env, {
-        GEMINI_API_KEY:     openwikiEnv.provider === 'google' ? apiKey : '',
-        OPENAI_API_KEY:     openwikiEnv.provider === 'openai' ? apiKey : '',
-        OPENWIKI_PROVIDER:  openwikiEnv.provider  || 'google',
-        OPENWIKI_MODEL:     openwikiEnv.model      || '',
-        OPENWIKI_BASE_URL:  openwikiEnv.baseUrl    || '',
+        OPENWIKI_PROVIDER:  prov,
+        OPENWIKI_MODEL:     openwikiEnv.model   || '',
+        OPENWIKI_BASE_URL:  openwikiEnv.baseUrl || '',
+        OPENWIKI_API_KEY:   apiKey || '',
+        GEMINI_API_KEY:     prov === 'google' ? apiKey : (process.env.GEMINI_API_KEY || ''),
+        OPENAI_API_KEY:     prov === 'openai' ? apiKey : (process.env.OPENAI_API_KEY || ''),
+        GROQ_API_KEY:       prov === 'groq'   ? apiKey : (process.env.GROQ_API_KEY   || ''),
+        XAI_API_KEY:        ['grok', 'xai'].includes(prov) ? apiKey : (process.env.XAI_API_KEY || ''),
+        NVIDIA_API_KEY:     prov === 'nvidia' ? apiKey : (process.env.NVIDIA_API_KEY || ''),
+        OPENROUTER_API_KEY: prov === 'openrouter' ? apiKey : (process.env.OPENROUTER_API_KEY || ''),
     });
 
     return new Promise((resolve) => {

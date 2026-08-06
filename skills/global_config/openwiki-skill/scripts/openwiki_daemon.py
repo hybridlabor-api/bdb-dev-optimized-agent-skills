@@ -15,7 +15,39 @@ except ImportError:
 
 LOG_DIR = os.path.join(os.path.expanduser("~"), ".openwiki")
 LOG_FILE = os.path.join(LOG_DIR, "daemon.log")
-MODEL_ID = "gemma-4-12b-it"
+
+# --- Provider config via environment variables ---
+# OPENWIKI_PROVIDER: "google" | "openai" | "groq" | "grok" | "nvidia" | "openrouter" | "ollama" | "lmstudio" | "custom"
+# OPENWIKI_MODEL:    model name (e.g. meta/llama-3.3-70b-instruct, grok-2-latest, llama-3.3-70b-versatile, anthropic/claude-3.5-sonnet, gpt-4o-mini)
+# OPENWIKI_BASE_URL: custom base URL (e.g. https://integrate.api.nvidia.com/v1, https://api.x.ai/v1, https://api.groq.com/openai/v1)
+PROVIDER = os.environ.get("OPENWIKI_PROVIDER", "google").lower()
+
+PROVIDER_BASE_URLS = {
+    "google": "",
+    "openai": "https://api.openai.com/v1",
+    "groq": "https://api.groq.com/openai/v1",
+    "grok": "https://api.x.ai/v1",
+    "xai": "https://api.x.ai/v1",
+    "nvidia": "https://integrate.api.nvidia.com/v1",
+    "openrouter": "https://openrouter.ai/api/v1",
+    "ollama": "http://localhost:11434/v1",
+    "lmstudio": "http://localhost:1234/v1",
+}
+
+PROVIDER_DEFAULT_MODELS = {
+    "google": "gemma-4-12b-it",
+    "openai": "gpt-4o-mini",
+    "groq": "llama-3.3-70b-versatile",
+    "grok": "grok-2-latest",
+    "xai": "grok-2-latest",
+    "nvidia": "meta/llama-3.3-70b-instruct",
+    "openrouter": "anthropic/claude-3.5-sonnet",
+    "ollama": "llama3",
+    "lmstudio": "local-model",
+}
+
+BASE_URL = os.environ.get("OPENWIKI_BASE_URL", "").strip() or PROVIDER_BASE_URLS.get(PROVIDER, "https://api.openai.com/v1")
+MODEL_ID = os.environ.get("OPENWIKI_MODEL", "").strip() or PROVIDER_DEFAULT_MODELS.get(PROVIDER, "gemma-4-12b-it")
 
 SYSTEM_PROMPT = """You are a technical documentation generator for software projects.
 You receive git evidence (recent commits, diffs, status) and existing wiki pages.
@@ -128,37 +160,66 @@ def has_meaningful_changes(evidence):
     return False
 
 
-def call_gemma(api_key, evidence, existing_pages):
-    client = genai.Client(api_key=api_key)
-
+def call_model(api_key, evidence, existing_pages):
+    """Call configured LLM provider. Supports google, openai, ollama."""
     existing_context = ""
     if existing_pages:
         existing_context = "\n\n---\n\n".join(
             f"## Existing: {name}\n{content}" for name, content in existing_pages.items()
         )
-
     user_msg = f"## Git Evidence\n\n{evidence}"
     if existing_context:
         user_msg += f"\n\n## Existing Wiki Pages\n\n{existing_context}"
 
-    response = client.models.generate_content(
-        model=MODEL_ID,
-        contents=user_msg,
-        config=genai.types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            temperature=0.3,
-            max_output_tokens=8192,
-        ),
-    )
+    if PROVIDER == "google":
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model=MODEL_ID,
+            contents=user_msg,
+            config=genai.types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                temperature=0.3,
+                max_output_tokens=8192,
+            ),
+        )
+        raw = response.text.strip()
 
-    raw = response.text.strip()
+    else:
+        # OpenAI-compatible REST API call (covers OpenAI, Groq, Grok, Nvidia NIM, OpenRouter, Ollama, Kimi, Qwen, etc.)
+        import urllib.request, json as _json
+        base = BASE_URL.rstrip("/")
+        payload = _json.dumps({
+            "model": MODEL_ID,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user",   "content": user_msg},
+            ],
+            "temperature": 0.3,
+        }).encode()
+
+        headers = {"Content-Type": "application/json"}
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
+        if PROVIDER == "openrouter":
+            headers["HTTP-Referer"] = "https://github.com/bdb-dev/openwiki"
+            headers["X-Title"] = "OpenWiki Daemon"
+
+        req = urllib.request.Request(f"{base}/chat/completions", data=payload, headers=headers)
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            data = _json.loads(resp.read())
+        raw = data["choices"][0]["message"]["content"].strip()
+
     if raw.startswith("```"):
         raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
         if raw.endswith("```"):
             raw = raw[:-3]
         raw = raw.strip()
-
     return json.loads(raw)
+
+
+def call_gemma(api_key, evidence, existing_pages):
+    """Backwards-compat alias."""
+    return call_model(api_key, evidence, existing_pages)
 
 
 def write_wiki_pages(project_dir, pages):
@@ -312,9 +373,9 @@ def check_and_update_project(project_dir, api_key):
 
     pre_hash = run_helper(helper, "pre-snapshot", project_dir)
 
-    log(f"Calling {MODEL_ID} for documentation update...")
+    log(f"Calling {PROVIDER}/{MODEL_ID} for documentation update...")
     try:
-        pages = call_gemma(api_key, evidence, existing_pages)
+        pages = call_model(api_key, evidence, existing_pages)
     except Exception as e:
         log(f"Gemma API error: {e}")
         return False
@@ -367,10 +428,19 @@ def main():
     parser.add_argument("--one-shot", action="store_true", help="Run once and exit")
     args = parser.parse_args()
 
-    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
-    if not api_key:
-        log("WARNING: GEMINI_API_KEY not set. Will collect evidence but skip documentation generation.")
-        log("Set it with: export GEMINI_API_KEY=your-key")
+    api_key = (
+        os.environ.get("OPENWIKI_API_KEY", "").strip() or
+        os.environ.get("NVIDIA_API_KEY", "").strip() or
+        os.environ.get("GROQ_API_KEY", "").strip() or
+        os.environ.get("XAI_API_KEY", "").strip() or
+        os.environ.get("OPENROUTER_API_KEY", "").strip() or
+        os.environ.get("OPENAI_API_KEY", "").strip() or
+        os.environ.get("GEMINI_API_KEY", "").strip()
+    )
+    if not api_key and PROVIDER not in ("ollama", "lmstudio"):
+        log(f"WARNING: No API key set for provider '{PROVIDER}'.")
+        log("Set OPENWIKI_API_KEY, NVIDIA_API_KEY, GROQ_API_KEY, XAI_API_KEY, OPENROUTER_API_KEY, OPENAI_API_KEY, or GEMINI_API_KEY.")
+        log("For local providers (Ollama / LMStudio): no key needed.")
 
     if args.one_shot:
         log("One-shot mode")
