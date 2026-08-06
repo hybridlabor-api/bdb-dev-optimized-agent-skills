@@ -86,6 +86,8 @@ Rather than relying on skeletal python mocks or broken remote APIs, this reposit
 <summary><strong>🎨 Adobe Creative Cloud (Illustrator, Photoshop, After Effects, Premiere Pro)</strong></summary>
 
 We provide a dual-engine architecture optimized for macOS and Windows environments:
+
+![BDB Architecture Sketch](bdb_architecture_sketch.jpg)
 - **Direct OS-Native Bridge (`bdb_adobe_mcp`)**: Runs zero-install scripting.
   - **macOS:** Targets application bundle IDs directly via AppleScript `do javascript` / `DoScript` command streams.
   - **Windows:** Automatically queries and instantiates local COM objects via PowerShell wrapper scripts and executes transient `.jsx` ExtendScript code.
@@ -242,6 +244,8 @@ memB includes a native **Obsidian Plugin** (`obsidian-memb-plugin`) that acts as
 ---
 
 ## ⚡ Heimdall Token Saver: CLI Context Compression (v2.6.3)
+
+![Heimdall Savings Graph](bdb_savings_graph_sketch.jpg)
 
 **Heimdall Token Saver** is an ultra-fast context compression engine designed to drastically reduce context window usage for CLI tool execution outputs in AI agent workflows.
 
