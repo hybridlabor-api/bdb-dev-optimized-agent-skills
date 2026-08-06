@@ -74,13 +74,23 @@ You are responsible for intelligently categorized ingestion. Do NOT rely on stat
 3. **Targeted Ingestion:** Execute the Python ingestion tool explicitly for specific files and categories, rather than doing a blind root scan. 
 
 **Execution:**
-Use the `run_command` tool to execute `memb_ingest.py` on specific files or folders, explicitly passing the `--project` and `--category` flags. Locate the `memb_ingest.py` script based on the active AI agent environment (e.g., `~/.gemini/mcps/memb-mcp/memb_ingest.py` for Antigravity, or `~/.codex/mcps/memb-mcp/memb_ingest.py` for Codex CLI):
-```bash
-# Example for Antigravity:
-~/.gemini/mcps/memb-mcp/.venv/bin/python ~/.gemini/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
+Use the `run_command` tool to execute `memb_ingest.py` on specific files or folders, explicitly passing the `--project` and `--category` flags. 
 
-# Example for Codex CLI:
-~/.codex/mcps/memb-mcp/.venv/bin/python ~/.codex/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
+Because `memB` is supported across many AI platforms, the installation path depends on your current environment. The base path for MCPs is typically one of the following in the user's home directory (`~`):
+- `~/.gemini/mcps/` (Antigravity)
+- `~/.codex/mcps/` (Codex CLI / ChatGPT)
+- `~/.cursor/mcps/` (Cursor)
+- `~/.claude/mcps/` (Claude Desktop / Claude Code)
+- `~/.windsurf/mcps/` (Windsurf)
+- `~/.cline/mcps/` (Cline)
+- `~/.roo/mcps/` (Roo Code)
+- `~/.aider/mcps/` (Aider)
+
+**You must resolve the correct path first**, then run the ingestion command using the python binary from the `.venv` inside that `memb-mcp` directory.
+
+Example command structure (replace `<PLATFORM_DIR>` with the correct path discovered):
+```bash
+~/<PLATFORM_DIR>/mcps/memb-mcp/.venv/bin/python ~/<PLATFORM_DIR>/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
 ```
 *(By injecting files one-by-one or in smart batches with precise categories, you build a flawless physical AI Vault that other agents can navigate intuitively).*
 
