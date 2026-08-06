@@ -80,14 +80,14 @@ BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, 
 
 ## 🔌 22 Custom Local MCP Integrations
 
+![BDB Architecture Sketch](bdb_architecture_sketch.jpg)
+
 Rather than relying on skeletal python mocks or broken remote APIs, this repository bundles **22 custom, local MCP wrappers** (in the `mcps/` directory). These are built/warmed automatically and allow your AI assistant to read, write, and execute commands within the industry's leading creative software.
 
 <details>
 <summary><strong>🎨 Adobe Creative Cloud (Illustrator, Photoshop, After Effects, Premiere Pro)</strong></summary>
 
 We provide a dual-engine architecture optimized for macOS and Windows environments:
-
-![BDB Architecture Sketch](bdb_architecture_sketch.jpg)
 - **Direct OS-Native Bridge (`bdb_adobe_mcp`)**: Runs zero-install scripting.
   - **macOS:** Targets application bundle IDs directly via AppleScript `do javascript` / `DoScript` command streams.
   - **Windows:** Automatically queries and instantiates local COM objects via PowerShell wrapper scripts and executes transient `.jsx` ExtendScript code.
