@@ -3,7 +3,7 @@
     "memb-mcp": {
       "command": "python3",
       "args": [
-        "~/.gemini/mcps/memb-mcp/memb_ingest.py"
+        "~/.gemini/mcps/memb-mcp/run.py"
       ]
     }
   }

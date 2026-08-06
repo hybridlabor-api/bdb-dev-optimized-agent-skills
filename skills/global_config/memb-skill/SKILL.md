@@ -74,9 +74,13 @@ You are responsible for intelligently categorized ingestion. Do NOT rely on stat
 3. **Targeted Ingestion:** Execute the Python ingestion tool explicitly for specific files and categories, rather than doing a blind root scan. 
 
 **Execution:**
-Use the `run_command` tool to execute `memb_ingest.py` on specific files or folders, explicitly passing the `--project` and `--category` flags.
+Use the `run_command` tool to execute `memb_ingest.py` on specific files or folders, explicitly passing the `--project` and `--category` flags. Locate the `memb_ingest.py` script based on the active AI agent environment (e.g., `~/.gemini/mcps/memb-mcp/memb_ingest.py` for Antigravity, or `~/.codex/mcps/memb-mcp/memb_ingest.py` for Codex CLI):
 ```bash
-/Users/timrennings/.gemini/mcps/memb-mcp/.venv/bin/python /Users/timrennings/bdb-dev/bdb-dev-optimized-agent-skills/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
+# Example for Antigravity:
+~/.gemini/mcps/memb-mcp/.venv/bin/python ~/.gemini/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
+
+# Example for Codex CLI:
+~/.codex/mcps/memb-mcp/.venv/bin/python ~/.codex/mcps/memb-mcp/memb_ingest.py path/to/specific_file.md --project "MyProject" --category "3D_Engine"
 ```
 *(By injecting files one-by-one or in smart batches with precise categories, you build a flawless physical AI Vault that other agents can navigate intuitively).*
 
