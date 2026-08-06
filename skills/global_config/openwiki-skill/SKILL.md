@@ -112,6 +112,7 @@ Define which pages need updates:
 Write and edit markdown files under `.openwiki/`.
 - **Aesthetic standard**: Follow professional technical writing guidelines. Use clear headings, markdown tables for configurations, code block syntax highlighting, and github-style alert blocks (`> [!NOTE]`).
 - **Grounding constraint**: Document ONLY what is actually implemented in code. Do not speculate or invent features.
+- **Loose Coupling via CLI Handoff**: After writing or updating a `.openwiki` doc, if memB is available, trigger an ingest via background subprocess: `python ~/.gemini/mcps/memb-mcp/memb_ingest.py .openwiki/doc.md --category 'Documentation' &`
 
 ### Step 5: Update Root Redirects
 Verify that `agent.md` or `CLAUDE.md` contains the mandatory OpenWiki block:

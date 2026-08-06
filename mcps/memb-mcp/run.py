@@ -111,7 +111,7 @@ def list_memories(user_id: str = "bdb_developer", limit: int = 50) -> List[Dict[
         user_id: The developer user identifier.
         limit: Max number of records to return.
     """
-    all_m = memory.get_all(user_id=user_id, limit=limit)
+    all_m = memory.get_all(filters={"user_id": user_id}, limit=limit)
     return all_m.get("results", []) if all_m else []
 
 @mcp.tool()

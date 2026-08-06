@@ -1,6 +1,6 @@
 {
   "name": "@hybridlabor-api/bdb-dev-optimized-agent-skills",
-  "version": "1.1.0",
+  "version": "2.3.0",
   "description": "Optimized Agent skills and MCP pack for BDB DEV",
   "main": "installer.js",
   "bin": {
@@ -23,11 +23,24 @@
     "installer.js",
     "mcp_config.json",
     "GEMINI.md",
+    "CODEX.md",
+    ".codex-plugin/",
     "Project-overview.html",
     "assets/",
     "skills/",
     "mcps/",
     "vendor/"
+  ],
+  "keywords": [
+    "codex-plugin",
+    "codex-cli",
+    "chatgpt-codex",
+    "antigravity-skill",
+    "claude-code-plugin",
+    "cursor-rules",
+    "windsurf-rules",
+    "aider-skills",
+    "mcp-server"
   ],
   "author": "BDB DEV",
   "license": "Apache-2.0"

@@ -16,11 +16,25 @@ const colors = {
     reset: "\x1b[0m",
     bold: "\x1b[1m",
     cyan: "\x1b[36m",
+    purple: "\x1b[38;2;157;78;221m",
+    purpleBold: "\x1b[1;\x1b[38;2;157;78;221m",
     green: "\x1b[32m",
     yellow: "\x1b[33m",
     magenta: "\x1b[35m",
     dim: "\x1b[2m"
 };
+
+function isNewerVersion(local, remote) {
+    const lParts = local.split('.').map(Number);
+    const rParts = remote.split('.').map(Number);
+    for (let i = 0; i < Math.max(lParts.length, rParts.length); i++) {
+        const l = lParts[i] || 0;
+        const r = rParts[i] || 0;
+        if (r > l) return true;
+        if (l > r) return false;
+    }
+    return false;
+}
 
 function checkForUpdates() {
     return new Promise((resolve) => {
@@ -30,7 +44,7 @@ function checkForUpdates() {
             res.on('end', () => {
                 try {
                     const latest = JSON.parse(data).version;
-                    if (latest && latest !== pkg.version) {
+                    if (latest && isNewerVersion(pkg.version, latest)) {
                         console.log(`${colors.yellow}${colors.bold}╭───────────────────────────────────────────────────────────╮${colors.reset}`);
                         console.log(`${colors.yellow}${colors.bold}│  💡 Update available: ${colors.dim}${pkg.version}${colors.reset}${colors.yellow}${colors.bold} ➔ ${colors.green}${latest}${colors.reset}                   │${colors.reset}`);
                         console.log(`${colors.yellow}${colors.bold}│  Run: ${colors.cyan}npx ${pkg.name}@latest${colors.reset}                       │${colors.reset}`);
@@ -45,9 +59,25 @@ function checkForUpdates() {
     });
 }
 
-console.log(`\n${colors.cyan}${colors.bold}=========================================================${colors.reset}`);
-console.log(`${colors.cyan}${colors.bold} 🚀 Starting BDB Optimized Agent Skills Installation (v${pkg.version})${colors.reset}`);
-console.log(`${colors.cyan}${colors.bold}=========================================================${colors.reset}\n`);
+const cols = process.stdout.columns || 110;
+
+const headerArt = `
+${colors.purple}${colors.bold}                 ██████╗ ██████╗ ██████╗      █████╗  ██████╗ ███████╗███╗   ██╗████████╗     ██████╗ ███████╗
+                 ██╔══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝
+                 ██████╔╝██║  ██║██████╔╝    ███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║       ██║   ██║███████╗
+                 ██╔══██╗██║  ██║██╔══██╗    ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║       ██║   ██║╚════██║
+                 ██████╔╝██████╔╝██████╔╝    ██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║       ╚██████╔╝███████║
+                 ╚═════╝ ╚═════╝ ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚══════╝${colors.reset}
+
+${colors.cyan}${colors.bold}                                          O P T I M I Z E D   A G E N T   S K I L L S${colors.reset}
+`;
+
+const divider = '─'.repeat(Math.max(110, cols));
+
+console.log(headerArt);
+console.log(`${colors.dim} ${divider}${colors.reset}`);
+console.log(`${colors.green}${colors.bold} 🚀 Starting Installation (v${pkg.version})${colors.reset}`);
+console.log(`${colors.dim} ${divider}${colors.reset}\n`);
 
 checkForUpdates();
 
@@ -89,9 +119,22 @@ const isAutoYes = process.argv.includes('-y') || process.argv.includes('--yes');
 function detectPlatforms() {
     const detections = [];
     
-    // Antigravity
+    // Google Antigravity
     if (fs.existsSync(geminiDir)) {
-        detections.push("Google Antigravity (detected at " + geminiDir + ")");
+        detections.push({ name: "Google Antigravity", path: geminiDir, key: "antigravity" });
+    }
+
+    // Codex CLI / ChatGPT Codex
+    const codexDir = path.join(homeDir, '.codex');
+    if (fs.existsSync(codexDir) || fs.existsSync(path.join(homeDir, '.codex', 'config.toml'))) {
+        detections.push({ name: "ChatGPT Codex CLI", path: codexDir, key: "codex" });
+    }
+
+    // Claude Code CLI
+    const claudeCodeConfig = path.join(homeDir, '.claude.json');
+    const claudeCodeDir = path.join(homeDir, '.claude');
+    if (fs.existsSync(claudeCodeConfig) || fs.existsSync(claudeCodeDir)) {
+        detections.push({ name: "Claude Code CLI", path: claudeCodeDir, key: "claudecode" });
     }
     
     // Claude Desktop
@@ -99,31 +142,39 @@ function detectPlatforms() {
         ? path.join(process.env.APPDATA || homeDir, 'Claude')
         : path.join(homeDir, 'Library', 'Application Support', 'Claude');
     if (fs.existsSync(claudePath)) {
-        detections.push("Claude Desktop (detected at " + claudePath + ")");
+        detections.push({ name: "Claude Desktop", path: claudePath, key: "claudedesktop" });
     }
     
-    // Cursor
+    // Cursor IDE
     const cursorPath = process.platform === 'win32' 
         ? path.join(process.env.APPDATA || homeDir, 'Cursor')
         : path.join(homeDir, 'Library', 'Application Support', 'Cursor');
     if (fs.existsSync(cursorPath)) {
-        detections.push("Cursor IDE (detected at " + cursorPath + ")");
+        detections.push({ name: "Cursor IDE", path: cursorPath, key: "cursor" });
     }
 
-    // VS Code (for Cline/Roo Code)
-    const vscodePath = process.platform === 'win32' 
-        ? path.join(process.env.APPDATA || homeDir, 'Code')
-        : path.join(homeDir, 'Library', 'Application Support', 'Code');
-    if (fs.existsSync(vscodePath)) {
-        detections.push("VS Code / Cline / Roo Code (detected at " + vscodePath + ")");
-    }
-
-    // Windsurf
+    // Windsurf IDE
     const windsurfPath = process.platform === 'win32' 
         ? path.join(process.env.APPDATA || homeDir, 'Windsurf')
         : path.join(homeDir, 'Library', 'Application Support', 'Windsurf');
     if (fs.existsSync(windsurfPath)) {
-        detections.push("Windsurf IDE (detected at " + windsurfPath + ")");
+        detections.push({ name: "Windsurf IDE", path: windsurfPath, key: "windsurf" });
+    }
+
+    // Roo Code & Cline (VS Code Extensions)
+    const vscodePath = process.platform === 'win32' 
+        ? path.join(process.env.APPDATA || homeDir, 'Code')
+        : path.join(homeDir, 'Library', 'Application Support', 'Code');
+    const rooPath = path.join(homeDir, '.roo');
+    const clinePath = path.join(homeDir, '.cline');
+    if (fs.existsSync(vscodePath) || fs.existsSync(rooPath) || fs.existsSync(clinePath)) {
+        detections.push({ name: "Roo Code / Cline / VS Code", path: vscodePath, key: "vscode" });
+    }
+
+    // Aider CLI
+    const aiderConf = path.join(homeDir, '.aider.conf.yml');
+    if (fs.existsSync(aiderConf) || fs.existsSync(path.join(homeDir, '.aider'))) {
+        detections.push({ name: "Aider CLI", path: homeDir, key: "aider" });
     }
 
     return detections;
@@ -137,7 +188,7 @@ function promptMode(callback) {
     const detections = detectPlatforms();
     if (detections.length > 0) {
         console.log("\nDetected Agent Environments on this system:");
-        detections.forEach(d => console.log("  * " + d));
+        detections.forEach(d => console.log("  * " + d.name + " (detected at " + d.path + ")"));
     } else {
         console.log("\nNo active agent config directories auto-detected in standard locations.");
     }
@@ -147,8 +198,12 @@ function promptMode(callback) {
     console.log(" (2) Claude Desktop / Claude Code");
     console.log(" (3) Cursor / Generic IDE (Project-local)");
     console.log(" (4) Custom Installation (Specify custom paths manually)");
+    console.log(" (5) ChatGPT Codex CLI");
+    console.log(" (6) Windsurf IDE");
+    console.log(" (7) Roo Code / Cline / VS Code");
+    console.log(" (8) Aider CLI");
     
-    rl.question("\nSelect platform [1/2/3/4]: ", (platformAns) => {
+    rl.question("\nSelect platform [1-8]: ", (platformAns) => {
         const platform = platformAns.trim() || '1';
         
         console.log("\nInstallation Mode:");
@@ -375,6 +430,34 @@ promptMode(({ mode, platform, customPaths }) => {
         targetLegacyDir = path.join(currentDir, '.cursor', 'bdb-skills', 'legacy');
         targetWorkspaceDir = path.join(currentDir, '.cursor', 'workspace_skills');
         targetMcpDir = path.join(currentDir, '.cursor');
+        mcpConfigPath = path.join(targetMcpDir, 'mcp.json');
+    } else if (platform === '5') {
+        // Codex
+        console.log("\n[Platform: ChatGPT Codex CLI] Adapting installation paths...");
+        targetSkillDir = path.join(homeDir, '.codex', 'skills');
+        targetLegacyDir = path.join(homeDir, '.codex', 'skills', 'legacy');
+        targetMcpDir = path.join(homeDir, '.codex');
+        mcpConfigPath = path.join(targetMcpDir, 'config.toml');
+    } else if (platform === '6') {
+        // Windsurf
+        console.log("\n[Platform: Windsurf IDE] Adapting installation paths...");
+        targetSkillDir = path.join(homeDir, '.windsurf', 'bdb-skills');
+        targetLegacyDir = path.join(homeDir, '.windsurf', 'bdb-skills', 'legacy');
+        targetMcpDir = path.join(homeDir, '.windsurf');
+        mcpConfigPath = path.join(targetMcpDir, 'mcp.json');
+    } else if (platform === '7') {
+        // Roo / Cline / VS Code
+        console.log("\n[Platform: Roo Code / Cline] Adapting installation paths...");
+        targetSkillDir = path.join(homeDir, '.roo', 'bdb-skills');
+        targetLegacyDir = path.join(homeDir, '.roo', 'bdb-skills', 'legacy');
+        targetMcpDir = path.join(homeDir, '.roo');
+        mcpConfigPath = path.join(targetMcpDir, 'mcp.json');
+    } else if (platform === '8') {
+        // Aider
+        console.log("\n[Platform: Aider CLI] Adapting installation paths...");
+        targetSkillDir = path.join(homeDir, '.aider', 'bdb-skills');
+        targetLegacyDir = path.join(homeDir, '.aider', 'bdb-skills', 'legacy');
+        targetMcpDir = path.join(homeDir, '.aider');
         mcpConfigPath = path.join(targetMcpDir, 'mcp.json');
     } else if (platform === '4' && customPaths) {
         // Custom paths

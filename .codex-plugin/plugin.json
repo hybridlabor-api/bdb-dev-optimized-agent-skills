@@ -1,0 +1,8 @@
+{
+  "name": "bdb-dev-optimized-agent-skills",
+  "version": "2.3.0",
+  "description": "BDB DEV Optimized Agent Skills and MCP pack for Codex CLI, Claude, Cursor and Antigravity",
+  "author": "hybridlabor-api",
+  "skills_dir": "./skills/global_config",
+  "mcp_config": "./.codex-plugin/.mcp.json"
+}

@@ -11,6 +11,7 @@ import sys
 import json
 import glob
 import argparse
+import shutil
 from typing import List, Dict, Any, Optional
 
 # Ensure local memb module is importable
@@ -183,7 +184,8 @@ def ingest_to_memb(memory: Any, documents: List[Dict[str, Any]], category: str):
 def get_memory_title(data: str, mid: str) -> str:
     import re
     if not data: return mid[:8]
-    clean = re.sub(r'[^\w\säöüßÄÖÜ]', ' ', data)
+    clean = re.sub(r'[:/|\\#^\[\]]', '', data)
+    clean = re.sub(r'[^\w\säöüßÄÖÜ]', ' ', clean)
     clean = re.sub(r'\s+', ' ', clean).strip()
     words = [w for w in clean.split() if len(w) > 2][:4]
     if not words: return mid[:8]
@@ -194,6 +196,7 @@ def build_ai_vault(memory: Any):
     """Generates an AI-first flat-file markdown vault for native agent access."""
     print("🌸 Generating physical AI-first Vault (God Mode Topology)...")
     vault_dir = os.path.join(os.environ.get("MEMB_DATA_DIR", os.path.expanduser("~/.MemBDB")), "memB_Vault")
+    shutil.rmtree(vault_dir, ignore_errors=True)
     os.makedirs(vault_dir, exist_ok=True)
     os.makedirs(os.path.join(vault_dir, "Projects"), exist_ok=True)
     
@@ -273,7 +276,7 @@ The `memB` architecture is brutally optimized for ultra-fast inference on small,
                     for item in c_items:
                         title = get_memory_title(item.get("document", ""), item.get("id", ""))
                         cl_content += f"- [[Projects/{proj}/{cat}/{c_name}/{title}|{title.replace('_', ' ')}]]\n"
-                        m_content = f"---\nid: \"{item.get('id')}\"\ndate: \"{item.get('created_at', '')}\"\ntags:\n  - memB/memory\n---\n\n# 🧠 {title.replace('_', ' ')}\n\n## 📜 Payload\n\n{item.get('document', '')}\n"
+                        m_content = f"---\nid: \"{item.get('id')}\"\ndate: \"{item.get('created_at', '')}\"\ntags: [memB/memory]\n---\n\n# 🧠 {title.replace('_', ' ')}\n\n## 📜 Payload\n\n{item.get('document', '')}\n"
                         with open(os.path.join(c_dir, f"{title}.md"), "w", encoding="utf-8") as f:
                             f.write(m_content)
                     with open(os.path.join(c_dir, "_Hub.md"), "w", encoding="utf-8") as f:
@@ -283,7 +286,7 @@ The `memB` architecture is brutally optimized for ultra-fast inference on small,
                 for item in items:
                     title = get_memory_title(item.get("document", ""), item.get("id", ""))
                     c_content += f"- [[Projects/{proj}/{cat}/{title}|{title.replace('_', ' ')}]]\n"
-                    m_content = f"---\nid: \"{item.get('id')}\"\ndate: \"{item.get('created_at', '')}\"\ntags:\n  - memB/memory\n---\n\n# 🧠 {title.replace('_', ' ')}\n\n## 📜 Payload\n\n{item.get('document', '')}\n"
+                    m_content = f"---\nid: \"{item.get('id')}\"\ndate: \"{item.get('created_at', '')}\"\ntags: [memB/memory]\n---\n\n# 🧠 {title.replace('_', ' ')}\n\n## 📜 Payload\n\n{item.get('document', '')}\n"
                     with open(os.path.join(cat_dir, f"{title}.md"), "w", encoding="utf-8") as f:
                         f.write(m_content)
             

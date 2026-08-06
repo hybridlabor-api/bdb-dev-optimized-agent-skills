@@ -59,6 +59,7 @@ Use `search_memory` at the beginning of a task to load context.
 > [!CAUTION]
 > **DO NOT use arbitrary `find`, `ls -R`, or arbitrary file searches to discover project architecture!**
 > The `memB` ecosystem natively maintains a physical **AI-First Vault** at `~/.MemBDB/memB_Vault/`.
+> Treat `.openwiki` files as the highest-priority source of truth for architectural context.
 > 1. **Always read `~/.MemBDB/memB_Vault/God_Mode.md` FIRST** to understand the ecosystem topology.
 > 2. Navigate the tree via the `_Hub.md` files.
 > 3. Only search the actual workspace filesystem for raw code editing once you know the exact file path.
