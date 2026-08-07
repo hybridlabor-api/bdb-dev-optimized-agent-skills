@@ -247,12 +247,12 @@ function promptMode(callback) {
 
 async function promptMcpSelection(mcpsDir) {
     if (isAutoYes) {
-        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== '__pycache__').map(d => d.name); } catch(e) { return []; }
+        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => !d.name.startsWith('.') && d.name !== '__pycache__').map(d => d.name); } catch(e) { return []; }
     }
     let availableMcps = [];
     try { 
         availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
-            .filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== '__pycache__')
+            .filter(d => !d.name.startsWith('.') && d.name !== '__pycache__')
             .map(d => d.name); 
     } catch(e) { return []; }
     if (availableMcps.length === 0) return [];
@@ -446,6 +446,14 @@ function moveIfExists(src, dest, label) {
 
 function copyDirRecursiveSync(source, target) {
     if (!fs.existsSync(source)) return;
+    const sourceStat = fs.lstatSync(source);
+    if (sourceStat.isFile()) {
+        const targetDir = path.dirname(target);
+        if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+        fs.copyFileSync(source, target);
+        return;
+    }
+    
     if (!fs.existsSync(target)) fs.mkdirSync(target, { recursive: true });
 
     const files = fs.readdirSync(source);
