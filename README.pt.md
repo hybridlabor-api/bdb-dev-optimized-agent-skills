@@ -34,6 +34,7 @@ Embora otimizado para o **Google Antigravity**, este pacote de skills e configur
 
 ---
 
+![BDB v3 Core Tools Overview](assets/bdb_v3_core_tools_overview_sketch.jpg)
 
 ### 🪐 Universal Agent Harness (v3.0.0)
 O instalador agora possui um motor Universal Sync totalmente automatizado. Ele varre seu sistema em busca do **Claude Desktop, Cursor, Windsurf, Aider, Roo/Cline** e injeta a configuração MCP curada e as regras de Godmode em todos os ambientes simultaneamente.
