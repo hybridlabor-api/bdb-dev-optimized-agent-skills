@@ -339,7 +339,25 @@ async function promptMcpSelection(mcpsDir, tier) {
     if (isAutoYes) return availableMcps;
     if (availableMcps.length === 0) return [];
 
-    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
+    
+    // Check existing mcp_config.json to pre-select already installed MCPs
+    let existingInstalled = [];
+    try {
+        const homeDir = process.env.HOME || process.env.USERPROFILE;
+        const geminiDir = path.join(homeDir, '.gemini');
+        const mcpConfigPath = path.join(geminiDir, 'config', 'mcp_config.json');
+        if (fs.existsSync(mcpConfigPath)) {
+            const parsed = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf8'));
+            const mcpStr = JSON.stringify(parsed.mcpServers || {});
+            existingInstalled = availableMcps.filter(m => mcpStr.includes(m));
+        }
+    } catch(e) {}
+
+    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ 
+        name: mcp, 
+        selected: existingInstalled.includes(mcp) 
+    }));
+
     if (selections.length === 0) return ['memb-mcp'];
 
     return new Promise((resolve) => {
@@ -685,14 +703,27 @@ function copyDirRecursiveSync(source, target, excludeList = []) {
     fs.mkdirSync(targetLegacyDir, { recursive: true });
     fs.mkdirSync(targetWorkspaceDir, { recursive: true });
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_config'), targetSkillDir, excludeSkills);
-    console.log(" -> Installed global config skills.");
-
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_legacy'), targetLegacyDir, excludeSkills);
-    console.log(" -> Installed global legacy skills.");
-
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'workspace_agents'), targetWorkspaceDir, excludeSkills);
-    console.log(" -> Installed workspace skills.");
+    // Copy all subfolders in skills/ to their respective destinations
+    const skillsBase = path.join(srcDir, 'skills');
+    if (fs.existsSync(skillsBase)) {
+        const dirs = fs.readdirSync(skillsBase);
+        for (const dir of dirs) {
+            const fullPath = path.join(skillsBase, dir);
+            if (!fs.statSync(fullPath).isDirectory()) continue;
+            
+            if (dir === 'global_legacy') {
+                copyDirRecursiveSync(fullPath, targetLegacyDir, excludeSkills);
+                console.log(" -> Installed global legacy skills.");
+            } else if (dir === 'workspace_agents') {
+                copyDirRecursiveSync(fullPath, targetWorkspaceDir, excludeSkills);
+                console.log(" -> Installed workspace skills.");
+            } else {
+                // Copy all other skill folders (global_config, basic, bdbmediastorm, etc.) into targetSkillDir
+                copyDirRecursiveSync(fullPath, targetSkillDir, excludeSkills);
+            }
+        }
+        console.log(" -> Installed all global config & core skills.");
+    }
 
     console.log("\nInstalling Godmode/Harness configurations to local workspace...");
     const harnessDirs = ['.cursor/rules', '.claude', '.github', '.codex-plugin'];
