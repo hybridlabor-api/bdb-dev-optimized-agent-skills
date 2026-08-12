@@ -7,7 +7,7 @@ const os = require('os');
 const https = require('https');
 
 const pkgPath = path.join(__dirname, 'package.json');
-let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '1.1.0' };
+let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '3.0.0' };
 if (fs.existsSync(pkgPath)) {
     try { pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')); } catch (e) {}
 }
@@ -886,9 +886,9 @@ async function promptCreatorExtension(mcpConfigPath) {
 async function promptOSAgentWorkspace() {
     if (isAutoYes) return;
     
-    console.log(`\n${colors.magenta}${colors.bold}💻 BDB OS Agent Workspace (Computer Control)${colors.reset}`);
+    console.log(`\n${colors.magenta}${colors.bold}🧠 BDB OS Agent Workspace (AI Orchestrator)${colors.reset}`);
     const doInstall = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Möchtest du den 'BDB OS Agent Workspace' für native Computer-Steuerung installieren? (y/N): ${colors.reset}`, (answer) => {
+        rl.question(`${colors.yellow}Möchtest du den 'BDB OS Agent Workspace' (Orchestration Layer für parallele AI Agents) installieren? (y/N): ${colors.reset}`, (answer) => {
             resolve(answer.trim().toLowerCase() === 'y');
         });
     });
