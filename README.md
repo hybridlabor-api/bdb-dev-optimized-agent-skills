@@ -390,13 +390,19 @@ Below is the complete overview of all curated agent skills included in this pack
 
 ---
 
-## 💻 BDB OS Agent Workspace (AI Orchestrator)
+## 💻 BDB OS Agent Workspace (AI Orchestrator) [`bdb-os-agent-workspace`]
 
-Running multiple coding agents simultaneously often results in chaotic workspaces, overlapping branches, and lost terminal sessions. **BDB OS Agent Workspace** is a Meta-Harness and desktop orchestrator that acts as an Agentic IDE.
+Running multiple coding agents simultaneously often results in chaotic workspaces, overlapping branches, and lost terminal sessions. **BDB OS Agent Workspace** is a Meta-Harness and desktop orchestrator that acts as a true Agentic IDE.
 
-- **Parallel Workspaces:** Launch Claude Code, Cursor, Aider, and Codex simultaneously on the same project. AO isolates them into separate git worktrees automatically.
+- **Parallel Workspaces:** Launch Claude Code, Cursor, Aider, and Codex simultaneously on the same project. The orchestrator isolates them into separate git worktrees automatically.
 - **Unified Feedback Loops:** CI failures, PR review comments, and merge conflicts are captured by the daemon and routed back to the exact agent session responsible for the code.
-- **Live Supervision:** Monitor all active agent terminals, browser previews, and task progress from a single centralized desktop dashboard.
+- **Live Supervision:** Monitor all active agent terminals, browser previews, and task progress from a single centralized desktop dashboard (Electron-based UI).
+
+**Installation & Linking:**
+The `bdb-dev-optimized-agent-skills` installer will automatically prompt you to integrate this workspace orchestrator. Or install manually:
+```bash
+git clone https://github.com/hybridlabor-api/bdb-os-agent-workspace.git
+```
 
 ---
 
