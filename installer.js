@@ -62,14 +62,13 @@ function checkForUpdates() {
 const cols = process.stdout.columns || 110;
 
 const headerArt = `
-${colors.purple}${colors.bold}                 ██████╗ ██████╗ ██████╗      █████╗  ██████╗ ███████╗███╗   ██╗████████╗     ██████╗ ███████╗
-                 ██╔══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝
-                 ██████╔╝██║  ██║██████╔╝    ███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║       ██║   ██║███████╗
-                 ██╔══██╗██║  ██║██╔══██╗    ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║       ██║   ██║╚════██║
-                 ██████╔╝██████╔╝██████╔╝    ██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║       ╚██████╔╝███████║
-                 ╚═════╝ ╚═════╝ ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚══════╝${colors.reset}
+${colors.purple}${colors.bold}    ____  ____  ____     ___   _____________   ________   ____  _____
+   / __ )/ __ \\/ __ )   /   | / ____/ ____/ | / /_  __/  / __ \\/ ___/
+  / __  / / / / __  |  / /| |/ / __/ __/ /  |/ / / /    / / / /\\__ \\ 
+ / /_/ / /_/ / /_/ /  / ___ / /_/ / /___/ /|  / / /    / /_/ /___/ / 
+/_____/_____/_____/  /_/  |_\\____/_____/_/ |_/ /_/     \\____//____/${colors.reset}
 
-${colors.cyan}${colors.bold}                                          O P T I M I Z E D   A G E N T   S K I L L S${colors.reset}
+${colors.cyan}${colors.bold}                  O P T I M I Z E D   A G E N T   S K I L L S${colors.reset}
 `;
 
 const divider = '─'.repeat(Math.max(110, cols));
@@ -182,18 +181,29 @@ function detectPlatforms() {
 
 function promptMode(callback) {
     if (isAutoYes) {
-        return callback({ mode: '1', platform: '1' });
+        return callback({ tier: '1', mode: '1', platform: '1' });
     }
 
-    const detections = detectPlatforms();
-    if (detections.length > 0) {
-        console.log("\nDetected Agent Environments on this system:");
-        detections.forEach(d => console.log("  * " + d.name + " (detected at " + d.path + ")"));
-    } else {
-        console.log("\nNo active agent config directories auto-detected in standard locations.");
-    }
+    const askTier = (next) => {
+        console.log("\nPackage Tier:");
+        console.log(" (1) Pro MEDIA (Full suite of dev-optimized skills and creative MCPs - Default)");
+        console.log(" (2) Basic (Essential skills only, lightweight MCPs)");
+        rl.question("\nSelect tier [1/2, default: 1]: ", (tierAns) => {
+            const tier = tierAns.trim() === '2' ? '2' : '1';
+            next(tier);
+        });
+    };
 
-    console.log("\nTarget AI Platform:");
+    askTier((tier) => {
+        const detections = detectPlatforms();
+        if (detections.length > 0) {
+            console.log("\nDetected Agent Environments on this system:");
+            detections.forEach(d => console.log("  * " + d.name + " (detected at " + d.path + ")"));
+        } else {
+            console.log("\nNo active agent config directories auto-detected in standard locations.");
+        }
+
+        console.log("\nTarget AI Platform:");
     console.log(" (1) Google Antigravity (Default)");
     console.log(" (2) Claude Desktop / Claude Code");
     console.log(" (3) Cursor / Generic IDE (Project-local)");
@@ -224,6 +234,7 @@ function promptMode(callback) {
                             rl.question("Target path for MCP Config JSON file [default: " + path.join(homeDir, 'mcp_config.json') + "]: ", (mcpConf) => {
                                 const customMcpConfigPath = mcpConf.trim() || path.join(homeDir, 'mcp_config.json');
                                 callback({
+                                    tier,
                                     mode,
                                     platform,
                                     customPaths: {
@@ -239,22 +250,30 @@ function promptMode(callback) {
                     });
                 });
             } else {
-                callback({ mode, platform });
+                callback({ tier, mode, platform });
             }
         });
     });
+    });
 }
 
-async function promptMcpSelection(mcpsDir) {
-    if (isAutoYes) {
-        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => !d.name.startsWith('.') && d.name !== '__pycache__').map(d => d.name); } catch(e) { return []; }
-    }
+async function promptMcpSelection(mcpsDir, tier) {
     let availableMcps = [];
     try { 
         availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
             .filter(d => !d.name.startsWith('.') && d.name !== '__pycache__')
             .map(d => d.name); 
     } catch(e) { return []; }
+
+    if (tier === '2') {
+        const basicMcps = ['computer-use-mcp', 'memb-mcp', 'windows-computer-use-mcp'];
+        availableMcps = availableMcps.filter(m => basicMcps.includes(m));
+    }
+
+    if (isAutoYes) {
+        return availableMcps;
+    }
+
     if (availableMcps.length === 0) return [];
 
     const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
@@ -444,7 +463,7 @@ function moveIfExists(src, dest, label) {
     }
 }
 
-function copyDirRecursiveSync(source, target) {
+function copyDirRecursiveSync(source, target, excludeList = []) {
     if (!fs.existsSync(source)) return;
     const sourceStat = fs.lstatSync(source);
     if (sourceStat.isFile()) {
@@ -458,6 +477,7 @@ function copyDirRecursiveSync(source, target) {
 
     const files = fs.readdirSync(source);
     files.forEach(file => {
+        if (excludeList.includes(file)) return;
         const curSource = path.join(source, file);
         const curTarget = path.join(target, file);
         try {
@@ -485,7 +505,7 @@ function copyDirRecursiveSync(source, target) {
     });
 }
 
-promptMode(({ mode, platform, customPaths }) => {
+promptMode(({ tier, mode, platform, customPaths }) => {
     fs.mkdirSync(backupDir, { recursive: true });
     
     let targetSkillDir = globalConfigDir;
@@ -561,18 +581,32 @@ promptMode(({ mode, platform, customPaths }) => {
         console.log(`\n[Merge Mode] Installing over existing directories. Existing skills will not be deleted.`);
     }
 
-    console.log("\nInstalling optimized skills (140 curated skills)...");
+    const excludeSkills = tier === '2' ? [
+        'bdb-adobe-suite-mcp.md',
+        'bdb-after-effects-mcp.md',
+        'bdb-blender-mcp.md',
+        'bdb-davinci-mcp.md',
+        'bdb-grandma3-mcp.md',
+        'bdb-resolume-mcp.md',
+        'bdb-rhino-mcp.md',
+        'bdb-touchdesigner-mcp.md',
+        'bdb-unreal-mcp.md',
+        'bdb-vectorworks-mcp.md',
+        'bdbmediastorm'
+    ] : [];
+
+    console.log(`\nInstalling optimized skills (140 curated skills)${tier === '2' ? ' [Basic Tier]' : ''}...`);
     fs.mkdirSync(targetSkillDir, { recursive: true });
     fs.mkdirSync(targetLegacyDir, { recursive: true });
     fs.mkdirSync(targetWorkspaceDir, { recursive: true });
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_config'), targetSkillDir);
+    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_config'), targetSkillDir, excludeSkills);
     console.log(" -> Installed global config skills.");
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_legacy'), targetLegacyDir);
+    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_legacy'), targetLegacyDir, excludeSkills);
     console.log(" -> Installed global legacy skills.");
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'workspace_agents'), targetWorkspaceDir);
+    copyDirRecursiveSync(path.join(srcDir, 'skills', 'workspace_agents'), targetWorkspaceDir, excludeSkills);
     console.log(" -> Installed workspace skills.");
 
     const geminiMdSrc = path.join(srcDir, 'GEMINI.md');
@@ -584,7 +618,7 @@ promptMode(({ mode, platform, customPaths }) => {
     (async () => {
         const mcpSrcDir = path.join(srcDir, 'mcps');
         const mcpCodeTarget = path.join(targetMcpDir, 'mcps');
-        const selectedMcps = await promptMcpSelection(mcpSrcDir);
+        const selectedMcps = await promptMcpSelection(mcpSrcDir, tier);
         
         if (selectedMcps.length > 0) {
             fs.mkdirSync(targetMcpDir, { recursive: true });

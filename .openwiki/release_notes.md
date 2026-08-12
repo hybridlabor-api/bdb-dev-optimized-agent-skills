@@ -1,5 +1,8 @@
 # Release Notes
 
+## Unreleased
+- **Unified Installer (Pro & Basic Consolidation)**: Rebuilt `installer.js` to dynamically handle both "Pro" and "Basic" package tiers. Users can now choose to install the lightweight Basic tier (which filters out creative MCPs and specific pro skills) directly from the main package, deprecating the need for a separate basic repository and NPM package.
+
 ## v2.4.0 (Multi-Provider OpenWiki, RepoGraph Code Health & Creator Decoupling)
 - **Multi-Provider LLM Engine for OpenWiki**: Decoupled `openwiki_daemon.py` from single-provider constraints. Fully supports Google Gemma 4 (`gemma-4-12b-it` via `google-genai`), Groq (`llama-3.3-70b-versatile`), Grok/xAI (`grok-2-latest`), Nvidia NIM (`meta/llama-3.3-70b-instruct`), OpenRouter (`anthropic/claude-3.5-sonnet`), OpenAI (`gpt-4o-mini`), Ollama (`llama3`), LM Studio, and custom OpenAI-compatible endpoints via environment variables.
 - **RepoGraph Deterministic Code Health Engine**: Introduced zero-token, zero-inference local Git analytics in OpenWiki. Computes 90-day hotspot velocity, maintainability index, commit distribution, and single-author bus factor risk scoring without external API calls.
