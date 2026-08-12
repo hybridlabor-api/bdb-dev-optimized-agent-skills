@@ -336,6 +336,7 @@ async function promptMcpSelection(mcpsDir, tier) {
             rl.pause();
             readline.emitKeypressEvents(process.stdin);
             process.stdin.setRawMode(true);
+            process.stdin.resume();
             process.stdin.on('keypress', onKeypress);
             render();
         } else {
