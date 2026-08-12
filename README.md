@@ -34,9 +34,11 @@ While optimized for **Google Antigravity**, this skills pack and MCP configurati
 
 ---
 
-## 🌟 144 Optimized Skills
+## 🌟 v3.0.0: The Godmode Architecture
 
-We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144 Optimized Skills** (featuring a native OpenWiki documentation engine in v1.3.3, and the **memB local semantic memory brain in v2.0.0**).
+We started with a massive pool of over 1,400 raw AI skills and previously distilled them down to 144. With the release of **v3.0.0**, we have radically consolidated the legacy bloat into **3 hyper-curated "Godmodes"** (UI/UX, Engineering, and Shipping). 
+
+These Godmodes enforce the absolute gold standard in software development (anti-slop design, domain-driven modeling, fluid motion, strict pre-launch validation). Through our new **Universal Agent Harness**, these rules are automatically injected natively into Cursor, Claude Code, Agy, and Copilot.
 
 These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency and context awareness.
 
@@ -253,7 +255,12 @@ BDB OS introduces a fully integrated local, offline-first semantic memory brain 
 The ecosystem includes a deeply integrated skill (`/memb-ingest`). When an agent runs this, the `memb_ingest.py` script recursively scans your project (reading `.openwiki`, `agent.md`, transcripts, and architecture files). 
 * **Offline Vector Embeddings:** It bundles a pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model to chunk and store these learnings natively in a fast SQLite vector store (`~/.MemBDB/memb.db`), all without hitting external APIs.
 
-### 2. Autonomous AI-First Vault Generation
+### 2. Autonomous Auto-Injection (Mem0-Style)
+In v3.0.0, memB no longer waits for agents to manually query it. It acts as an active **Context Injector**:
+*   **File-Injection (Closed IDEs):** memB dynamically generates `.cursor/rules/999_memb_context.mdc` and `CLAUDE.md` in your local workspace, giving Cursor and GitHub Copilot instant context.
+*   **LLM Proxy (Open Tools):** A bundled local proxy intercepts API calls from Agy or Roo Code, retrieves facts via RAG, and injects them into the system prompt *before* they hit the LLM (along with background Auto-Capture of new facts).
+
+### 3. Autonomous AI-First Vault Generation
 Once ingestion completes, memB natively generates a **physical Markdown Vault** (`~/.MemBDB/memB_Vault`) structured around a strict "God Mode" radial topology:
 * **Zero-Compute Context:** A universal `agent.md` and a master `God_Mode.md` are written to the root. Small 30MB local inference models can instantly orient themselves macroscopically by reading these physical files without spending context tokens on complex database calls.
 * **Micro-Targeted RAG:** For precise execution, the small LLMs query the vector DB to retrieve just the exact 3-5 sub-files needed.

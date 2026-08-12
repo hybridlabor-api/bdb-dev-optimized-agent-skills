@@ -50,10 +50,10 @@ def fetch_top_context(memory: Any, project_name: str) -> str:
     context_parts = []
     
     # 1. Fetch Godmode rules
-    godmode_memories = memory.search("developer preferences architecture rules", user_id="bdb_developer", limit=5)
+    godmode_memories = memory.search("developer preferences architecture rules", filters={"user_id": "bdb_developer"}, limit=5)
     
     # 2. Fetch Project-specific rules
-    project_memories = memory.search("project rules constraints decisions", user_id="bdb_developer", limit=5)
+    project_memories = memory.search("project rules constraints decisions", filters={"user_id": "bdb_developer"}, limit=5)
     
     context_parts.append("# memB Auto-Injected Context")
     context_parts.append("The following knowledge was automatically retrieved from the memB vector engine.\n")
