@@ -63,7 +63,7 @@ Below is the complete overview of all curated agent skills included in this pack
 
 | Skill Name | Description |
 |------------|-------------|
-| `bdreadme` | Enforces the strict BDB DEV corporate standard for generating and formatting GitHub README.md files. Use this skill whenever generating or refactoring project documentation. |
+
 | `engineering-godmode` | BDB Engineering Godmode. Enforces strict Domain-Driven Design, TypeScript strictness, Clean Architecture, and systematic 5-step debugging triage. |
 | `shipping-godmode` | BDB Shipping Godmode. The final gatekeeper for production releases. Enforces Spec-Driven Development, rigorous pre-launch checks, feature flags, and rollback strategies. |
 | `ui-ux-godmode` | BDB UI/UX Godmode. The absolute Gold-Standard for frontend design. Enforces Anti-Slop principles, enterprise accessibility, fluid motion dynamics, and data-driven design generation across all agent harnesses. |

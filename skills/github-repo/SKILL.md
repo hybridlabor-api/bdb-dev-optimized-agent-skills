@@ -18,7 +18,7 @@ The **`github-repo`** skill establishes strict standards for building, organizin
 - **Repository Initialization**: When creating a new repository or preparing an existing codebase for open-source publication.
 - **Pre-Push Sanitization Audit**: Before committing or pushing code, to ensure no absolute local paths, API keys, foreign repository names, or cloned user metadata are published.
 - **Workflow Setup**: Setting up automated testing (`ci.yml`), automated NPM releases (`publish.yml`), or `.gitignore` rules.
-- **README Overhaul**: Restructuring a project's `README.md` to conform to modern open-source standards.
+- **README Overhaul**: Restructuring a project's `README.md` to conform to modern BDB DEV corporate open-source standards.
 
 ---
 
@@ -82,13 +82,38 @@ Before pushing any commit to GitHub, execute this 5-point sanitization audit:
 
 ---
 
-## 4. High-Impact README Layout Standard & Dynamic Badges
+## 4. High-Impact README Layout Standard (BDB DEV Style)
 
-A top-tier `README.md` MUST include a clean row of dynamic shields/badges directly under the main title. Badges MUST be tailored to the specific repository owner, repository name, tech stack, license, test coverage, and key project metric.
+A top-tier `README.md` MUST strictly adhere to the BDB DEV corporate identity and structure.
 
-### Standard Badge Row Formula
+### 4.1 Top Bar: Language Definition & ASCII Art Header
+Every README must start with a language switch header at the very top (if applicable), followed immediately by a clean ASCII Art text logo inside a ````text ```` block. The ASCII art should spell out the project name or "BDB DEV" using standard blocky fonts.
+
+### 4.2 Title, Topology Sketch & Dynamic Badges
+Directly below the ASCII art, place the main title (H1) with an appropriate emoji. 
+**Topology Sketch (MANDATORY)**: Directly below the title, include an architectural sketch image representing the system. You MUST instruct the agent or use your own generative tools (e.g., DALL-E, Nano Banana, or available harness tools) to generate a topology sketch image (e.g., `![Architecture Sketch](assets/topology_sketch.jpg)`).
+Follow this immediately with a clean row of dynamic shields/badges tailored to the repository.
+
+### 4.3 The Hook (Mission Statement)
+Directly below the badges, write a single, bolded, hard-hitting sentence inside a blockquote that explains the ultimate value proposition of the project.
+
+### 4.4 Visualizations, Emojis, & GitHub Alerts
+- **Mermaid Diagrams**: ALWAYS include `mermaid` code blocks to visualize the core architecture or signal flow.
+- **Emojis**: Use clear H2 (`##`) sections with matching emojis (e.g., `## 🌟 Key Highlights`, `## 🏗️ Architecture`, `## 🚀 Quickstart`).
+- **GitHub Alerts**: NEVER use standard bold text for warnings or tips. You MUST use official GitHub Markdown Alert syntax (`> [!IMPORTANT]`, `> [!TIP]`, `> [!CAUTION]`).
+- **Clean Clutter**: Use `<details>` and `<summary><strong>...</strong></summary>` to collapse verbose information.
+
+### 4.5 Standard Layout Formula
 ```markdown
-# Project Name
+🌐 **Language / Sprache**: **Deutsch** | [ 🇬🇧 English ](README.en.md)
+
+````text
+   B D B   D E V   -   P R O J E C T   N A M E
+````
+
+# 🚀 BDB DEV - [Project Name]
+
+![Architecture Sketch](assets/topology_sketch.jpg)
 
 [![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<owner>/<repo>/actions)
 [![coverage](https://img.shields.io/badge/coverage-94%25-brightgreen.svg)](https://github.com/<owner>/<repo>)
@@ -96,7 +121,13 @@ A top-tier `README.md` MUST include a clean row of dynamic shields/badges direct
 [![license](https://img.shields.io/badge/license-<license>-blue.svg)](LICENSE)
 [![key metric](https://img.shields.io/badge/<metric_name>-<value>-brightgreen.svg)](https://github.com/<owner>/<repo>)
 
-> **High-impact tagline explaining what the project does in 1-2 concise sentences.**
+> **[Action verb] the [Technology] into a [High-end outcome], highly isolated, [Feature]-grade system.**
+
+## 🌟 Key Highlights
+...
+
+## 🏗️ Architecture & Workflow
+...
 ```
 
 ### Dynamic Badge Adaptation Guidelines
@@ -211,6 +242,9 @@ For complete architectural details, developer guides, and release notes, visit t
 ## 📄 License
 
 [MIT](LICENSE) © Project Contributors
+
+---
+*Elevate your agency. Dominate the workflow.*
 ```
 
 ---
