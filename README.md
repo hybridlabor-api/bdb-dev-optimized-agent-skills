@@ -38,18 +38,25 @@ While optimized for **Google Antigravity**, this skills pack and MCP configurati
 ### 🪐 Universal Agent Harness (v3.0.0)
 The installer now features a fully automated Universal Sync engine. It scans your system for **Claude Desktop, Cursor, Windsurf, Aider, Roo/Cline**, and injects the curated MCP configuration and Godmode rules across all environments simultaneously.
 
+### 🧩 Ecosystem Integrations (v3.0.0)
+This package acts as the bridge to two massive upstream capabilities (available as direct installation targets via the installer):
+- **BDB OS Agent Workspace:** The Orchestration Layer for parallel AI agents. Start multiple isolated agent sessions via Git-Worktrees with live terminal control, automatic CI/CD feedback loops, and PR review routing.
+- **BDB Creator Extension:** The heavy-lifting Agentic Media Pipeline. Gives agents local ComfyUI MCP capabilities (FLUX, SDXL), Image-to-3D generation (TripoSR, TRELLIS), and automated video production through OpenMontage and Remotion.
+
 ## 🌟 ~144+ Optimized Skills (Updated for v3.0.0)
 
 We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144+ Optimized Skills** (featuring a native OpenWiki documentation engine, the **memB local semantic memory brain**, and now **Universal Agent Harness synchronization in v3.0.0**).
 
 These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency, strict architectural constraints, and robust context awareness.
 
-### 🛡️ The 4 Godmodes (Apex Layer)
-Instead of letting agents wander through generic instructions, the top-tier of this repository enforces four **Hyper-Curated Godmodes**. These act as the ultimate gatekeepers for your codebase:
+### 🛡️ The 6 Godmodes (Apex Layer)
+Instead of letting agents wander through generic instructions, the top-tier of this repository enforces six **Hyper-Curated Godmodes**. These act as the ultimate gatekeepers for your codebase:
 - **`engineering-godmode`**: Forces Domain-Driven Design, strict TypeScript checks, Clean Architecture, and systematic debugging.
 - **`ui-ux-godmode`**: The frontend Gold-Standard. Enforces BDB "Anti-Slop" principles, accessibility, and fluid motion dynamics.
 - **`shipping-godmode`**: The final gatekeeper for production releases. Enforces Spec-Driven Development, pre-launch checks, and safe rollbacks.
 - **`eventtech-godmode`**: The supreme rulebook for the BDB Creator Engine, governing 3D, Media, and 22 creative-tech MCPs.
+- **`godmode-3d-creation`**: Controls the Agentic 3D pipeline (TripoSR, TRELLIS) for generative models and CAD structures.
+- **`godmode-media-creation`**: Orchestrates automated video production, storytelling, and ComfyUI generation loops.
 
 ### 💻 Beyond Events: Full-Stack Software & Web Agents
 While heavily optimized for the creative tech industry, these skills are deeply rooted in core software engineering:
@@ -254,6 +261,18 @@ Below is the complete overview of all curated agent skills included in this pack
 </details>
 
 <details>
+<summary><strong>🌀 BDB Ecosystem & Methodologies</strong></summary>
+
+| Skill Name | Description |
+|------------|-------------|
+| `bdbmediastorm` | The ultimate creative-tech and show-control brainstorming engine. Orchestrates multi-agent ideation focused on signal flow, hardware constraints, protocols, and BDB MCP integrations. Now strictly governed by the 3 Core Godmodes (engineering, ui-ux, shipping). |
+| `bdbrainstorm` | Combines multi-agent brainstorming, the /grill-me slash command, and the 3 Core Godmodes (engineering-godmode, ui-ux-godmode, shipping-godmode) to force a comprehensive, multi-agent ideation and technical design workflow. |
+| `github-repo` | Standards and workflows for writing, formatting, sanitizing, and publishing high-quality GitHub repositories, complementing openwiki-skill. |
+| `memb-ingest` | Deep scan and ingest project files (.md, .json, agent.md, .openwiki) and past conversation logs into the local memB vector memory engine. |
+
+</details>
+
+<details>
 <summary><strong>🔥 Specialized Workspace Agents</strong></summary>
 
 #### 🤖 Agents & Automation
@@ -309,6 +328,8 @@ Below is the complete overview of all curated agent skills included in this pack
 |------------|-------------|
 | `engineering-godmode` | BDB Engineering Godmode. Enforces strict Domain-Driven Design, TypeScript strictness, Clean Architecture, and systematic 5-step debugging triage. |
 | `eventtech-godmode` | BDB EventTech Godmode. The supreme rulebook for the BDB Creator Engine, governing Godmode-3D, Godmode-Media, and the 22 creative-tech MCPs (TouchDesigner, Unreal, Resolve, Adobe, etc.). |
+| `godmode-3d-creation` | Master orchestration skill for all 3D generation, modeling, and reconstruction tasks. Acts as the 3D brain for the BDB Creator Extension. |
+| `godmode-media-creation` | Master orchestration skill for all media creation tasks (Video, Audio, Image, Motion Design). Acts as the brain for the BDB Creator Extension. |
 | `shipping-godmode` | BDB Shipping Godmode. The final gatekeeper for production releases. Enforces Spec-Driven Development, rigorous pre-launch checks, feature flags, and rollback strategies. |
 | `ui-ux-godmode` | BDB UI/UX Godmode. The absolute Gold-Standard for frontend design. Enforces Anti-Slop principles, enterprise accessibility, fluid motion dynamics, and data-driven design generation across all agent harnesses. |
 
@@ -640,9 +661,9 @@ We provide a dual-engine architecture optimized for macOS and Windows environmen
 
 ---
 
-## 📖 11 Specialized System Skills
+## 📖 14 Specialized System Skills
 
-To make these MCP integrations accessible to AI agents, we provide **11 dedicated system skills** inside the `skills/global_config/` directory. If an AI agent imports this pack, it will immediately read these markdown files to learn the tool signatures, expected arguments, ExtendScript hooks, and common troubleshooting steps for each application.
+This repository also contains 14 deep-system configurations and documentation guidelines mapped automatically. If an AI agent imports this pack, it will immediately read these markdown files to learn the tool signatures, expected arguments, ExtendScript hooks, and common troubleshooting steps for each application.
 
 <details>
 <summary><strong>View System Skills List</strong></summary>
