@@ -5,7 +5,7 @@ const path = require('path');
 const readline = require('readline');
 const os = require('os');
 const https = require('https');
-
+const { execSync, spawn } = require('child_process');
 const pkgPath = path.join(__dirname, 'package.json');
 let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '3.0.0' };
 if (fs.existsSync(pkgPath)) {
@@ -270,44 +270,77 @@ async function promptMcpSelection(mcpsDir, tier) {
         availableMcps = availableMcps.filter(m => basicMcps.includes(m));
     }
 
-    if (isAutoYes) {
-        return availableMcps;
-    }
-
+    if (isAutoYes) return availableMcps;
     if (availableMcps.length === 0) return [];
 
     const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
-
-    const displayMenu = () => {
-        console.log(`\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}`);
-        console.log(` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}`);
-        selections.forEach((mcp, index) => {
-            const check = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
-            console.log(` ${colors.cyan}${index + 1}.${colors.reset} [${check}] ${colors.bold}${mcp.name}${colors.reset}`);
-        });
-        console.log(`\n${colors.dim}Type a number to toggle, 'all' to select all, 'none' to clear, or 'done' to proceed:${colors.reset}`);
-    };
+    if (selections.length === 0) return ['memb-mcp'];
 
     return new Promise((resolve) => {
-        const ask = () => {
-            displayMenu();
-            rl.question('\n> ', (answer) => {
-                const input = answer.trim().toLowerCase();
-                if (input === 'done' || input === '') { 
-                    resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]); 
-                    return; 
+        let cursor = 0;
+        let drawnLines = 0;
+
+        const render = () => {
+            if (drawnLines > 0) {
+                process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
+            }
+            let output = `\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}\n`;
+            output += ` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}\n`;
+            
+            selections.forEach((mcp, index) => {
+                const isSelected = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
+                if (index === cursor) {
+                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${mcp.name}${colors.reset}\n`;
+                } else {
+                    output += `   [${isSelected}] ${mcp.name}\n`;
                 }
-                if (input === 'all') { selections.forEach(s => s.selected = true); }
-                else if (input === 'none') { selections.forEach(s => s.selected = false); }
-                else {
-                    const num = parseInt(input, 10);
-                    if (!isNaN(num) && num > 0 && num <= selections.length) { selections[num - 1].selected = !selections[num - 1].selected; }
-                    else { console.log('Invalid input. Please try again.'); }
-                }
-                ask();
             });
+            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to toggle, 'a' to select all, ENTER to confirm.${colors.reset}\n`;
+            
+            const lines = output.split('\n');
+            drawnLines = lines.length - 1;
+            process.stdout.write(output);
         };
-        ask();
+
+        const onKeypress = (chunk, key) => {
+            if (!key) return;
+            if (key.name === 'up') {
+                cursor = cursor > 0 ? cursor - 1 : selections.length - 1;
+                render();
+            } else if (key.name === 'down') {
+                cursor = cursor < selections.length - 1 ? cursor + 1 : 0;
+                render();
+            } else if (key.name === 'space') {
+                selections[cursor].selected = !selections[cursor].selected;
+                render();
+            } else if (key.name === 'a') {
+                selections.forEach(s => s.selected = true);
+                render();
+            } else if (key.name === 'return' || key.name === 'enter') {
+                cleanup();
+                console.log("");
+                resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]);
+            } else if (key.ctrl && key.name === 'c') {
+                cleanup();
+                process.exit(0);
+            }
+        };
+
+        const cleanup = () => {
+            process.stdin.removeListener('keypress', onKeypress);
+            if (process.stdin.isTTY) process.stdin.setRawMode(false);
+            rl.resume();
+        };
+
+        if (process.stdin.isTTY) {
+            rl.pause();
+            readline.emitKeypressEvents(process.stdin);
+            process.stdin.setRawMode(true);
+            process.stdin.on('keypress', onKeypress);
+            render();
+        } else {
+            resolve(availableMcps);
+        }
     });
 }
 
@@ -383,7 +416,7 @@ async function installOpenWikiDaemon(apiKey, targetSkillDir, openwikiEnv = {}) {
     const prov = openwikiEnv.provider || "google";
     if (!apiKey && !["ollama", "lmstudio"].includes(prov)) { console.log(' -> Skipping OpenWiki Daemon background installation (no API key provided).'); return; }
     console.log('\nInstalling OpenWiki Daemon...');
-    const { spawn, execSync } = require('child_process');
+    
     const scriptBase = path.join(targetSkillDir, 'openwiki-skill', 'scripts');
 
     const daemonEnv = Object.assign({}, process.env, {
@@ -437,7 +470,7 @@ async function installTokenSaver(platformTarget) {
         return;
     }
     console.log(`\n${colors.magenta}${colors.bold}--- Installing Heimdall Token Saver Context Optimizer ---${colors.reset}`);
-    const { execSync } = require('child_process');
+    
     const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
 
     try {
@@ -683,7 +716,7 @@ promptMode(({ tier, mode, platform, customPaths }) => {
             });
             console.log(` -> Installed selected MCP servers to ${mcpCodeTarget}`);
 
-            const execSync = require('child_process').execSync;
+            
             const nodeMcps = ['adobe_uxp_mcp', 'unreal_mcp', 'tdmcp', 'touchdesigner-mcp', 'davinci-resolve-mcp', 'after-effects-mcp', 'computer-use-mcp'];
             nodeMcps.filter(m => selectedMcps.includes(m)).forEach(mcpFolder => {
                 const targetFolder = path.join(mcpCodeTarget, mcpFolder);
@@ -835,7 +868,7 @@ async function promptMemBIngestion(mcpCodeTarget) {
     if (fs.existsSync(ingestScript) && fs.existsSync(pythonBin)) {
         console.log(` -> Running memB deep ingestion on: ${targetDir}...`);
         try {
-            const { execSync } = require('child_process');
+            
             const cmd = `"${pythonBin}" "${ingestScript}" "${targetDir}"${includeTranscripts ? ' --transcripts' : ''}`;
             execSync(cmd, { stdio: 'inherit' });
         } catch (e) {
