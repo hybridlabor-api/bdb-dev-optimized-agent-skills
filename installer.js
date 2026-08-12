@@ -609,6 +609,17 @@ promptMode(({ tier, mode, platform, customPaths }) => {
     copyDirRecursiveSync(path.join(srcDir, 'skills', 'workspace_agents'), targetWorkspaceDir, excludeSkills);
     console.log(" -> Installed workspace skills.");
 
+    console.log("\nInstalling Godmode/Harness configurations to local workspace...");
+    const harnessDirs = ['.cursor/rules', '.claude', '.github', '.codex-plugin'];
+    harnessDirs.forEach(dir => {
+        const sourcePath = path.join(srcDir, dir);
+        if (fs.existsSync(sourcePath)) {
+            const targetPath = path.join(currentDir, dir);
+            copyDirRecursiveSync(sourcePath, targetPath);
+            console.log(` -> Copied ${dir} to ${targetPath}`);
+        }
+    });
+
     const geminiMdSrc = path.join(srcDir, 'GEMINI.md');
     if (platform === '1' && fs.existsSync(geminiMdSrc)) {
         fs.copyFileSync(geminiMdSrc, path.join(geminiDir, 'GEMINI.md'));
