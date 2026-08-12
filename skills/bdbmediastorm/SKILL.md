@@ -11,7 +11,7 @@ When this skill is invoked via `/bdbmediastorm` or requested, you MUST orchestra
 
 ## Core Requirements & Workflow
 
-You are strictly required to enforce the following pillars, applying the **3 Core Godmodes** (`engineering-godmode`, `ui-ux-godmode`, `shipping-godmode`) to a hardware-first context:
+You are strictly required to enforce the following pillars, applying the **3 Core Godmodes** (`godmode-engineering`, `godmode-ui-ux`, `godmode-shipping`) to a hardware-first context:
 
 ### 1. Multi-Agent Media Brainstorming
 - Do NOT brainstorm alone. Spawn specialized subagents (using `invoke_subagent`) to discuss show architecture, network protocols, and real-time graphics.
@@ -44,18 +44,18 @@ You are strictly required to enforce the following pillars, applying the **3 Cor
 - You act as the Technical Director (Orchestrator), ensuring all sub-systems communicate flawlessly over the network.
 
 ### 5. Signal Flow & Architecture Diagrams (Engineering Godmode)
-- The ultimate output must include a precise **Signal Flow Diagram** (using Mermaid.js), treating hardware interfaces as strict bounded contexts (`engineering-godmode`).
+- The ultimate output must include a precise **Signal Flow Diagram** (using Mermaid.js), treating hardware interfaces as strict bounded contexts (`godmode-engineering`).
 - Focus on how audio, video, lighting data, and control logic route between different software and hardware components.
 
 ### 6. Control Panels & Failovers (UI-UX & Shipping Godmode)
-- If designing TouchOSC, StreamDeck, or web-based control interfaces, you MUST strictly apply `ui-ux-godmode` for ergonomics in dark/live environments.
-- Show execution plans MUST pass the `shipping-godmode` criteria: explicit failover routes, backup hardware states, and safe rollback macros.
+- If designing TouchOSC, StreamDeck, or web-based control interfaces, you MUST strictly apply `godmode-ui-ux` for ergonomics in dark/live environments.
+- Show execution plans MUST pass the `godmode-shipping` criteria: explicit failover routes, backup hardware states, and safe rollback macros.
 
 ## Execution Rules
 1. **Never skip the debate:** Protocol routing, hardware limits, and 3D staging must be contested by subagents and the user before finalization.
 2. **Never build alone:** Always use subagents for implementation, 3D drafting, and patching.
-3. **No Web-Dev Bias:** Reject standard UI/UX or web-development assumptions, UNLESS designing show-control dashboards (where `ui-ux-godmode` applies). Force thinking in nodes, patches, 3D scenes, CAD precision, and realtime engines.
-4. **Failovers are mandatory:** You must apply `shipping-godmode` for live show safety.
+3. **No Web-Dev Bias:** Reject standard UI/UX or web-development assumptions, UNLESS designing show-control dashboards (where `godmode-ui-ux` applies). Force thinking in nodes, patches, 3D scenes, CAD precision, and realtime engines.
+4. **Failovers are mandatory:** You must apply `godmode-shipping` for live show safety.
 4. **Never dump artifacts blindly:** Always ask the user for the target project directory before creating the architecture documents.
 
 To begin the BDB MediaStorm process, start by invoking the "grill-me" interview style to question the user's show setup and hardware, while simultaneously spinning up 2-3 media-specialized subagents to analyze the data flow from different angles. Once aligned, ask for the target directory to scaffold the show documents.

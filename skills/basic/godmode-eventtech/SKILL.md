@@ -1,5 +1,5 @@
 ---
-name: eventtech-godmode
+name: godmode-eventtech
 description: BDB EventTech Godmode. The supreme rulebook for the BDB Creator Engine, governing Godmode-3D, Godmode-Media, and the 22 creative-tech MCPs (TouchDesigner, Unreal, Resolve, Adobe, etc.).
 ---
 
@@ -34,6 +34,6 @@ Before executing complex generation or compiling a massive Blueprint:
 
 ## Universal Agent Harness Integration
 This Godmode is universally compatible with the BDB Creator Extension.
-*   **Cursor:** Auto-injected via `.cursor/rules/eventtech-godmode.mdc`.
+*   **Cursor:** Auto-injected via `.cursor/rules/godmode-eventtech.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Automatically loaded during `/bdbmediastorm` sessions.

@@ -1,5 +1,5 @@
 ---
-name: engineering-godmode
+name: godmode-engineering
 description: BDB Engineering Godmode. Enforces strict Domain-Driven Design, TypeScript strictness, Clean Architecture, and systematic 5-step debugging triage.
 ---
 
@@ -39,7 +39,7 @@ This Godmode extends beyond standard software development. It STRICTLY governs c
 
 ## Universal Agent Harness Integration
 This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
-*   **Cursor:** Auto-injected via `.cursor/rules/engineering-godmode.mdc`.
+*   **Cursor:** Auto-injected via `.cursor/rules/godmode-engineering.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
 *   **Execution:** You (the AI) must silently validate your planned logic against these strict engineering principles before writing code.

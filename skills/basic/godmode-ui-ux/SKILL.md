@@ -1,5 +1,5 @@
 ---
-name: ui-ux-godmode
+name: godmode-ui-ux
 description: BDB UI/UX Godmode. The absolute Gold-Standard for frontend design. Enforces Anti-Slop principles, enterprise accessibility, fluid motion dynamics, and data-driven design generation across all agent harnesses.
 ---
 
@@ -45,7 +45,7 @@ This Godmode extends beyond standard software development. It STRICTLY governs c
 
 ## Universal Agent Harness Integration
 This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
-*   **Cursor:** Auto-injected via `.cursor/rules/ui-ux-godmode.mdc`.
+*   **Cursor:** Auto-injected via `.cursor/rules/godmode-ui-ux.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
 *   **Execution:** You (the AI) must silently validate your planned UI code against these 5 pillars before outputting code to the user.
