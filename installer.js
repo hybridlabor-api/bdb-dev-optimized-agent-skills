@@ -204,56 +204,60 @@ function promptMode(callback) {
         }
 
         console.log("\nTarget AI Platform:");
-    console.log(" (1) Google Antigravity (Default)");
-    console.log(" (2) Claude Desktop / Claude Code");
-    console.log(" (3) Cursor / Generic IDE (Project-local)");
-    console.log(" (4) Custom Installation (Specify custom paths manually)");
-    console.log(" (5) ChatGPT Codex CLI");
-    console.log(" (6) Windsurf IDE");
-    console.log(" (7) Roo Code / Cline / VS Code");
-    console.log(" (8) Aider CLI");
-    
-    rl.question("\nSelect platform [1-8]: ", (platformAns) => {
-        const platform = platformAns.trim() || '1';
+        console.log(" (0) Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)");
+        console.log(" (1) Google Antigravity (Default Single)");
+        console.log(" (2) Claude Desktop / Claude Code");
+        console.log(" (3) Cursor / Generic IDE (Project-local)");
+        console.log(" (4) Custom Installation (Specify custom paths manually)");
+        console.log(" (5) ChatGPT Codex CLI");
+        console.log(" (6) Windsurf IDE");
+        console.log(" (7) Roo Code / Cline / VS Code");
+        console.log(" (8) Aider CLI");
         
-        console.log("\nInstallation Mode:");
-        console.log(" (1) Merge: Keep your existing skills/MCPs and add/update BDB tools.");
-        console.log(" (2) Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools.");
-        rl.question("\nSelect mode [1/2]: ", (modeAns) => {
-            const mode = modeAns.trim() === '2' ? '2' : '1';
+        rl.question("\nSelect platform [0-8, default: 0]: ", (platformAns) => {
+            let platform = platformAns.trim() || '0';
+            const isUniversal = platform === '0';
+            if (isUniversal) platform = '1'; // Default to Antigravity as the Master Hub
             
-            if (platform === '4') {
-                // Prompt for custom paths
-                console.log("\n--- Custom Path Configuration ---");
-                rl.question("Target directory for global skills [default: " + path.join(homeDir, '.bdb-skills') + "]: ", (skillDir) => {
-                    const customSkillDir = skillDir.trim() || path.join(homeDir, '.bdb-skills');
-                    rl.question("Target directory for legacy skills [default: " + path.join(customSkillDir, 'legacy') + "]: ", (legacyDir) => {
-                        const customLegacyDir = legacyDir.trim() || path.join(customSkillDir, 'legacy');
-                        rl.question("Target directory for workspace skills [default: " + workspaceDir + "]: ", (workDir) => {
-                            const customWorkspaceDir = workDir.trim() || workspaceDir;
-                            rl.question("Target path for MCP Config JSON file [default: " + path.join(homeDir, 'mcp_config.json') + "]: ", (mcpConf) => {
-                                const customMcpConfigPath = mcpConf.trim() || path.join(homeDir, 'mcp_config.json');
-                                callback({
-                                    tier,
-                                    mode,
-                                    platform,
-                                    customPaths: {
-                                        skillDir: customSkillDir,
-                                        legacyDir: customLegacyDir,
-                                        workspaceDir: customWorkspaceDir,
-                                        mcpConfigPath: customMcpConfigPath,
-                                        mcpDir: path.dirname(customMcpConfigPath)
-                                    }
+            console.log("\nInstallation Mode:");
+            console.log(" (1) Merge: Keep your existing skills/MCPs and add/update BDB tools.");
+            console.log(" (2) Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools.");
+            rl.question("\nSelect mode [1/2]: ", (modeAns) => {
+                const mode = modeAns.trim() === '2' ? '2' : '1';
+                
+                if (platform === '4') {
+                    // Prompt for custom paths
+                    console.log("\n--- Custom Path Configuration ---");
+                    rl.question("Target directory for global skills [default: " + path.join(homeDir, '.bdb-skills') + "]: ", (skillDir) => {
+                        const customSkillDir = skillDir.trim() || path.join(homeDir, '.bdb-skills');
+                        rl.question("Target directory for legacy skills [default: " + path.join(customSkillDir, 'legacy') + "]: ", (legacyDir) => {
+                            const customLegacyDir = legacyDir.trim() || path.join(customSkillDir, 'legacy');
+                            rl.question("Target directory for workspace skills [default: " + workspaceDir + "]: ", (workDir) => {
+                                const customWorkspaceDir = workDir.trim() || workspaceDir;
+                                rl.question("Target path for MCP Config JSON file [default: " + path.join(homeDir, 'mcp_config.json') + "]: ", (mcpConf) => {
+                                    const customMcpConfigPath = mcpConf.trim() || path.join(homeDir, 'mcp_config.json');
+                                    callback({
+                                        tier,
+                                        mode,
+                                        platform,
+                                        isUniversal,
+                                        customPaths: {
+                                            skillDir: customSkillDir,
+                                            legacyDir: customLegacyDir,
+                                            workspaceDir: customWorkspaceDir,
+                                            mcpConfigPath: customMcpConfigPath,
+                                            mcpDir: path.dirname(customMcpConfigPath)
+                                        }
+                                    });
                                 });
                             });
                         });
                     });
-                });
-            } else {
-                callback({ tier, mode, platform });
-            }
+                } else {
+                    callback({ tier, mode, platform, isUniversal });
+                }
+            });
         });
-    });
     });
 }
 
@@ -537,7 +541,7 @@ function copyDirRecursiveSync(source, target, excludeList = []) {
     });
 }
 
-promptMode(({ tier, mode, platform, customPaths }) => {
+promptMode(({ tier, mode, platform, isUniversal, customPaths }) => {
     fs.mkdirSync(backupDir, { recursive: true });
     
     let targetSkillDir = globalConfigDir;
@@ -950,6 +954,39 @@ async function promptOSAgentWorkspace() {
         await promptCreatorExtension(mcpConfigPath);
         await promptOSAgentWorkspace();
         await promptMemBIngestion(mcpCodeTarget);
+        
+        if (isUniversal) {
+            console.log(`\n${colors.magenta}${colors.bold}🌐 Universal Agent Harness Sync...${colors.reset}`);
+            const detections = detectPlatforms();
+            let masterMcpData = {};
+            try { masterMcpData = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf8')); } catch(e) {}
+            
+            const syncMcpConfig = (targetPath) => {
+                try {
+                    let data = { mcpServers: {} };
+                    if (fs.existsSync(targetPath)) {
+                        data = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
+                        if (!data.mcpServers) data.mcpServers = {};
+                    }
+                    if (masterMcpData.mcpServers) {
+                        for (const [key, val] of Object.entries(masterMcpData.mcpServers)) {
+                            data.mcpServers[key] = val;
+                        }
+                    }
+                    fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+                    fs.writeFileSync(targetPath, JSON.stringify(data, null, 2));
+                } catch(e) {
+                    console.log(`    Failed to sync MCP to ${targetPath}: ${e.message}`);
+                }
+            };
+
+            for (const d of detections) {
+                console.log(` -> Injecting MCP engines into ${d.name}...`);
+                if (d.key === 'claude') syncMcpConfig(path.join(d.path, 'claude_desktop_config.json'));
+                else if (d.key === 'cursor' || d.key === 'windsurf' || d.key === 'vscode' || d.key === 'aider') syncMcpConfig(path.join(d.path, 'mcp.json'));
+            }
+            console.log(` -> Universal Sync Complete!`);
+        }
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
         console.log(`${colors.green}${colors.bold} 🎉 Installation complete! The environment now has the ${colors.reset}`);
