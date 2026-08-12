@@ -1,30 +1,54 @@
-# BDB DEV Optimized Agent Skills (v3.0.0)
+![BDB DEV Media | Event – Optimized Agent Skills](header.png)
 
-[![GitHub License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/bdb-dev-optimized-agent-skills)](https://www.npmjs.com/package/@hybridlabor-api/bdb-dev-optimized-agent-skills)
-
-Welcome to the **BDB DEV Optimized Agent Skills** repository. This is a hyper-curated, enterprise-grade toolkit of ~250 optimized AI Agent skills, strict system configurations, and advanced local MCP servers designed for autonomous software engineering.
+🌐 **Language / Sprache / Idioma**: **English** | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇵🇹 Português ](README.pt.md)
 
 ---
 
-## 🏗️ Architecture Overview
+```text
+██████╗ ██████╗ ██████╗      █████╗  ██████╗ ███████╗███╗   ██╗████████╗     ██████╗ ███████╗
+██╔══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝
+██████╔╝██║  ██║██████╔╝    ███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║       ██║   ██║███████╗
+██╔══██╗██║  ██║██╔══██╗    ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║       ██║   ██║╚════██║
+██████╔╝██████╔╝██████╔╝    ██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║       ╚██████╔╝███████║
+╚═════╝ ╚═════╝ ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚══════╝
 
-The BDB OS ecosystem bridges the gap between raw LLMs and production-grade engineering environments. It consists of four core pillars:
+                         O P T I M I Z E D   A G E N T   S K I L L S
+```
 
-1. **The 144+ Optimized Skills:** A massive library of meticulously crafted Markdown skills covering everything from AWS Terraform to UI/UX design.
-2. **The 3 Godmodes:** The absolute apex of the skill hierarchy. These three skills dictate strict Domain-Driven Design, UI/UX "Anti-Slop", and safe shipping practices across the entire ecosystem.
-3. **Universal Agent Harness:** The core setup injects rules directly into Agy, Claude Code, Cursor, Windsurf, GitHub Copilot, and Codex.
-4. **Active Daemons (memB & OpenWiki):** Background Python/Node daemons that manage persistent long-term memory (memB) and auto-document codebases (OpenWiki).
+# 🚀 BDB DEV - Optimized Creative & Full-Stack Skills Pack
+
+[![CI](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/actions)
+[![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/bdb-dev-optimized-agent-skills.svg)](https://www.npmjs.com/package/@hybridlabor-api/bdb-dev-optimized-agent-skills)
+[![runtime](https://img.shields.io/badge/node-20+-blue.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![skills](https://img.shields.io/badge/skills-144%20curated-brightgreen.svg)](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills)
+
+> **Supercharging AI coding agents with 144 hyper-curated skills, 22 local MCPs, and deep integrations for the creative technology industry.**
+
+Welcome to the **BDB DEV Skills & MCP Configuration** repository. This project serves as the backbone of our creative and full-stack development ecosystem, supercharging AI agents with highly specialized capabilities tailored for the event and creative technology industry, as well as general-purpose software engineering.
+
+While optimized for **Google Antigravity**, this skills pack and MCP configuration is **100% universal** and works seamlessly with all modern AI agents and developer interfaces, including **ChatGPT Codex / Codex CLI, Claude Desktop, Claude Code, Cursor, Aider, Roo Code, Cline, and Windsurf**.
+
+> 🎙 **Audio Deep Dive: "Give AI Agents Control of Creative Software"**  
+> <video src="assets/Give_AI_Agents_Control_of_Creative_Software.mp4" controls></video>
 
 ---
 
-## 🛡️ The 3 Godmodes (Apex Layer)
 
-Instead of letting agents wander through generic instructions, the top-tier of this repository enforces three **Hyper-Curated Godmodes**. These act as the ultimate gatekeepers for your codebase and are automatically injected into all agent harnesses:
+### 🪐 Universal Agent Harness (v3.0.0)
+The installer now features a fully automated Universal Sync engine. It scans your system for **Claude Desktop, Cursor, Windsurf, Aider, Roo/Cline**, and injects the curated MCP configuration and Godmode rules across all environments simultaneously.
 
-*   **`engineering-godmode`:** Forces Domain-Driven Design, strict TypeScript checks, Clean Architecture, and systematic 5-step debugging. 
-*   **`ui-ux-godmode`:** The frontend Gold-Standard. Enforces BDB "Anti-Slop" principles, enterprise accessibility, fluid motion dynamics, and precise data-driven design.
-*   **`shipping-godmode`:** The final gatekeeper. Enforces Spec-Driven Development, rigorous pre-launch environment checks, feature flags, and safe rollback strategies before any deployment.
+## 🌟 144 Optimized Skills
+
+We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144 Optimized Skills** (featuring a native OpenWiki documentation engine in v1.3.3, and the **memB local semantic memory brain in v2.0.0**).
+
+These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency and context awareness.
+
+### 💻 Beyond Events: Normal Software & App Coding
+While heavily optimized for the creative tech industry, these skills are deeply rooted in core software engineering:
+- **Full-Stack Development**: Spinning up Next.js App Router boilerplates, building scalable Node.js microservices, and crafting interactive frontends.
+- **App Development**: Architecting databases, designing REST APIs, and building standard web and mobile applications from scratch.
+- **Design & Quality Assurance**: Auditing UI/UX patterns (utilizing `ui-ux-pro-max`), enforcing clean code principles, and setting up strict CI/CD pipelines.
 
 ---
 
@@ -279,25 +303,22 @@ Below is the complete overview of all curated agent skills included in this pack
 
 AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** and **BDBMediaStorm** philosophy:
 
-- **1. IDEATE & MEDIA STORM (`/grill-me`, `/bdbrainstorm`, `/bdbmediastorm`)**: Actively challenge ideas via multi-agent debate. Use `/bdbrainstorm` for code/architecture, or `/bdbmediastorm` for hardware, 3D scenography (Rhino, Unreal), and MCP compatibility checks.
+- **1. IDEATE & MEDIA STORM (`/grill-me`, `/bdbrainstorm`, `/bdbmediastorm`)**: Actively challenge ideas or conduct multi-agent media/event-tech brainstorming. Spawns specialized subagents (CI/Design Expert, Real Time Architect, MCP Implementer) to validate hardware, 3D scenography (Rhino, Blender, Unreal), protocols (OSC, Art-Net), and MCP compatibility.
 - **2. DEFINE & SCAFFOLD (`openwiki-skill`, `github-repo`)**: Confirm target workspace directory with the user, then autonomously initialize project documentation, `agent.md`, `.openwiki/` structures, and GitHub repo standards.
-- **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to **`engineering-godmode`** (Clean Architecture) and **`ui-ux-godmode`** (Anti-Slop Standards).
+- **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to `ui-ux-pro-max` standards.
 - **4. BUILD (`/subagents`)**: Subagent-driven development. The master orchestrator delegates specific component creation, node patching, and refactoring tasks to independent subagents.
-- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX or signal-flow audits based on the Godmode criteria.
-- **6. SHIP (`/ship`)**: Enforce **`shipping-godmode`** (rollback strategies, spec-checks), commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
+- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX or signal-flow audits.
+- **6. SHIP (`/ship`)**: Commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
 
 ---
 
+## 🧠 BDBrainstorm: The Ultimate Ideation Engine
 
-## 🧠 BDBrainstorm & MediaStorm: The Godmode Ideation Engines
+Included in this optimized arsenal is our proprietary **BDBrainstorm** skill.
 
-Included in this optimized arsenal are our proprietary multi-agent ideation skills, entirely governed by the **3 Core Godmodes** (`engineering-godmode`, `ui-ux-godmode`, and `shipping-godmode`):
-
-- **`/bdbrainstorm` (Software & Code):** Combines multi-agent brainstorming with the `/grill-me` interview approach. It forces Domain-Driven Design (`engineering-godmode`), enforces premium frontend standards (`ui-ux-godmode`), and stress-tests architectures for production readiness (`shipping-godmode`).
-- **`/bdbmediastorm` (Show-Control & Hardware):** Exclusively tailored for creative-tech (TouchDesigner, Adobe, grandMA3, Unreal Engine). It forces subagents to map signal flow, validate the 11 Core MCPs, leverage the Creator Extension pipelines, and design mandatory hardware failovers.
+BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, subagent-driven development, and extreme UI/UX design workflows to force a comprehensive, multi-agent ideation process. It stress-tests designs, architectures the systems behind them, and outputs actionable, high-fidelity implementation plans.
 
 ---
-
 
 ## 🔌 22 Custom Local MCP Integrations
 
@@ -361,6 +382,30 @@ We provide a dual-engine architecture optimized for macOS and Windows environmen
 
 ---
 
+## 📖 11 Specialized System Skills
+
+To make these MCP integrations accessible to AI agents, we provide **11 dedicated system skills** inside the `skills/global_config/` directory. If an AI agent imports this pack, it will immediately read these markdown files to learn the tool signatures, expected arguments, ExtendScript hooks, and common troubleshooting steps for each application.
+
+<details>
+<summary><strong>View System Skills List</strong></summary>
+
+- [`bdb-unreal-mcp.md`](skills/global_config/bdb-unreal-mcp.md)
+- [`bdb-rhino-mcp.md`](skills/global_config/bdb-rhino-mcp.md)
+- [`bdb-davinci-mcp.md`](skills/global_config/bdb-davinci-mcp.md)
+- [`bdb-blender-mcp.md`](skills/global_config/bdb-blender-mcp.md)
+- [`bdb-after-effects-mcp.md`](skills/global_config/bdb-after-effects-mcp.md)
+- [`bdb-vectorworks-mcp.md`](skills/global_config/bdb-vectorworks-mcp.md)
+- [`bdb-touchdesigner-mcp.md`](skills/global_config/bdb-touchdesigner-mcp.md)
+- [`bdb-computer-use-mcp.md`](skills/global_config/bdb-computer-use-mcp.md)
+- [`bdb-grandma3-mcp.md`](skills/global_config/bdb-grandma3-mcp.md)
+- [`bdb-resolume-mcp.md`](skills/global_config/bdb-resolume-mcp.md)
+- [`bdb-adobe-suite-mcp.md`](skills/global_config/bdb-adobe-suite-mcp.md)
+- [`bdb-memb-mcp.md`](skills/global_config/bdb-memb-mcp.md)
+- [`openwiki-skill`](skills/global_config/openwiki-skill/SKILL.md): Direct Gemini-native integration of OpenWiki for autonomous, high-agency documentation management and release notes maintenance.
+- [`memb-skill`](skills/global_config/memb-skill/SKILL.md): BDB local-first long-term memory engine (memB). Query, remember, and adapt preferences, code architectures, and developer patterns across tasks.
+</details>
+
+---
 
 ## 🌐 OpenWiki & RepoGraph Code Health Engine (v2.4.0)
 
@@ -424,33 +469,20 @@ tail -f ~/.openwiki/daemon.log
 
 ---
 
-
 ## 🎨 Modular Creator Extension Suite (`bdb-dev-creator-extension`)
 
-To keep the core skills pack fast and lightweight (<25MB), all heavy 3D generation, cinema-grade video production, and ComfyUI pipelines have been completely decoupled into the companion **BDB Creator Extension**. 
+To keep the core skills pack fast and lightweight (<25MB), heavy 3D generation, cinema video production, and ComfyUI pipelines are decoupled into the companion **BDB Creator Extension**:
 
-This suite transforms your AI agent from a pure software engineer into a **full-stack creative studio**:
+- **🔷 3D Generation Suite (`engines/3d/`):** Microsoft TRELLIS (high-fidelity image-to-3D), Stability AI TripoSR (<0.5s image-to-mesh), and parametric CadQuery text-to-CAD (STEP/STL/URDF).
+- **🎬 Cinema Video Suite (`engines/video/`):** OpenMontage AI orchestrator, 100+ Remotion cinema-grade motion templates (`video-shotcraft`), and Palmier Pro macOS NLE HTTP MCP server (`http://127.0.0.1:19789/mcp`).
+- **🎨 Local ComfyUI MCP (`mcps/comfyui-mcp/`):** Local FLUX, SDXL, and Wan2.1 generative pipelines exposed over Model Context Protocol.
 
-- **🔷 3D Generation Suite (`engines/3d/`)**
-  - **Microsoft TRELLIS:** High-fidelity image-to-3D generation.
-  - **Stability AI TripoSR:** Ultra-fast (<0.5s) image-to-mesh generation.
-  - **CadQuery text-to-CAD:** Parametric modeling outputting production-ready STEP, STL, and URDF files.
-- **🎬 Cinema Video Suite (`engines/video/`)**
-  - **OpenMontage Agentic Production:** Full end-to-end video production. Just prompt your agent, and it handles script, stock retrieval, and voiceover.
-  - **Backlot Living Storyboards:** A live visual dashboard to approve takes and costs before the render.
-  - **Motion Templates (`video-shotcraft`):** 100+ Remotion cinema-grade motion templates.
-  - **Palmier Pro NLE Integration:** Direct timeline injection via HTTP MCP (`http://127.0.0.1:19789/mcp`).
-- **🎨 Local ComfyUI Engine (`mcps/comfyui-mcp/`)**
-  - Exposes local Stable Diffusion, FLUX, and Wan2.1 generative workflows directly over the Model Context Protocol. Zero-cost AI rendering, fully controlled by the agent.
-
-**Installation & Linking:**
-The `bdb-dev-optimized-agent-skills` installer will automatically prompt you to integrate this suite. Or install manually:
+Link the suite alongside your core skills:
 ```bash
 git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git
 ```
 
 ---
-
 
 ## 🧠 memB: Custom Semantic Brain (v2.2.1)
 
@@ -463,12 +495,7 @@ BDB OS introduces a fully integrated local, offline-first semantic memory brain 
 The ecosystem includes a deeply integrated skill (`/memb-ingest`). When an agent runs this, the `memb_ingest.py` script recursively scans your project (reading `.openwiki`, `agent.md`, transcripts, and architecture files). 
 * **Offline Vector Embeddings:** It bundles a pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model to chunk and store these learnings natively in a fast SQLite vector store (`~/.MemBDB/memb.db`), all without hitting external APIs.
 
-### 2. Autonomous Auto-Injection (Mem0-Style)
-In v3.0.0, memB no longer waits for agents to manually query it. It acts as an active **Context Injector**:
-*   **File-Injection (Closed IDEs):** memB dynamically generates `.cursor/rules/999_memb_context.mdc` and `CLAUDE.md` in your local workspace, giving Cursor and GitHub Copilot instant context.
-*   **LLM Proxy (Open Tools):** A bundled local proxy intercepts API calls from Agy or Roo Code, retrieves facts via RAG, and injects them into the system prompt *before* they hit the LLM (along with background Auto-Capture of new facts).
-
-### 3. Autonomous AI-First Vault Generation
+### 2. Autonomous AI-First Vault Generation
 Once ingestion completes, memB natively generates a **physical Markdown Vault** (`~/.MemBDB/memB_Vault`) structured around a strict "God Mode" radial topology:
 * **Zero-Compute Context:** A universal `agent.md` and a master `God_Mode.md` are written to the root. Small 30MB local inference models can instantly orient themselves macroscopically by reading these physical files without spending context tokens on complex database calls.
 * **Micro-Targeted RAG:** For precise execution, the small LLMs query the vector DB to retrieve just the exact 3-5 sub-files needed.
@@ -484,7 +511,6 @@ memB includes a native **Obsidian Plugin** (`obsidian-memb-plugin`) that acts as
 </details>
 
 ---
-
 
 ## ⚡ Heimdall Token Saver: CLI Context Compression (v2.6.3)
 
@@ -528,7 +554,6 @@ You can run diagnostic and benchmarking commands directly in your terminal:
 
 ---
 
-
 ## 🛠️ Installation
 
 ### 🆚 Which Version Should I Use?
@@ -542,7 +567,7 @@ The installer is built using an interactive Node-based menu. It allows you to:
 
 ### Option 1: Ask Your AI Agent (Easiest)
 Simply tell your assistant:
-> "Please run `npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills` to install the skills pack and configure the local MCP servers."
+> "Please run `npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills@latest` to install the skills pack and configure the local MCP servers."
 
 ### Option 2: Command Line (Global via NPX - Recommended)
 Run the script globally in your terminal. We recommend always appending `@latest` to fetch the newest version:
@@ -578,7 +603,3 @@ chmod +x installer.sh
 
 ---
 *Elevate your agency. Dominate the workflow.*
-
-
-
-
