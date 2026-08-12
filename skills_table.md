@@ -3,7 +3,7 @@
 
 | Skill Name | Description |
 |------------|-------------|
-| `creator-godmode` | BDB Creator Godmode. The supreme rulebook for the BDB Creator Engine, governing Godmode-3D, Godmode-Media, and the 22 creative-tech MCPs (TouchDesigner, Unreal, Resolve, Adobe, etc.). |
+| `eventtech-godmode` | BDB EventTech Godmode. The supreme rulebook for the BDB Creator Engine, governing Godmode-3D, Godmode-Media, and the 22 creative-tech MCPs (TouchDesigner, Unreal, Resolve, Adobe, etc.). |
 | `engineering-godmode` | BDB Engineering Godmode. Enforces strict Domain-Driven Design, TypeScript strictness, Clean Architecture, and systematic 5-step debugging triage. |
 | `shipping-godmode` | BDB Shipping Godmode. The final gatekeeper for production releases. Enforces Spec-Driven Development, rigorous pre-launch checks, feature flags, and rollback strategies. |
 | `ui-ux-godmode` | BDB UI/UX Godmode. The absolute Gold-Standard for frontend design. Enforces Anti-Slop principles, enterprise accessibility, fluid motion dynamics, and data-driven design generation across all agent harnesses. |

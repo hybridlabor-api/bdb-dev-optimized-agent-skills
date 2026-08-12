@@ -1,3 +1,8 @@
+---
+description: memB Auto-Injected Knowledge Base
+globs: *
+---
+
 # memB Auto-Injected Context
 The following knowledge was automatically retrieved from the memB vector engine.
 
