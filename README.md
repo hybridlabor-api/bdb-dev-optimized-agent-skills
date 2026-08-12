@@ -39,6 +39,8 @@ The BDB OS ecosystem bridges the gap between raw LLMs and production-grade engin
 2. **The 3 Godmodes:** The absolute apex of the skill hierarchy. These three skills dictate strict Domain-Driven Design, UI/UX "Anti-Slop", and safe shipping practices across the entire ecosystem.
 3. **Universal Agent Harness:** The core setup injects rules directly into Agy, Claude Code, Cursor, Windsurf, GitHub Copilot, and Codex.
 4. **Active Daemons (memB & OpenWiki):** Background Python/Node daemons that manage persistent long-term memory (memB) and auto-document codebases (OpenWiki).
+5. **BDB OS Agent Workspace (AI Orchestrator):** An advanced Meta-Harness and orchestration layer for running multiple AI coding agents (Claude Code, Codex, Aider) in parallel within isolated workspaces.
+6. **BDB Creator Extension:** Native integrations for generative 3D, Video, and ComfyUI MCP engines tailored for the creative technology industry.
 
 ---
 
