@@ -851,31 +851,70 @@ async function promptCreatorExtension(mcpConfigPath) {
     
     console.log(`\n${colors.magenta}${colors.bold}🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI)${colors.reset}`);
     const doInstall = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Möchtest du das Plugin 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines) einrichten? (y/N): ${colors.reset}`, (answer) => {
+        rl.question(`${colors.yellow}Möchtest du das Plugin 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines) installieren? (y/N): ${colors.reset}`, (answer) => {
             resolve(answer.trim().toLowerCase() === 'y');
         });
     });
 
     if (!doInstall) return;
 
-    const creatorDir = path.join(path.dirname(srcDir), 'bdb-dev-creator-extension');
+    // Use user's home directory config path for stability if running via npx, or alongside current dir
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const creatorDir = path.join(basePath, 'bdb-dev-creator-extension');
     const installerScript = path.join(creatorDir, 'installer.js');
+
+    if (!fs.existsSync(creatorDir)) {
+        console.log(` -> BDB Creator Extension wird nach ${creatorDir} geklont...`);
+        try {
+            execSync(`git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git "${creatorDir}"`, { stdio: 'inherit' });
+        } catch (e) {
+            console.log(` -> Fehler beim Klonen der Creator Extension: ${e.message}`);
+            return;
+        }
+    }
 
     if (fs.existsSync(installerScript)) {
         console.log(` -> Starte Setup der BDB Creator Extension...`);
         try {
-            execSync(`node "${installerScript}"`, { stdio: 'inherit' });
+            execSync(`node "${installerScript}"`, { stdio: 'inherit', cwd: creatorDir });
         } catch (e) {
             console.log(` -> Hinweis beim Ausführen des Creator Extension Setups: ${e.message}`);
         }
+    }
+}
+
+async function promptOSAgentWorkspace() {
+    if (isAutoYes) return;
+    
+    console.log(`\n${colors.magenta}${colors.bold}💻 BDB OS Agent Workspace (Computer Control)${colors.reset}`);
+    const doInstall = await new Promise((resolve) => {
+        rl.question(`${colors.yellow}Möchtest du den 'BDB OS Agent Workspace' für native Computer-Steuerung installieren? (y/N): ${colors.reset}`, (answer) => {
+            resolve(answer.trim().toLowerCase() === 'y');
+        });
+    });
+
+    if (!doInstall) return;
+
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const osAgentDir = path.join(basePath, 'bdb-os-agent-workspace');
+
+    if (!fs.existsSync(osAgentDir)) {
+        console.log(` -> BDB OS Agent Workspace wird nach ${osAgentDir} geklont...`);
+        try {
+            execSync(`git clone https://github.com/hybridlabor-api/bdb-os-agent-workspace.git "${osAgentDir}"`, { stdio: 'inherit' });
+            console.log(` -> Erfolgreich geklont! (CD in ${osAgentDir} für die OS-Steuerung)`);
+        } catch (e) {
+            console.log(` -> Fehler beim Klonen des OS Agent Workspaces: ${e.message}`);
+        }
     } else {
-        console.log(` -> BDB Creator Extension Verzeichnis nicht gefunden unter ${creatorDir}.`);
+        console.log(` -> BDB OS Agent Workspace existiert bereits unter ${osAgentDir}.`);
     }
 }
 
         await installOpenWikiDaemon(creds.gemini, targetSkillDir, { provider: creds.openwikiProvider, model: creds.openwikiModel, baseUrl: creds.openwikiBaseUrl });
         await installTokenSaver(platform);
         await promptCreatorExtension(mcpConfigPath);
+        await promptOSAgentWorkspace();
         await promptMemBIngestion(mcpCodeTarget);
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
