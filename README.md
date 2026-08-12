@@ -686,11 +686,13 @@ The installer is built using an interactive Node-based menu. It allows you to:
 Simply tell your assistant:
 > "Please run `npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills` to install the skills pack and configure the local MCP servers."
 
-### Option 2: Command Line (Global via NPX)
-Run the script globally in your terminal:
+### Option 2: Command Line (Global via NPX - Recommended)
+Run the script globally in your terminal. We recommend always appending `@latest` to fetch the newest version:
+
 ```bash
-npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills
+npx -y @hybridlabor-api/bdb-dev-optimized-agent-skills@latest
 ```
+*(This command works on Mac/Linux terminals as well as Windows PowerShell!)*
 
 ### Option 3: Using Homebrew (macOS)
 If you are on a Mac and prefer Homebrew, you can tap and install the package:
