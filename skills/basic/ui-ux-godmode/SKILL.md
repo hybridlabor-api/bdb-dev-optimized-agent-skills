@@ -38,8 +38,13 @@ An interface that cannot be used by everyone is broken.
 *   **WCAG 2.1 AA:** Enforce strict contrast ratios (4.5:1 for normal text).
 *   **Keyboard Navigation:** Focus states must be highly visible (e.g., `focus-visible:ring-2 focus-visible:ring-offset-2`). Every interactive element must be reachable via `Tab` and executable via `Enter/Space`.
 
+## 6. Creator Extension & BDB MediaStorm Governance
+This Godmode extends beyond standard software development. It STRICTLY governs creative-tech and show-control workflows (BDB Creator Extension).
+*   **MediaStorm Validations:** When executing `/bdbmediastorm` for TouchDesigner, Unreal Engine, or Adobe Suite workflows, UX principles must translate to operator panels, perform mode interfaces, and VJ dashboards. 
+*   **Performance vs UI:** In real-time rendering environments, UI must not block the main render thread. Anti-slop applies to creative tech: avoid generic generative noises and default particle systems. 
+
 ## Universal Agent Harness Integration
-This Godmode is universally compatible.
+This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
 *   **Cursor:** Auto-injected via `.cursor/rules/ui-ux-godmode.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.

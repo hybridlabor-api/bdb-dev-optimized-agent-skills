@@ -31,8 +31,13 @@ Never launch a feature without a verified rollback plan.
 *   **Auto-Rollback Triggers:** Define exactly what metrics will trigger an automatic rollback (e.g., error rate jumps by >2x, latency spikes above 500ms).
 *   **Database Migrations:** Ensure any database schema changes are backward compatible, or have a strictly tested `down` migration ready.
 
+## 5. Creator Extension & BDB MediaStorm Governance
+This Godmode extends beyond standard software development. It STRICTLY governs creative-tech and show-control workflows (BDB Creator Extension).
+*   **MediaStorm Deployments:** When executing `/bdbmediastorm` for TouchDesigner, Unreal Engine, or Adobe Suite workflows, you must enforce rigorous release management for `.tox` files, Unreal Blueprints, and showfiles.
+*   **Show-Ready Validation:** Never push a creative-tech update to a live production environment (e.g., a running installation or live show) without a verified fallback or backup showfile. 
+
 ## Universal Agent Harness Integration
-This Godmode is universally compatible.
+This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
 *   **Cursor:** Auto-injected via `.cursor/rules/shipping-godmode.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.

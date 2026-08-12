@@ -32,8 +32,13 @@ Production code fails. You must ensure we know *why* it failed.
 *   **Structured Logging:** Do not use `console.log("here")`. Use structured, level-based logging with context (e.g., `logger.error("Failed to fetch user", { userId, error: e.message })`).
 *   **Error Boundaries:** Ensure the app handles unexpected errors gracefully without crashing the entire process (React Error Boundaries, Node.js global catchers).
 
+## 5. Creator Extension & BDB MediaStorm Governance
+This Godmode extends beyond standard software development. It STRICTLY governs creative-tech and show-control workflows (BDB Creator Extension).
+*   **11-MCP Validation:** When the user invokes `/bdbmediastorm` for TouchDesigner, Unreal Engine, GrandMA3, or Adobe Suite workflows, you MUST validate the signal flow against hardware constraints and MCP availability.
+*   **Creative-Tech Architecture:** The same principles of Clean Architecture and Modularity apply to node-based graphs (TouchDesigner), Blueprint architectures (Unreal), and DMX showfiles. Do not create monolithic, entangled creative networks.
+
 ## Universal Agent Harness Integration
-This Godmode is universally compatible.
+This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
 *   **Cursor:** Auto-injected via `.cursor/rules/engineering-godmode.mdc`.
 *   **Claude Code:** Reads principles via `CLAUDE.md`.
 *   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
