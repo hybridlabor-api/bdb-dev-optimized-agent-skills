@@ -80,10 +80,18 @@ console.log(`${colors.dim} ${divider}${colors.reset}\n`);
 
 checkForUpdates();
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+function askTextQuestion(query) {
+    return new Promise((resolve) => {
+        const rlTemp = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        rlTemp.question(query, (answer) => {
+            rlTemp.close();
+            resolve(answer);
+        });
+    });
+}
 
 const homeDir = os.homedir();
 const currentDir = process.cwd();
@@ -186,6 +194,8 @@ async function promptSingleSelect(title, options, defaultIndex = 0) {
         let cursor = defaultIndex;
         let drawnLines = 0;
 
+        let selectedIndex = defaultIndex;
+
         const render = () => {
             if (drawnLines > 0) {
                 process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
@@ -193,31 +203,35 @@ async function promptSingleSelect(title, options, defaultIndex = 0) {
             let output = `\n${colors.cyan}${colors.bold}${title}${colors.reset}\n`;
             options.forEach((opt, index) => {
                 const label = opt.label || opt.name || opt;
+                const isSelected = index === selectedIndex ? `${colors.green}x${colors.reset}` : ' ';
                 if (index === cursor) {
-                    output += ` ${colors.green}${colors.bold}➔ 🔘 ${label}${colors.reset}\n`;
+                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${label}${colors.reset}\n`;
                 } else {
-                    output += `    ⚪ ${label}\n`;
+                    output += `   [${isSelected}] ${label}\n`;
                 }
             });
-            output += `\n${colors.dim}Navigation: Use UP/DOWN arrows to move cursor, ENTER or SPACE to confirm.${colors.reset}\n`;
+            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to select, ENTER to confirm.${colors.reset}\n`;
 
             const lines = output.split('\n');
             drawnLines = lines.length - 1;
             process.stdout.write(output);
         };
 
-        const onKeypress = (chunk, key) => {
+        const onKeypress = (str, key) => {
             if (!key) return;
-            if (key.name === 'up') {
+            if (key.name === 'up' || key.name === 'k') {
                 cursor = cursor > 0 ? cursor - 1 : options.length - 1;
                 render();
-            } else if (key.name === 'down') {
+            } else if (key.name === 'down' || key.name === 'j') {
                 cursor = cursor < options.length - 1 ? cursor + 1 : 0;
                 render();
-            } else if (key.name === 'return' || key.name === 'enter' || key.name === 'space') {
+            } else if (key.name === 'space') {
+                selectedIndex = cursor;
+                render();
+            } else if (key.name === 'return' || key.name === 'enter') {
                 cleanup();
                 console.log("");
-                resolve(options[cursor].value !== undefined ? options[cursor].value : options[cursor]);
+                resolve(options[selectedIndex].value !== undefined ? options[selectedIndex].value : options[selectedIndex]);
             } else if (key.ctrl && key.name === 'c') {
                 cleanup();
                 process.exit(0);
@@ -226,12 +240,13 @@ async function promptSingleSelect(title, options, defaultIndex = 0) {
 
         const cleanup = () => {
             process.stdin.removeListener('keypress', onKeypress);
-            if (process.stdin.isTTY) process.stdin.setRawMode(false);
-            rl.resume();
+            if (process.stdin.isTTY) {
+                process.stdin.setRawMode(false);
+                process.stdin.pause();
+            }
         };
 
         if (process.stdin.isTTY) {
-            rl.pause();
             readline.emitKeypressEvents(process.stdin);
             process.stdin.setRawMode(true);
             process.stdin.resume();
@@ -252,7 +267,7 @@ async function promptMode() {
         { label: 'Pro MEDIA (Full suite of dev-optimized skills and creative MCPs - Default)', value: '1' },
         { label: 'Basic (Essential skills only, lightweight MCPs)', value: '2' }
     ];
-    const tier = await promptSingleSelect('Package Tier Selection:', tierOptions, 0);
+    const tier = await promptSingleSelect('Package Tier:', tierOptions, 0);
 
     const detections = detectPlatforms();
     if (detections.length > 0) {
@@ -263,17 +278,17 @@ async function promptMode() {
     }
 
     const platformOptions = [
-        { label: 'Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)', value: '0' },
-        { label: 'Google Antigravity (Default Single Hub)', value: '1' },
-        { label: 'Claude Desktop / Claude Code', value: '2' },
-        { label: 'Cursor / Generic IDE (Project-local)', value: '3' },
-        { label: 'Custom Installation (Specify custom paths manually)', value: '4' },
-        { label: 'ChatGPT Codex CLI', value: '5' },
-        { label: 'Windsurf IDE', value: '6' },
-        { label: 'Roo Code / Cline / VS Code', value: '7' },
-        { label: 'Aider CLI', value: '8' }
+        { label: '(0) Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)', value: '0' },
+        { label: '(1) Google Antigravity (Default Single Hub)', value: '1' },
+        { label: '(2) Claude Desktop / Claude Code', value: '2' },
+        { label: '(3) Cursor / Generic IDE (Project-local)', value: '3' },
+        { label: '(4) Custom Installation (Specify custom paths manually)', value: '4' },
+        { label: '(5) ChatGPT Codex CLI', value: '5' },
+        { label: '(6) Windsurf IDE', value: '6' },
+        { label: '(7) Roo Code / Cline / VS Code', value: '7' },
+        { label: '(8) Aider CLI', value: '8' }
     ];
-    const rawPlatform = await promptSingleSelect('Target AI Platform Selection:', platformOptions, 0);
+    const rawPlatform = await promptSingleSelect('Target AI Platform:', platformOptions, 0);
     let platform = rawPlatform;
     const isUniversal = rawPlatform === '0';
     if (isUniversal) platform = '1';
@@ -282,14 +297,14 @@ async function promptMode() {
         { label: 'Merge: Keep your existing skills/MCPs and add/update BDB tools (Recommended)', value: '1' },
         { label: 'Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools', value: '2' }
     ];
-    const mode = await promptSingleSelect('Installation Mode Selection:', modeOptions, 0);
+    const mode = await promptSingleSelect('Installation Mode:', modeOptions, 0);
 
     if (rawPlatform === '4') {
         console.log("\n--- Custom Path Configuration ---");
-        const skillDir = await new Promise(res => rl.question(`Target directory for global skills [default: ${path.join(homeDir, '.bdb-skills')}]: `, ans => res(ans.trim() || path.join(homeDir, '.bdb-skills'))));
-        const legacyDir = await new Promise(res => rl.question(`Target directory for legacy skills [default: ${path.join(skillDir, 'legacy')}]: `, ans => res(ans.trim() || path.join(skillDir, 'legacy'))));
-        const workDir = await new Promise(res => rl.question(`Target directory for workspace skills [default: ${workspaceDir}]: `, ans => res(ans.trim() || workspaceDir)));
-        const mcpConf = await new Promise(res => rl.question(`Target path for MCP Config JSON file [default: ${path.join(homeDir, 'mcp_config.json')}]: `, ans => res(ans.trim() || path.join(homeDir, 'mcp_config.json'))));
+        const skillDir = (await askTextQuestion(`Target directory for global skills [default: ${path.join(homeDir, '.bdb-skills')}]: `)).trim() || path.join(homeDir, '.bdb-skills');
+        const legacyDir = (await askTextQuestion(`Target directory for legacy skills [default: ${path.join(skillDir, 'legacy')}]: `)).trim() || path.join(skillDir, 'legacy');
+        const workDir = (await askTextQuestion(`Target directory for workspace skills [default: ${workspaceDir}]: `)).trim() || workspaceDir;
+        const mcpConf = (await askTextQuestion(`Target path for MCP Config JSON file [default: ${path.join(homeDir, 'mcp_config.json')}]: `)).trim() || path.join(homeDir, 'mcp_config.json');
         return {
             tier,
             mode,
@@ -353,12 +368,12 @@ async function promptMcpSelection(mcpsDir, tier) {
             process.stdout.write(output);
         };
 
-        const onKeypress = (chunk, key) => {
+        const onKeypress = (str, key) => {
             if (!key) return;
-            if (key.name === 'up') {
+            if (key.name === 'up' || key.name === 'k') {
                 cursor = cursor > 0 ? cursor - 1 : selections.length - 1;
                 render();
-            } else if (key.name === 'down') {
+            } else if (key.name === 'down' || key.name === 'j') {
                 cursor = cursor < selections.length - 1 ? cursor + 1 : 0;
                 render();
             } else if (key.name === 'space') {
@@ -379,12 +394,13 @@ async function promptMcpSelection(mcpsDir, tier) {
 
         const cleanup = () => {
             process.stdin.removeListener('keypress', onKeypress);
-            if (process.stdin.isTTY) process.stdin.setRawMode(false);
-            rl.resume();
+            if (process.stdin.isTTY) {
+                process.stdin.setRawMode(false);
+                process.stdin.pause();
+            }
         };
 
         if (process.stdin.isTTY) {
-            rl.pause();
             readline.emitKeypressEvents(process.stdin);
             process.stdin.setRawMode(true);
             process.stdin.resume();
@@ -402,17 +418,19 @@ async function promptCredentials() {
         console.log(`\n${colors.magenta}${colors.bold}--- Integrations & Credentials ---${colors.reset}`);
 
         // Step 1: LLM Provider for OpenWiki
-        console.log(`\n${colors.cyan}${colors.bold}OpenWiki Documentation Engine - LLM Provider${colors.reset}`);
-        console.log(`  ${colors.dim}[1] Gemma 4 12B / Gemini   – Google AI Studio (FREE, default)${colors.reset}`);
-        console.log(`  ${colors.dim}[2] Groq                   – Ultra-Fast Llama 3.3 70B (Groq API)${colors.reset}`);
-        console.log(`  ${colors.dim}[3] Grok / xAI            – Grok 2 (api.x.ai)${colors.reset}`);
-        console.log(`  ${colors.dim}[4] Nvidia NIM            – Llama 3.3 70B (integrate.api.nvidia.com)${colors.reset}`);
-        console.log(`  ${colors.dim}[5] OpenRouter            – Claude 3.5, Qwen, Kimi, Llama (openrouter.ai)${colors.reset}`);
-        console.log(`  ${colors.dim}[6] OpenAI                – GPT-4o-mini / GPT-4o (api.openai.com)${colors.reset}`);
-        console.log(`  ${colors.dim}[7] Ollama / LM Studio    – Local LLM (no API key, no cost)${colors.reset}`);
-        console.log(`  ${colors.dim}[8] Custom OpenAI API     – Custom Base URL + API Key + Model${colors.reset}`);
 
-        rl.question(`${colors.yellow}Choose provider [1-8, default: 1]: ${colors.reset}`, (choice) => {
+        (async () => {
+        const provOptions = [
+            { label: 'Gemma 4 12B / Gemini – Google AI Studio (FREE, default)', value: '1' },
+            { label: 'Groq – Ultra-Fast Llama 3.3 70B (Groq API)', value: '2' },
+            { label: 'Grok / xAI – Grok 2 (api.x.ai)', value: '3' },
+            { label: 'Nvidia NIM – Llama 3.3 70B (integrate.api.nvidia.com)', value: '4' },
+            { label: 'OpenRouter – Claude 3.5, Qwen, Kimi, Llama (openrouter.ai)', value: '5' },
+            { label: 'OpenAI – GPT-4o-mini / GPT-4o (api.openai.com)', value: '6' },
+            { label: 'Ollama / LM Studio – Local LLM (no API key, no cost)', value: '7' },
+            { label: 'Custom OpenAI API – Custom Base URL + API Key + Model', value: '8' }
+        ];
+        const choice = await promptSingleSelect('Choose OpenWiki LLM Provider:', provOptions, 0);
             let provider = "google", model = "", baseUrl = "", keyEnvName = "GEMINI_API_KEY";
             const c = choice.trim();
 
@@ -424,43 +442,26 @@ async function promptCredentials() {
             else if (c === "7") { provider = "ollama";     model = "llama3";                 baseUrl = "http://localhost:11434/v1"; }
             else if (c === "8") { provider = "custom";     keyEnvName = "OPENWIKI_API_KEY"; }
 
-            const askBaseUrl = (afterUrl) => {
+            (async () => {
                 if (c === "8") {
-                    rl.question(`${colors.yellow}Custom Base URL [e.g. https://integrate.api.nvidia.com/v1]: ${colors.reset}`, (u) => {
-                        baseUrl = u.trim();
-                        afterUrl();
-                    });
+                    const u = await askTextQuestion(`${colors.yellow}Custom Base URL [e.g. https://integrate.api.nvidia.com/v1]: ${colors.reset}`);
+                    baseUrl = u.trim();
                 } else if (c === "7") {
-                    rl.question(`${colors.yellow}Ollama Base URL [default: http://localhost:11434/v1]: ${colors.reset}`, (u) => {
-                        if (u.trim()) baseUrl = u.trim();
-                        afterUrl();
-                    });
-                } else {
-                    afterUrl();
+                    const u = await askTextQuestion(`${colors.yellow}Ollama Base URL [default: http://localhost:11434/v1]: ${colors.reset}`);
+                    if (u.trim()) baseUrl = u.trim();
                 }
-            };
-
-            const askModel = (afterModel) => {
                 const defaultModel = model || (provider === "google" ? "gemma-4-12b-it" : "gpt-4o-mini");
-                rl.question(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`, (m) => {
-                    if (m.trim()) model = m.trim();
-                    afterModel();
-                });
-            };
+                const m = await askTextQuestion(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`);
+                if (m.trim()) model = m.trim();
 
-            const askApiKey = (afterKey) => {
-                if (provider === "ollama") { afterKey(""); return; }
-                rl.question(`${colors.yellow}Enter your ${keyEnvName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, afterKey);
-            };
-
-            const askGitHub = (apiKey) => {
-                rl.question(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (github) => {
-                    resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: baseUrl });
-                });
-            };
-
-            askBaseUrl(() => askModel(() => askApiKey((apiKey) => askGitHub(apiKey))));
-        });
+                let apiKey = "";
+                if (provider !== "ollama") {
+                    apiKey = await askTextQuestion(`${colors.yellow}Enter your ${keyEnvName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `);
+                }
+                const github = await askTextQuestion(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `);
+                resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: baseUrl });
+            })();
+        })();
     });
 }
 
@@ -891,25 +892,15 @@ function copyDirRecursiveSync(source, target, excludeList = []) {
 async function promptMemBIngestion(mcpCodeTarget) {
     if (isAutoYes) return;
     
-    const options = [
-        { label: 'Ja: Ingest-Scan jetzt auf Projekt-Verzeichnis ausführen', value: true },
-        { label: 'Nein: memB Ingestion vorerst überspringen', value: false }
-    ];
-    const doIngest = await promptSingleSelect('🧠 memB Deep Memory Ingestion:', options, 1);
+    console.log(`\n${colors.cyan}${colors.bold}🧠 memB Deep Memory Ingestion${colors.reset}`);
+    const doIngest = await promptSingleSelect('Would you like to scan & ingest a project directory into memB memory?', [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
 
     if (!doIngest) return;
 
-    const targetDir = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Enter project directory path to scan [default: current workspace]: ${colors.reset}`, (answer) => {
-            resolve(answer.trim() || process.cwd());
-        });
-    });
+    const answerDir = await askTextQuestion(`${colors.yellow}Enter project directory path to scan [default: current workspace]: ${colors.reset}`);
+    const targetDir = answerDir.trim() || process.cwd();
 
-    const includeTranscripts = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Include past conversation logs/transcripts? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const includeTranscripts = await promptSingleSelect('Include past conversation logs/transcripts?', [{label:'Yes', value:true}, {label:'No', value:false}], 1);
 
     const pythonBin = process.platform === 'win32'
         ? path.join(mcpCodeTarget, 'memb-mcp', '.venv', 'Scripts', 'python.exe')
@@ -934,11 +925,8 @@ async function promptMemBIngestion(mcpCodeTarget) {
 async function promptCreatorExtension(mcpConfigPath) {
     if (isAutoYes) return;
     
-    const options = [
-        { label: 'Ja: Installieren & Konfigurieren (BDB Creator Extension - 3D, Video & ComfyUI MCP Engines)', value: true },
-        { label: 'Nein: Überspringen', value: false }
-    ];
-    const doInstall = await promptSingleSelect('🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI):', options, 0);
+    console.log(`\n${colors.magenta}${colors.bold}🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI)${colors.reset}`);
+    const doInstall = await promptSingleSelect("Install 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines)?", [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
 
     if (!doInstall) return;
 
@@ -970,11 +958,8 @@ async function promptCreatorExtension(mcpConfigPath) {
 async function promptOSAgentWorkspace() {
     if (isAutoYes) return;
     
-    const options = [
-        { label: 'Ja: Installieren & Konfigurieren (BDB OS Agent Workspace - Orchestrations-Layer für parallele KI-Agenten)', value: true },
-        { label: 'Nein: Überspringen', value: false }
-    ];
-    const doInstall = await promptSingleSelect('🧠 BDB OS Agent Workspace (AI Orchestrator):', options, 0);
+    console.log(`\n${colors.magenta}${colors.bold}🧠 BDB OS Agent Workspace (AI Orchestrator)${colors.reset}`);
+    const doInstall = await promptSingleSelect("Install 'BDB OS Agent Workspace' (Orchestration Layer)?", [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
 
     if (!doInstall) return;
 
@@ -1037,6 +1022,6 @@ async function promptOSAgentWorkspace() {
         console.log(`${colors.green}${colors.bold} 🎉 Installation complete! The environment now has the ${colors.reset}`);
         console.log(`${colors.green}${colors.bold}    optimized skill configuration.${colors.reset}`);
         console.log(`${colors.green}${colors.bold}=========================================================${colors.reset}`);
-        rl.close();
+        
     })();
-});
+})();
