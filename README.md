@@ -38,16 +38,23 @@ While optimized for **Google Antigravity**, this skills pack and MCP configurati
 ### 🪐 Universal Agent Harness (v3.0.0)
 The installer now features a fully automated Universal Sync engine. It scans your system for **Claude Desktop, Cursor, Windsurf, Aider, Roo/Cline**, and injects the curated MCP configuration and Godmode rules across all environments simultaneously.
 
-## 🌟 144 Optimized Skills
+## 🌟 ~144+ Optimized Skills (Updated for v3.0.0)
 
-We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144 Optimized Skills** (featuring a native OpenWiki documentation engine in v1.3.3, and the **memB local semantic memory brain in v2.0.0**).
+We started with a massive pool of over 1,400 raw AI skills. After rigorous testing, filtering, and refinement, we’ve distilled them down to a hyper-curated set of **144+ Optimized Skills** (featuring a native OpenWiki documentation engine, the **memB local semantic memory brain**, and now **Universal Agent Harness synchronization in v3.0.0**).
 
-These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency and context awareness.
+These skills are precision-engineered to ensure agents waste no time on redundant tasks and instead operate with maximum agency, strict architectural constraints, and robust context awareness.
 
-### 💻 Beyond Events: Normal Software & App Coding
+### 🛡️ The 3 Godmodes (Apex Layer)
+Instead of letting agents wander through generic instructions, the top-tier of this repository enforces three **Hyper-Curated Godmodes**. These act as the ultimate gatekeepers for your codebase:
+- **`engineering-godmode`**: Forces Domain-Driven Design, strict TypeScript checks, Clean Architecture, and systematic debugging.
+- **`ui-ux-godmode`**: The frontend Gold-Standard. Enforces BDB "Anti-Slop" principles, accessibility, and fluid motion dynamics.
+- **`eventtech-godmode`**: The supreme rulebook for the BDB Creator Engine, governing 3D, Media, and 22 creative-tech MCPs.
+
+### 💻 Beyond Events: Full-Stack Software & Web Agents
 While heavily optimized for the creative tech industry, these skills are deeply rooted in core software engineering:
+- **Autonomous Web Operations**: Full suite of Firecrawl-powered specialized agents for structured data extraction, automated web interaction, and complex scraping operations.
 - **Full-Stack Development**: Spinning up Next.js App Router boilerplates, building scalable Node.js microservices, and crafting interactive frontends.
-- **App Development**: Architecting databases, designing REST APIs, and building standard web and mobile applications from scratch.
+- **App Development**: Architecting databases with Prisma/Drizzle, designing REST/GraphQL APIs, and building standard web and mobile applications from scratch.
 - **Design & Quality Assurance**: Auditing UI/UX patterns (utilizing `ui-ux-pro-max`), enforcing clean code principles, and setting up strict CI/CD pipelines.
 
 ---
