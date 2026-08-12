@@ -82,12 +82,12 @@ Before pushing any commit to GitHub, execute this 5-point sanitization audit:
 
 ---
 
-## 4. High-Impact README Layout Standard (BDB DEV Style)
+## 4. High-Impact README Layout Standard
 
-A top-tier `README.md` MUST strictly adhere to the BDB DEV corporate identity and structure.
+A top-tier `README.md` MUST strictly adhere to the following professional layout and structure.
 
 ### 4.1 Top Bar: Language Definition & ASCII Art Header
-Every README must start with a language switch header at the very top (if applicable), followed immediately by a clean ASCII Art text logo inside a ````text ```` block. The ASCII art should spell out the project name or "BDB DEV" using standard blocky fonts.
+Every README must start with a language switch header at the very top (if applicable), followed immediately by a clean ASCII Art text logo inside a ````text ```` block. The ASCII art should spell out the Organization and Project Name using standard blocky fonts.
 
 ### 4.2 Title, Topology Sketch & Dynamic Badges
 Directly below the ASCII art, place the main title (H1) with an appropriate emoji. 
@@ -108,10 +108,10 @@ Directly below the badges, write a single, bolded, hard-hitting sentence inside 
 🌐 **Language / Sprache**: **Deutsch** | [ 🇬🇧 English ](README.en.md)
 
 ````text
-   B D B   D E V   -   P R O J E C T   N A M E
+   [ O R G / A U T H O R ]   -   P R O J E C T   N A M E
 ````
 
-# 🚀 BDB DEV - [Project Name]
+# 🚀 [Org/Author] - [Project Name]
 
 ![Architecture Sketch](assets/topology_sketch.jpg)
 
