@@ -5,7 +5,9 @@ description: The ultimate creative-tech and show-control brainstorming engine. O
 
 # BDB MediaStorm: Show-Control & Creative-Tech Ideation
 
-When this skill is invoked via `/bdbmediastorm` or requested, you MUST orchestrate a comprehensive event-tech and media-architecture workflow. Forget standard web apps, UI/UX, or standard coding practices. Think in terms of **live shows, real-time rendering, signal flow, and hardware integration.**
+> **Domain Separation:** Use `/bdbrainstorm` for general software, web apps, and code architecture. Use `/bdbmediastorm` exclusively for creative-tech projects involving **TouchDesigner, Adobe, grandMA3, Unreal Engine, Rhino, Blender, and Resolume.**
+
+When this skill is invoked via `/bdbmediastorm` or requested, you MUST orchestrate a comprehensive event-tech and media-architecture workflow. Forget standard web apps, UI/UX, or standard coding practices. Think in terms of **live shows, real-time rendering, signal flow, generative AI pipelines, and hardware integration.**
 
 ## Core Requirements & Workflow
 
@@ -13,10 +15,11 @@ You are strictly required to enforce the following pillars, applying the **3 Cor
 
 ### 1. Multi-Agent Media Brainstorming
 - Do NOT brainstorm alone. Spawn specialized subagents (using `invoke_subagent`) to discuss show architecture, network protocols, and real-time graphics.
-- **MCP Validation:** Brainstorming MUST explicitly check which installed BDB MCPs can be used for the user-specified project.
+- **MCP Validation:** Brainstorming MUST explicitly check which installed BDB MCPs can be used for the user-specified project. You MUST cross-reference the **11 core MCP skills** (e.g., TouchDesigner, Unreal, Adobe, MA3, etc.) to inject tool-specific context.
+- **Creator Extension Godmodes:** If the user has the BDB Creator Extension installed, the agents must actively integrate its generative pipelines (ComfyUI local rendering, OpenMontage orchestrations, TRELLIS 3D).
 - Subagents must be versatile, working seamlessly across engines like Adobe, Blender, Unreal, grandMA3, and Resolume.
 - Assign distinct roles to subagents. You MUST include at minimum:
-  - **"CI / Design Expert"** (Focus: Quality standards, design consistency, asset pipelines)
+  - **"CI / Design Expert"** (Focus: Quality standards, generative AI pipelines, asset pipelines)
   - **"Real Time Architect"** (Focus: Engine logic, framerates, Spout/Syphon, signal routing)
   - **"MCP Implementer Architect"** (Focus: Direct integration and configuration via specific MCP tools)
 - Have them debate the technical feasibility before any scripts are written.
