@@ -87,6 +87,10 @@
     "memb_mcp": {
       "command": "__PYTHON_BIN__",
       "args": ["__MCPS_DIR__/memb-mcp/run.py"]
+    },
+    "open_design_mcp": {
+      "command": "npx",
+      "args": ["-y", "@nexu-io/open-design-mcp", "__MCPS_DIR__/open-design"]
     }
   }
 }
