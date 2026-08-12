@@ -59,7 +59,7 @@ Instead of letting agents wander through generic instructions, the top-tier of t
 Below is the complete overview of all curated agent skills included in this package. These are automatically deployed to your agent's workspace by the interactive installer.
 
 <details>
-<summary><h3>👑 Core Godmodes</h3></summary>
+<summary><strong>👑 Core Godmodes</strong></summary>
 
 | Skill Name | Description |
 |------------|-------------|
@@ -71,7 +71,7 @@ Below is the complete overview of all curated agent skills included in this pack
 </details>
 
 <details>
-<summary><h3>⚙️ System & Config</h3></summary>
+<summary><strong>⚙️ System & Config</strong></summary>
 
 #### 🤖 Agents & Automation
 | Skill Name | Description |
@@ -248,7 +248,7 @@ Below is the complete overview of all curated agent skills included in this pack
 </details>
 
 <details>
-<summary><h3>🛠️ Development & Languages</h3></summary>
+<summary><strong>🛠️ Development & Languages</strong></summary>
 
 #### 🤖 Agents & Automation
 | Skill Name | Description |
