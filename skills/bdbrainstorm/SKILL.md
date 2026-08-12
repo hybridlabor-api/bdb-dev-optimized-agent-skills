@@ -1,11 +1,11 @@
 ---
 name: bdbrainstorm
-description: Combines multi-agent brainstorming, the /grill-me slash command, subagent-driven-development, and ui-ux-pro-max to force a comprehensive, multi-agent ideation and UI/UX design workflow.
+description: Combines multi-agent brainstorming, the /grill-me slash command, and the 3 Core Godmodes (godmode-engineering, godmode-ui-ux, godmode-shipping) to force a comprehensive, multi-agent ideation and technical design workflow.
 ---
 
 # BDBrainstorm: The Ultimate Multi-Agent Design & Ideation Workflow
 
-When this skill is invoked or requested, you MUST orchestrate a comprehensive ideation and development workflow using a combination of multi-agent brainstorming, interactive user grilling, subagent-driven development, and high-end UI/UX principles. 
+When this skill is invoked or requested, you MUST orchestrate a comprehensive ideation and development workflow using a combination of multi-agent brainstorming, interactive user grilling, and strict adherence to the 3 Core Godmodes (`godmode-engineering`, `godmode-ui-ux`, `godmode-shipping`). 
 
 ## Core Requirements & Workflow
 
@@ -24,20 +24,22 @@ You are strictly required to enforce the following 4 pillars in your process:
 - Do NOT proceed to generate artifacts or write files until the user has confirmed the specific directory.
 - **Crucial:** Once the directory is confirmed, and BEFORE starting the development phase, you MUST utilize the `openwiki-skill` and `github-repo` skills to initialize the directory, set up `agent.md`, and generate the foundational project files.
 
-### 4. Subagent-Driven Development
-- Once the brainstorming and grilling phase produces a solid plan, you must strictly follow the `subagent-driven-development` skill.
-- Delegate specific implementation tasks to independent subagents. 
-- You act as the Orchestrator/Master Agent, reviewing the subagents' work and ensuring all components integrate perfectly.
+### 4. Engineering Godmode (Clean Architecture)
+- Once the conceptual plan is solid, you must strictly enforce `godmode-engineering` principles.
+- Delegate specific implementation tasks to independent subagents using Domain-Driven Design (DDD). You act as the Master Orchestrator, reviewing their work to ensure it passes the 5-step debugging triage.
 
-### 5. UI/UX Pro Max Standards
-- Every user interface decision, wireframe, or component generated during this process MUST adhere to the `ui-ux-pro-max` skill guidelines.
-- Enforce high-agency frontend interfaces, strict design taste, calibrated color palettes, modern typography, micro-interactions, and responsive mobile-first layouts.
-- Do not settle for "MVP" aesthetics. The output must look premium and state-of-the-art.
+### 5. UI/UX Godmode (Anti-Slop Standards)
+- Every user interface decision, wireframe, or component generated during this process MUST adhere to the `godmode-ui-ux` guidelines.
+- Enforce high-agency frontend interfaces, strict design taste, calibrated color palettes, and modern typography. Do not settle for "MVP" aesthetics.
+
+### 6. Shipping Godmode (The Final Gatekeeper)
+- Before the brainstorm concludes and the code is merged, verify that the plan satisfies the `godmode-shipping` rules (Spec-Driven Development, feature flags, rollback strategies).
 
 ## Execution Rules
 1. **Never skip the debate:** Ideas must be contested by subagents and the user before finalization.
 2. **Never build alone:** Always use subagents for implementation.
-3. **Never accept ugly UI:** Always apply `ui-ux-pro-max` rules.
+3. **Never accept ugly UI:** Always apply `godmode-ui-ux` rules.
+4. **Never skip architecture & shipping checks:** Always enforce `godmode-engineering` and `godmode-shipping` constraints.
 4. **Never dump artifacts blindly:** Always ask the user for the target project directory before creating the plan, README, or agent.md files.
 
 To begin the BDBrainstorm process, start by invoking the "grill-me" interview style to question the user's premise, while simultaneously spinning up 2-3 subagents to analyze the initial request from different angles. Once aligned, ask the user for the target directory before writing the project artifacts and spawning development subagents.

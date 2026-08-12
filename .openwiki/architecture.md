@@ -6,23 +6,29 @@ This document tracks the technical architecture and modular structure of the **B
 
 ## 🏛️ Ecosystem Topology & Modular Decoupling
 
-The ecosystem is partitioned into two dedicated layers to balance high-speed agent agility with specialized heavy-compute creative pipelines:
+The ecosystem is partitioned into dedicated modular layers to balance high-speed agent agility with desktop orchestration and specialized heavy-compute creative pipelines:
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────┐
+│           bdb-os-agent-workspace (Desktop IDE Meta-Harness)             │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │ Architecture & Workspace Pairing
+┌────────────────────────────────────▼────────────────────────────────────┐
 │              bdb-dev-optimized-agent-skills (Core Backbone)             │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │ Six-Pillar Godmode Architecture                                   │  │
+│  │ (engineering, ui-ux, shipping, eventtech, 3d-creation, media)    │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
 │  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
-│  │ 144 Curated      │  │ memB Semantic    │  │ OpenWiki Multi-LLM    │  │
-│  │ Agent Skills     │  │ Memory Engine    │  │ & RepoGraph Engine    │  │
+│  │ Universal Agent  │  │ memB Semantic    │  │ OpenWiki Multi-LLM    │  │
+│  │ Harness Sync     │  │ Memory Engine    │  │ & RepoGraph Engine    │  │
 │  └──────────────────┘  └──────────────────┘  └───────────────────────┘  │
 │  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
-│  │ Heimdall Token   │  │ 22 Core Local    │  │ 6-Stage Agent         │  │
-│  │ Saver CLI Engine │  │ Creative MCPs    │  │ Pipeline Engine       │  │
+│  │ Heimdall Token   │  │ Firecrawl Web    │  │ 6-Stage Agent         │  │
+│  │ Saver CLI Engine │  │ Scraping Suite   │  │ Pipeline Engine       │  │
 │  └──────────────────┘  └──────────────────┘  └───────────────────────┘  │
 └────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                    Modular Add-on / Fork Architecture
-                                     │
+                                     │ Modular Add-on Architecture
 ┌────────────────────────────────────▼────────────────────────────────────┐
 │               bdb-dev-creator-extension (Heavy Compute)                 │
 │  ┌──────────────────┐  ┌──────────────────┐  ┌───────────────────────┐  │
@@ -34,15 +40,36 @@ The ecosystem is partitioned into two dedicated layers to balance high-speed age
 
 1. **Core Skills Backbone (`bdb-dev-optimized-agent-skills`)**:
    - Ultra-lightweight, high-speed skill execution engine.
-   - Bundles universal agent skills, 22 core local MCP servers, memB semantic memory, OpenWiki daemon, and Heimdall Token Saver.
-2. **Creator Extension Suite (`bdb-dev-creator-extension`)**:
+   - Bundles the Six-Pillar Godmode Architecture, Universal Agent Harness Sync, 22 core local MCP servers, memB semantic memory, OpenWiki daemon, Firecrawl web scraping suite, and Heimdall Token Saver.
+2. **Desktop Orchestration Harness (`bdb-os-agent-workspace`)**:
+   - Desktop IDE meta-harness orchestrator providing multi-workspace coordination and UI environment setup.
+3. **Creator Extension Suite (`bdb-dev-creator-extension`)**:
    - Standalone modular extension containing heavy CUDA/ML models, 3D parametric & mesh generators (TRELLIS, TripoSR, text-to-cad), automated cinema video pipelines (OpenMontage, Remotion Video-Shotcraft, Palmier Pro NLE MCP), and local ComfyUI rendering workflows.
 
 ---
 
 ## ⚙️ Core Subsystems
 
-### 1. Multi-Provider OpenWiki Engine (`openwiki_daemon.py`)
+### 1. Six-Pillar Godmode Architecture
+A supreme domain governance framework structuring agent execution under 6 master skills:
+- `godmode-engineering`: Fullstack software engineering, clean code, TDD, refactoring, and API patterns.
+- `godmode-ui-ux`: Frontend design, visual excellence, responsiveness, design systems, and micro-interactions.
+- `godmode-shipping`: CI/CD pipelines, release orchestration, documentation synchronization, and git management.
+- `godmode-eventtech`: Show control, lighting (grandMA3), media servers (Resolume), TouchDesigner, and live hardware protocols.
+- `godmode-3d-creation`: Parametric CAD, McNeel Rhino, Grasshopper, Unreal Engine 5, and 3D asset workflows.
+- `godmode-media-creation`: DaVinci Resolve video editing, Adobe ExtendScript automation, motion graphics, and audio processing.
+
+### 2. Universal Agent Harness Sync Subsystem
+Automated multi-IDE configuration and rule synchronization engine:
+- Injects and harmonizes system prompts, agent instructions, and MCP tool definitions across 8 supported agent environments: **Antigravity**, **Claude Code / Desktop**, **Cursor**, **Windsurf**, **Roo Code / Cline**, **ChatGPT Codex CLI**, **Aider**, and **VS Code**.
+- Eliminates configuration drift and maintains strict 1:1 functional parity across all developer tools.
+
+### 3. BDB Ecosystem Integrations
+Deep architectural pairing across the BDB ecosystem:
+- **`bdb-dev-creator-extension`**: Companion link handling heavy CUDA/ML tasks, local ComfyUI rendering, 3D mesh synthesis, and cinema video generation.
+- **`bdb-os-agent-workspace`**: Desktop meta-harness desktop orchestrator for environment management and multi-agent coordination.
+
+### 4. Multi-Provider OpenWiki Engine (`openwiki_daemon.py`)
 A continuous, non-intrusive background daemon that maintains codebase documentation, changelogs, architecture specs, and design decisions in `.openwiki/`.
 - **Multi-Provider LLM Support:** Fully decoupled from vendor lock-in with unified OpenAI-compatible and Google GenAI adapters:
   - **Google:** `gemma-4-12b-it` (via `google-genai` SDK)
@@ -54,7 +81,7 @@ A continuous, non-intrusive background daemon that maintains codebase documentat
   - **Local Offline / Self-Hosted:** Ollama (`llama3`), LM Studio, or any custom OpenAI-compatible endpoint
 - **Configuration:** Controlled via `OPENWIKI_PROVIDER`, `OPENWIKI_MODEL`, and `OPENWIKI_BASE_URL` environment variables.
 
-### 2. RepoGraph Deterministic Code Health Analytics (Zero-Token Git Engine)
+### 5. RepoGraph Deterministic Code Health Analytics (Zero-Token Git Engine)
 A 100% deterministic, zero-token cost analysis subsystem embedded in the OpenWiki pipeline:
 - **90-Day Hotspot Tracking:** Scans commit velocity and file churn frequency over rolling 90-day intervals to compute relative defect risk.
 - **Single-Author Bus Factor Analysis:** Automatically identifies mission-critical files touched by only one contributor.
@@ -64,7 +91,7 @@ A 100% deterministic, zero-token cost analysis subsystem embedded in the OpenWik
   - 60-second live auto-refresh (`<meta http-equiv="refresh" content="60">`).
   - Integrated memB sync card displaying recent Architectural Decision Records (ADRs).
 
-### 3. memB Local Semantic Memory Brain
+### 6. memB Local Semantic Memory Brain
 An offline-first, local vector database and knowledge management engine:
 - **Vector Embedding Engine:** Pre-quantized 30MB `all-MiniLM-L6-v2` ONNX model coupled with a local SQLite database (`~/.MemBDB/memb.db`).
 - **Semantic Ingestion Tool (`memb_ingest.py`):** Ingests `.openwiki`, `agent.md`, ADRs, and session transcripts using targeted `--project` and `--category` flags.

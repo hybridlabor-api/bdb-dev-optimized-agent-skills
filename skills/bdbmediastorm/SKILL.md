@@ -1,22 +1,25 @@
 ---
 name: bdbmediastorm
-description: The ultimate creative-tech and show-control brainstorming engine. Orchestrates multi-agent ideation focused on signal flow, hardware constraints, protocols, and BDB MCP integrations (TouchDesigner, grandMA3, Unreal, Resolume) instead of standard software development.
+description: The ultimate creative-tech and show-control brainstorming engine. Orchestrates multi-agent ideation focused on signal flow, hardware constraints, protocols, and BDB MCP integrations. Now strictly governed by the 3 Core Godmodes (engineering, ui-ux, shipping).
 ---
 
 # BDB MediaStorm: Show-Control & Creative-Tech Ideation
 
-When this skill is invoked via `/bdbmediastorm` or requested, you MUST orchestrate a comprehensive event-tech and media-architecture workflow. Forget standard web apps, UI/UX, or standard coding practices. Think in terms of **live shows, real-time rendering, signal flow, and hardware integration.**
+> **Domain Separation:** Use `/bdbrainstorm` for general software, web apps, and code architecture. Use `/bdbmediastorm` exclusively for creative-tech projects involving **TouchDesigner, Adobe, grandMA3, Unreal Engine, Rhino, Blender, and Resolume.**
+
+When this skill is invoked via `/bdbmediastorm` or requested, you MUST orchestrate a comprehensive event-tech and media-architecture workflow. Forget standard web apps, UI/UX, or standard coding practices. Think in terms of **live shows, real-time rendering, signal flow, generative AI pipelines, and hardware integration.**
 
 ## Core Requirements & Workflow
 
-You are strictly required to enforce the following 5 pillars in your process:
+You are strictly required to enforce the following pillars, applying the **3 Core Godmodes** (`godmode-engineering`, `godmode-ui-ux`, `godmode-shipping`) to a hardware-first context:
 
 ### 1. Multi-Agent Media Brainstorming
 - Do NOT brainstorm alone. Spawn specialized subagents (using `invoke_subagent`) to discuss show architecture, network protocols, and real-time graphics.
-- **MCP Validation:** Brainstorming MUST explicitly check which installed BDB MCPs can be used for the user-specified project.
+- **MCP Validation:** Brainstorming MUST explicitly check which installed BDB MCPs can be used for the user-specified project. You MUST cross-reference the **11 core MCP skills** (e.g., TouchDesigner, Unreal, Adobe, MA3, etc.) to inject tool-specific context.
+- **Creator Extension Godmodes:** If the user has the BDB Creator Extension installed, the agents must actively integrate its generative pipelines (ComfyUI local rendering, OpenMontage orchestrations, TRELLIS 3D).
 - Subagents must be versatile, working seamlessly across engines like Adobe, Blender, Unreal, grandMA3, and Resolume.
 - Assign distinct roles to subagents. You MUST include at minimum:
-  - **"CI / Design Expert"** (Focus: Quality standards, design consistency, asset pipelines)
+  - **"CI / Design Expert"** (Focus: Quality standards, generative AI pipelines, asset pipelines)
   - **"Real Time Architect"** (Focus: Engine logic, framerates, Spout/Syphon, signal routing)
   - **"MCP Implementer Architect"** (Focus: Direct integration and configuration via specific MCP tools)
 - Have them debate the technical feasibility before any scripts are written.
@@ -40,14 +43,19 @@ You are strictly required to enforce the following 5 pillars in your process:
 - **Focus Areas:** Deep focus must be placed on 3D design, scenography, and real-time rendering using Rhino, Blender, and Unreal Engine alongside control systems like TouchDesigner and grandMA3.
 - You act as the Technical Director (Orchestrator), ensuring all sub-systems communicate flawlessly over the network.
 
-### 5. Signal Flow & Architecture Diagrams
-- The ultimate output must include a precise **Signal Flow Diagram** (using Mermaid.js).
+### 5. Signal Flow & Architecture Diagrams (Engineering Godmode)
+- The ultimate output must include a precise **Signal Flow Diagram** (using Mermaid.js), treating hardware interfaces as strict bounded contexts (`godmode-engineering`).
 - Focus on how audio, video, lighting data, and control logic route between different software and hardware components.
+
+### 6. Control Panels & Failovers (UI-UX & Shipping Godmode)
+- If designing TouchOSC, StreamDeck, or web-based control interfaces, you MUST strictly apply `godmode-ui-ux` for ergonomics in dark/live environments.
+- Show execution plans MUST pass the `godmode-shipping` criteria: explicit failover routes, backup hardware states, and safe rollback macros.
 
 ## Execution Rules
 1. **Never skip the debate:** Protocol routing, hardware limits, and 3D staging must be contested by subagents and the user before finalization.
 2. **Never build alone:** Always use subagents for implementation, 3D drafting, and patching.
-3. **No Web-Dev Bias:** Reject standard UI/UX or web-development assumptions. Force thinking in nodes, patches, 3D scenes, CAD precision, and realtime engines.
+3. **No Web-Dev Bias:** Reject standard UI/UX or web-development assumptions, UNLESS designing show-control dashboards (where `godmode-ui-ux` applies). Force thinking in nodes, patches, 3D scenes, CAD precision, and realtime engines.
+4. **Failovers are mandatory:** You must apply `godmode-shipping` for live show safety.
 4. **Never dump artifacts blindly:** Always ask the user for the target project directory before creating the architecture documents.
 
 To begin the BDB MediaStorm process, start by invoking the "grill-me" interview style to question the user's show setup and hardware, while simultaneously spinning up 2-3 media-specialized subagents to analyze the data flow from different angles. Once aligned, ask for the target directory to scaffold the show documents.

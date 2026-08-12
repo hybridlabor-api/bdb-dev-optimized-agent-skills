@@ -15,7 +15,7 @@ Usage:
 import argparse
 import platform
 
-from installers import antigravity, claude
+from installers import antigravity, claude, universal
 from installers.common import (
     install_cli,
     install_core,
@@ -43,9 +43,9 @@ Examples:
     )
     parser.add_argument(
         "--target",
-        choices=["claude", "antigravity", "both"],
-        default=None,
-        help="Target platform (default: claude for install, both for uninstall)",
+        choices=["claude", "antigravity", "both", "all"],
+        default="all",
+        help="Target platform (default: all)",
     )
     parser.add_argument(
         "--link",
@@ -65,8 +65,8 @@ Examples:
     args = parser.parse_args()
 
     if args.uninstall:
-        # Default to 'both' for uninstall so nothing is left behind
-        target = args.target or "both"
+        # Default to 'all' for uninstall so nothing is left behind
+        target = args.target or "all"
         print(f"Uninstalling token-saver from: {target}")
 
         print("\n--- Legacy cleanup ---")
@@ -75,10 +75,12 @@ Examples:
         print("\n--- CLI ---")
         uninstall_cli()
 
-        if target in ("claude", "both"):
+        if target in ("claude", "both", "all"):
             claude.uninstall()
-        if target in ("antigravity", "both"):
+        if target in ("antigravity", "both", "all"):
             antigravity.uninstall()
+        if target in ("both", "all"):
+            universal.uninstall()
 
         print("\n--- Core ---")
         uninstall_core()
@@ -91,7 +93,7 @@ Examples:
         return
 
     # --- Install ---
-    target = args.target or "claude"
+    target = args.target or "all"
     print(f"Installing token-saver for: {target}")
     print(f"Platform: {platform.system()}")
     print(f"Mode: {'symlink' if args.link else 'copy'}")
@@ -100,10 +102,12 @@ Examples:
     print("\n--- Legacy cleanup ---")
     migrate_from_legacy()
 
-    if target in ("claude", "both"):
+    if target in ("claude", "both", "all"):
         claude.install(use_symlink=args.link)
-    if target in ("antigravity", "both"):
+    if target in ("antigravity", "both", "all"):
         antigravity.install(use_symlink=args.link)
+    if target in ("both", "all"):
+        universal.install(use_symlink=args.link)
 
     install_core(use_symlink=args.link)
 

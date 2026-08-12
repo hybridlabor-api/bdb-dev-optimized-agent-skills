@@ -1,0 +1,44 @@
+---
+name: godmode-shipping
+description: BDB Shipping Godmode. The final gatekeeper for production releases. Enforces Spec-Driven Development, rigorous pre-launch checks, feature flags, and rollback strategies.
+---
+
+# 🚀 BDB Shipping Godmode
+
+This skill is the final gatekeeper. No code reaches production without passing these rigorous checks. It orchestrates release management and workflow discipline for the BDB ecosystem across all supported harnesses (Cursor, Claude Code, Agy, Copilot).
+
+## 1. Spec-Driven Development
+Writing code without a specification is guessing.
+*   **The `/spec` Command:** Every major feature or refactor must begin by writing a clear markdown specification file.
+*   **Boundaries & Constraints:** The spec must document the exact boundaries of the feature, edge cases, data structures, and the definition of "Done". Do not proceed to code until the user approves the spec.
+
+## 2. Pre-Launch Validation Checklist
+Before any code is committed, pushed, or deployed, you must actively verify the following:
+*   [ ] **Test Suite Green:** All unit and E2E tests pass.
+*   [ ] **No Test Skips:** No `.skip` or `.only` test blocks remain in the codebase.
+*   [ ] **Sanitized Code:** No floating `console.log` or debug statements left behind.
+*   [ ] **Accessibility Checked:** Core Web Vitals and WCAG 2.1 AA audits are clear.
+*   [ ] **Security Verified:** API keys and secrets are safely managed via environment variables and never hardcoded.
+
+## 3. Deployment & Rollout Strategy
+Releasing code should be a boring event.
+*   **Decouple Deploy from Release:** Pushing code to production does not mean the user sees it immediately. Use Feature Flags to merge code safely into main without exposing it to the user.
+*   **Dark Launching:** Test the code in production with synthetic traffic or internal users before flipping the feature flag for the public.
+*   **Staged Rollouts:** For critical features, roll out sequentially (Internal Team -> 5% of users -> 50% -> 100%).
+
+## 4. Rollback Strategies
+Never launch a feature without a verified rollback plan.
+*   **Auto-Rollback Triggers:** Define exactly what metrics will trigger an automatic rollback (e.g., error rate jumps by >2x, latency spikes above 500ms).
+*   **Database Migrations:** Ensure any database schema changes are backward compatible, or have a strictly tested `down` migration ready.
+
+## 5. Creator Extension & BDB MediaStorm Governance
+This Godmode extends beyond standard software development. It STRICTLY governs creative-tech and show-control workflows (BDB Creator Extension).
+*   **MediaStorm Deployments:** When executing `/bdbmediastorm` for TouchDesigner, Unreal Engine, or Adobe Suite workflows, you must enforce rigorous release management for `.tox` files, Unreal Blueprints, and showfiles.
+*   **Show-Ready Validation:** Never push a creative-tech update to a live production environment (e.g., a running installation or live show) without a verified fallback or backup showfile. 
+
+## Universal Agent Harness Integration
+This Godmode is universally compatible and governs all extensions, including the BDB Creator Engine.
+*   **Cursor:** Auto-injected via `.cursor/rules/godmode-shipping.mdc`.
+*   **Claude Code:** Reads principles via `CLAUDE.md`.
+*   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
+*   **Execution:** You (the AI) must present the Pre-Launch Checklist to the user before confirming a task is completely finished.

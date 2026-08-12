@@ -5,9 +5,9 @@ const path = require('path');
 const readline = require('readline');
 const os = require('os');
 const https = require('https');
-
+const { execSync, spawn } = require('child_process');
 const pkgPath = path.join(__dirname, 'package.json');
-let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '1.1.0' };
+let pkg = { name: '@hybridlabor-api/bdb-dev-optimized-agent-skills', version: '3.0.0' };
 if (fs.existsSync(pkgPath)) {
     try { pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8')); } catch (e) {}
 }
@@ -62,14 +62,13 @@ function checkForUpdates() {
 const cols = process.stdout.columns || 110;
 
 const headerArt = `
-${colors.purple}${colors.bold}                 ██████╗ ██████╗ ██████╗      █████╗  ██████╗ ███████╗███╗   ██╗████████╗     ██████╗ ███████╗
-                 ██╔══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝
-                 ██████╔╝██║  ██║██████╔╝    ███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║       ██║   ██║███████╗
-                 ██╔══██╗██║  ██║██╔══██╗    ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║       ██║   ██║╚════██║
-                 ██████╔╝██████╔╝██████╔╝    ██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║       ╚██████╔╝███████║
-                 ╚═════╝ ╚═════╝ ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚══════╝${colors.reset}
+${colors.purple}${colors.bold}    ____  ____  ____     ___   _____________   ________   ____  _____
+   / __ )/ __ \\/ __ )   /   | / ____/ ____/ | / /_  __/  / __ \\/ ___/
+  / __  / / / / __  |  / /| |/ / __/ __/ /  |/ / / /    / / / /\\__ \\ 
+ / /_/ / /_/ / /_/ /  / ___ / /_/ / /___/ /|  / / /    / /_/ /___/ / 
+/_____/_____/_____/  /_/  |_\\____/_____/_/ |_/ /_/     \\____//____/${colors.reset}
 
-${colors.cyan}${colors.bold}                                          O P T I M I Z E D   A G E N T   S K I L L S${colors.reset}
+${colors.cyan}${colors.bold}                  O P T I M I Z E D   A G E N T   S K I L L S${colors.reset}
 `;
 
 const divider = '─'.repeat(Math.max(110, cols));
@@ -81,10 +80,18 @@ console.log(`${colors.dim} ${divider}${colors.reset}\n`);
 
 checkForUpdates();
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+function askTextQuestion(query) {
+    return new Promise((resolve) => {
+        const rlTemp = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        rlTemp.question(query, (answer) => {
+            rlTemp.close();
+            resolve(answer);
+        });
+    });
+}
 
 const homeDir = os.homedir();
 const currentDir = process.cwd();
@@ -180,115 +187,246 @@ function detectPlatforms() {
     return detections;
 }
 
-function promptMode(callback) {
+async function promptSingleSelect(title, options, defaultIndex = 0) {
+    if (isAutoYes) return options[defaultIndex].value !== undefined ? options[defaultIndex].value : options[defaultIndex];
+
+    return new Promise((resolve) => {
+        let cursor = defaultIndex;
+        let drawnLines = 0;
+
+        let selectedIndex = defaultIndex;
+
+        const render = () => {
+            if (drawnLines > 0) {
+                process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
+            }
+            let output = `\n${colors.cyan}${colors.bold}${title}${colors.reset}\n`;
+            options.forEach((opt, index) => {
+                const label = opt.label || opt.name || opt;
+                const isSelected = index === selectedIndex ? `${colors.green}x${colors.reset}` : ' ';
+                if (index === cursor) {
+                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${label}${colors.reset}\n`;
+                } else {
+                    output += `   [${isSelected}] ${label}\n`;
+                }
+            });
+            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to select, ENTER to confirm.${colors.reset}\n`;
+
+            const lines = output.split('\n');
+            drawnLines = lines.length - 1;
+            process.stdout.write(output);
+        };
+
+        const onKeypress = (str, key) => {
+            if (!key) return;
+            if (key.name === 'up' || key.name === 'k') {
+                cursor = cursor > 0 ? cursor - 1 : options.length - 1;
+                render();
+            } else if (key.name === 'down' || key.name === 'j') {
+                cursor = cursor < options.length - 1 ? cursor + 1 : 0;
+                render();
+            } else if (key.name === 'space') {
+                selectedIndex = cursor;
+                render();
+            } else if (key.name === 'return' || key.name === 'enter') {
+                cleanup();
+                console.log("");
+                resolve(options[selectedIndex].value !== undefined ? options[selectedIndex].value : options[selectedIndex]);
+            } else if (key.ctrl && key.name === 'c') {
+                cleanup();
+                process.exit(0);
+            }
+        };
+
+        const cleanup = () => {
+            process.stdin.removeListener('keypress', onKeypress);
+            if (process.stdin.isTTY) {
+                process.stdin.setRawMode(false);
+                process.stdin.pause();
+            }
+        };
+
+        if (process.stdin.isTTY) {
+            readline.emitKeypressEvents(process.stdin);
+            process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdin.on('keypress', onKeypress);
+            render();
+        } else {
+            resolve(options[defaultIndex].value !== undefined ? options[defaultIndex].value : options[defaultIndex]);
+        }
+    });
+}
+
+async function promptMode() {
     if (isAutoYes) {
-        return callback({ mode: '1', platform: '1' });
+        return { tier: '1', mode: '1', platform: '1' };
     }
+
+    const tierOptions = [
+        { label: 'Pro MEDIA (Full suite of dev-optimized skills and creative MCPs - Default)', value: '1' },
+        { label: 'Basic (Essential skills only, lightweight MCPs)', value: '2' }
+    ];
+    const tier = await promptSingleSelect('Package Tier:', tierOptions, 0);
 
     const detections = detectPlatforms();
     if (detections.length > 0) {
-        console.log("\nDetected Agent Environments on this system:");
-        detections.forEach(d => console.log("  * " + d.name + " (detected at " + d.path + ")"));
+        console.log(`\n${colors.magenta}${colors.bold}Detected Agent Environments on this system:${colors.reset}`);
+        detections.forEach(d => console.log(`  * ${colors.green}${d.name}${colors.reset} (detected at ${d.path})`));
     } else {
         console.log("\nNo active agent config directories auto-detected in standard locations.");
     }
 
-    console.log("\nTarget AI Platform:");
-    console.log(" (1) Google Antigravity (Default)");
-    console.log(" (2) Claude Desktop / Claude Code");
-    console.log(" (3) Cursor / Generic IDE (Project-local)");
-    console.log(" (4) Custom Installation (Specify custom paths manually)");
-    console.log(" (5) ChatGPT Codex CLI");
-    console.log(" (6) Windsurf IDE");
-    console.log(" (7) Roo Code / Cline / VS Code");
-    console.log(" (8) Aider CLI");
-    
-    rl.question("\nSelect platform [1-8]: ", (platformAns) => {
-        const platform = platformAns.trim() || '1';
-        
-        console.log("\nInstallation Mode:");
-        console.log(" (1) Merge: Keep your existing skills/MCPs and add/update BDB tools.");
-        console.log(" (2) Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools.");
-        rl.question("\nSelect mode [1/2]: ", (modeAns) => {
-            const mode = modeAns.trim() === '2' ? '2' : '1';
-            
-            if (platform === '4') {
-                // Prompt for custom paths
-                console.log("\n--- Custom Path Configuration ---");
-                rl.question("Target directory for global skills [default: " + path.join(homeDir, '.bdb-skills') + "]: ", (skillDir) => {
-                    const customSkillDir = skillDir.trim() || path.join(homeDir, '.bdb-skills');
-                    rl.question("Target directory for legacy skills [default: " + path.join(customSkillDir, 'legacy') + "]: ", (legacyDir) => {
-                        const customLegacyDir = legacyDir.trim() || path.join(customSkillDir, 'legacy');
-                        rl.question("Target directory for workspace skills [default: " + workspaceDir + "]: ", (workDir) => {
-                            const customWorkspaceDir = workDir.trim() || workspaceDir;
-                            rl.question("Target path for MCP Config JSON file [default: " + path.join(homeDir, 'mcp_config.json') + "]: ", (mcpConf) => {
-                                const customMcpConfigPath = mcpConf.trim() || path.join(homeDir, 'mcp_config.json');
-                                callback({
-                                    mode,
-                                    platform,
-                                    customPaths: {
-                                        skillDir: customSkillDir,
-                                        legacyDir: customLegacyDir,
-                                        workspaceDir: customWorkspaceDir,
-                                        mcpConfigPath: customMcpConfigPath,
-                                        mcpDir: path.dirname(customMcpConfigPath)
-                                    }
-                                });
-                            });
-                        });
-                    });
-                });
-            } else {
-                callback({ mode, platform });
+    const platformOptions = [
+        { label: '(0) Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)', value: '0' },
+        { label: '(1) Google Antigravity (Default Single Hub)', value: '1' },
+        { label: '(2) Claude Desktop / Claude Code', value: '2' },
+        { label: '(3) Cursor / Generic IDE (Project-local)', value: '3' },
+        { label: '(4) Custom Installation (Specify custom paths manually)', value: '4' },
+        { label: '(5) ChatGPT Codex CLI', value: '5' },
+        { label: '(6) Windsurf IDE', value: '6' },
+        { label: '(7) Roo Code / Cline / VS Code', value: '7' },
+        { label: '(8) Aider CLI', value: '8' }
+    ];
+    const rawPlatform = await promptSingleSelect('Target AI Platform:', platformOptions, 0);
+    let platform = rawPlatform;
+    const isUniversal = rawPlatform === '0';
+    if (isUniversal) platform = '1';
+
+    const modeOptions = [
+        { label: 'Merge: Keep your existing skills/MCPs and add/update BDB tools (Recommended)', value: '1' },
+        { label: 'Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools', value: '2' }
+    ];
+    const mode = await promptSingleSelect('Installation Mode:', modeOptions, 0);
+
+    if (rawPlatform === '4') {
+        console.log("\n--- Custom Path Configuration ---");
+        const skillDir = (await askTextQuestion(`Target directory for global skills [default: ${path.join(homeDir, '.bdb-skills')}]: `)).trim() || path.join(homeDir, '.bdb-skills');
+        const legacyDir = (await askTextQuestion(`Target directory for legacy skills [default: ${path.join(skillDir, 'legacy')}]: `)).trim() || path.join(skillDir, 'legacy');
+        const workDir = (await askTextQuestion(`Target directory for workspace skills [default: ${workspaceDir}]: `)).trim() || workspaceDir;
+        const mcpConf = (await askTextQuestion(`Target path for MCP Config JSON file [default: ${path.join(homeDir, 'mcp_config.json')}]: `)).trim() || path.join(homeDir, 'mcp_config.json');
+        return {
+            tier,
+            mode,
+            platform,
+            isUniversal,
+            customPaths: {
+                skillDir,
+                legacyDir,
+                workspaceDir: workDir,
+                mcpConfigPath: mcpConf,
+                mcpDir: path.dirname(mcpConf)
             }
-        });
-    });
+        };
+    }
+
+    return { tier, mode, platform, isUniversal };
 }
 
-async function promptMcpSelection(mcpsDir) {
-    if (isAutoYes) {
-        try { return fs.readdirSync(mcpsDir, { withFileTypes: true }).filter(d => !d.name.startsWith('.') && d.name !== '__pycache__').map(d => d.name); } catch(e) { return []; }
-    }
+async function promptMcpSelection(mcpsDir, tier) {
     let availableMcps = [];
     try { 
         availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
             .filter(d => !d.name.startsWith('.') && d.name !== '__pycache__')
             .map(d => d.name); 
     } catch(e) { return []; }
+
+    if (tier === '2') {
+        const basicMcps = ['computer-use-mcp', 'memb-mcp', 'windows-computer-use-mcp'];
+        availableMcps = availableMcps.filter(m => basicMcps.includes(m));
+    }
+
+    if (isAutoYes) return availableMcps;
     if (availableMcps.length === 0) return [];
 
-    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
+    
+    // Check existing mcp_config.json to pre-select already installed MCPs
+    let existingInstalled = [];
+    try {
+        const homeDir = process.env.HOME || process.env.USERPROFILE;
+        const geminiDir = path.join(homeDir, '.gemini');
+        const mcpConfigPath = path.join(geminiDir, 'config', 'mcp_config.json');
+        if (fs.existsSync(mcpConfigPath)) {
+            const parsed = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf8'));
+            const mcpStr = JSON.stringify(parsed.mcpServers || {});
+            existingInstalled = availableMcps.filter(m => mcpStr.includes(m));
+        }
+    } catch(e) {}
 
-    const displayMenu = () => {
-        console.log(`\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}`);
-        console.log(` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}`);
-        selections.forEach((mcp, index) => {
-            const check = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
-            console.log(` ${colors.cyan}${index + 1}.${colors.reset} [${check}] ${colors.bold}${mcp.name}${colors.reset}`);
-        });
-        console.log(`\n${colors.dim}Type a number to toggle, 'all' to select all, 'none' to clear, or 'done' to proceed:${colors.reset}`);
-    };
+    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ 
+        name: mcp, 
+        selected: existingInstalled.includes(mcp) 
+    }));
+
+    if (selections.length === 0) return ['memb-mcp'];
 
     return new Promise((resolve) => {
-        const ask = () => {
-            displayMenu();
-            rl.question('\n> ', (answer) => {
-                const input = answer.trim().toLowerCase();
-                if (input === 'done' || input === '') { 
-                    resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]); 
-                    return; 
+        let cursor = 0;
+        let drawnLines = 0;
+
+        const render = () => {
+            if (drawnLines > 0) {
+                process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
+            }
+            let output = `\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}\n`;
+            output += ` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}\n`;
+            
+            selections.forEach((mcp, index) => {
+                const isSelected = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
+                if (index === cursor) {
+                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${mcp.name}${colors.reset}\n`;
+                } else {
+                    output += `   [${isSelected}] ${mcp.name}\n`;
                 }
-                if (input === 'all') { selections.forEach(s => s.selected = true); }
-                else if (input === 'none') { selections.forEach(s => s.selected = false); }
-                else {
-                    const num = parseInt(input, 10);
-                    if (!isNaN(num) && num > 0 && num <= selections.length) { selections[num - 1].selected = !selections[num - 1].selected; }
-                    else { console.log('Invalid input. Please try again.'); }
-                }
-                ask();
             });
+            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to toggle, 'a' to select all, ENTER to confirm.${colors.reset}\n`;
+            
+            const lines = output.split('\n');
+            drawnLines = lines.length - 1;
+            process.stdout.write(output);
         };
-        ask();
+
+        const onKeypress = (str, key) => {
+            if (!key) return;
+            if (key.name === 'up' || key.name === 'k') {
+                cursor = cursor > 0 ? cursor - 1 : selections.length - 1;
+                render();
+            } else if (key.name === 'down' || key.name === 'j') {
+                cursor = cursor < selections.length - 1 ? cursor + 1 : 0;
+                render();
+            } else if (key.name === 'space') {
+                selections[cursor].selected = !selections[cursor].selected;
+                render();
+            } else if (key.name === 'a') {
+                selections.forEach(s => s.selected = true);
+                render();
+            } else if (key.name === 'return' || key.name === 'enter') {
+                cleanup();
+                console.log("");
+                resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]);
+            } else if (key.ctrl && key.name === 'c') {
+                cleanup();
+                process.exit(0);
+            }
+        };
+
+        const cleanup = () => {
+            process.stdin.removeListener('keypress', onKeypress);
+            if (process.stdin.isTTY) {
+                process.stdin.setRawMode(false);
+                process.stdin.pause();
+            }
+        };
+
+        if (process.stdin.isTTY) {
+            readline.emitKeypressEvents(process.stdin);
+            process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdin.on('keypress', onKeypress);
+            render();
+        } else {
+            resolve(availableMcps);
+        }
     });
 }
 
@@ -298,17 +436,19 @@ async function promptCredentials() {
         console.log(`\n${colors.magenta}${colors.bold}--- Integrations & Credentials ---${colors.reset}`);
 
         // Step 1: LLM Provider for OpenWiki
-        console.log(`\n${colors.cyan}${colors.bold}OpenWiki Documentation Engine - LLM Provider${colors.reset}`);
-        console.log(`  ${colors.dim}[1] Gemma 4 12B / Gemini   – Google AI Studio (FREE, default)${colors.reset}`);
-        console.log(`  ${colors.dim}[2] Groq                   – Ultra-Fast Llama 3.3 70B (Groq API)${colors.reset}`);
-        console.log(`  ${colors.dim}[3] Grok / xAI            – Grok 2 (api.x.ai)${colors.reset}`);
-        console.log(`  ${colors.dim}[4] Nvidia NIM            – Llama 3.3 70B (integrate.api.nvidia.com)${colors.reset}`);
-        console.log(`  ${colors.dim}[5] OpenRouter            – Claude 3.5, Qwen, Kimi, Llama (openrouter.ai)${colors.reset}`);
-        console.log(`  ${colors.dim}[6] OpenAI                – GPT-4o-mini / GPT-4o (api.openai.com)${colors.reset}`);
-        console.log(`  ${colors.dim}[7] Ollama / LM Studio    – Local LLM (no API key, no cost)${colors.reset}`);
-        console.log(`  ${colors.dim}[8] Custom OpenAI API     – Custom Base URL + API Key + Model${colors.reset}`);
 
-        rl.question(`${colors.yellow}Choose provider [1-8, default: 1]: ${colors.reset}`, (choice) => {
+        (async () => {
+        const provOptions = [
+            { label: 'Gemma 4 12B / Gemini – Google AI Studio (FREE, default)', value: '1' },
+            { label: 'Groq – Ultra-Fast Llama 3.3 70B (Groq API)', value: '2' },
+            { label: 'Grok / xAI – Grok 2 (api.x.ai)', value: '3' },
+            { label: 'Nvidia NIM – Llama 3.3 70B (integrate.api.nvidia.com)', value: '4' },
+            { label: 'OpenRouter – Claude 3.5, Qwen, Kimi, Llama (openrouter.ai)', value: '5' },
+            { label: 'OpenAI – GPT-4o-mini / GPT-4o (api.openai.com)', value: '6' },
+            { label: 'Ollama / LM Studio – Local LLM (no API key, no cost)', value: '7' },
+            { label: 'Custom OpenAI API – Custom Base URL + API Key + Model', value: '8' }
+        ];
+        const choice = await promptSingleSelect('Choose OpenWiki LLM Provider:', provOptions, 0);
             let provider = "google", model = "", baseUrl = "", keyEnvName = "GEMINI_API_KEY";
             const c = choice.trim();
 
@@ -320,43 +460,26 @@ async function promptCredentials() {
             else if (c === "7") { provider = "ollama";     model = "llama3";                 baseUrl = "http://localhost:11434/v1"; }
             else if (c === "8") { provider = "custom";     keyEnvName = "OPENWIKI_API_KEY"; }
 
-            const askBaseUrl = (afterUrl) => {
+            (async () => {
                 if (c === "8") {
-                    rl.question(`${colors.yellow}Custom Base URL [e.g. https://integrate.api.nvidia.com/v1]: ${colors.reset}`, (u) => {
-                        baseUrl = u.trim();
-                        afterUrl();
-                    });
+                    const u = await askTextQuestion(`${colors.yellow}Custom Base URL [e.g. https://integrate.api.nvidia.com/v1]: ${colors.reset}`);
+                    baseUrl = u.trim();
                 } else if (c === "7") {
-                    rl.question(`${colors.yellow}Ollama Base URL [default: http://localhost:11434/v1]: ${colors.reset}`, (u) => {
-                        if (u.trim()) baseUrl = u.trim();
-                        afterUrl();
-                    });
-                } else {
-                    afterUrl();
+                    const u = await askTextQuestion(`${colors.yellow}Ollama Base URL [default: http://localhost:11434/v1]: ${colors.reset}`);
+                    if (u.trim()) baseUrl = u.trim();
                 }
-            };
-
-            const askModel = (afterModel) => {
                 const defaultModel = model || (provider === "google" ? "gemma-4-12b-it" : "gpt-4o-mini");
-                rl.question(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`, (m) => {
-                    if (m.trim()) model = m.trim();
-                    afterModel();
-                });
-            };
+                const m = await askTextQuestion(`${colors.yellow}Model name [default: ${defaultModel}]: ${colors.reset}`);
+                if (m.trim()) model = m.trim();
 
-            const askApiKey = (afterKey) => {
-                if (provider === "ollama") { afterKey(""); return; }
-                rl.question(`${colors.yellow}Enter your ${keyEnvName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, afterKey);
-            };
-
-            const askGitHub = (apiKey) => {
-                rl.question(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `, (github) => {
-                    resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: baseUrl });
-                });
-            };
-
-            askBaseUrl(() => askModel(() => askApiKey((apiKey) => askGitHub(apiKey))));
-        });
+                let apiKey = "";
+                if (provider !== "ollama") {
+                    apiKey = await askTextQuestion(`${colors.yellow}Enter your ${keyEnvName} for OpenWiki${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `);
+                }
+                const github = await askTextQuestion(`${colors.yellow}Enter your GITHUB_PERSONAL_ACCESS_TOKEN for GitHub MCP${colors.reset} ${colors.dim}(leave blank to skip):${colors.reset} `);
+                resolve({ gemini: apiKey.trim(), github: github.trim(), openwikiProvider: provider, openwikiModel: model, openwikiBaseUrl: baseUrl });
+            })();
+        })();
     });
 }
 
@@ -364,7 +487,7 @@ async function installOpenWikiDaemon(apiKey, targetSkillDir, openwikiEnv = {}) {
     const prov = openwikiEnv.provider || "google";
     if (!apiKey && !["ollama", "lmstudio"].includes(prov)) { console.log(' -> Skipping OpenWiki Daemon background installation (no API key provided).'); return; }
     console.log('\nInstalling OpenWiki Daemon...');
-    const { spawn, execSync } = require('child_process');
+    
     const scriptBase = path.join(targetSkillDir, 'openwiki-skill', 'scripts');
 
     const daemonEnv = Object.assign({}, process.env, {
@@ -418,13 +541,11 @@ async function installTokenSaver(platformTarget) {
         return;
     }
     console.log(`\n${colors.magenta}${colors.bold}--- Installing Heimdall Token Saver Context Optimizer ---${colors.reset}`);
-    const { execSync } = require('child_process');
+    
     const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
 
     try {
-        let targetFlag = '--target both';
-        if (platformTarget === '1') targetFlag = '--target antigravity';
-        else if (platformTarget === '2') targetFlag = '--target claude';
+        let targetFlag = '--target all';
 
         console.log(` -> Running Heimdall Token Saver setup (${targetFlag})...`);
         execSync(`${pythonCmd} install.py ${targetFlag}`, {
@@ -444,7 +565,7 @@ function moveIfExists(src, dest, label) {
     }
 }
 
-function copyDirRecursiveSync(source, target) {
+function copyDirRecursiveSync(source, target, excludeList = []) {
     if (!fs.existsSync(source)) return;
     const sourceStat = fs.lstatSync(source);
     if (sourceStat.isFile()) {
@@ -458,6 +579,7 @@ function copyDirRecursiveSync(source, target) {
 
     const files = fs.readdirSync(source);
     files.forEach(file => {
+        if (excludeList.includes(file)) return;
         const curSource = path.join(source, file);
         const curTarget = path.join(target, file);
         try {
@@ -485,7 +607,8 @@ function copyDirRecursiveSync(source, target) {
     });
 }
 
-promptMode(({ mode, platform, customPaths }) => {
+(async () => {
+    const { tier, mode, platform, isUniversal, customPaths } = await promptMode();
     fs.mkdirSync(backupDir, { recursive: true });
     
     let targetSkillDir = globalConfigDir;
@@ -561,30 +684,112 @@ promptMode(({ mode, platform, customPaths }) => {
         console.log(`\n[Merge Mode] Installing over existing directories. Existing skills will not be deleted.`);
     }
 
-    console.log("\nInstalling optimized skills (140 curated skills)...");
+    const excludeSkills = tier === '2' ? [
+        'bdb-adobe-suite-mcp.md',
+        'bdb-after-effects-mcp.md',
+        'bdb-blender-mcp.md',
+        'bdb-davinci-mcp.md',
+        'bdb-grandma3-mcp.md',
+        'bdb-resolume-mcp.md',
+        'bdb-rhino-mcp.md',
+        'bdb-touchdesigner-mcp.md',
+        'bdb-unreal-mcp.md',
+        'bdb-vectorworks-mcp.md',
+        'bdbmediastorm'
+    ] : [];
+
+    console.log(`\nInstalling optimized skills (140 curated skills)${tier === '2' ? ' [Basic Tier]' : ''}...`);
     fs.mkdirSync(targetSkillDir, { recursive: true });
     fs.mkdirSync(targetLegacyDir, { recursive: true });
     fs.mkdirSync(targetWorkspaceDir, { recursive: true });
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_config'), targetSkillDir);
-    console.log(" -> Installed global config skills.");
+    // Copy all subfolders in skills/ to their respective destinations
+    const skillsBase = path.join(srcDir, 'skills');
+    if (fs.existsSync(skillsBase)) {
+        const dirs = fs.readdirSync(skillsBase);
+        for (const dir of dirs) {
+            const fullPath = path.join(skillsBase, dir);
+            if (!fs.statSync(fullPath).isDirectory()) continue;
+            
+            if (dir === 'global_legacy') {
+                copyDirRecursiveSync(fullPath, targetLegacyDir, excludeSkills);
+                console.log(" -> Installed global legacy skills.");
+            } else if (dir === 'workspace_agents') {
+                copyDirRecursiveSync(fullPath, targetWorkspaceDir, excludeSkills);
+                console.log(" -> Installed workspace skills.");
+            } else {
+                // Copy all other skill folders (global_config, basic, bdbmediastorm, etc.) into targetSkillDir
+                copyDirRecursiveSync(fullPath, targetSkillDir, excludeSkills);
+            }
+        }
+        console.log(" -> Installed all global config & core skills.");
+    }
 
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'global_legacy'), targetLegacyDir);
-    console.log(" -> Installed global legacy skills.");
-
-    copyDirRecursiveSync(path.join(srcDir, 'skills', 'workspace_agents'), targetWorkspaceDir);
-    console.log(" -> Installed workspace skills.");
+    console.log("\nInstalling Godmode/Harness configurations to local workspace...");
+    const harnessDirs = ['.cursor/rules', '.claude', '.github', '.codex-plugin'];
+    harnessDirs.forEach(dir => {
+        const sourcePath = path.join(srcDir, dir);
+        if (fs.existsSync(sourcePath)) {
+            const targetPath = path.join(currentDir, dir);
+            copyDirRecursiveSync(sourcePath, targetPath);
+            console.log(` -> Copied ${dir} to ${targetPath}`);
+        }
+    });
 
     const geminiMdSrc = path.join(srcDir, 'GEMINI.md');
-    if (platform === '1' && fs.existsSync(geminiMdSrc)) {
+    if (fs.existsSync(geminiMdSrc)) {
+        // 1. Antigravity Global config
         fs.copyFileSync(geminiMdSrc, path.join(geminiDir, 'GEMINI.md'));
         console.log(` -> Installed GEMINI.md to ${path.join(geminiDir, 'GEMINI.md')}`);
+        
+        // 2. Universal Harness Injection
+        const globalRules = fs.readFileSync(geminiMdSrc, 'utf8');
+        
+        // Cursor
+        const cursorRulePath = path.join(currentDir, '.cursor', 'rules', '000_global_rules.mdc');
+        if (fs.existsSync(path.dirname(cursorRulePath))) {
+            fs.writeFileSync(cursorRulePath, `---\nname: global-rules\ndescription: Global BDB Agent Rules\n---\n\n${globalRules}`);
+            console.log(` -> Injected Global Rules to ${cursorRulePath}`);
+        }
+        
+        // Claude Code
+        const claudeMdPath = path.join(currentDir, 'CLAUDE.md');
+        if (fs.existsSync(claudeMdPath)) {
+            const claudeContent = fs.readFileSync(claudeMdPath, 'utf8');
+            if (!claudeContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(claudeMdPath, `\n\n${globalRules}`);
+                console.log(` -> Appended Global Rules to ${claudeMdPath}`);
+            }
+        } else {
+            fs.writeFileSync(claudeMdPath, globalRules);
+            console.log(` -> Created ${claudeMdPath} with Global Rules`);
+        }
+        
+        // GitHub Copilot
+        const copilotPath = path.join(currentDir, '.github', 'copilot-instructions.md');
+        if (fs.existsSync(path.dirname(copilotPath))) {
+            const copilotContent = fs.existsSync(copilotPath) ? fs.readFileSync(copilotPath, 'utf8') : '';
+            if (!copilotContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(copilotPath, `\n\n${globalRules}`);
+                console.log(` -> Injected Global Rules to ${copilotPath}`);
+            }
+        }
+        
+        // Codex Plugin
+        const codexPath = path.join(currentDir, '.codex-plugin', 'system.md');
+        if (fs.existsSync(path.dirname(codexPath))) {
+            const codexContent = fs.existsSync(codexPath) ? fs.readFileSync(codexPath, 'utf8') : '';
+            if (!codexContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(codexPath, `\n\n${globalRules}`);
+                console.log(` -> Injected Global Rules to ${codexPath}`);
+            }
+        }
     }
 
     (async () => {
         const mcpSrcDir = path.join(srcDir, 'mcps');
         const mcpCodeTarget = path.join(targetMcpDir, 'mcps');
-        const selectedMcps = await promptMcpSelection(mcpSrcDir);
+        const selectedMcps = await promptMcpSelection(mcpSrcDir, tier);
         
         if (selectedMcps.length > 0) {
             fs.mkdirSync(targetMcpDir, { recursive: true });
@@ -596,7 +801,7 @@ promptMode(({ mode, platform, customPaths }) => {
             });
             console.log(` -> Installed selected MCP servers to ${mcpCodeTarget}`);
 
-            const execSync = require('child_process').execSync;
+            
             const nodeMcps = ['adobe_uxp_mcp', 'unreal_mcp', 'tdmcp', 'touchdesigner-mcp', 'davinci-resolve-mcp', 'after-effects-mcp', 'computer-use-mcp'];
             nodeMcps.filter(m => selectedMcps.includes(m)).forEach(mcpFolder => {
                 const targetFolder = path.join(mcpCodeTarget, mcpFolder);
@@ -719,25 +924,14 @@ async function promptMemBIngestion(mcpCodeTarget) {
     if (isAutoYes) return;
     
     console.log(`\n${colors.cyan}${colors.bold}🧠 memB Deep Memory Ingestion${colors.reset}`);
-    const doIngest = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Would you like to scan & ingest a project directory into memB memory? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const doIngest = await promptSingleSelect('Would you like to scan & ingest a project directory into memB memory?', [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
 
     if (!doIngest) return;
 
-    const targetDir = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Enter project directory path to scan [default: current workspace]: ${colors.reset}`, (answer) => {
-            resolve(answer.trim() || process.cwd());
-        });
-    });
+    const answerDir = await askTextQuestion(`${colors.yellow}Enter project directory path to scan [default: current workspace]: ${colors.reset}`);
+    const targetDir = answerDir.trim() || process.cwd();
 
-    const includeTranscripts = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Include past conversation logs/transcripts? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const includeTranscripts = await promptSingleSelect('Include past conversation logs/transcripts?', [{label:'Yes', value:true}, {label:'No', value:false}], 1);
 
     const pythonBin = process.platform === 'win32'
         ? path.join(mcpCodeTarget, 'memb-mcp', '.venv', 'Scripts', 'python.exe')
@@ -748,7 +942,7 @@ async function promptMemBIngestion(mcpCodeTarget) {
     if (fs.existsSync(ingestScript) && fs.existsSync(pythonBin)) {
         console.log(` -> Running memB deep ingestion on: ${targetDir}...`);
         try {
-            const { execSync } = require('child_process');
+            
             const cmd = `"${pythonBin}" "${ingestScript}" "${targetDir}"${includeTranscripts ? ' --transcripts' : ''}`;
             execSync(cmd, { stdio: 'inherit' });
         } catch (e) {
@@ -763,38 +957,119 @@ async function promptCreatorExtension(mcpConfigPath) {
     if (isAutoYes) return;
     
     console.log(`\n${colors.magenta}${colors.bold}🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI)${colors.reset}`);
-    const doInstall = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Möchtest du das Plugin 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines) einrichten? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const doInstall = await promptSingleSelect("Install 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines)?", [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
 
     if (!doInstall) return;
 
-    const creatorDir = path.join(path.dirname(srcDir), 'bdb-dev-creator-extension');
+    // Use user's home directory config path for stability if running via npx, or alongside current dir
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const creatorDir = path.join(basePath, 'bdb-dev-creator-extension');
     const installerScript = path.join(creatorDir, 'installer.js');
+
+    if (!fs.existsSync(creatorDir)) {
+        console.log(` -> BDB Creator Extension wird über NPM nach ${creatorDir} geladen...`);
+        try {
+            fs.mkdirSync(creatorDir, { recursive: true });
+            execSync(`npm pack @hybridlabor-api/bdb-dev-creator-extension`, { stdio: 'ignore', cwd: creatorDir });
+            const tarball = fs.readdirSync(creatorDir).find(f => f.endsWith('.tgz'));
+            if (tarball) {
+                execSync(`tar -xzf "${tarball}" --strip-components=1`, { stdio: 'ignore', cwd: creatorDir });
+                fs.unlinkSync(path.join(creatorDir, tarball));
+                console.log(` -> Erfolgreich heruntergeladen!`);
+            } else {
+                throw new Error("NPM pack lieferte kein Archiv.");
+            }
+        } catch (e) {
+            console.log(` -> Fehler beim Herunterladen der Creator Extension: ${e.message}`);
+            return;
+        }
+    }
 
     if (fs.existsSync(installerScript)) {
         console.log(` -> Starte Setup der BDB Creator Extension...`);
         try {
-            execSync(`node "${installerScript}"`, { stdio: 'inherit' });
+            execSync(`node "${installerScript}"`, { stdio: 'inherit', cwd: creatorDir });
         } catch (e) {
             console.log(` -> Hinweis beim Ausführen des Creator Extension Setups: ${e.message}`);
         }
+    }
+}
+
+async function promptOSAgentWorkspace() {
+    if (isAutoYes) return;
+    
+    console.log(`\n${colors.magenta}${colors.bold}🧠 BDB OS Agent Workspace (AI Orchestrator)${colors.reset}`);
+    const doInstall = await promptSingleSelect("Install 'BDB OS Agent Workspace' (Orchestration Layer)?", [{label:'Yes', value:true}, {label:'No, skip it', value:false}], 1);
+
+    if (!doInstall) return;
+
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const osAgentDir = path.join(basePath, 'bdb-os-agent-workspace');
+
+    if (!fs.existsSync(osAgentDir)) {
+        console.log(` -> BDB OS Agent Workspace wird über NPM nach ${osAgentDir} geladen...`);
+        try {
+            fs.mkdirSync(osAgentDir, { recursive: true });
+            execSync(`npm pack @hybridlabor-api/bdb-os-agent-workspace`, { stdio: 'ignore', cwd: osAgentDir });
+            const tarball = fs.readdirSync(osAgentDir).find(f => f.endsWith('.tgz'));
+            if (tarball) {
+                execSync(`tar -xzf "${tarball}" --strip-components=1`, { stdio: 'ignore', cwd: osAgentDir });
+                fs.unlinkSync(path.join(osAgentDir, tarball));
+                console.log(` -> Erfolgreich heruntergeladen! (CD in ${osAgentDir} für die OS-Steuerung)`);
+            } else {
+                throw new Error("NPM pack lieferte kein Archiv.");
+            }
+        } catch (e) {
+            console.log(` -> Fehler beim Herunterladen des OS Agent Workspaces: ${e.message}`);
+        }
     } else {
-        console.log(` -> BDB Creator Extension Verzeichnis nicht gefunden unter ${creatorDir}.`);
+        console.log(` -> BDB OS Agent Workspace existiert bereits unter ${osAgentDir}.`);
     }
 }
 
         await installOpenWikiDaemon(creds.gemini, targetSkillDir, { provider: creds.openwikiProvider, model: creds.openwikiModel, baseUrl: creds.openwikiBaseUrl });
         await installTokenSaver(platform);
         await promptCreatorExtension(mcpConfigPath);
+        await promptOSAgentWorkspace();
         await promptMemBIngestion(mcpCodeTarget);
+        
+        if (isUniversal) {
+            console.log(`\n${colors.magenta}${colors.bold}🌐 Universal Agent Harness Sync...${colors.reset}`);
+            const detections = detectPlatforms();
+            let masterMcpData = {};
+            try { masterMcpData = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf8')); } catch(e) {}
+            
+            const syncMcpConfig = (targetPath) => {
+                try {
+                    let data = { mcpServers: {} };
+                    if (fs.existsSync(targetPath)) {
+                        data = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
+                        if (!data.mcpServers) data.mcpServers = {};
+                    }
+                    if (masterMcpData.mcpServers) {
+                        for (const [key, val] of Object.entries(masterMcpData.mcpServers)) {
+                            data.mcpServers[key] = val;
+                        }
+                    }
+                    fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+                    fs.writeFileSync(targetPath, JSON.stringify(data, null, 2));
+                } catch(e) {
+                    console.log(`    Failed to sync MCP to ${targetPath}: ${e.message}`);
+                }
+            };
+
+            for (const d of detections) {
+                console.log(` -> Injecting MCP engines into ${d.name}...`);
+                if (d.key === 'claude') syncMcpConfig(path.join(d.path, 'claude_desktop_config.json'));
+                else if (d.key === 'cursor' || d.key === 'windsurf' || d.key === 'vscode' || d.key === 'aider') syncMcpConfig(path.join(d.path, 'mcp.json'));
+            }
+            console.log(` -> Universal Sync Complete!`);
+        }
         
         console.log(`\n${colors.green}${colors.bold}=========================================================${colors.reset}`);
         console.log(`${colors.green}${colors.bold} 🎉 Installation complete! The environment now has the ${colors.reset}`);
         console.log(`${colors.green}${colors.bold}    optimized skill configuration.${colors.reset}`);
         console.log(`${colors.green}${colors.bold}=========================================================${colors.reset}`);
-        rl.close();
+        
     })();
-});
+})();

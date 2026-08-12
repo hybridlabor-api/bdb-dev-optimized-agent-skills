@@ -49,3 +49,44 @@ This document records the foundational architectural decisions, rationale, and c
 - **Context:** Heavy generative 3D pipelines (TRELLIS, TripoSR), automated cinema video suites (OpenMontage, Remotion Video-Shotcraft, Palmier Pro NLE MCP), and local ComfyUI model weights add tens of gigabytes of dependencies and complex CUDA/toolchain requirements.
 - **Decision:** Decouple these heavy creative engines into an independent companion repository (`bdb-dev-creator-extension`). Maintain `bdb-dev-optimized-agent-skills` as a lean, ultra-fast universal core skills backbone with optional add-on links during installation.
 - **Consequences:** Keeps the primary agent skills pack fast to install and lightweight to clone (<25MB), while providing deep creative generative pipelines for specialized workstations via the extension repo.
+
+---
+
+## ADR-007: Unified Package Installer for Pro and Basic Tiers
+- **Status:** Accepted
+- **Context:** Maintaining separate repositories and NPM packages for the "Pro" and "Basic" tiers of the agent skills led to CI/CD overhead, duplicated NPM workflows, and fragmented release pipelines.
+- **Decision:** Consolidate the "Basic" tier into the primary `bdb-dev-optimized-agent-skills` package by introducing dynamic tier selection in the CLI installer (`installer.js`). The installer intelligently filters out heavy creative MCPs and specific pro skills when "Basic" is selected.
+- **Consequences:** Eliminates the need for a separate basic repository and NPM package, creating a single source of truth, simplifying updates, and providing users with a unified `npx` entry point.
+
+---
+
+## ADR-008: Six-Pillar Godmode Skill Hierarchy
+- **Status:** Accepted
+- **Context:** High-level agent orchestration requires distinct domain governance across engineering, user interface design, delivery/shipping, physical event tech, 3D creation, and media generation to maintain consistent execution standards.
+- **Decision:** Establish a six-pillar supreme domain governance architecture: `godmode-engineering`, `godmode-ui-ux`, `godmode-shipping`, `godmode-eventtech`, `godmode-3d-creation`, and `godmode-media-creation`. All domain-specific sub-skills and agent workflows route through these primary authority pillars.
+- **Consequences:** Streamlines agent decision-making, prevents rule conflict across specialized tools, and enforces uniform quality thresholds across all creative and technical domains.
+
+---
+
+## ADR-009: Universal Harness & Cross-IDE Configuration Sync
+- **Status:** Accepted
+- **Context:** Developers and teams use diverse IDEs and agent interfaces (Antigravity, Claude Code/Desktop, Cursor, Windsurf, Roo Code / Cline, ChatGPT Codex CLI, Aider, VS Code), leading to fragmented rule maintenance and out-of-sync MCP configs.
+- **Decision:** Implement a Universal Agent Harness Sync subsystem within the interactive installer to automatically inject and harmonize prompt rules, system instructions, and MCP tool configurations across all 8 supported agent environments.
+- **Consequences:** Guarantees 1:1 parity in agent capabilities, memory access, and tool availability regardless of which IDE or CLI runner is active.
+
+---
+
+## ADR-010: Bundled Heimdall Context Compression Engine
+- **Status:** Accepted
+- **Context:** Raw output from CLI tools, test runners, and system commands consumes excessive token context, resulting in slow responses, high API costs, and context window exhaustion.
+- **Decision:** Embed the Heimdall Token Saver engine natively into `vendor/token-saver/` within the core skills repository, providing context reduction on CLI tool outputs.
+- **Consequences:** Cuts context payload sizes by 60–99% on CLI output while preserving critical stack traces, error codes, and assertions without external dependencies.
+
+---
+
+## ADR-011: Firecrawl Agentic Web Scraping Standard
+- **Status:** Accepted
+- **Context:** Extracting structured web data, executing multi-page site crawls, and interacting with JavaScript-rendered Web UI pages requires a standardized, resilient scraping toolset for agents.
+- **Decision:** Standardize web data extraction on the Firecrawl CLI platform, integrating dedicated skills for structured JSON schema extraction (`firecrawl-agent`), bulk documentation crawling (`firecrawl-crawl`), page interaction (`firecrawl-interact`), site mapping (`firecrawl-map`), and deep search synthesis (`firecrawl-search`).
+- **Consequences:** Provides reliable, LLM-optimized web data access and dynamic browser interaction across all agent workflows.
+
