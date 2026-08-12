@@ -6,7 +6,7 @@ import re
 directories = {
     "👑 Core Godmodes": "skills/basic/*",
     "⚙️ System & Config": "skills/global_config/*",
-    "🛠️ Development & Languages": "skills/global_legacy/*"
+    "🔥 Specialized Workspace Agents": "skills/workspace_agents/*"
 }
 
 subgenres = {
@@ -25,7 +25,7 @@ output = []
 
 for main_category, path_pattern in directories.items():
     output.append(f"<details>")
-    output.append(f"<summary><h3>{main_category}</h3></summary>\n")
+    output.append(f"<summary><strong>{main_category}</strong></summary>\n")
     
     skill_dirs = glob.glob(path_pattern)
     skills = []
