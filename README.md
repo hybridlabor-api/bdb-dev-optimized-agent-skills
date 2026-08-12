@@ -400,15 +400,7 @@ Running multiple coding agents simultaneously often results in chaotic workspace
 
 ---
 
-## 🎬 BDB Creator Extension (3D, Video & Node Engines)
 
-To keep the core BDB DEV skills lightweight (<25MB), all heavy generative and media pipelines have been decoupled into the **BDB Creator Extension**. 
-
-- **Generative 3D & Animation:** Integrates native MCP servers for Unreal Engine, Rhino 7/8, and Spline.
-- **Node-Based Media:** Full API and MCP integration for TouchDesigner (MindDesigner), DaVinci Resolve, and ComfyUI.
-- **Event Technology:** Deep integrations for grandMA3 and Resolume, tailored specifically for show control and live event programming.
-
----
 
 ## 🔄 BDB Software Engineering Pipeline & Slash Commands
 
@@ -570,13 +562,24 @@ tail -f ~/.openwiki/daemon.log
 
 ## 🎨 Modular Creator Extension Suite (`bdb-dev-creator-extension`)
 
-To keep the core skills pack fast and lightweight (<25MB), heavy 3D generation, cinema video production, and ComfyUI pipelines are decoupled into the companion **BDB Creator Extension**:
+To keep the core skills pack fast and lightweight (<25MB), all heavy 3D generation, cinema-grade video production, and ComfyUI pipelines have been completely decoupled into the companion **BDB Creator Extension**. 
 
-- **🔷 3D Generation Suite (`engines/3d/`):** Microsoft TRELLIS (high-fidelity image-to-3D), Stability AI TripoSR (<0.5s image-to-mesh), and parametric CadQuery text-to-CAD (STEP/STL/URDF).
-- **🎬 Cinema Video Suite (`engines/video/`):** OpenMontage AI orchestrator, 100+ Remotion cinema-grade motion templates (`video-shotcraft`), and Palmier Pro macOS NLE HTTP MCP server (`http://127.0.0.1:19789/mcp`).
-- **🎨 Local ComfyUI MCP (`mcps/comfyui-mcp/`):** Local FLUX, SDXL, and Wan2.1 generative pipelines exposed over Model Context Protocol.
+This suite transforms your AI agent from a pure software engineer into a **full-stack creative studio**:
 
-Link the suite alongside your core skills:
+- **🔷 3D Generation Suite (`engines/3d/`)**
+  - **Microsoft TRELLIS:** High-fidelity image-to-3D generation.
+  - **Stability AI TripoSR:** Ultra-fast (<0.5s) image-to-mesh generation.
+  - **CadQuery text-to-CAD:** Parametric modeling outputting production-ready STEP, STL, and URDF files.
+- **🎬 Cinema Video Suite (`engines/video/`)**
+  - **OpenMontage Agentic Production:** Full end-to-end video production. Just prompt your agent, and it handles script, stock retrieval, and voiceover.
+  - **Backlot Living Storyboards:** A live visual dashboard to approve takes and costs before the render.
+  - **Motion Templates (`video-shotcraft`):** 100+ Remotion cinema-grade motion templates.
+  - **Palmier Pro NLE Integration:** Direct timeline injection via HTTP MCP (`http://127.0.0.1:19789/mcp`).
+- **🎨 Local ComfyUI Engine (`mcps/comfyui-mcp/`)**
+  - Exposes local Stable Diffusion, FLUX, and Wan2.1 generative workflows directly over the Model Context Protocol. Zero-cost AI rendering, fully controlled by the agent.
+
+**Installation & Linking:**
+The `bdb-dev-optimized-agent-skills` installer will automatically prompt you to integrate this suite. Or install manually:
 ```bash
 git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git
 ```
