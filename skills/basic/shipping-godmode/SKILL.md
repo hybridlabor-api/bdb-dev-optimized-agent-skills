@@ -1,35 +1,39 @@
 ---
 name: shipping-godmode
-description: Release management and workflow discipline based on Addy Osmani's agent-skills. Enforces pre-launch checklists, rollback strategies, and safe deployments.
+description: BDB Shipping Godmode. The final gatekeeper for production releases. Enforces Spec-Driven Development, rigorous pre-launch checks, feature flags, and rollback strategies.
 ---
 
-# Shipping Godmode
+# 🚀 BDB Shipping Godmode
 
-This skill is the final gatekeeper. No code reaches production without passing these rigorous checks.
+This skill is the final gatekeeper. No code reaches production without passing these rigorous checks. It orchestrates release management and workflow discipline for the BDB ecosystem across all supported harnesses (Cursor, Claude Code, Agy, Copilot).
 
 ## 1. Spec-Driven Development
-- Every major change must begin with a clear spec (`/spec`).
-- Document boundaries, constraints, and success criteria.
+Writing code without a specification is guessing.
+*   **The `/spec` Command:** Every major feature or refactor must begin by writing a clear markdown specification file.
+*   **Boundaries & Constraints:** The spec must document the exact boundaries of the feature, edge cases, data structures, and the definition of "Done". Do not proceed to code until the user approves the spec.
 
-## 2. Pre-Launch Checklists
-Before deploying, confirm:
-- [ ] All tests pass (Unit, E2E).
-- [ ] No `.skip` or `.only` test blocks remain.
-- [ ] No `console.log` debugging left in production code.
-- [ ] Accessibility (WCAG 2.1 AA) and Core Web Vitals audited.
-- [ ] Security boundaries validated.
+## 2. Pre-Launch Validation Checklist
+Before any code is committed, pushed, or deployed, you must actively verify the following:
+*   [ ] **Test Suite Green:** All unit and E2E tests pass.
+*   [ ] **No Test Skips:** No `.skip` or `.only` test blocks remain in the codebase.
+*   [ ] **Sanitized Code:** No floating `console.log` or debug statements left behind.
+*   [ ] **Accessibility Checked:** Core Web Vitals and WCAG 2.1 AA audits are clear.
+*   [ ] **Security Verified:** API keys and secrets are safely managed via environment variables and never hardcoded.
 
-## 3. Safe Rollouts & Feature Flags
-- Ship behind Feature Flags where possible.
-- Decouple deployment from release.
-- Define a Staged Rollout sequence (Team -> 5% -> 50% -> 100%).
+## 3. Deployment & Rollout Strategy
+Releasing code should be a boring event.
+*   **Decouple Deploy from Release:** Pushing code to production does not mean the user sees it immediately. Use Feature Flags to merge code safely into main without exposing it to the user.
+*   **Dark Launching:** Test the code in production with synthetic traffic or internal users before flipping the feature flag for the public.
+*   **Staged Rollouts:** For critical features, roll out sequentially (Internal Team -> 5% of users -> 50% -> 100%).
 
-## 4. Rollback Strategy
-- NEVER launch without a documented, verified Rollback Plan.
-- Define trigger conditions for automatic rollback (e.g., error rate > 2x baseline).
+## 4. Rollback Strategies
+Never launch a feature without a verified rollback plan.
+*   **Auto-Rollback Triggers:** Define exactly what metrics will trigger an automatic rollback (e.g., error rate jumps by >2x, latency spikes above 500ms).
+*   **Database Migrations:** Ensure any database schema changes are backward compatible, or have a strictly tested `down` migration ready.
 
-## Workflow Execution
-1. Verify CI/CD pipeline green.
-2. Run Pre-Launch Checklist.
-3. Document Rollback trigger.
-4. Execute Deployment.
+## Universal Agent Harness Integration
+This Godmode is universally compatible.
+*   **Cursor:** Auto-injected via `.cursor/rules/shipping-godmode.mdc`.
+*   **Claude Code:** Reads principles via `CLAUDE.md`.
+*   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
+*   **Execution:** You (the AI) must present the Pre-Launch Checklist to the user before confirming a task is completely finished.

@@ -1,40 +1,46 @@
 ---
 name: ui-ux-godmode
-description: The absolute Gold-Standard for UI/UX. Enforces Anthropic's Anti-Slop principles, Fluent UI constraints, Apple Motion dynamics, and data-driven design generation. Use this skill BEFORE generating any frontend code to establish the aesthetic, motion, and accessibility baseline.
+description: BDB UI/UX Godmode. The absolute Gold-Standard for frontend design. Enforces Anti-Slop principles, enterprise accessibility, fluid motion dynamics, and data-driven design generation across all agent harnesses.
 ---
 
-# UI/UX Godmode (Anti-Slop & Craft)
+# 🎨 BDB UI/UX Godmode
 
-This skill replaces all legacy design, UI, and UX skills. It represents the absolute pinnacle of frontend engineering and design craft.
+This skill replaces all legacy design and UX skills. It represents the absolute pinnacle of frontend engineering and design craft in the BDB ecosystem. As an agent, you must execute these principles rigorously across all supported harnesses (Cursor, Claude Code, Agy, Copilot).
 
-## 1. Anti-Slop (The Anthropic Standard)
-You must actively resist generating generic "AI-look" interfaces.
-- **NO** overuse of purple/blue generic gradients.
-- **NO** arbitrarily rounded corners without a unified token system.
-- **NO** generic dashboard layouts if the product doesn't strictly need a dashboard.
-- **NO** floating cards on gray backgrounds without purposeful elevation.
-Every pixel must earn its place. Form follows strict intent.
+## 1. The Anti-Slop Directive
+You must actively resist generating generic "AI-look" interfaces. The internet is flooded with low-effort, generic layouts. Your job is to craft intent-driven design.
+*   **No Generic Gradients:** Do not use arbitrary purple/blue glowing gradients or mesh backgrounds unless explicitly requested by the brand guidelines.
+*   **No Arbitrary Border Radii:** Do not mix `rounded-md` and `rounded-2xl` arbitrarily. All border radii must follow a strict, nested mathematical token system.
+*   **No Default Dashboards:** Do not build a sidebar/header dashboard layout for a tool that would be better served as a modal, a command palette, or a single-column focused view.
+*   **Elevations & Shadows:** Flat is not an excuse for lacking hierarchy. Shadows must mimic real-world lighting (multi-layered diffuse shadows), not hard black boxes.
 
-## 2. Inspiration First (nexu-io/open-design & refero.design)
-If the user does not provide a rigid template:
-- Search or suggest exploring `https://styles.refero.design/` and `https://github.com/nexu-io/open-design`.
-- Define a strict Moodboard and Visual Signature *before* writing HTML/CSS.
+## 2. Inspiration & Retrieval Layer
+Never guess a layout if the user hasn't provided one. You must act as a design researcher before acting as a coder.
+*   **Ask for References:** Prompt the user to provide references from highly curated galleries.
+*   **Curated Sources:** When searching for inspiration, rely on real-world patterns. Internally map your layout generation to standards found on top-tier UI galleries (e.g., refero.design, open-design).
+*   **Moodboard First:** Define the visual signature (Typography paired, Primary/Secondary/Surface colors defined) in markdown before writing a single line of React/HTML/CSS.
 
-## 3. Data-Driven Architecture (Saifyxpro)
-Do not guess Hex codes or spacing values.
-- You must generate a cohesive, tokenized Design System (using CSV-based logic or programmatic generation) for Colors, Typography, Spacing, and Elevation.
-- Use `oklch` for perceptual uniformity if working in modern CSS.
+## 3. Data-Driven Architecture (Design Tokens)
+Design is math. You do not guess spacing, and you do not guess colors.
+*   **Color Space:** Use `oklch()` for programmatic color generation to ensure perceptual uniformity (no more muddy yellows or overly bright blues when generating palettes).
+*   **Spacing System:** Strictly adhere to a 4pt or 8pt grid (`4, 8, 12, 16, 24, 32, 48, 64, 96`). Do not use random pixel values like `17px` or `21px`.
+*   **Modular Typography:** Generate font sizes using a modular scale (e.g., Major Third or Perfect Fourth). Define explicit `line-height` (tighter for headings ~1.1, looser for body ~1.5) and tracking/letter-spacing (tighter for large text, looser for microcopy).
 
-## 4. Fluid Motion (Emil Kowalski / Apple Design)
-- **Interruptible Animations:** State transitions must be fluid.
-- **Spring Physics:** Prefer spring-based motion (damping/response) over fixed-duration easings for interactive elements.
-- Ensure spatial consistency (elements return to where they originated).
+## 4. Fluid Motion & Physics
+Animation is not decoration; it is spatial orientation.
+*   **Interruptible Animations:** State transitions must be fluid. If a user closes a modal while it is still opening, it must smoothly reverse from its current physical state, not snap back to zero.
+*   **Spring Physics:** Avoid fixed-duration CSS `ease-in-out` for interactive elements. Use spring physics (Stiffness, Damping, Mass) via tools like Framer Motion or React Spring so elements feel tactile and physically grounded.
+*   **Spatial Consistency:** Elements must expand from their origin point (Shared Element Transitions) rather than fading in from nowhere.
 
-## 5. Enterprise Density (Microsoft Fluent)
-- When dealing with tables, forms, or data-heavy views, apply Fluent UI constraints: compact density, high contrast, and flawless keyboard accessibility (WCAG 2.1 AA).
+## 5. Enterprise Density & Accessibility
+An interface that cannot be used by everyone is broken.
+*   **High-Density Data:** When building B2B tables or forms, apply strict compact density rules. Minimize padding, use tabular numbers (`font-variant-numeric: tabular-nums;`), and align numerical data to the right.
+*   **WCAG 2.1 AA:** Enforce strict contrast ratios (4.5:1 for normal text).
+*   **Keyboard Navigation:** Focus states must be highly visible (e.g., `focus-visible:ring-2 focus-visible:ring-offset-2`). Every interactive element must be reachable via `Tab` and executable via `Enter/Space`.
 
-## Workflow Execution
-1. Acknowledge intent and define the Visual Signature.
-2. Generate/Validate the Token System.
-3. Apply Anti-Slop critique.
-4. Implement component with Fluid Motion hooks.
+## Universal Agent Harness Integration
+This Godmode is universally compatible.
+*   **Cursor:** Auto-injected via `.cursor/rules/ui-ux-godmode.mdc`.
+*   **Claude Code:** Reads principles via `CLAUDE.md`.
+*   **Agy / CLI Agents:** Natively enforced via the prompt orchestrator.
+*   **Execution:** You (the AI) must silently validate your planned UI code against these 5 pillars before outputting code to the user.
