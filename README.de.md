@@ -498,18 +498,122 @@ tail -f ~/.openwiki/daemon.log
 
 ---
 
-## 🎨 Modulare Creator Extension Suite (`bdb-dev-creator-extension`)
+## 🖥️ BDB OS Agent Workspace: Parallele Multi-Agenten-Orchestrierung (v3.0.0)
 
-Um das Core-Skills-Paket schnell und leichtgewichtig (<25MB) zu halten, sind aufwendige 3D-Generierung, Kino-Videoproduktion und ComfyUI-Pipelines in die Begleit-Extension **BDB Creator Extension** ausgelagert:
+[![Repo](https://img.shields.io/badge/repo-bdb--os--agent--workspace-blue.svg)](https://github.com/hybridlabor-api/bdb-os-agent-workspace)
+[![harness](https://img.shields.io/badge/orchestrierung-Git%20Worktrees-brightgreen.svg)](https://github.com/hybridlabor-api/bdb-os-agent-workspace)
+[![terminal](https://img.shields.io/badge/terminal-Live%20Steuerung-purple.svg)](https://github.com/hybridlabor-api/bdb-os-agent-workspace)
+[![license](https://img.shields.io/badge/lizenz-Apache%202.0-blue.svg)](LICENSE)
 
-- **🔷 3D Generation Suite (`engines/3d/`):** Microsoft TRELLIS (high-fidelity image-to-3D), Stability AI TripoSR (<0.5s image-to-mesh), and parametric CadQuery text-to-CAD (STEP/STL/URDF).
-- **🎬 Cinema Video Suite (`engines/video/`):** OpenMontage AI orchestrator, 100+ Remotion cinema-grade motion templates (`video-shotcraft`), and Palmier Pro macOS NLE HTTP MCP server (`http://127.0.0.1:19789/mcp`).
-- **🎨 Local ComfyUI MCP (`mcps/comfyui-mcp/`):** Local FLUX, SDXL, and Wan2.1 generative pipelines exposed over Model Context Protocol.
+**BDB OS Agent Workspace** ist der Desktop-Meta-Harness und die Orchestrierungsschicht für parallele KI-Agenten. Er ermöglicht Entwicklern das gleichzeitige Starten, Verwalten und Koordinieren mehrerer isolierter Agenten-Sitzungen über unabhängige Git-Worktrees mit Echtzeit-Terminal-Feedbackschleifen und automatisiertem PR-Review-Routing.
 
-Link the suite alongside your core skills:
+```mermaid
+flowchart TD
+    A[Desktop IDE Meta-Harness] --> B[Git Worktree Orchestrator]
+    B --> C[Agenten-Sitzung 1: Feature Entwicklung]
+    B --> D[Agenten-Sitzung 2: Refactoring]
+    B --> E[Agenten-Sitzung N: Test & Verifikation]
+    C --> F[Live-Terminalsteuerung & Prozessmonitor]
+    D --> F
+    E --> F
+    F --> G[Automatische CI/CD-Feedbackschleifen]
+    G --> H[PR-Review & Merge-Routing]
+    H --> I[Zentrales Git-Repository]
+```
+
+<details>
+<summary><strong>⚙️ Architektur & Worktree-Orchestrierung</strong></summary>
+
+- **Git-Worktree-Isolierung:** Instanziiert dedizierte, saubere Arbeitsbäume für jede Subagenten-Sitzung, was Dateistatus-Korruption und Lockfile-Kollisionen bei parallelen Bearbeitungen verhindert.
+- **Desktop Meta-Harness:** Koordiniert Multi-Workspace-Setups, Umgebungsvariablen und lokale Server-Ports über parallele Entwicklungsumgebungen hinweg.
+- **Parallele Agenten-Ausführung:** Startet autonome Agenten, die gleichzeitig an separaten Modulen, Features oder Bugfixes arbeiten, ohne den Hauptzweig des Workspaces zu beeinträchtigen.
+</details>
+
+<details>
+<summary><strong>🔬 Technische Spezifikationen & Automatisiertes Routing</strong></summary>
+
+- **Live-Terminalsteuerung:** Erfasst Stdout/Stderr-Streams von Subagenten mit aktiver Prozessüberwachung, Sitzungs-Lebenszyklussteuerung und Statusberichten in Echtzeit.
+- **Automatische CI/CD-Feedbackschleifen:** Überwacht Testausgaben und Build-Aufgaben und leitet Fehlerspuren direkt in den Kontext des ausführenden Subagenten zur sofortigen Reparatur zurück.
+- **PR-Review-Routing:** Bündelt fertiggestellte Features, führt automatisierte Sicherheits- und Code-Health-Prüfungen durch und leitet generierte Pull Requests zur Überprüfung oder zum automatischen Mergen weiter.
+</details>
+
+<details>
+<summary><strong>🔌 Unterstützte Harnesses & Direkter Repository-Link</strong></summary>
+
+- **Unterstützte Agenten-Harnesses:**
+  - **Google Antigravity / AGY CLI**
+  - **Claude Desktop & Claude Code**
+  - **Cursor & Windsurf**
+  - **Roo Code & Cline**
+  - **ChatGPT Codex / Codex CLI**
+  - **Aider & VS Code**
+- **Direktes Repository:** Greifen Sie auf den Workspace-Orchestrator unter [github.com/hybridlabor-api/bdb-os-agent-workspace](https://github.com/hybridlabor-api/bdb-os-agent-workspace) zu.
+
+```bash
+git clone https://github.com/hybridlabor-api/bdb-os-agent-workspace.git
+```
+</details>
+
+---
+
+## 🎨 BDB Creator Extension: Heavy-Lifting Medien- & 3D-Compute-Pipeline (v3.0.0)
+
+[![Repo](https://img.shields.io/badge/repo-bdb--dev--creator--extension-blue.svg)](https://github.com/hybridlabor-api/bdb-dev-creator-extension)
+[![compute](https://img.shields.io/badge/compute-CUDA%20%2F%20ML-orange.svg)](https://github.com/hybridlabor-api/bdb-dev-creator-extension)
+[![3D Engine](https://img.shields.io/badge/3D-TRELLIS%20%7C%20TripoSR-brightgreen.svg)](https://github.com/hybridlabor-api/bdb-dev-creator-extension)
+[![ComfyUI](https://img.shields.io/badge/ComfyUI-FLUX%20%7C%20SDXL%20%7C%20Wan2.1-red.svg)](https://github.com/hybridlabor-api/bdb-dev-creator-extension)
+[![license](https://img.shields.io/badge/lizenz-Apache%202.0-blue.svg)](LICENSE)
+
+**BDB Creator Extension** (`bdb-dev-creator-extension`) ist die hochleistungsfähige Medien-Compute-Pipeline, die entwickelt wurde, um das Kern-Skill-Paket schnell, leichtgewichtig und reaktionsschnell zu halten (<25MB). Sie kapselt CUDA/ML-Neuronale Netze, 3D-Mesh-Synthese, parametrische CAD-Generierung, automatisierten Videoschnitt und lokale ComfyUI-Rendering-Engines aus.
+
+```mermaid
+flowchart LR
+    A[Kern-Skills Agent] -->|MCP-Anfrage| B[BDB Creator Extension Router]
+    B --> C[3D-Generierungs-Suite]
+    B --> D[Cinema-Video-Suite]
+    B --> E[Lokale ComfyUI MCP Engine]
+    C --> C1[TRELLIS: High-Fidelity 3D]
+    C --> C2[TripoSR: Schnelles Mesh <0,5s]
+    C --> C3[CadQuery: Text-to-CAD]
+    D --> D1[OpenMontage AI Director]
+    D --> D2[Remotion Video-Shotcraft]
+    D --> D3[Palmier Pro NLE MCP Server]
+    E --> E1[FLUX.1 Bildgenerierung]
+    E --> E2[SDXL Pipeline]
+    E --> E3[Wan2.1 Video Diffusion]
+    C1 & C2 & C3 & D1 & D2 & D3 & E1 & E2 & E3 --> F[Gerenderte Medien & Räumliche Assets]
+```
+
+<details>
+<summary><strong>🔷 3D-Generierungs-Suite (`engines/3d/`)</strong></summary>
+
+- **Microsoft TRELLIS:** Hochpräzise Image-to-3D-Asset-Generierung zur Erstellung texturierter 3D-Meshes und NeRF/Gaussian-Splat-Darstellungen.
+- **Stability AI TripoSR:** Ultraschnelle Single-Image-zu-3D-Mesh-Generierung unter einer halben Sekunde (<0,5s) für zügiges räumliches Prototyping.
+- **CadQuery Parametrisches Text-to-CAD:** Generiert präzise Ingenieursmodelle und architektonische Geometrie in den Formaten STEP, STL und URDF.
+</details>
+
+<details>
+<summary><strong>🎬 Cinema-Video-Suite (`engines/video/`)</strong></summary>
+
+- **OpenMontage AI Orchestrator:** Automatisiertes Video-Storytelling, Skript-zu-Timeline-Montage und Shot-Sequenzierung.
+- **Remotion Video-Shotcraft:** Über 100 erstklassige programmatische Videokomponenten und Motion-Graphics-Templates auf React-Basis.
+- **Palmier Pro NLE MCP Server:** Echtzeit-HTTP-MCP-Brücke (`http://127.0.0.1:19789/mcp`), die native macOS NLE-Videobearbeitungsfunktionen bereitstellt.
+</details>
+
+<details>
+<summary><strong>🎨 Lokale ComfyUI MCP Engine & Direkter Repository-Link (`mcps/comfyui-mcp/`)</strong></summary>
+
+- **Model Context Protocol Integration:** Stellt lokale ComfyUI-Workflows als ausführbare Tools für KI-Agenten über MCP bereit.
+- **Unterstützte Generative Modelle:**
+  - **FLUX.1:** Hochauflösende Bildsynthese und präzise Prompt-Befolgung.
+  - **SDXL:** Latent-Diffusion-Workflow-Steuerung mit benutzerdefinierten LoRAs und ControlNets.
+  - **Wan2.1:** Generative Video-Diffusionsmodelle für die Erstellung von Clips mit hoher Bildrate.
+- **Direktes Repository:** Greifen Sie auf die Extension-Suite unter [github.com/hybridlabor-api/bdb-dev-creator-extension](https://github.com/hybridlabor-api/bdb-dev-creator-extension) zu.
+
 ```bash
 git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git
 ```
+</details>
 
 ---
 
