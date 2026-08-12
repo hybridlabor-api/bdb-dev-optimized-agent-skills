@@ -619,9 +619,53 @@ promptMode(({ tier, mode, platform, customPaths }) => {
     });
 
     const geminiMdSrc = path.join(srcDir, 'GEMINI.md');
-    if (platform === '1' && fs.existsSync(geminiMdSrc)) {
+    if (fs.existsSync(geminiMdSrc)) {
+        // 1. Antigravity Global config
         fs.copyFileSync(geminiMdSrc, path.join(geminiDir, 'GEMINI.md'));
         console.log(` -> Installed GEMINI.md to ${path.join(geminiDir, 'GEMINI.md')}`);
+        
+        // 2. Universal Harness Injection
+        const globalRules = fs.readFileSync(geminiMdSrc, 'utf8');
+        
+        // Cursor
+        const cursorRulePath = path.join(currentDir, '.cursor', 'rules', '000_global_rules.mdc');
+        if (fs.existsSync(path.dirname(cursorRulePath))) {
+            fs.writeFileSync(cursorRulePath, `---\nname: global-rules\ndescription: Global BDB Agent Rules\n---\n\n${globalRules}`);
+            console.log(` -> Injected Global Rules to ${cursorRulePath}`);
+        }
+        
+        // Claude Code
+        const claudeMdPath = path.join(currentDir, 'CLAUDE.md');
+        if (fs.existsSync(claudeMdPath)) {
+            const claudeContent = fs.readFileSync(claudeMdPath, 'utf8');
+            if (!claudeContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(claudeMdPath, `\n\n${globalRules}`);
+                console.log(` -> Appended Global Rules to ${claudeMdPath}`);
+            }
+        } else {
+            fs.writeFileSync(claudeMdPath, globalRules);
+            console.log(` -> Created ${claudeMdPath} with Global Rules`);
+        }
+        
+        // GitHub Copilot
+        const copilotPath = path.join(currentDir, '.github', 'copilot-instructions.md');
+        if (fs.existsSync(path.dirname(copilotPath))) {
+            const copilotContent = fs.existsSync(copilotPath) ? fs.readFileSync(copilotPath, 'utf8') : '';
+            if (!copilotContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(copilotPath, `\n\n${globalRules}`);
+                console.log(` -> Injected Global Rules to ${copilotPath}`);
+            }
+        }
+        
+        // Codex Plugin
+        const codexPath = path.join(currentDir, '.codex-plugin', 'system.md');
+        if (fs.existsSync(path.dirname(codexPath))) {
+            const codexContent = fs.existsSync(codexPath) ? fs.readFileSync(codexPath, 'utf8') : '';
+            if (!codexContent.includes("Global Agent Instructions")) {
+                fs.appendFileSync(codexPath, `\n\n${globalRules}`);
+                console.log(` -> Injected Global Rules to ${codexPath}`);
+            }
+        }
     }
 
     (async () => {
