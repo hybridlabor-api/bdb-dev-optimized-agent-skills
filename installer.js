@@ -967,11 +967,20 @@ async function promptCreatorExtension(mcpConfigPath) {
     const installerScript = path.join(creatorDir, 'installer.js');
 
     if (!fs.existsSync(creatorDir)) {
-        console.log(` -> BDB Creator Extension wird nach ${creatorDir} geklont...`);
+        console.log(` -> BDB Creator Extension wird über NPM nach ${creatorDir} geladen...`);
         try {
-            execSync(`git clone https://github.com/hybridlabor-api/bdb-dev-creator-extension.git "${creatorDir}"`, { stdio: 'inherit' });
+            fs.mkdirSync(creatorDir, { recursive: true });
+            execSync(`npm pack @hybridlabor-api/bdb-dev-creator-extension`, { stdio: 'ignore', cwd: creatorDir });
+            const tarball = fs.readdirSync(creatorDir).find(f => f.endsWith('.tgz'));
+            if (tarball) {
+                execSync(`tar -xzf "${tarball}" --strip-components=1`, { stdio: 'ignore', cwd: creatorDir });
+                fs.unlinkSync(path.join(creatorDir, tarball));
+                console.log(` -> Erfolgreich heruntergeladen!`);
+            } else {
+                throw new Error("NPM pack lieferte kein Archiv.");
+            }
         } catch (e) {
-            console.log(` -> Fehler beim Klonen der Creator Extension: ${e.message}`);
+            console.log(` -> Fehler beim Herunterladen der Creator Extension: ${e.message}`);
             return;
         }
     }
@@ -998,12 +1007,20 @@ async function promptOSAgentWorkspace() {
     const osAgentDir = path.join(basePath, 'bdb-os-agent-workspace');
 
     if (!fs.existsSync(osAgentDir)) {
-        console.log(` -> BDB OS Agent Workspace wird nach ${osAgentDir} geklont...`);
+        console.log(` -> BDB OS Agent Workspace wird über NPM nach ${osAgentDir} geladen...`);
         try {
-            execSync(`git clone https://github.com/hybridlabor-api/bdb-os-agent-workspace.git "${osAgentDir}"`, { stdio: 'inherit' });
-            console.log(` -> Erfolgreich geklont! (CD in ${osAgentDir} für die OS-Steuerung)`);
+            fs.mkdirSync(osAgentDir, { recursive: true });
+            execSync(`npm pack @hybridlabor-api/bdb-os-agent-workspace`, { stdio: 'ignore', cwd: osAgentDir });
+            const tarball = fs.readdirSync(osAgentDir).find(f => f.endsWith('.tgz'));
+            if (tarball) {
+                execSync(`tar -xzf "${tarball}" --strip-components=1`, { stdio: 'ignore', cwd: osAgentDir });
+                fs.unlinkSync(path.join(osAgentDir, tarball));
+                console.log(` -> Erfolgreich heruntergeladen! (CD in ${osAgentDir} für die OS-Steuerung)`);
+            } else {
+                throw new Error("NPM pack lieferte kein Archiv.");
+            }
         } catch (e) {
-            console.log(` -> Fehler beim Klonen des OS Agent Workspaces: ${e.message}`);
+            console.log(` -> Fehler beim Herunterladen des OS Agent Workspaces: ${e.message}`);
         }
     } else {
         console.log(` -> BDB OS Agent Workspace existiert bereits unter ${osAgentDir}.`);
