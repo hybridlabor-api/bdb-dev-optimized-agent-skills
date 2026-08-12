@@ -441,9 +441,7 @@ async function installTokenSaver(platformTarget) {
     const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
 
     try {
-        let targetFlag = '--target both';
-        if (platformTarget === '1') targetFlag = '--target antigravity';
-        else if (platformTarget === '2') targetFlag = '--target claude';
+        let targetFlag = '--target all';
 
         console.log(` -> Running Heimdall Token Saver setup (${targetFlag})...`);
         execSync(`${pythonCmd} install.py ${targetFlag}`, {
