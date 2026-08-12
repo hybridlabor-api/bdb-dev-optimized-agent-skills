@@ -188,6 +188,18 @@
 </details>
 
 <details>
+<summary><strong>🌀 BDB Ecosystem & Methodologies</strong></summary>
+
+| Skill Name | Description |
+|------------|-------------|
+| `bdbmediastorm` | The ultimate creative-tech and show-control brainstorming engine. Orchestrates multi-agent ideation focused on signal flow, hardware constraints, protocols, and BDB MCP integrations. Now strictly governed by the 3 Core Godmodes (engineering, ui-ux, shipping). |
+| `bdbrainstorm` | Combines multi-agent brainstorming, the /grill-me slash command, and the 3 Core Godmodes (engineering-godmode, ui-ux-godmode, shipping-godmode) to force a comprehensive, multi-agent ideation and technical design workflow. |
+| `github-repo` | Standards and workflows for writing, formatting, sanitizing, and publishing high-quality GitHub repositories, complementing openwiki-skill. |
+| `memb-ingest` | Deep scan and ingest project files (.md, .json, agent.md, .openwiki) and past conversation logs into the local memB vector memory engine. |
+
+</details>
+
+<details>
 <summary><strong>🔥 Specialized Workspace Agents</strong></summary>
 
 #### 🤖 Agents & Automation

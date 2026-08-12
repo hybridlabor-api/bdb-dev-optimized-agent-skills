@@ -6,6 +6,7 @@ import re
 directories = {
     "👑 Core Godmodes": "skills/basic/*",
     "⚙️ System & Config": "skills/global_config/*",
+    "🌀 BDB Ecosystem & Methodologies": "skills/*",
     "🔥 Specialized Workspace Agents": "skills/workspace_agents/*"
 }
 
@@ -31,6 +32,13 @@ for main_category, path_pattern in directories.items():
     skills = []
     
     for sdir in skill_dirs:
+        # Prevent the wildcard in "skills/*" from pulling in sub-directories we already handle,
+        # or anything that isn't a direct skill folder (like 'global_config')
+        if main_category == "🌀 BDB Ecosystem & Methodologies":
+            base = os.path.basename(sdir)
+            if base in ["basic", "global_config", "workspace_agents", "global_legacy", "assets", "tools", "mcps"]:
+                continue
+                
         skill_md = os.path.join(sdir, "SKILL.md")
         if os.path.isdir(sdir) and os.path.exists(skill_md):
             with open(skill_md, 'r', encoding='utf-8') as f:
