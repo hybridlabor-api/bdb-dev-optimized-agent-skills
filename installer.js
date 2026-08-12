@@ -308,6 +308,94 @@ async function promptMode() {
     return { tier, mode, platform, isUniversal };
 }
 
+async function promptMcpSelection(mcpsDir, tier) {
+    let availableMcps = [];
+    try { 
+        availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
+            .filter(d => !d.name.startsWith('.') && d.name !== '__pycache__')
+            .map(d => d.name); 
+    } catch(e) { return []; }
+
+    if (tier === '2') {
+        const basicMcps = ['computer-use-mcp', 'memb-mcp', 'windows-computer-use-mcp'];
+        availableMcps = availableMcps.filter(m => basicMcps.includes(m));
+    }
+
+    if (isAutoYes) return availableMcps;
+    if (availableMcps.length === 0) return [];
+
+    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
+    if (selections.length === 0) return ['memb-mcp'];
+
+    return new Promise((resolve) => {
+        let cursor = 0;
+        let drawnLines = 0;
+
+        const render = () => {
+            if (drawnLines > 0) {
+                process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
+            }
+            let output = `\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}\n`;
+            output += ` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}\n`;
+            
+            selections.forEach((mcp, index) => {
+                const isSelected = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
+                if (index === cursor) {
+                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${mcp.name}${colors.reset}\n`;
+                } else {
+                    output += `   [${isSelected}] ${mcp.name}\n`;
+                }
+            });
+            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to toggle, 'a' to select all, ENTER to confirm.${colors.reset}\n`;
+            
+            const lines = output.split('\n');
+            drawnLines = lines.length - 1;
+            process.stdout.write(output);
+        };
+
+        const onKeypress = (chunk, key) => {
+            if (!key) return;
+            if (key.name === 'up') {
+                cursor = cursor > 0 ? cursor - 1 : selections.length - 1;
+                render();
+            } else if (key.name === 'down') {
+                cursor = cursor < selections.length - 1 ? cursor + 1 : 0;
+                render();
+            } else if (key.name === 'space') {
+                selections[cursor].selected = !selections[cursor].selected;
+                render();
+            } else if (key.name === 'a') {
+                selections.forEach(s => s.selected = true);
+                render();
+            } else if (key.name === 'return' || key.name === 'enter') {
+                cleanup();
+                console.log("");
+                resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]);
+            } else if (key.ctrl && key.name === 'c') {
+                cleanup();
+                process.exit(0);
+            }
+        };
+
+        const cleanup = () => {
+            process.stdin.removeListener('keypress', onKeypress);
+            if (process.stdin.isTTY) process.stdin.setRawMode(false);
+            rl.resume();
+        };
+
+        if (process.stdin.isTTY) {
+            rl.pause();
+            readline.emitKeypressEvents(process.stdin);
+            process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdin.on('keypress', onKeypress);
+            render();
+        } else {
+            resolve(availableMcps);
+        }
+    });
+}
+
 async function promptCredentials() {
     if (isAutoYes) return { gemini: "", github: "", openwikiProvider: "google", openwikiModel: "", openwikiBaseUrl: "" };
     return new Promise((resolve) => {
