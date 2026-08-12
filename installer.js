@@ -179,128 +179,28 @@ function detectPlatforms() {
     return detections;
 }
 
-function promptMode(callback) {
-    if (isAutoYes) {
-        return callback({ tier: '1', mode: '1', platform: '1' });
-    }
-
-    const askTier = (next) => {
-        console.log("\nPackage Tier:");
-        console.log(" (1) Pro MEDIA (Full suite of dev-optimized skills and creative MCPs - Default)");
-        console.log(" (2) Basic (Essential skills only, lightweight MCPs)");
-        rl.question("\nSelect tier [1/2, default: 1]: ", (tierAns) => {
-            const tier = tierAns.trim() === '2' ? '2' : '1';
-            next(tier);
-        });
-    };
-
-    askTier((tier) => {
-        const detections = detectPlatforms();
-        if (detections.length > 0) {
-            console.log("\nDetected Agent Environments on this system:");
-            detections.forEach(d => console.log("  * " + d.name + " (detected at " + d.path + ")"));
-        } else {
-            console.log("\nNo active agent config directories auto-detected in standard locations.");
-        }
-
-        console.log("\nTarget AI Platform:");
-        console.log(" (0) Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)");
-        console.log(" (1) Google Antigravity (Default Single)");
-        console.log(" (2) Claude Desktop / Claude Code");
-        console.log(" (3) Cursor / Generic IDE (Project-local)");
-        console.log(" (4) Custom Installation (Specify custom paths manually)");
-        console.log(" (5) ChatGPT Codex CLI");
-        console.log(" (6) Windsurf IDE");
-        console.log(" (7) Roo Code / Cline / VS Code");
-        console.log(" (8) Aider CLI");
-        
-        rl.question("\nSelect platform [0-8, default: 0]: ", (platformAns) => {
-            let platform = platformAns.trim() || '0';
-            const isUniversal = platform === '0';
-            if (isUniversal) platform = '1'; // Default to Antigravity as the Master Hub
-            
-            console.log("\nInstallation Mode:");
-            console.log(" (1) Merge: Keep your existing skills/MCPs and add/update BDB tools.");
-            console.log(" (2) Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools.");
-            rl.question("\nSelect mode [1/2]: ", (modeAns) => {
-                const mode = modeAns.trim() === '2' ? '2' : '1';
-                
-                if (platform === '4') {
-                    // Prompt for custom paths
-                    console.log("\n--- Custom Path Configuration ---");
-                    rl.question("Target directory for global skills [default: " + path.join(homeDir, '.bdb-skills') + "]: ", (skillDir) => {
-                        const customSkillDir = skillDir.trim() || path.join(homeDir, '.bdb-skills');
-                        rl.question("Target directory for legacy skills [default: " + path.join(customSkillDir, 'legacy') + "]: ", (legacyDir) => {
-                            const customLegacyDir = legacyDir.trim() || path.join(customSkillDir, 'legacy');
-                            rl.question("Target directory for workspace skills [default: " + workspaceDir + "]: ", (workDir) => {
-                                const customWorkspaceDir = workDir.trim() || workspaceDir;
-                                rl.question("Target path for MCP Config JSON file [default: " + path.join(homeDir, 'mcp_config.json') + "]: ", (mcpConf) => {
-                                    const customMcpConfigPath = mcpConf.trim() || path.join(homeDir, 'mcp_config.json');
-                                    callback({
-                                        tier,
-                                        mode,
-                                        platform,
-                                        isUniversal,
-                                        customPaths: {
-                                            skillDir: customSkillDir,
-                                            legacyDir: customLegacyDir,
-                                            workspaceDir: customWorkspaceDir,
-                                            mcpConfigPath: customMcpConfigPath,
-                                            mcpDir: path.dirname(customMcpConfigPath)
-                                        }
-                                    });
-                                });
-                            });
-                        });
-                    });
-                } else {
-                    callback({ tier, mode, platform, isUniversal });
-                }
-            });
-        });
-    });
-}
-
-async function promptMcpSelection(mcpsDir, tier) {
-    let availableMcps = [];
-    try { 
-        availableMcps = fs.readdirSync(mcpsDir, { withFileTypes: true })
-            .filter(d => !d.name.startsWith('.') && d.name !== '__pycache__')
-            .map(d => d.name); 
-    } catch(e) { return []; }
-
-    if (tier === '2') {
-        const basicMcps = ['computer-use-mcp', 'memb-mcp', 'windows-computer-use-mcp'];
-        availableMcps = availableMcps.filter(m => basicMcps.includes(m));
-    }
-
-    if (isAutoYes) return availableMcps;
-    if (availableMcps.length === 0) return [];
-
-    const selections = availableMcps.filter(m => m !== 'memb-mcp').map(mcp => ({ name: mcp, selected: false }));
-    if (selections.length === 0) return ['memb-mcp'];
+async function promptSingleSelect(title, options, defaultIndex = 0) {
+    if (isAutoYes) return options[defaultIndex].value !== undefined ? options[defaultIndex].value : options[defaultIndex];
 
     return new Promise((resolve) => {
-        let cursor = 0;
+        let cursor = defaultIndex;
         let drawnLines = 0;
 
         const render = () => {
             if (drawnLines > 0) {
                 process.stdout.write(`\x1B[${drawnLines}A\x1B[J`);
             }
-            let output = `\n${colors.magenta}${colors.bold}--- Select Optional MCPs to Install ---${colors.reset}\n`;
-            output += ` ${colors.green}[x] memb-mcp${colors.reset} ${colors.dim}(Core Module - Always Installed)${colors.reset}\n`;
-            
-            selections.forEach((mcp, index) => {
-                const isSelected = mcp.selected ? `${colors.green}x${colors.reset}` : ' ';
+            let output = `\n${colors.cyan}${colors.bold}${title}${colors.reset}\n`;
+            options.forEach((opt, index) => {
+                const label = opt.label || opt.name || opt;
                 if (index === cursor) {
-                    output += `${colors.cyan}${colors.bold} > [${isSelected}] ${mcp.name}${colors.reset}\n`;
+                    output += ` ${colors.green}${colors.bold}➔ 🔘 ${label}${colors.reset}\n`;
                 } else {
-                    output += `   [${isSelected}] ${mcp.name}\n`;
+                    output += `    ⚪ ${label}\n`;
                 }
             });
-            output += `\n${colors.dim}Use UP/DOWN arrows to navigate, SPACE to toggle, 'a' to select all, ENTER to confirm.${colors.reset}\n`;
-            
+            output += `\n${colors.dim}Navigation: Use UP/DOWN arrows to move cursor, ENTER or SPACE to confirm.${colors.reset}\n`;
+
             const lines = output.split('\n');
             drawnLines = lines.length - 1;
             process.stdout.write(output);
@@ -309,21 +209,15 @@ async function promptMcpSelection(mcpsDir, tier) {
         const onKeypress = (chunk, key) => {
             if (!key) return;
             if (key.name === 'up') {
-                cursor = cursor > 0 ? cursor - 1 : selections.length - 1;
+                cursor = cursor > 0 ? cursor - 1 : options.length - 1;
                 render();
             } else if (key.name === 'down') {
-                cursor = cursor < selections.length - 1 ? cursor + 1 : 0;
+                cursor = cursor < options.length - 1 ? cursor + 1 : 0;
                 render();
-            } else if (key.name === 'space') {
-                selections[cursor].selected = !selections[cursor].selected;
-                render();
-            } else if (key.name === 'a') {
-                selections.forEach(s => s.selected = true);
-                render();
-            } else if (key.name === 'return' || key.name === 'enter') {
+            } else if (key.name === 'return' || key.name === 'enter' || key.name === 'space') {
                 cleanup();
                 console.log("");
-                resolve(['memb-mcp', ...selections.filter(s => s.selected).map(s => s.name)]);
+                resolve(options[cursor].value !== undefined ? options[cursor].value : options[cursor]);
             } else if (key.ctrl && key.name === 'c') {
                 cleanup();
                 process.exit(0);
@@ -344,9 +238,74 @@ async function promptMcpSelection(mcpsDir, tier) {
             process.stdin.on('keypress', onKeypress);
             render();
         } else {
-            resolve(availableMcps);
+            resolve(options[defaultIndex].value !== undefined ? options[defaultIndex].value : options[defaultIndex]);
         }
     });
+}
+
+async function promptMode() {
+    if (isAutoYes) {
+        return { tier: '1', mode: '1', platform: '1' };
+    }
+
+    const tierOptions = [
+        { label: 'Pro MEDIA (Full suite of dev-optimized skills and creative MCPs - Default)', value: '1' },
+        { label: 'Basic (Essential skills only, lightweight MCPs)', value: '2' }
+    ];
+    const tier = await promptSingleSelect('Package Tier Selection:', tierOptions, 0);
+
+    const detections = detectPlatforms();
+    if (detections.length > 0) {
+        console.log(`\n${colors.magenta}${colors.bold}Detected Agent Environments on this system:${colors.reset}`);
+        detections.forEach(d => console.log(`  * ${colors.green}${d.name}${colors.reset} (detected at ${d.path})`));
+    } else {
+        console.log("\nNo active agent config directories auto-detected in standard locations.");
+    }
+
+    const platformOptions = [
+        { label: 'Universal Agent Harness (Inject rules & MCPs into ALL detected platforms - Recommended)', value: '0' },
+        { label: 'Google Antigravity (Default Single Hub)', value: '1' },
+        { label: 'Claude Desktop / Claude Code', value: '2' },
+        { label: 'Cursor / Generic IDE (Project-local)', value: '3' },
+        { label: 'Custom Installation (Specify custom paths manually)', value: '4' },
+        { label: 'ChatGPT Codex CLI', value: '5' },
+        { label: 'Windsurf IDE', value: '6' },
+        { label: 'Roo Code / Cline / VS Code', value: '7' },
+        { label: 'Aider CLI', value: '8' }
+    ];
+    const rawPlatform = await promptSingleSelect('Target AI Platform Selection:', platformOptions, 0);
+    let platform = rawPlatform;
+    const isUniversal = rawPlatform === '0';
+    if (isUniversal) platform = '1';
+
+    const modeOptions = [
+        { label: 'Merge: Keep your existing skills/MCPs and add/update BDB tools (Recommended)', value: '1' },
+        { label: 'Replace: Backup and wipe your existing skills/MCPs, installing ONLY BDB tools', value: '2' }
+    ];
+    const mode = await promptSingleSelect('Installation Mode Selection:', modeOptions, 0);
+
+    if (rawPlatform === '4') {
+        console.log("\n--- Custom Path Configuration ---");
+        const skillDir = await new Promise(res => rl.question(`Target directory for global skills [default: ${path.join(homeDir, '.bdb-skills')}]: `, ans => res(ans.trim() || path.join(homeDir, '.bdb-skills'))));
+        const legacyDir = await new Promise(res => rl.question(`Target directory for legacy skills [default: ${path.join(skillDir, 'legacy')}]: `, ans => res(ans.trim() || path.join(skillDir, 'legacy'))));
+        const workDir = await new Promise(res => rl.question(`Target directory for workspace skills [default: ${workspaceDir}]: `, ans => res(ans.trim() || workspaceDir)));
+        const mcpConf = await new Promise(res => rl.question(`Target path for MCP Config JSON file [default: ${path.join(homeDir, 'mcp_config.json')}]: `, ans => res(ans.trim() || path.join(homeDir, 'mcp_config.json'))));
+        return {
+            tier,
+            mode,
+            platform,
+            isUniversal,
+            customPaths: {
+                skillDir,
+                legacyDir,
+                workspaceDir: workDir,
+                mcpConfigPath: mcpConf,
+                mcpDir: path.dirname(mcpConf)
+            }
+        };
+    }
+
+    return { tier, mode, platform, isUniversal };
 }
 
 async function promptCredentials() {
@@ -541,7 +500,8 @@ function copyDirRecursiveSync(source, target, excludeList = []) {
     });
 }
 
-promptMode(({ tier, mode, platform, isUniversal, customPaths }) => {
+(async () => {
+    const { tier, mode, platform, isUniversal, customPaths } = await promptMode();
     fs.mkdirSync(backupDir, { recursive: true });
     
     let targetSkillDir = globalConfigDir;
@@ -843,12 +803,11 @@ promptMode(({ tier, mode, platform, isUniversal, customPaths }) => {
 async function promptMemBIngestion(mcpCodeTarget) {
     if (isAutoYes) return;
     
-    console.log(`\n${colors.cyan}${colors.bold}🧠 memB Deep Memory Ingestion${colors.reset}`);
-    const doIngest = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Would you like to scan & ingest a project directory into memB memory? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const options = [
+        { label: 'Ja: Ingest-Scan jetzt auf Projekt-Verzeichnis ausführen', value: true },
+        { label: 'Nein: memB Ingestion vorerst überspringen', value: false }
+    ];
+    const doIngest = await promptSingleSelect('🧠 memB Deep Memory Ingestion:', options, 1);
 
     if (!doIngest) return;
 
@@ -887,12 +846,11 @@ async function promptMemBIngestion(mcpCodeTarget) {
 async function promptCreatorExtension(mcpConfigPath) {
     if (isAutoYes) return;
     
-    console.log(`\n${colors.magenta}${colors.bold}🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI)${colors.reset}`);
-    const doInstall = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Möchtest du das Plugin 'BDB Creator Extension' (3D, Video & ComfyUI MCP Engines) installieren? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const options = [
+        { label: 'Ja: Installieren & Konfigurieren (BDB Creator Extension - 3D, Video & ComfyUI MCP Engines)', value: true },
+        { label: 'Nein: Überspringen', value: false }
+    ];
+    const doInstall = await promptSingleSelect('🎬 BDB Creator Extension (Generative 3D, Video & ComfyUI):', options, 0);
 
     if (!doInstall) return;
 
@@ -924,12 +882,11 @@ async function promptCreatorExtension(mcpConfigPath) {
 async function promptOSAgentWorkspace() {
     if (isAutoYes) return;
     
-    console.log(`\n${colors.magenta}${colors.bold}🧠 BDB OS Agent Workspace (AI Orchestrator)${colors.reset}`);
-    const doInstall = await new Promise((resolve) => {
-        rl.question(`${colors.yellow}Möchtest du den 'BDB OS Agent Workspace' (Orchestration Layer für parallele AI Agents) installieren? (y/N): ${colors.reset}`, (answer) => {
-            resolve(answer.trim().toLowerCase() === 'y');
-        });
-    });
+    const options = [
+        { label: 'Ja: Installieren & Konfigurieren (BDB OS Agent Workspace - Orchestrations-Layer für parallele KI-Agenten)', value: true },
+        { label: 'Nein: Überspringen', value: false }
+    ];
+    const doInstall = await promptSingleSelect('🧠 BDB OS Agent Workspace (AI Orchestrator):', options, 0);
 
     if (!doInstall) return;
 
