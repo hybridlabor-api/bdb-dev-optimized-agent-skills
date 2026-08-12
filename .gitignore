@@ -13,3 +13,10 @@ build/
 .env
 .env.*
 .npmrc
+
+# Temporary generator & test scripts
+update_readme*.py
+rebuild_readme*.py
+generate_skills_table*.py
+test_sandbox*.js
+patch_installer*.js
