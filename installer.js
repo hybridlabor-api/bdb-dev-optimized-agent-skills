@@ -962,7 +962,7 @@ async function promptCreatorExtension(mcpConfigPath) {
     if (!doInstall) return;
 
     // Use user's home directory config path for stability if running via npx, or alongside current dir
-    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.agents') : path.dirname(srcDir);
     const creatorDir = path.join(basePath, 'bdb-dev-creator-extension');
     const installerScript = path.join(creatorDir, 'installer.js');
 
@@ -1003,7 +1003,7 @@ async function promptOSAgentWorkspace() {
 
     if (!doInstall) return;
 
-    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.gemini') : path.dirname(srcDir);
+    const basePath = __dirname.includes('_npx') ? path.join(os.homedir(), '.agents') : path.dirname(srcDir);
     const osAgentDir = path.join(basePath, 'bdb-os-agent-workspace');
 
     if (!fs.existsSync(osAgentDir)) {
