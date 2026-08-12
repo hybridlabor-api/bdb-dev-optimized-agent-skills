@@ -421,21 +421,22 @@ git clone https://github.com/hybridlabor-api/bdb-os-agent-workspace.git
 
 AI agents follow this structured lifecycle, deeply integrated with the **BDBrainstorm** and **BDBMediaStorm** philosophy:
 
-- **1. IDEATE & MEDIA STORM (`/grill-me`, `/bdbrainstorm`, `/bdbmediastorm`)**: Actively challenge ideas or conduct multi-agent media/event-tech brainstorming. Spawns specialized subagents (CI/Design Expert, Real Time Architect, MCP Implementer) to validate hardware, 3D scenography (Rhino, Blender, Unreal), protocols (OSC, Art-Net), and MCP compatibility.
+- **1. IDEATE & MEDIA STORM (`/grill-me`, `/bdbrainstorm`, `/bdbmediastorm`)**: Actively challenge ideas via multi-agent debate. Use `/bdbrainstorm` for code/architecture, or `/bdbmediastorm` for hardware, 3D scenography (Rhino, Unreal), and MCP compatibility checks.
 - **2. DEFINE & SCAFFOLD (`openwiki-skill`, `github-repo`)**: Confirm target workspace directory with the user, then autonomously initialize project documentation, `agent.md`, `.openwiki/` structures, and GitHub repo standards.
-- **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to `ui-ux-pro-max` standards.
+- **3. PLAN (`/plan`)**: Create technical design specs, PRD, and file-by-file implementation plans, strictly adhering to **`engineering-godmode`** (Clean Architecture) and **`ui-ux-godmode`** (Anti-Slop Standards).
 - **4. BUILD (`/subagents`)**: Subagent-driven development. The master orchestrator delegates specific component creation, node patching, and refactoring tasks to independent subagents.
-- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX or signal-flow audits.
-- **6. SHIP (`/ship`)**: Commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
+- **5. VERIFY & REVIEW (`/review`)**: Perform QA gate reviews, secret scans, unit test suites, and strict UI/UX or signal-flow audits based on the Godmode criteria.
+- **6. SHIP (`/ship`)**: Enforce **`shipping-godmode`** (rollback strategies, spec-checks), commit, push private repositories, update OpenWiki docs autonomously, and deploy live.
 
 ---
 
 
-## 🧠 BDBrainstorm: The Ultimate Ideation Engine
+## 🧠 BDBrainstorm & MediaStorm: The Godmode Ideation Engines
 
-Included in this optimized arsenal is our proprietary **BDBrainstorm** skill.
+Included in this optimized arsenal are our proprietary multi-agent ideation skills, entirely governed by the **3 Core Godmodes** (`engineering-godmode`, `ui-ux-godmode`, and `shipping-godmode`):
 
-BDBrainstorm combines multi-agent brainstorming, the `/grill-me` slash command, subagent-driven development, and extreme UI/UX design workflows to force a comprehensive, multi-agent ideation process. It stress-tests designs, architectures the systems behind them, and outputs actionable, high-fidelity implementation plans.
+- **`/bdbrainstorm` (Software & Code):** Combines multi-agent brainstorming with the `/grill-me` interview approach. It forces Domain-Driven Design (`engineering-godmode`), enforces premium frontend standards (`ui-ux-godmode`), and stress-tests architectures for production readiness (`shipping-godmode`).
+- **`/bdbmediastorm` (Show-Control & Hardware):** Exclusively tailored for creative-tech (TouchDesigner, Adobe, grandMA3, Unreal Engine). It forces subagents to map signal flow, validate the 11 Core MCPs, leverage the Creator Extension pipelines, and design mandatory hardware failovers.
 
 ---
 
