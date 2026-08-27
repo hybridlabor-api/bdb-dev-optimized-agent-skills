@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.12.1](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/compare/v3.12.0...v3.12.1) (2026-08-27)
+
+
+### Features
+
+* **branding:** embed authentic BDB vector coin, watermark and seal in certificate template ([1c28dd2](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/commit/1c28dd29adcaf4a03232aa571709d82bc7450dc0))
+* **branding:** redesign certificate to flagship BDB Enterprise SaaS Host A4 layout ([14bec20](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/commit/14bec20a13bbb7195e3b076eb473a16d7f036019))
+
+
+### Miscellaneous Chores
+
+* pin next release to 3.12.1 ([f395afc](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/commit/f395afc45a23e10681bc9fc710e12d8885876a81))
+
 ## [3.12.0](https://github.com/hybridlabor-api/bdb-dev-optimized-agent-skills/compare/v3.11.0...v3.12.0) (2026-08-27)
 
 
